@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e585c3bb2a3d5db99400ecffbc67f344",
+    "hash": "192eb1de43cf2390f42c6f2be2fde4d1",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
