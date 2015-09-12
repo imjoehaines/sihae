@@ -14,13 +14,16 @@ use Sihae\BlogConfig;
 class FeatureContext extends MinkContext implements Context, SnippetAcceptingContext
 {
     /**
+     * @var string
+     */
+    protected static $defaultBlogTitle = 'Sihae';
+
+    /**
     * @BeforeSuite
     */
     public static function prepare()
     {
-        $blogConfig = BlogConfig::find(1);
-        $blogConfig->title = 'Sihae';
-        $blogConfig->save();
+        self::setBlogTitleTo(self::$defaultBlogTitle);
     }
 
     /**
@@ -28,8 +31,18 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     */
     public function cleanDB()
     {
+        self::setBlogTitleTo(self::$defaultBlogTitle);
+    }
+
+    /**
+     * Sets the blog title to a given string
+     *
+     * @param string $title
+     */
+    protected static function setBlogTitleTo($title)
+    {
         $blogConfig = BlogConfig::find(1);
-        $blogConfig->title = 'Sihae';
+        $blogConfig->title = $title;
         $blogConfig->save();
     }
 
@@ -38,8 +51,6 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
      */
     public function myBlogIsCalled($blogTitle)
     {
-        $blogConfig = BlogConfig::find(1);
-        $blogConfig->title = $blogTitle;
-        $blogConfig->save();
+        self::setBlogTitleTo($blogTitle);
     }
 }
