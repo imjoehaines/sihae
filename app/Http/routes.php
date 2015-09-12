@@ -11,4 +11,4 @@
 |
 */
 
-Route::get('/', 'LandingPageController@index');
+Route::get('/', 'LandingPageController@display');
