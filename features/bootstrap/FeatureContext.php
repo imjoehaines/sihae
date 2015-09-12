@@ -41,8 +41,8 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
      */
     protected static function setBlogTitleTo($title)
     {
-        $blogConfig = BlogConfig::find(1);
-        $blogConfig->title = $title;
+        $blogConfig = BlogConfig::where('setting', 'title')->firstOrFail();
+        $blogConfig->value = $title;
         $blogConfig->save();
     }
 

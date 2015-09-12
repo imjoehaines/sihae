@@ -14,11 +14,13 @@ class CreateBlogConfigTable extends Migration
     {
         Schema::create('blog_config', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title')->default('Sihae');
+            $table->string('setting');
+            $table->string('value');
         });
 
         DB::table('blog_config')->insert([
-            'title' => 'Sihae'
+            'setting' => 'title',
+            'value' => 'Sihae'
         ]);
     }
 
