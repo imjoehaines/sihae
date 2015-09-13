@@ -5,7 +5,7 @@ namespace Sihae\Http\Controllers;
 use Illuminate\Http\Request;
 
 use View;
-use Sihae\BlogConfig;
+use Sihae\Post;
 use Sihae\Http\Requests;
 use Sihae\Http\Controllers\Controller;
 
@@ -18,6 +18,6 @@ class LandingPageController extends Controller
      */
     public function display()
     {
-        return View::make('landingpage');
+        return View::make('landingpage', ['posts' => Post::all()]);
     }
 }
