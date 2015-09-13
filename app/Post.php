@@ -2,15 +2,27 @@
 
 namespace Sihae;
 
-use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\SluggableTrait;
+use Cviebrock\EloquentSluggable\SluggableInterface;
 
-class Post extends Model
+class Post extends Model implements SluggableInterface
 {
+    use SluggableTrait;
+
     /**
      * @var string
      */
     protected $table = 'posts';
+
+    /**
+     * @var array
+     */
+    protected $sluggable = [
+        'build_from' => 'title',
+        'save_to' => 'slug',
+    ];
 
     /**
      * Gets the date a post was created

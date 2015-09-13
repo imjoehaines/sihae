@@ -1,6 +1,6 @@
 <aside>
   <header>
-    <h1>{{ $config::get('title') }}</h1>
+    <h1><a href="/">{{ $config::get('title') }}</a></h1>
   </header>
 
   <p><em>Beep boop</em></p>

@@ -1,7 +1,7 @@
-Feature: Blog Posts
+Feature: Blog Post List
   As a Sihae user
-  I want to be able to see my blog posts
-  So that my blog can be read
+  I want to be able to see a list of my blog posts
+  So that users can browse my blog
 
   Scenario: Visiting a Sihae blog without any posts
     Given I am on the homepage

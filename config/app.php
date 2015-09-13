@@ -145,6 +145,7 @@ return [
         Sihae\Providers\EventServiceProvider::class,
         Sihae\Providers\RouteServiceProvider::class,
 
+        Cviebrock\EloquentSluggable\SluggableServiceProvider::class,
     ],
 
     /*

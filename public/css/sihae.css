@@ -17,17 +17,22 @@ h1, h2, h3, h4, h5, h6 {
 
 aside {
   width: 30%;
-  background: url('/images/sidebar.jpg') center/cover no-repeat fixed;
+  background: url('/images/sidebar.jpg') bottom/cover no-repeat;
   position: fixed;
   height: 100%;
   color: #f8f8f8;
   padding: 4rem 2rem;
   text-align: center;
+  text-shadow: 1px 1px 2px #000;
 }
 
-aside h1 {
+aside h1 a {
   color: #f8f8f8;
   font-weight: normal;
+}
+
+aside h1 a:hover {
+  color: #f4645f;
 }
 
 aside ul, .post-list, .post-pagination {
@@ -39,7 +44,6 @@ aside ul, .post-list, .post-pagination {
 .post-list li {
   margin-bottom: 1rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid #f8f8f8;
   overflow: hidden;
 }
 

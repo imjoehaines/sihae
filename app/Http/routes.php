@@ -12,3 +12,5 @@
 */
 
 Route::get('/', 'LandingPageController@display');
+
+Route::get('/post/{slug}', 'PostController@show');

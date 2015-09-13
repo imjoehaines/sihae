@@ -5,7 +5,7 @@
   <ol class="post-list">
     @forelse ($posts as $post)
       <li>
-        <h2><a href="#">{{ $post->title }}</a></h2>
+        <h2><a href="/post/{{ $post->slug }}">{{ $post->title }}</a></h2>
         <p>{{ $post->summary }}</p>
         <small class="post-date">posted {{ $post->timeSinceDateCreated() }}</small>
       </li>
