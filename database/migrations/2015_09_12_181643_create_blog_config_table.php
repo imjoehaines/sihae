@@ -16,12 +16,8 @@ class CreateBlogConfigTable extends Migration
             $table->increments('id');
             $table->string('setting');
             $table->string('value');
+            $table->unique('setting');
         });
-
-        DB::table('blog_config')->insert([
-            'setting' => 'title',
-            'value' => 'Sihae'
-        ]);
     }
 
     /**

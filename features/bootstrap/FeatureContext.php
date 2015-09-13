@@ -7,6 +7,7 @@ use Behat\Gherkin\Node\TableNode;
 use Behat\MinkExtension\Context\MinkContext;
 
 use Sihae\BlogConfig;
+use Illuminate\Support\Facades\Config;
 
 /**
  * Defines application features from the specific context.
@@ -23,7 +24,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     */
     public static function prepare()
     {
-        self::setBlogTitleTo(self::$defaultBlogTitle);
+        self::setBlogTitleTo(Config::get('blogconfig.title'));
     }
 
     /**
@@ -31,7 +32,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     */
     public function cleanDB()
     {
-        self::setBlogTitleTo(self::$defaultBlogTitle);
+        self::setBlogTitleTo(Config::get('blogconfig.title'));
     }
 
     /**
@@ -41,9 +42,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
      */
     protected static function setBlogTitleTo($title)
     {
-        $blogConfig = BlogConfig::where('setting', 'title')->firstOrFail();
-        $blogConfig->value = $title;
-        $blogConfig->save();
+        BlogConfig::set('title', $title);
     }
 
     /**
