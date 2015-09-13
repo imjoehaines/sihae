@@ -102,3 +102,7 @@ a:hover {
 .post-date {
   color: #ccc;
 }
+
+code {
+  white-space: pre;
+}

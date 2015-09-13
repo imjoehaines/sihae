@@ -146,6 +146,7 @@ return [
         Sihae\Providers\RouteServiceProvider::class,
 
         Cviebrock\EloquentSluggable\SluggableServiceProvider::class,
+        VTalbot\Markdown\MarkdownServiceProvider::class,
     ],
 
     /*
@@ -194,6 +195,8 @@ return [
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
+
+        'Markdown'  => VTalbot\Markdown\Facades\Markdown::class,
 
     ],
 
