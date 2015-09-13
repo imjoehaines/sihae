@@ -19,3 +19,11 @@ $factory->define(Sihae\User::class, function (Faker\Generator $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+$factory->define(Sihae\Post::class, function (Faker\Generator $faker) {
+    return [
+        'title' => $faker->sentence(rand(1, 3)),
+        'summary' => $faker->sentence(rand(10, 20)),
+        'body' => $faker->paragraph(rand(4, 10)),
+    ];
+});
