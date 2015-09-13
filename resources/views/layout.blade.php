@@ -3,20 +3,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic|Lato:300,400' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" href="https://cdn.rawgit.com/mblode/marx/master/css/marx.min.css">
-  <link rel="stylesheet" href="sihae.css">
+  <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/sihae.css">
 
   <title>{{ $config::get('title') }}</title>
 </head>
 <body>
-  <main>
-    <header>
-      <h1>{{ $config::get('title') }}</h1>
-    </header>
+  @include('sidebar')
 
-    <article>@yield('content')</article>
-    <aside>@include('sidebar')</aside>
+  <main>
+    @yield('content')
   </main>
 </body>
 </html>

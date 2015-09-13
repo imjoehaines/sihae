@@ -1,0 +1,43 @@
+* {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+body {
+  font-family: 'Source Sans Pro', 'Open Sans', 'San Fransisco', 'Helvetica Neue', Helvetica, 'Lucida Grande', sans-serif;
+  color: #999;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: lighter;
+  margin-top: 0;
+  color: #333;
+}
+
+aside {
+  width: 30%;
+  background: url('/images/sidebar.jpg') center/cover no-repeat fixed;
+  position: fixed;
+  height: 100%;
+  color: #f8f8f8;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+aside h1 {
+  color: #f8f8f8;
+  font-weight: normal;
+}
+
+aside ul {
+  padding: 0;
+  list-style-type: none;
+}
+
+main {
+  width: 70%;
+  float: left;
+  margin-left: 30%;
+  padding: 4rem;
+}
