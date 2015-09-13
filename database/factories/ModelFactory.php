@@ -22,7 +22,7 @@ $factory->define(Sihae\User::class, function (Faker\Generator $faker) {
 
 $factory->define(Sihae\Post::class, function (Faker\Generator $faker) {
     return [
-        'title' => $faker->sentence(rand(1, 3)),
+        'title' => rtrim($faker->sentence(rand(1, 3)), '.'),
         'summary' => $faker->sentence(rand(10, 20)),
         'body' => $faker->paragraph(rand(4, 10)),
     ];

@@ -30,9 +30,23 @@ aside h1 {
   font-weight: normal;
 }
 
-aside ul {
+aside ul, ul.post-list {
+  margin: 0;
   padding: 0;
   list-style-type: none;
+}
+
+ul.post-list li {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #f8f8f8;
+  overflow: hidden;
+}
+
+ul.post-list li:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
 }
 
 main {
@@ -40,4 +54,13 @@ main {
   float: left;
   margin-left: 30%;
   padding: 4rem;
+}
+
+a {
+  color: #f4645f;
+  text-decoration: none;
+}
+
+.post-date {
+  color: #ccc;
 }
