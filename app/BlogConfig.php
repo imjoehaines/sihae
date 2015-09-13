@@ -38,4 +38,14 @@ class BlogConfig extends Model
     {
         return ConfigServiceProvider::get('title');
     }
+
+    /**
+     * Gets the number of posts per page
+     *
+     * @return string
+     */
+    public static function postsPerPage()
+    {
+        return ConfigServiceProvider::get('postsPerPage');
+    }
 }

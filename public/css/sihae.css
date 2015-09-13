@@ -30,23 +30,49 @@ aside h1 {
   font-weight: normal;
 }
 
-aside ul, ul.post-list {
+aside ul, .post-list, .post-pagination {
   margin: 0;
   padding: 0;
   list-style-type: none;
 }
 
-ul.post-list li {
+.post-list li {
   margin-bottom: 1rem;
   padding-bottom: 1rem;
   border-bottom: 1px solid #f8f8f8;
   overflow: hidden;
 }
 
-ul.post-list li:last-child {
+.post-list li:last-child {
   margin-bottom: 0;
   padding-bottom: 0;
   border-bottom: none;
+}
+
+.post-pagination {
+  margin-top: 2rem;
+}
+
+.post-pagination-newer {
+  float: left;
+  width: 33%;
+}
+
+.post-pagination-pages {
+  text-align: center;
+  display: inline-block;
+  width: 33%;
+}
+
+.post-pagination-older {
+  float: right;
+  text-align: right;
+  width: 33%;
+}
+
+.disabled {
+  color: #ccc;
+  cursor: default;
 }
 
 main {

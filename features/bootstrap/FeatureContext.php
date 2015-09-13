@@ -63,4 +63,12 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
             $post->save();
         }
     }
+
+    /**
+     * @Given the number of posts per page is :postsPerPage
+     */
+    public function theNumberOfPostsPerPageIs($postsPerPage)
+    {
+        BlogConfig::set('postsPerPage', $postsPerPage);
+    }
 }
