@@ -8,7 +8,6 @@ use View;
 use Sihae\Post;
 use Sihae\BlogConfig;
 use Sihae\Http\Requests;
-use Sihae\Http\Controllers\Controller;
 
 class LandingPageController extends Controller
 {

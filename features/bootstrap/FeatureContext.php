@@ -17,16 +17,16 @@ use Illuminate\Support\Facades\Config;
 class FeatureContext extends MinkContext implements Context, SnippetAcceptingContext
 {
     /**
-    * @BeforeSuite
-    */
+     * @BeforeSuite
+     */
     public static function prepare()
     {
         self::cleanDB();
     }
 
     /**
-    * @AfterScenario @database
-    */
+     * @AfterScenario @database
+     */
     public static function cleanDB()
     {
         BlogConfig::truncate();

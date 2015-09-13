@@ -70,11 +70,6 @@ aside ul, .post-list, .post-pagination {
   width: 33%;
 }
 
-.disabled {
-  color: #ccc;
-  cursor: default;
-}
-
 main {
   width: 70%;
   float: left;
@@ -85,6 +80,19 @@ main {
 a {
   color: #f4645f;
   text-decoration: none;
+}
+
+a:hover {
+  color: #d81d16;
+}
+
+.disabled {
+  color: #ccc;
+  cursor: default;
+}
+
+.disabled:hover {
+  color: #ccc;
 }
 
 .post-date {
