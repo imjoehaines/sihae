@@ -15,34 +15,19 @@ use Illuminate\Support\Facades\Config;
 class FeatureContext extends MinkContext implements Context, SnippetAcceptingContext
 {
     /**
-     * @var string
-     */
-    protected static $defaultBlogTitle = 'Sihae';
-
-    /**
     * @BeforeSuite
     */
     public static function prepare()
     {
-        self::setBlogTitleTo(Config::get('blogconfig.title'));
+        self::cleanDB();
     }
 
     /**
     * @AfterScenario @database
     */
-    public function cleanDB()
+    public static function cleanDB()
     {
-        self::setBlogTitleTo(Config::get('blogconfig.title'));
-    }
-
-    /**
-     * Sets the blog title to a given string
-     *
-     * @param string $title
-     */
-    protected static function setBlogTitleTo($title)
-    {
-        BlogConfig::set('title', $title);
+        BlogConfig::truncate();
     }
 
     /**
@@ -50,6 +35,6 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
      */
     public function myBlogIsCalled($blogTitle)
     {
-        self::setBlogTitleTo($blogTitle);
+        BlogConfig::set('title', $blogTitle);
     }
 }

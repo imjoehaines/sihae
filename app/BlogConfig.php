@@ -3,7 +3,7 @@
 namespace Sihae;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Config;
+use Sihae\Providers\ConfigServiceProvider;
 
 class BlogConfig extends Model
 {
@@ -18,35 +18,26 @@ class BlogConfig extends Model
     public $timestamps = false;
 
     /**
-     * Sets a given setting to the given value
+     * Sets a given setting to the given value - proxy for ConfigServiceProvider::set
      *
      * @param string $setting
      * @param string $value
+     * @return boolean success
      */
     public static function set($setting, $value)
     {
-        $blogConfig = BlogConfig::where('setting', $setting)->first();
-
-        if (!$blogConfig) {
-            $blogConfig = new BlogConfig;
-            $blogConfig->setting = $setting;
-        }
-
-        $blogConfig->value = $value;
-        $blogConfig->save();
+        return ConfigServiceProvider::set($setting, $value);
     }
 
     /**
-     * Gets a given setting's value
+     * Gets a given setting's value - proxy for ConfigServiceProvider::get
      *
      * @param string $setting
      * @return string
      */
     private static function get($setting)
     {
-        $row = BlogConfig::where('setting', $setting)->first();
-
-        return $row ? $row->value : Config::get('blogconfig.' . $setting);
+        return ConfigServiceProvider::get($setting);
     }
 
     /**

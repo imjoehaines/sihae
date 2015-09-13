@@ -1,3 +1,5 @@
+@inject('config', 'Sihae\Providers\ConfigServiceProvider')
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,12 +7,12 @@
   <link rel="stylesheet" href="https://cdn.rawgit.com/mblode/marx/master/css/marx.min.css">
   <link rel="stylesheet" href="sihae.css">
 
-  <title>{{ $title or 'Sihae' }}</title>
+  <title>{{ $config::get('title') }}</title>
 </head>
 <body>
   <main>
     <header>
-      <h1>{{ $title or 'Sihae' }}</h1>
+      <h1>{{ $config::get('title') }}</h1>
     </header>
 
     <article>@yield('content')</article>

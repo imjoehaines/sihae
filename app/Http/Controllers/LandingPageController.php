@@ -18,6 +18,6 @@ class LandingPageController extends Controller
      */
     public function display()
     {
-        return View::make('landingpage', ['title' => BlogConfig::title()]);
+        return View::make('landingpage');
     }
 }
