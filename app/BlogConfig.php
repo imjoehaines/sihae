@@ -30,23 +30,12 @@ class BlogConfig extends Model
     }
 
     /**
-     * Gets a given setting's value - proxy for ConfigServiceProvider::get
-     *
-     * @param string $setting
-     * @return string
-     */
-    private static function get($setting)
-    {
-        return ConfigServiceProvider::get($setting);
-    }
-
-    /**
      * Gets the title of the blog
      *
      * @return string
      */
     public static function title()
     {
-        return BlogConfig::get('title');
+        return ConfigServiceProvider::get('title');
     }
 }
