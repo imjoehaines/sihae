@@ -23,7 +23,7 @@
     <input name="summary" id="summary" maxlength="255" required>
 
     <label for="body">Post</label>
-    <textarea name="body" id="body" maxlength="7500" required></textarea>
+    <textarea name="body" id="body" required></textarea>
 
     <button name="submit" type="submit">Add new post</button>
   </form>
