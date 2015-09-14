@@ -23,8 +23,8 @@ return [
     'settings' => [
         'default' => [
             'HTML.Doctype' => 'XHTML 1.0 Strict',
-            'HTML.Allowed' => 'div,b,strong,i,em,a[href|title],ul,ol,li,p,br,span,img[width|height|alt|src]',
-            'CSS.AllowedProperties' => 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align',
+            'HTML.Allowed' => 'h1,h2,h3,h4,h5,h6,blockquote,table[summary],strong,em,a[href|title],ul,ol,dl,li,p,img[width|height|alt|src],pre,code,dd,dt,td[abbr],th[abbr]',
+            'CSS.AllowedProperties' => '',
             'AutoFormat.AutoParagraph' => true,
             'AutoFormat.RemoveEmpty' => true,
         ],
