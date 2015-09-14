@@ -25,7 +25,7 @@ class NewPostRequest extends Request
     public function rules()
     {
         return [
-            'title' => 'required|max:120|string',
+            'title' => 'required|max:140|string',
             'summary' => 'required|max:255|string',
             'body' => 'required|max:7500|string',
         ];

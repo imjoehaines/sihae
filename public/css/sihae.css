@@ -106,3 +106,25 @@ a:hover {
 code {
   white-space: pre;
 }
+
+label {
+  margin: 0;
+  display: block;
+}
+
+input, textarea {
+  margin: 0.5rem 0 1rem;
+  padding: 0.5rem;
+  display: block;
+  width: 100%;
+  border: 1px solid #ddd;
+}
+
+textarea {
+  min-height: 10rem;
+}
+
+button {
+  clear: both;
+  display: block;
+}

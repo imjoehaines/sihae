@@ -16,21 +16,15 @@
   <form action="/post/new" method="POST">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-    <label for="title">
-      Title
-      <input name="title" id="title">
-    </label>
+    <label for="title">Title</label>
+    <input name="title" id="title" maxlength="140" required>
 
-    <label for="summary">
-      Summary
-      <input name="summary" id="summary">
-    </label>
+    <label for="summary">Summary</label>
+    <input name="summary" id="summary" maxlength="255" required>
 
-    <label for="body">
-      Post
-      <textarea name="body" id="body"></textarea>
-    </label>
+    <label for="body">Post</label>
+    <textarea name="body" id="body" maxlength="7500" required></textarea>
 
-    <button name="submit" type="submit">New Post</button>
+    <button name="submit" type="submit">Add new post</button>
   </form>
 @endsection
