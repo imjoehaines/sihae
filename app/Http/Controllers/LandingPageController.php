@@ -20,6 +20,8 @@ class LandingPageController extends Controller
     {
         $perPage = BlogConfig::postsPerPage();
 
-        return View::make('landingpage', ['posts' => Post::paginate($perPage)]);
+        return View::make('landingpage', [
+            'posts' => Post::orderBy('created_at', 'desc')->paginate($perPage),
+        ]);
     }
 }
