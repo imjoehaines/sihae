@@ -13,4 +13,7 @@
 
 Route::get('/', 'LandingPageController@display');
 
+Route::get('/post/new', 'PostController@create');
+Route::post('/post/new', 'PostController@store');
+
 Route::get('/post/{slug}', 'PostController@show');

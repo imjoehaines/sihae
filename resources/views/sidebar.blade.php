@@ -12,4 +12,8 @@
     <li>Two</li>
     <li>Three</li>
   </ul>
+
+  <p>
+    <a href="/post/new">Add a new post</a>
+  </p>
 </aside>

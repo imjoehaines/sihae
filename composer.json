@@ -9,7 +9,8 @@
         "laravel/framework": "5.1.*",
         "nesbot/carbon": "~1.20",
         "cviebrock/eloquent-sluggable": "~3.0",
-        "vtalbot/markdown": "~2.0"
+        "vtalbot/markdown": "~2.0",
+        "mews/purifier": "~2.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

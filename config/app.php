@@ -147,6 +147,7 @@ return [
 
         Cviebrock\EloquentSluggable\SluggableServiceProvider::class,
         VTalbot\Markdown\MarkdownServiceProvider::class,
+        Mews\Purifier\PurifierServiceProvider::class,
     ],
 
     /*
@@ -197,6 +198,7 @@ return [
         'View'      => Illuminate\Support\Facades\View::class,
 
         'Markdown'  => VTalbot\Markdown\Facades\Markdown::class,
+        'Purifier' => Mews\Purifier\Facades\Purifier::class,
 
     ],
 

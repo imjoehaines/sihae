@@ -4,6 +4,5 @@
 @section('content')
   <h2>{{ $title }}</h2>
 
-  {{-- NOTE: ensure this is filtered for XSS --}}
-  {!! Markdown::string($body) !!}
+  {!! $body !!}
 @endsection
