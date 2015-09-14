@@ -12,7 +12,7 @@ use Sihae\Http\Controllers\Controller;
 class PostController extends Controller
 {
     /**
-     * Display the specified resource.
+     * Display a post by slug
      *
      * @param string $slug
      * @return Response
