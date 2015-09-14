@@ -108,6 +108,6 @@ return [
 	 *
 	 * and continue from there.
 	 */
-	'reserved' => ['create'],
+	'reserved' => ['new'],
 
 ];
