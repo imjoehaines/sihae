@@ -6,7 +6,9 @@
     @forelse ($posts as $post)
       <li>
         <h2><a href="/post/{{ $post->slug }}">{{ $post->title }}</a></h2>
-        <p>{{ $post->summary }}</p>
+        <div class="post-summary">
+          {!! $post->summary !!}
+        </div>
         <small class="post-date">posted {{ $post->timeSinceDateCreated() }}</small>
       </li>
     @empty

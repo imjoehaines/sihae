@@ -19,12 +19,14 @@
     <label for="title">Title</label>
     <input name="title" id="title" maxlength="140" required>
 
-    <label for="summary">Summary</label>
-    <input name="summary" id="summary" maxlength="255" required>
-
     <label for="body">Post</label>
     <textarea name="body" id="body" required></textarea>
 
     <button name="submit" type="submit">Add new post</button>
   </form>
+
+  <script>
+    var simplemde = new SimpleMDE();
+    simplemde.render();
+  </script>
 @endsection

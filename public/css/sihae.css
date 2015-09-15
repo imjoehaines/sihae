@@ -41,13 +41,13 @@ aside ul, .post-list, .post-pagination {
   list-style-type: none;
 }
 
-.post-list li {
+.post-list > li {
   margin-bottom: 1rem;
   padding-bottom: 1rem;
   overflow: hidden;
 }
 
-.post-list li:last-child {
+.post-list > li:last-child {
   margin-bottom: 0;
   padding-bottom: 0;
   border-bottom: none;
@@ -108,12 +108,12 @@ code {
 }
 
 label {
-  margin: 0;
+  margin: 1rem 0 0.5rem;
   display: block;
 }
 
 input, textarea {
-  margin: 0.5rem 0 1rem;
+  margin: 0;
   padding: 0.5rem;
   display: block;
   width: 100%;
@@ -127,4 +127,17 @@ textarea {
 button {
   clear: both;
   display: block;
+}
+
+.editor-toolbar {
+  border-radius: 0;
+}
+
+.CodeMirror {
+  border-radius: 0;
+}
+
+.CodeMirror .cm-spell-error:not(.cm-url):not(.cm-comment) {
+   border-bottom: 2px dotted rgba(255, 0, 0, 1);
+   background: none;
 }

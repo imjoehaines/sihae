@@ -2,14 +2,14 @@
 
 namespace Sihae\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use View;
 use Markdown;
 use Purifier;
 use Redirect;
 use Sihae\Post;
+use Stringy\Stringy;
 use Sihae\Http\Requests;
+use Illuminate\Http\Request;
 use Sihae\Http\Controllers\Controller;
 use Sihae\Http\Requests\NewPostRequest;
 
@@ -51,8 +51,10 @@ class PostController extends Controller
     {
         $post = new Post;
 
+        $summary = Stringy::create($request->body)->safeTruncate(450, '…');
+
         $post->title = $request->get('title');
-        $post->summary = $request->get('summary');
+        $post->summary = $summary;
         $post->body = $request->get('body');
         $post->save();
 

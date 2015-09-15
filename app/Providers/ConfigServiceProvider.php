@@ -2,8 +2,8 @@
 
 namespace Sihae\Providers;
 
-use Illuminate\Support\Facades\Config;
 use Sihae\BlogConfig;
+use Illuminate\Support\Facades\Config;
 
 class ConfigServiceProvider
 {

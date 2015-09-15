@@ -26,7 +26,6 @@ class NewPostRequest extends Request
     {
         return [
             'title' => 'required|max:140|string',
-            'summary' => 'required|max:500|string',
             'body' => 'required|string',
         ];
     }
