@@ -129,6 +129,24 @@ button {
   display: block;
 }
 
+blockquote {
+  display: block;
+  margin: 2rem 0;
+  padding-left: 1rem;
+  overflow: hidden;
+  border-left: 0.25rem solid #f4645f;
+}
+
+img {
+  max-width: 100%;
+  margin: 1rem 0;
+}
+
+.post-summary img {
+  display: none;
+}
+
+/* SimpleMDE */
 .editor-toolbar {
   border-radius: 0;
 }
