@@ -1,5 +1,11 @@
 {
   "private": true,
+  "scripts": {
+    "test": "npm run sniffer && npm run unit && npm run acceptance",
+    "acceptance": "vendor/bin/behat",
+    "unit": "vendor/bin/phpspec run",
+    "sniffer": "vendor/bin/phpcs --standard=PSR1,PSR2 -p --colors app/"
+  },
   "devDependencies": {
     "gulp": "^3.8.8"
   },

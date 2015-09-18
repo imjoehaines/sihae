@@ -19,7 +19,8 @@
         "behat/mink": "^1.6",
         "behat/mink-extension": "^2.0",
         "laracasts/behat-laravel-extension": "^1.0",
-        "phpspec/phpspec": "~2.3"
+        "phpspec/phpspec": "~2.3",
+        "squizlabs/php_codesniffer": "~2.3"
     },
     "autoload": {
         "classmap": [
