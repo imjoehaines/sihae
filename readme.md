@@ -6,6 +6,7 @@
 - Create a postgres database
 - Configure `.env`
 - `composer install`
+- `npm install`
 - `php artisan migrate`
 
 Run tests with `npm test` or individually:
