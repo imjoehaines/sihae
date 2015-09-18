@@ -8,6 +8,7 @@ before_script:
   - psql -c 'create database sihae;' -U postgres
   - composer self-update
   - composer install
+  - npm install
   - cp .env.travis .env
   - php artisan migrate
 
