@@ -3,7 +3,7 @@ Feature: Create a New Blog Post
   I want to be able to write a blog post
   So that I can share my thoughts
 
-  @database
+  @database @login
   Scenario: Creating a new post
     Given I am on "post/new"
     When I fill in "title" with "my post"

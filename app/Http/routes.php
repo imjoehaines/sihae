@@ -13,7 +13,11 @@
 
 Route::get('/', 'LandingPageController@display');
 
-Route::get('/post/new', 'PostController@create');
-Route::post('/post/new', 'PostController@store');
-
+Route::get('/post/new', ['middleware' => 'auth', 'uses' => 'PostController@create']);
+Route::post('/post/new', ['middleware' => 'auth', 'uses' => 'PostController@store']);
 Route::get('/post/{slug}', 'PostController@show');
+
+// authentication
+Route::get('/login', 'Auth\AuthController@getLogin');
+Route::post('/login', 'Auth\AuthController@postLogin');
+Route::get('/logout', 'Auth\AuthController@getLogout');

@@ -23,6 +23,10 @@ class AuthController extends Controller
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
+    protected $redirectPath = '/';
+    protected $loginPath = '/login';
+    protected $logoutPath = '/logout';
+
     /**
      * Create a new authentication controller instance.
      *
@@ -54,7 +58,7 @@ class AuthController extends Controller
      * @param  array  $data
      * @return User
      */
-    protected function create(array $data)
+    public function create(array $data)
     {
         return User::create([
             'name' => $data['name'],

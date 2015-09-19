@@ -124,6 +124,19 @@ textarea {
   min-height: 10rem;
 }
 
+div.checkbox {
+  margin: 1rem 0 2.5rem;
+}
+
+div.checkbox label {
+  display: inline;
+}
+
+input[type="checkbox"] {
+  display: inline;
+  width: auto;
+}
+
 button {
   clear: both;
   display: block;
