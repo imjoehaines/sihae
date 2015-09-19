@@ -13,9 +13,13 @@
   <title>{{ $config::get('title') }}</title>
 </head>
 <body>
-  @include('sidebar')
+  @include('partials/sidebar')
 
   <main>
+    @if (Auth::user())
+      @include('partials/admin')
+    @endif
+
     @yield('content')
   </main>
 </body>

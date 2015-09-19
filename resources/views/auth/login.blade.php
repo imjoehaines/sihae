@@ -3,6 +3,15 @@
 @section('content')
   <h2>Login</h2>
 
+  @if ($errors->count())
+    <h3>Oops!</h3>
+    <ul>
+      @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+      @endforeach
+    </ul>
+  @endif
+
   <form method="POST" action="/login">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
