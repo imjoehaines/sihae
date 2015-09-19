@@ -19,11 +19,11 @@
     <input type="email" id="email" name="email" value="{{ old('email') }}">
 
     <label for="password">Password</label>
-    <input type="password" id="password" name="password" id="password">
+    <input type="password" id="password" name="password">
 
     <div class="checkbox">
       <input type="checkbox" id="remember" name="remember">
-      <label for="remember">keep me logged in</label>
+      <label for="remember">Stay logged in</label>
     </div>
 
     <button type="submit">Login</button>

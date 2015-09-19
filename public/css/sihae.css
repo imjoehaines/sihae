@@ -126,12 +126,12 @@ code {
 }
 
 label {
-  margin: 1rem 0 0.5rem;
+  margin: 0 0 0.5rem;
   display: block;
 }
 
 input, textarea {
-  margin: 0;
+  margin: 0 0 1rem;
   padding: 0.5rem;
   display: block;
   width: 100%;
@@ -143,7 +143,7 @@ textarea {
 }
 
 div.checkbox {
-  margin: 1rem 0 2.5rem;
+  margin: 1rem 0;
 }
 
 div.checkbox label {

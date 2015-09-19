@@ -21,3 +21,6 @@ Route::get('/post/{slug}', 'PostController@show');
 Route::get('/login', 'Auth\AuthController@getLogin');
 Route::post('/login', 'Auth\AuthController@postLogin');
 Route::get('/logout', 'Auth\AuthController@getLogout');
+
+Route::get('/settings', 'SettingsController@display');
+Route::post('/settings', 'SettingsController@store');

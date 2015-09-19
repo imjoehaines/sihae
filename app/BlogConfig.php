@@ -30,6 +30,21 @@ class BlogConfig extends Model
     }
 
     /**
+     * Sets all given settings to given values
+     *
+     * @param array $settings
+     */
+    public static function setAll($settings)
+    {
+        // ew - this stops _token going into the db but is ugly af
+        unset($settings['_token']);
+
+        foreach ($settings as $setting => $value) {
+            BlogConfig::set($setting, $value);
+        }
+    }
+
+    /**
      * Gets the title of the blog
      *
      * @return string
@@ -47,5 +62,15 @@ class BlogConfig extends Model
     public static function postsPerPage()
     {
         return ConfigServiceProvider::get('postsPerPage');
+    }
+
+    /**
+     * Gets whether to show a login link
+     *
+     * @return string
+     */
+    public static function showLoginLink()
+    {
+        return ConfigServiceProvider::get('showLoginLink');
     }
 }

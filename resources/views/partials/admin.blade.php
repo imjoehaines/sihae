@@ -1,6 +1,6 @@
 <aside class="admin">
   <ul>
-    <li><a href="#">
+    <li><a href="/settings">
       <i class="fa fa-cog"></i> Settings
     </a></li>
 
