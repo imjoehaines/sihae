@@ -1,4 +1,3 @@
-@inject('config', 'Sihae\Providers\ConfigServiceProvider')
 @extends('layout')
 
 @section('content')
