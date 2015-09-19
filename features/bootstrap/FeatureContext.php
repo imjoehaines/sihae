@@ -1,20 +1,24 @@
 <?php
 
-use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
-use Behat\Behat\Context\SnippetAcceptingContext;
-use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
+use Behat\Gherkin\Node\PyStringNode;
 use Behat\MinkExtension\Context\MinkContext;
+use Behat\Behat\Context\SnippetAcceptingContext;
+use Behat\Behat\Tester\Exception\PendingException;
 
 use Sihae\Post;
+use Sihae\User;
 use Sihae\BlogConfig;
 use Illuminate\Support\Facades\Config;
+use Sihae\Http\Controllers\Auth\AuthController;
 
 /**
  * Defines application features from the specific context.
  */
-class FeatureContext extends MinkContext implements Context, SnippetAcceptingContext
+class FeatureContext extends MinkContext implements
+    Context,
+    SnippetAcceptingContext
 {
     /**
      * @BeforeSuite
@@ -31,6 +35,33 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     {
         BlogConfig::truncate();
         Post::truncate();
+        User::truncate();
+    }
+
+    /**
+     * @BeforeScenario @login
+     */
+    public function login()
+    {
+        $this->createTestUser();
+
+        $this->visit('/login');
+        $this->fillField('email', 'test@test.com');
+        $this->fillField('password', 'testing');
+        $this->pressButton('Login');
+    }
+
+    /**
+     * Adds a test user to the database
+     */
+    protected function createTestUser()
+    {
+        $auth = new AuthController;
+        $auth->create([
+            'name' => 'test',
+            'email' => 'test@test.com',
+            'password' => 'testing'
+        ]);
     }
 
     /**
