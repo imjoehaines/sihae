@@ -15,7 +15,7 @@ class CreateBlogConfigTable extends Migration
         Schema::create('blog_config', function (Blueprint $table) {
             $table->increments('id');
             $table->string('setting');
-            $table->string('value');
+            $table->string('value', 500);
             $table->unique('setting');
         });
     }

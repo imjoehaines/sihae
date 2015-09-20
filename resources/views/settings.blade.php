@@ -18,6 +18,9 @@
     <label for="title">Blog Title</label>
     <input id="title" name="title" value="{{ $title }}">
 
+    <label for="summary">Blog Summary</label>
+    <textarea id="summary" name="summary" maxlength="400">{{ $summary }}</textarea>
+
     <label for="postsPerPage">Number of posts per page</label>
     <input type="number" id="postsPerPage" name="postsPerPage" value="{{ $postsPerPage }}">
 

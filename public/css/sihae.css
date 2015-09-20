@@ -140,7 +140,7 @@ input, textarea {
 }
 
 textarea {
-  min-height: 10rem;
+  min-height: 5rem;
 }
 
 div.checkbox {
