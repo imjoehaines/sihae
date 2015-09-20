@@ -15,7 +15,7 @@ h1, h2, h3, h4, h5, h6 {
   color: #333;
 }
 
-aside {
+aside.sidebar {
   width: 30%;
   background: url('/images/sidebar.jpg') bottom/cover no-repeat;
   position: fixed;
@@ -39,6 +39,25 @@ aside ul, .post-list, .post-pagination {
   margin: 0;
   padding: 0;
   list-style-type: none;
+}
+
+aside.admin {
+  position: fixed;
+  top: 0;
+  right: 0;
+  max-width: 15%;
+  padding: 0.5rem 1rem;
+  opacity: 0.5;
+  background: white;
+  text-align: right;
+}
+
+aside.admin:hover {
+  opacity: 1;
+}
+
+aside.admin li {
+  padding: 0.25rem 0;
 }
 
 .post-list > li {
@@ -108,12 +127,12 @@ code {
 }
 
 label {
-  margin: 1rem 0 0.5rem;
+  margin: 0 0 0.5rem;
   display: block;
 }
 
 input, textarea {
-  margin: 0;
+  margin: 0 0 1rem;
   padding: 0.5rem;
   display: block;
   width: 100%;
@@ -125,7 +144,7 @@ textarea {
 }
 
 div.checkbox {
-  margin: 1rem 0 2.5rem;
+  margin: 1rem 0;
 }
 
 div.checkbox label {

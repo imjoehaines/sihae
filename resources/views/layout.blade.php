@@ -13,9 +13,11 @@
   <title>{{ $config::get('title') }}</title>
 </head>
 <body>
-  @include('sidebar')
+  @include('partials/sidebar')
 
   <main>
+    @include('partials/admin')
+
     @yield('content')
   </main>
 </body>

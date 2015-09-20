@@ -26,6 +26,7 @@ class FeatureContext extends MinkContext implements
     public static function prepare()
     {
         self::cleanDB();
+        Cache::flush();
     }
 
     /**
@@ -101,5 +102,13 @@ class FeatureContext extends MinkContext implements
     public function theNumberOfPostsPerPageIs($postsPerPage)
     {
         BlogConfig::set('postsPerPage', $postsPerPage);
+    }
+
+    /**
+     * @Given I am logged in
+     */
+    public function iAmLoggedIn()
+    {
+        $this->login();
     }
 }
