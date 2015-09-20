@@ -73,4 +73,14 @@ class BlogConfig extends Model
     {
         return ConfigServiceProvider::get('showLoginLink');
     }
+
+    /**
+     * Gets the blog summary
+     *
+     * @return string
+     */
+    public static function summary()
+    {
+        return ConfigServiceProvider::get('summary');
+    }
 }

@@ -20,11 +20,13 @@ class SettingsController extends Controller
         $title = Input::old('title') ?: BlogConfig::title();
         $postsPerPage = Input::old('postsPerPage') ?: BlogConfig::postsPerPage();
         $showLoginLink = BlogConfig::showLoginLink();
+        $summary = Input::old('summary') ?: BlogConfig::summary();
 
         return View::make('settings', [
             'title' => $title,
             'postsPerPage' => $postsPerPage,
             'showLoginLink' => $showLoginLink,
+            'summary' => $summary,
         ]);
     }
 
