@@ -26,6 +26,7 @@ class FeatureContext extends MinkContext implements
     public static function prepare()
     {
         self::cleanDB();
+        Cache::flush();
     }
 
     /**
