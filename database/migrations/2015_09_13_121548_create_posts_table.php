@@ -18,7 +18,7 @@ class CreatePostsTable extends Migration
             $table->string('title', 140)->index();
             $table->string('summary', 500);
             $table->text('body');
-            $table->string('slug')->nullable();
+            $table->string('slug')->index();
         });
     }
 
