@@ -148,6 +148,7 @@ return [
         Cviebrock\EloquentSluggable\SluggableServiceProvider::class,
         VTalbot\Markdown\MarkdownServiceProvider::class,
         Mews\Purifier\PurifierServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
     ],
 
     /*
