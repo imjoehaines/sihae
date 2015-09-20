@@ -2,6 +2,7 @@
 
 namespace Sihae\Providers;
 
+use Cache;
 use Sihae\BlogConfig;
 use Illuminate\Support\Facades\Config;
 
@@ -16,6 +17,12 @@ class ConfigServiceProvider
      */
     public static function set($setting, $value)
     {
+        if (Cache::has($setting)) {
+            Cache::forget($setting);
+        }
+
+        Cache::forever($setting, $value);
+
         $blogConfig = BlogConfig::where('setting', $setting)->first();
 
         if (!$blogConfig) {
@@ -36,6 +43,10 @@ class ConfigServiceProvider
      */
     public static function get($setting)
     {
+        if (Cache::has($setting)) {
+            return Cache::get($setting);
+        }
+
         $row = BlogConfig::where('setting', $setting)->first();
 
         return $row ? $row->value : Config::get('blogconfig.' . $setting);
