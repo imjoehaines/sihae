@@ -17,11 +17,13 @@ class ConfigServiceProvider
      */
     public static function set($setting, $value)
     {
-        if (Cache::has($setting)) {
-            Cache::forget($setting);
+        $cachedSetting = self::cacheNameFor($setting);
+
+        if (Cache::has($cachedSetting)) {
+            Cache::forget($cachedSetting);
         }
 
-        Cache::forever($setting, $value);
+        Cache::forever($cachedSetting, $value);
 
         $blogConfig = BlogConfig::where('setting', $setting)->first();
 
@@ -43,12 +45,33 @@ class ConfigServiceProvider
      */
     public static function get($setting)
     {
-        if (Cache::has($setting)) {
-            return Cache::get($setting);
+        $cachedSetting = self::cacheNameFor($setting);
+
+        if (Cache::has($cachedSetting)) {
+            return Cache::get($cachedSetting);
         }
 
-        $row = BlogConfig::where('setting', $setting)->first();
+        $row = BlogConfig::select('value')->where('setting', $setting)->first();
 
-        return $row ? $row->value : Config::get('blogconfig.' . $setting);
+        if ($row) {
+            $value = $row->value;
+        } else {
+            $value = Config::get('blogconfig.' . $setting);
+        }
+
+        Cache::forever($cachedSetting, $value);
+
+        return $value;
+    }
+
+    /**
+     * Gets the name to use when caching a given setting
+     *
+     * @param string $setting
+     * @return string
+     */
+    protected static function cacheNameFor($setting)
+    {
+        return __CLASS__ . '::' . $setting;
     }
 }

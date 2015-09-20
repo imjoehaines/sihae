@@ -2,7 +2,6 @@
 
 namespace Sihae;
 
-use Cache;
 use Illuminate\Database\Eloquent\Model;
 use Sihae\Providers\ConfigServiceProvider;
 
