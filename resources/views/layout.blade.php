@@ -16,9 +16,7 @@
   @include('partials/sidebar')
 
   <main>
-    @if (Auth::user())
-      @include('partials/admin')
-    @endif
+    @include('partials/admin')
 
     @yield('content')
   </main>
