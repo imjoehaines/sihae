@@ -102,4 +102,12 @@ class FeatureContext extends MinkContext implements
     {
         BlogConfig::set('postsPerPage', $postsPerPage);
     }
+
+    /**
+     * @Given I am logged in
+     */
+    public function iAmLoggedIn()
+    {
+        $this->login();
+    }
 }
