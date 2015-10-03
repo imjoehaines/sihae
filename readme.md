@@ -2,6 +2,8 @@
 
 [![Sihae home page](screenshot.png)](https://raw.githubusercontent.com/imjoehaines/sihae/master/screenshot.png)
 
+*Sidebar image from [NASA's HubbleSite](http://hubblesite.org/gallery/album/pr2009025i)*
+
 ## Setup
 - Create a postgres database
 - Configure `.env`
