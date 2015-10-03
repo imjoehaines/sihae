@@ -8,6 +8,12 @@
       <li><a href="/post/new">
         Add a new post <i class="fa fa-plus"></i>
       </a></li>
+
+      @if (isset($slug))
+        <li><a href="/post/edit/{{ $slug }}">
+          Edit this post <i class="fa fa-pencil"></i>
+        </a></li>
+      @endif
     @endif
 
     @if ($config::get('showLoginLink'))

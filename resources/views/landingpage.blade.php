@@ -6,10 +6,16 @@
     @forelse ($posts as $post)
       <li>
         <h1><a href="/post/{{ $post->slug }}">{{ $post->title }}</a></h1>
+
         <div class="post-summary">
           {!! $post->summary !!}
         </div>
-        <small class="post-date">posted {{ $post->timeSinceDateCreated() }}</small>
+
+        <small class="post-date">posted {{ $post->timeSinceDateCreated() }}
+          @if (Auth::check())
+            &mdash; <a href="/post/edit/{{ $post->slug }}">edit this post</a>
+          @endif
+        </small>
       </li>
     @empty
       <li>

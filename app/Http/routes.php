@@ -15,6 +15,10 @@ Route::get('/', 'LandingPageController@display');
 
 Route::get('/post/new', ['middleware' => 'auth', 'uses' => 'PostController@create']);
 Route::post('/post/new', ['middleware' => 'auth', 'uses' => 'PostController@store']);
+
+Route::get('/post/edit/{slug}', ['middleware' => 'auth', 'uses' => 'PostController@edit']);
+Route::post('/post/edit/{slug}', ['middleware' => 'auth', 'uses' => 'PostController@update']);
+
 Route::get('/post/{slug}', 'PostController@show');
 
 // authentication
