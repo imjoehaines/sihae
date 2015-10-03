@@ -2,10 +2,10 @@
 @extends('layout')
 
 @section('content')
-  <h2>Add a new post</h2>
+  <h1>Add a new post</h1>
 
   @if ($errors->count())
-    <h3>Oops &mdash; you seem to be missing something!</h3>
+    <h2>Oops &mdash; you seem to be missing something!</h2>
     <ul>
       @foreach ($errors->all() as $error)
         <li>{{ $error }}</li>
