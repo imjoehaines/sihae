@@ -5,12 +5,12 @@
 }
 
 body {
-  font-family: 'Source Sans Pro', 'Open Sans', 'San Fransisco', 'Helvetica Neue', Helvetica, 'Lucida Grande', sans-serif;
+  font-family: 'San Fransisco', 'Source Sans Pro', 'Open Sans', 'Helvetica Neue', Helvetica, 'Lucida Grande', sans-serif;
   color: #999;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-weight: lighter;
+  font-weight: normal;
   margin-top: 0;
   color: #333;
 }

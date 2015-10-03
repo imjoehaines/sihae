@@ -5,7 +5,7 @@
   <ol class="post-list">
     @forelse ($posts as $post)
       <li>
-        <h2><a href="/post/{{ $post->slug }}">{{ $post->title }}</a></h2>
+        <h1><a href="/post/{{ $post->slug }}">{{ $post->title }}</a></h1>
         <div class="post-summary">
           {!! $post->summary !!}
         </div>
@@ -13,7 +13,7 @@
       </li>
     @empty
       <li>
-        <h2>There aren't any posts!</h2>
+        <h1>There aren't any posts!</h1>
       </li>
     @endforelse
   </ol>
