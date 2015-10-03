@@ -1,10 +1,10 @@
 @extends('layout')
 
 @section('content')
-  <h2>Settings</h2>
+  <h1>Settings</h1>
 
   @if ($errors->count())
-    <h3>Oops!</h3>
+    <h2>Oops!</h2>
     <ul>
       @foreach ($errors->all() as $error)
         <li>{{ $error }}</li>
