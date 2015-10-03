@@ -23,7 +23,7 @@ return [
     'settings' => [
         'default' => [
             'HTML.Doctype' => 'XHTML 1.0 Strict',
-            'HTML.Allowed' => 'h1,h2,h3,h4,h5,h6,blockquote,table[summary],strong,em,a[href|title],ul,ol,dl,li,p,img[width|height|alt|src],pre,code,dd,dt,td[abbr],th[abbr]',
+            'HTML.Allowed' => 'h1,h2,h3,h4,h5,h6,blockquote,table[summary],strong,em,a[href|title],ul,ol,dl,li,p,img[width|height|alt|src],pre,code[class],dd,dt,td[abbr],th[abbr]',
             'CSS.AllowedProperties' => '',
             'AutoFormat.AutoParagraph' => true,
             'AutoFormat.RemoveEmpty' => true,

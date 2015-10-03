@@ -3,5 +3,5 @@
     <h1><a href="/">{{ $config::get('title') }}</a></h1>
   </header>
 
-  {!! nl2br(e($config::get('summary'))) !!}
+  {!! Purifier::clean(Markdown::string($config::get('summary'))) !!}
 </aside>
