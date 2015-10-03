@@ -178,6 +178,10 @@ img {
   display: none;
 }
 
+.fa {
+  margin-left: 0.3rem;
+}
+
 /* SimpleMDE */
 .editor-toolbar {
   border-radius: 0;
