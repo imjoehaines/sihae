@@ -15,7 +15,7 @@ Feature: Blog Post List
     And I am on the homepage
     Then I should see "Penny's Perfect Post"
     And I should see "A cool and good post by Penny"
-    And I should see text matching "posted (\d*) second(s?) ago"
+    And I should see text matching "[pP]osted (\d*) second(s?) ago"
     But I should not see "Penny's post's text"
     And I should not see "Newer Posts"
     And I should not see text matching "Page (\d*) of (\d*)"
