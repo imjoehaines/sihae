@@ -26,6 +26,22 @@ aside.sidebar {
   text-shadow: 1px 1px 2px #000;
 }
 
+aside.sidebar::after {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 70%;
+  content: ' ';
+  height: 33%;
+  background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.65) 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.65)));
+  background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%);
+  background: -o-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%);
+  background: -ms-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%);
+  background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a6000000',GradientType=0 );
+}
+
 aside h1 a {
   color: #f8f8f8;
   font-weight: normal;
@@ -41,23 +57,15 @@ aside ul, .post-list, .post-pagination {
   list-style-type: none;
 }
 
-aside.admin {
+.admin {
+  z-index: 99;
   position: fixed;
-  top: 0;
-  right: 0;
-  max-width: 15%;
-  padding: 0.5rem 1rem;
-  opacity: 0.5;
-  background: white;
-  text-align: right;
+  bottom: 2rem;
 }
 
-aside.admin:hover {
-  opacity: 1;
-}
-
-aside.admin li {
+.admin li {
   padding: 0.25rem 0;
+  text-align: left;
 }
 
 .post-list > li {
@@ -120,6 +128,7 @@ a:hover {
 
 .post-date {
   color: #ccc;
+  text-transform: lowercase;
 }
 
 code {
@@ -178,8 +187,10 @@ img {
   display: none;
 }
 
-.fa {
-  margin-left: 0.3rem;
+.post-edit {
+  font-size: 0.8rem;
+  text-transform: lowercase;
+  vertical-align: middle;
 }
 
 /* SimpleMDE */
