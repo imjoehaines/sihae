@@ -20,8 +20,6 @@
   @include('partials/sidebar')
 
   <main>
-    @include('partials/admin')
-
     @yield('content')
   </main>
 

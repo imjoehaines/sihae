@@ -1,31 +1,15 @@
-<aside class="admin">
-  <ul>
-    @if (Auth::check())
-      <li><a href="/settings">
-        Settings <i class="fa fa-cog"></i>
-      </a></li>
+<ul class="admin">
+  <li><a href="/settings">
+    <i class="fa fa-cog"></i> Settings
+  </a></li>
 
-      <li><a href="/post/new">
-        Add a new post <i class="fa fa-plus"></i>
-      </a></li>
+  <li><a href="/post/new">
+    <i class="fa fa-plus"></i> Add a new post
+  </a></li>
 
-      @if (isset($slug))
-        <li><a href="/post/edit/{{ $slug }}">
-          Edit this post <i class="fa fa-pencil"></i>
-        </a></li>
-      @endif
-    @endif
-
-    @if ($config::get('showLoginLink'))
-      @if (Auth::check())
-        <li><a href="/logout">
-          Logout <i class="fa fa-sign-out"></i>
-        </a></li>
-      @else
-        <li><a href="/login">
-          Login <i class="fa fa-sign-in"></i>
-        </a></li>
-      @endif
-    @endif
-  </ul>
-</aside>
+  @if ($config::get('showLoginLink'))
+    <li><a href="/logout">
+      <i class="fa fa-sign-out"></i> Logout
+    </a></li>
+  @endif
+</ul>

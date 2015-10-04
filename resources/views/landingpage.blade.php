@@ -11,9 +11,9 @@
           {!! $post->summary !!}
         </div>
 
-        <small class="post-date">posted {{ $post->timeSinceDateCreated() }}
+        <small class="post-date">Posted {{ $post->timeSinceDateCreated() }}
           @if (Auth::check())
-            &mdash; <a href="/post/edit/{{ $post->slug }}">edit this post</a>
+            &mdash; <a href="/post/edit/{{ $post->slug }}"><i class="fa fa-pencil"></i> Edit this post</a>
           @endif
         </small>
       </li>
