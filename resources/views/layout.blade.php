@@ -12,6 +12,9 @@
   <link rel="stylesheet" href="/lib/tomorrow-night-eighties.css">
   <script src="/lib/highlight.pack.js"></script>
 
+  <link rel="stylesheet" href="/lib/alert-alert.min.css">
+  <script src="/lib/alert-alert.min.js"></script>
+
   <link rel="stylesheet" href="/css/sihae.css">
 
   <title>{{ $config::get('title') }}</title>
@@ -23,6 +26,7 @@
     @yield('content')
   </main>
 
+  @include('partials/flashmessages')
   <script>hljs.initHighlightingOnLoad()</script>
 </body>
 </html>
