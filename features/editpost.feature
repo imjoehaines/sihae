@@ -13,5 +13,6 @@ Feature: Edit a Blog Post
     And I fill in "body" with "Different post text"
     And I press "submit"
     Then I should be on "post/penny-s-perfect-post"
+    And I should see "Successfully edited your post!"
     And I should see "Penny's Perfecter Post"
     And I should see "Different post text"

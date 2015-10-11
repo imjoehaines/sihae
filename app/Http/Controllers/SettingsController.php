@@ -41,6 +41,8 @@ class SettingsController extends Controller
         BlogConfig::set('showLoginLink', isset($request->showLoginLink));
         BlogConfig::setAll($request->all());
 
+        $this->flashMessage($request, 'Successfully updated your settings!', 'success');
+
         return Redirect::action('SettingsController@display');
     }
 }
