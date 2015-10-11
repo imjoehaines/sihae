@@ -18,6 +18,27 @@ class BlogConfig extends Model
     public $timestamps = false;
 
     /**
+     * Checks if a setting is valid
+     *
+     * @param string $setting
+     * @return boolean
+     */
+    protected static function isValid($setting)
+    {
+        return in_array($setting, self::validSettings());
+    }
+
+    /**
+     * Gets all valid settings
+     *
+     * @return array
+     */
+    protected static function validSettings()
+    {
+        return array_keys(\Config::get('blogconfig'));
+    }
+
+    /**
      * Sets a given setting to the given value - proxy for ConfigServiceProvider::set
      *
      * @param string $setting
@@ -26,7 +47,11 @@ class BlogConfig extends Model
      */
     public static function set($setting, $value)
     {
-        return ConfigServiceProvider::set($setting, $value);
+        if (self::isValid($setting)) {
+            return ConfigServiceProvider::set($setting, $value);
+        }
+
+        return false;
     }
 
     /**
@@ -34,13 +59,10 @@ class BlogConfig extends Model
      *
      * @param array $settings
      */
-    public static function setAll($settings)
+    public static function setAll(array $settings)
     {
-        // ew - this stops _token going into the db but is ugly af
-        unset($settings['_token']);
-
         foreach ($settings as $setting => $value) {
-            BlogConfig::set($setting, $value);
+            self::set($setting, $value);
         }
     }
 
