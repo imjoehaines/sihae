@@ -59,6 +59,8 @@ class PostController extends Controller
         $post->body = $request->get('body');
         $post->save();
 
+        $this->flashMessage($request, 'Successfully created your new post!', 'success');
+
         return Redirect::action('PostController@show', [$post->slug]);
     }
 
@@ -95,6 +97,8 @@ class PostController extends Controller
         $post->summary = $summary;
         $post->body = $request->get('body');
         $post->save();
+
+        $this->flashMessage($request, 'Successfully edited your post!', 'success');
 
         return Redirect::action('PostController@show', [$post->slug]);
     }
