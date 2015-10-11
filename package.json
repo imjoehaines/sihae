@@ -10,6 +10,7 @@
     "gulp": "^3.8.8"
   },
   "dependencies": {
+    "alert-alert": "^1.0.10",
     "laravel-elixir": "^3.0.0",
     "simplemde": "^1.7.0"
   }

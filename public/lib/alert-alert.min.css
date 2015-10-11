@@ -1,0 +1,7 @@
+#aa-container{position:fixed;top:9pt;right:9pt;z-index:1}.aa-notification{width:300px;min-height:40px;padding:9pt;margin-bottom:9pt;background-color:#fff;border-left:4px solid #646464;border-radius:3px;cursor:pointer;box-shadow:1px 1px 3px rgba(0,0,0,.6);transition:.3s linear all}.aa-notification:hover{-webkit-transform:scale(1.06);transform:scale(1.06);
+  box-shadow:3px 3px 4px rgba(0,0,0,.6)}.aa-notification.info{
+  border-left-color:#6464c8}.aa-notification.success{
+  border-left-color:#64b464}.aa-notification.warning{
+  border-left-color:#e6d764}.aa-notification.error{
+  border-left-color:#e66464}
+/*# sourceMappingURL=alert-alert.min.css.map */

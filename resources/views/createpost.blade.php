@@ -17,10 +17,10 @@
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
     <label for="title">Title</label>
-    <input name="title" id="title" maxlength="140" required>
+    <input name="title" id="title" maxlength="140" required value="{{ Input::old('title') }}">
 
     <label for="body">Post</label>
-    <textarea name="body" id="body" required>{{ Input::old('body') }}</textarea>
+    <textarea name="body" id="body">{{ Input::old('body') }}</textarea>
 
     <button name="submit" type="submit">Add new post</button>
   </form>
