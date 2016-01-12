@@ -1,5 +1,4 @@
-[![Stories in Ready](https://badge.waffle.io/imjoehaines/sihae.png?label=ready&title=Ready)](https://waffle.io/imjoehaines/sihae)
-# Sihae [![Build Status](https://travis-ci.org/imjoehaines/sihae.svg)](https://travis-ci.org/imjoehaines/sihae) [![StyleCI](https://styleci.io/repos/42362618/shield)](https://styleci.io/repos/42362618)
+# Sihae [![Build Status](https://travis-ci.org/imjoehaines/sihae.svg)](https://travis-ci.org/imjoehaines/sihae) [![StyleCI](https://styleci.io/repos/42362618/shield)](https://styleci.io/repos/42362618) [![Stories in Ready](https://badge.waffle.io/imjoehaines/sihae.png?label=ready&title=Ready)](https://waffle.io/imjoehaines/sihae)
 
 [![Sihae home page](screenshot.png)](https://raw.githubusercontent.com/imjoehaines/sihae/master/screenshot.png)
 
