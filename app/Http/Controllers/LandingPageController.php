@@ -17,7 +17,7 @@ class LandingPageController extends Controller
      *
      * @return Response
      */
-    public function display()
+    public function display() : \Illuminate\View\View
     {
         $perPage = BlogConfig::postsPerPage();
         $posts = Post::orderBy('created_at', 'desc')->paginate($perPage);

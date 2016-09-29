@@ -2,8 +2,8 @@
 
 namespace Sihae\Http\Controllers\Auth;
 
-use Sihae\User;
 use Validator;
+use Sihae\User;
 use Sihae\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
@@ -43,7 +43,7 @@ class AuthController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
+    protected function validator(array $data) : \Illuminate\Contracts\Validation\Validator
     {
         return Validator::make($data, [
             'name' => 'required|max:255',
@@ -55,10 +55,10 @@ class AuthController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return User
      */
-    public function create(array $data)
+    public function create(array $data) : User
     {
         return User::create([
             'name' => $data['name'],

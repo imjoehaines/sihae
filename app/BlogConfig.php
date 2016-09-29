@@ -23,9 +23,9 @@ class BlogConfig extends Model
      * @param string $setting
      * @return boolean
      */
-    protected static function isValid($setting)
+    protected static function isValid(string $setting) : bool
     {
-        return in_array($setting, self::validSettings());
+        return in_array($setting, static::validSettings());
     }
 
     /**
@@ -33,7 +33,7 @@ class BlogConfig extends Model
      *
      * @return array
      */
-    protected static function validSettings()
+    protected static function validSettings() : array
     {
         return array_keys(\Config::get('blogconfig'));
     }
@@ -45,9 +45,9 @@ class BlogConfig extends Model
      * @param string $value
      * @return boolean success
      */
-    public static function set($setting, $value)
+    public static function set(string $setting, string $value) : bool
     {
-        if (self::isValid($setting)) {
+        if (static::isValid($setting)) {
             return ConfigServiceProvider::set($setting, $value);
         }
 
@@ -58,11 +58,13 @@ class BlogConfig extends Model
      * Sets all given settings to given values
      *
      * @param array $settings
+     *
+     * TODO should this return as set?
      */
     public static function setAll(array $settings)
     {
         foreach ($settings as $setting => $value) {
-            self::set($setting, $value);
+            static::set($setting, $value);
         }
     }
 
@@ -71,7 +73,7 @@ class BlogConfig extends Model
      *
      * @return string
      */
-    public static function title()
+    public static function title() : string
     {
         return ConfigServiceProvider::get('title');
     }
@@ -81,7 +83,7 @@ class BlogConfig extends Model
      *
      * @return string
      */
-    public static function postsPerPage()
+    public static function postsPerPage() : string
     {
         return ConfigServiceProvider::get('postsPerPage');
     }
@@ -91,7 +93,7 @@ class BlogConfig extends Model
      *
      * @return string
      */
-    public static function showLoginLink()
+    public static function showLoginLink() : string
     {
         return ConfigServiceProvider::get('showLoginLink');
     }
@@ -101,7 +103,7 @@ class BlogConfig extends Model
      *
      * @return string
      */
-    public static function summary()
+    public static function summary() : string
     {
         return ConfigServiceProvider::get('summary');
     }

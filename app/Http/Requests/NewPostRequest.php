@@ -11,7 +11,7 @@ class NewPostRequest extends Request
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize() : bool
     {
         // yolo
         return true;
@@ -22,7 +22,7 @@ class NewPostRequest extends Request
      *
      * @return array
      */
-    public function rules()
+    public function rules() : array
     {
         return [
             'title' => 'required|max:140|string',

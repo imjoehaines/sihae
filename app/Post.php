@@ -29,7 +29,7 @@ class Post extends Model implements SluggableInterface
      *
      * @return Carbon
      */
-    public function dateCreated()
+    public function dateCreated() : Carbon
     {
         return Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at);
     }
@@ -39,7 +39,7 @@ class Post extends Model implements SluggableInterface
      *
      * @return string
      */
-    public function timeSinceDateCreated()
+    public function timeSinceDateCreated() : string
     {
         return $this->dateCreated()->diffForHumans();
     }
