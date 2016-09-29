@@ -19,9 +19,9 @@ class PostController extends Controller
      * Display a post by slug
      *
      * @param string $slug
-     * @return Response
+     * @return \Illuminate\View\View
      */
-    public function show($slug)
+    public function show(string $slug) : \Illuminate\View\View
     {
         $post = Post::findBySlugOrFail($slug);
 
@@ -35,9 +35,9 @@ class PostController extends Controller
     /**
      * Displays the form to create a new post
      *
-     * @return Response
+     * @return \Illuminate\View\View
      */
-    public function create()
+    public function create() : \Illuminate\View\View
     {
         return View::make('createpost');
     }
@@ -46,9 +46,9 @@ class PostController extends Controller
      * Store a new post
      *
      * @param NewPostRequest $request
-     * @return Response redirect to the new post's page
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(NewPostRequest $request)
+    public function store(NewPostRequest $request) : \Illuminate\Http\RedirectResponse
     {
         $post = new Post;
 
@@ -68,9 +68,9 @@ class PostController extends Controller
      * Displays the form to edit a post
      *
      * @param string $slug
-     * @return Response
+     * @return \Illuminate\View\View
      */
-    public function edit($slug)
+    public function edit(string $slug) : \Illuminate\View\View
     {
         $post = Post::findBySlugOrFail($slug);
 
@@ -85,9 +85,9 @@ class PostController extends Controller
      * Updates a post
      *
      * @param NewPostRequest $request
-     * @return Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(NewPostRequest $request)
+    public function update(NewPostRequest $request) : \Illuminate\Http\RedirectResponse
     {
         $post = Post::findBySlugOrFail($request->slug);
 

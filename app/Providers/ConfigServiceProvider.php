@@ -15,7 +15,7 @@ class ConfigServiceProvider
      * @param string $value
      * @return boolean success
      */
-    public static function set($setting, $value)
+    public static function set(string $setting, string $value) : bool
     {
         $cachedSetting = self::cacheNameFor($setting);
 
@@ -33,6 +33,7 @@ class ConfigServiceProvider
         }
 
         $blogConfig->value = $value;
+
         return $blogConfig->save();
     }
 
@@ -43,7 +44,7 @@ class ConfigServiceProvider
      * @param string $setting
      * @return string
      */
-    public static function get($setting)
+    public static function get(string $setting) : string
     {
         $cachedSetting = self::cacheNameFor($setting);
 
@@ -70,7 +71,7 @@ class ConfigServiceProvider
      * @param string $setting
      * @return string
      */
-    protected static function cacheNameFor($setting)
+    protected static function cacheNameFor(string $setting) : string
     {
         return __CLASS__ . '::' . $setting;
     }

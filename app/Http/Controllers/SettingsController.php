@@ -15,7 +15,7 @@ class SettingsController extends Controller
      *
      * @return Response
      */
-    public function display()
+    public function display() : \Illuminate\View\View
     {
         $title = Input::old('title') ?: BlogConfig::title();
         $postsPerPage = Input::old('postsPerPage') ?: BlogConfig::postsPerPage();
@@ -36,7 +36,7 @@ class SettingsController extends Controller
      * @param SettingsRequest $request
      * @return Redirect SettingsController@display
      */
-    public function store(SettingsRequest $request)
+    public function store(SettingsRequest $request) : \Illuminate\Http\RedirectResponse
     {
         BlogConfig::set('showLoginLink', isset($request->showLoginLink));
         BlogConfig::setAll($request->all());
