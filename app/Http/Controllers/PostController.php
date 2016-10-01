@@ -29,6 +29,7 @@ class PostController extends Controller
             'title' => $post->title,
             'body' => Purifier::clean(Markdown::string($post->body)),
             'slug' => $post->slug,
+            'created' => $post->dateCreated(),
         ]);
     }
 
