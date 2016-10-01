@@ -58,14 +58,15 @@ class BlogConfig extends Model
      * Sets all given settings to given values
      *
      * @param array $settings
-     *
-     * TODO should this return as set?
      */
-    public static function setAll(array $settings)
+    public static function setAll(array $settings) : bool
     {
-        foreach ($settings as $setting => $value) {
-            static::set($setting, $value);
-        }
+        $validSettings = array_filter(array_flip($settings), 'static::isValid');
+
+        // this would normally be value => key but we just array_flip-ed $settings
+        return empty(array_filter($validSettings, function (string $setting, string $value) : bool {
+            return !static::set($setting, $value);
+        }, ARRAY_FILTER_USE_BOTH));
     }
 
     /**

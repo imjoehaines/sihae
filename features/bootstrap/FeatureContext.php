@@ -37,7 +37,7 @@ class FeatureContext extends MinkContext implements
     }
 
     /**
-     * @AfterScenario @database
+     * @BeforeScenario @database
      */
     public static function cleanDB()
     {
@@ -75,7 +75,7 @@ class FeatureContext extends MinkContext implements
     /**
      * @Given my blog is called :blogTitle
      */
-    public function myBlogIsCalled($blogTitle)
+    public function myBlogIsCalled(string $blogTitle)
     {
         BlogConfig::set('title', $blogTitle);
     }
@@ -106,7 +106,7 @@ class FeatureContext extends MinkContext implements
     /**
      * @Given the number of posts per page is :postsPerPage
      */
-    public function theNumberOfPostsPerPageIs($postsPerPage)
+    public function theNumberOfPostsPerPageIs(string $postsPerPage)
     {
         BlogConfig::set('postsPerPage', $postsPerPage);
     }
@@ -117,5 +117,37 @@ class FeatureContext extends MinkContext implements
     public function iAmLoggedIn()
     {
         $this->login();
+    }
+
+    /**
+     * @Given I rename my blog to :name
+     */
+    public function iRenameMyBlogTo(string $name)
+    {
+        $this->fillField('title', $name);
+        $this->pressButton('Save');
+    }
+
+    /**
+     * @Given I summarise my blog as :summary
+     */
+    public function iSummariseMyBlogAs(string $summary)
+    {
+        $this->fillField('summary', $summary);
+        $this->pressButton('Save');
+    }
+
+    /**
+     * @Given I turn :state the login link
+     */
+    public function iTurnTheLoginLink(string $state)
+    {
+        if (strtolower($state) === "on") {
+            $this->checkOption('showLoginLink');
+        } else {
+            $this->uncheckOption('showLoginLink');
+        }
+
+        $this->pressButton('Save');
     }
 }
