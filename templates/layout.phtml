@@ -25,7 +25,7 @@
 
     <main>
         <?php if (isset($page)) : ?>
-            <?= $this->fetch($page . '.phtml'); ?>
+            <?= $this->fetch($page . '.phtml', $data); ?>
         <?php else : ?>
             <?php throw new \LogicException('You must specify a page'); ?>
         <?php endif; ?>

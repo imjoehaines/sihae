@@ -1,0 +1,54 @@
+<ol class="post-list">
+    <?php if (count($posts) === 0) : ?>
+        <li>
+            <h1>There aren't any posts!</h1>
+        </li>
+    <?php else : ?>
+        <?php foreach ($posts as $post) : ?>
+            <li>
+                <h1><a href="/post/<?= $post['slug'] ?>"><?= $post['title'] ?></a></h1>
+
+                <div class="post-summary">
+                    <?= $post['summary'] ?>
+                </div>
+
+                <small class="post-date">
+                    <span title="<?= $post['date_created'] ?>">
+                        Posted <?= $post['date_created'] ?>
+                    </span>
+
+                    <?php if (true || $isLoggedIn) : ?>
+                        &mdash; <a href="/post/edit/<?= $post['slug'] ?>"><i class="fa fa-pencil"></i> Edit this post</a>
+                    <?php endif; ?>
+                </small>
+            </li>
+        <?php endforeach; ?>
+    <?php endif; ?>
+</ol>
+
+<?php /*
+<?php if (count($posts) > 0) : ?>
+    <ol class="post-pagination">
+        <li class="post-pagination-newer">
+            <?php if ($posts->currentPage() === 1) : ?>
+                <a href="<?= $posts->previousPageUrl() ?>" class="disabled">Newer Posts</a>
+            <?php else : ?>
+                <a href="<?= $posts->previousPageUrl() ?>">Newer Posts</a>
+            <?php endif; ?>
+        </li>
+
+        <li class="post-pagination-pages">
+            <small>Page <?= $posts->currentPage() ?> of <?= $posts->lastPage() ?></small>
+        </li>
+
+        <li class="post-pagination-older">
+            <?php if ($posts->hasMorePages()) : ?>
+                <a href="<?= $posts->nextPageUrl() ?>">Older Posts</a>
+            <?php else : ?>
+                <a href="<?= $posts->nextPageUrl() ?>" class="disabled">Older Posts</a>
+            <?php endif; ?>
+        </li>
+    </ol>
+<?php endif; ?>
+*/
+?>

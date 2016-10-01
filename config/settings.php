@@ -18,5 +18,12 @@ return [
             'path' => __DIR__ . '/../logs/app.log',
             'level' => \Monolog\Logger::DEBUG,
         ],
+
+        // TODO make this confgurable
+        'database' => [
+            'dsn' => 'sqlite:' . __DIR__ . '/../database.sq3',
+            'username' => null,
+            'password' => null,
+        ],
     ],
 ];

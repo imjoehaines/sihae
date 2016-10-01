@@ -11,6 +11,12 @@ use Interop\Container\ContainerInterface as Container;
 
 $container = $app->getContainer();
 
+$container['database'] = function (Container $container) : PDO {
+    $settings = $container->get('settings')['database'];
+
+    return new PDO($settings['dsn'], $settings['username'], $settings['password']);
+};
+
 // view renderer
 $container['renderer'] = function (Container $container) : PhpRenderer {
     $settings = $container->get('settings')['renderer'];
