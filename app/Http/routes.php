@@ -13,18 +13,20 @@
 
 Route::get('/', 'LandingPageController@display');
 
-Route::get('/post/new', ['middleware' => 'auth', 'uses' => 'PostController@create']);
-Route::post('/post/new', ['middleware' => 'auth', 'uses' => 'PostController@store']);
-
-Route::get('/post/edit/{slug}', ['middleware' => 'auth', 'uses' => 'PostController@edit']);
-Route::post('/post/edit/{slug}', ['middleware' => 'auth', 'uses' => 'PostController@update']);
-
-Route::get('/post/{slug}', 'PostController@show');
-
 // authentication
 Route::get('/login', 'Auth\AuthController@getLogin');
 Route::post('/login', 'Auth\AuthController@postLogin');
 Route::get('/logout', 'Auth\AuthController@getLogout');
 
-Route::get('/settings', 'SettingsController@display');
-Route::post('/settings', 'SettingsController@store');
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/post/new', 'PostController@create');
+    Route::post('/post/new', 'PostController@store');
+
+    Route::get('/post/edit/{slug}', 'PostController@edit');
+    Route::post('/post/edit/{slug}', 'PostController@update');
+
+    Route::get('/settings', 'SettingsController@display');
+    Route::post('/settings', 'SettingsController@store');
+});
+
+Route::get('/post/{slug}', 'PostController@show');

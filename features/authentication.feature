@@ -18,3 +18,10 @@ Feature: Authentication
     But I should see "Login"
     And I should see an "#email" element
     And I should see a "#password" element
+
+  Scenario: Attempting to change settings when not logged in
+    Given I am on "/settings"
+    Then I should not see "Blog Title"
+    But I should see "Login"
+    And I should see an "#email" element
+    And I should see a "#password" element
