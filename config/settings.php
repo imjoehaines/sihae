@@ -2,6 +2,19 @@
 
 return [
     'settings' => [
+        'sihae' => [
+            'title' => 'Sihae',
+            'summary' => 'Welcome to your Sihae blog',
+            'show_login_link' => true,
+        ],
+
+        'database' => [
+            'dsn' => 'sqlite:' . __DIR__ . '/../database.sq3',
+            'username' => null,
+            'password' => null,
+            'attributes' => [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION],
+        ],
+
         'displayErrorDetails' => true,
         'addContentLengthHeader' => false,
 
@@ -15,14 +28,6 @@ return [
             'name' => 'slim-app',
             'path' => __DIR__ . '/../logs/app.log',
             'level' => \Monolog\Logger::DEBUG,
-        ],
-
-        // TODO make this confgurable
-        'database' => [
-            'dsn' => 'sqlite:' . __DIR__ . '/../database.sq3',
-            'username' => null,
-            'password' => null,
-            'attributes' => [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION],
         ],
     ],
 ];

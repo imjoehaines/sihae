@@ -9,30 +9,28 @@
 
     <link rel="stylesheet" href="/css/sihae.css">
 
-    <title>Sihae</title>
+    <title><?= $settings['title'] ?></title>
 </head>
 <body>
     <aside class="sidebar">
         <header>
-            <h1><a href="/">Sihae</a></h1>
+            <h1><a href="/"><?= $settings['title'] ?></a></h1>
         </header>
 
-        Welcome to your Sihae blog
+        <?= $settings['summary'] ?>
 
         <ul class="admin">
             <?php if (true || $isLoggedIn) : ?>
-                <li><a href="/settings">
-                    <i class="fa fa-cog"></i> Settings
-                </a></li>
-
                 <li><a href="/post/new">
                     <i class="fa fa-plus"></i> Add a new post
                 </a></li>
 
-                <li><a href="/logout">
-                    <i class="fa fa-sign-out"></i> Logout
-                </a></li>
-            <?php else : ?>
+                <?php if ($settings['show_login_link'] === true) : ?>
+                    <li><a href="/logout">
+                        <i class="fa fa-sign-out"></i> Logout
+                    </a></li>
+                <?php endif; ?>
+            <?php elseif ($settings['show_login_link'] === true) : ?>
                 <li><a href="/login">
                     <i class="fa fa-sign-in"></i> Login
                 </a></li>

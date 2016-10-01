@@ -8,10 +8,18 @@ $app->add(function (Request $request, Response $response, callable $next) use ($
     $response = $next($request, $response);
 
     if ($response->getStatusCode() == 404) {
-        $handler = $container['notFoundHandler'];
+        $handler = $container->get('notFoundHandler');
 
         return $handler($request, $response);
     }
 
     return $response;
+});
+
+// provide $settings to all views
+$app->add(function (Request $request, Response $response, callable $next) use ($container) {
+    $settings = $container->get('settings')['sihae'];
+    $container->get('renderer')->addAttribute('settings', $settings);
+
+    return $next($request, $response);
 });
