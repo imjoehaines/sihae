@@ -87,17 +87,11 @@ $app->post('/post/edit/{slug}', function (Request $request, Response $response, 
     $updatedPost = $request->getParsedBody();
 
     if (isset($updatedPost['title'], $updatedPost['body'])) {
-        $query ='
-            UPDATE posts
-            SET title = :title, slug = :newSlug, body = :body
-            WHERE slug = :slug;';
-
-        $newSlug = s($post['title'])->slugify();
+        $query ='UPDATE posts SET title = :title, body = :body WHERE slug = :slug;';
 
         $statement = $db->prepare($query);
         $statement->execute([
             'title' => $updatedPost['title'],
-            'newSlug' => $newSlug,
             'body' => $updatedPost['body'],
             'slug' => $slug,
         ]);
