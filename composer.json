@@ -5,6 +5,7 @@
         "monolog/monolog": "^1.21",
         "psr/log": "^1.0",
         "container-interop/container-interop": "^1.1",
-        "vlucas/phpdotenv": "^2.4"
+        "vlucas/phpdotenv": "^2.4",
+        "danielstjules/stringy": "^2.3"
     }
 }

@@ -24,6 +24,7 @@ return [
             'dsn' => 'sqlite:' . __DIR__ . '/../database.sq3',
             'username' => null,
             'password' => null,
+            'attributes' => [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION],
         ],
     ],
 ];

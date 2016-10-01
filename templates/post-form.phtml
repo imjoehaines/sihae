@@ -1,0 +1,26 @@
+<h1>Add a new post</h1>
+
+<?php if (isset($errors) && count($errors) > 0) : ?>
+    <h2>Oops &mdash; you seem to be missing something!</h2>
+
+    <ul>
+        <?php foreach ($errors as $error) : ?>
+            <li><?= $error ?></li>
+        <?php endforeach ?>
+    </ul>
+<?php endif; ?>
+
+<form action="/post/new" method="POST">
+    <label for="title">Title</label>
+    <input name="title" id="title" maxlength="140" required value="<?= $post['title'] ?? '' ?>">
+
+    <label for="body">Post</label>
+    <textarea name="body" id="body"><?= $post['body'] ?? '' ?></textarea>
+
+    <button name="submit" type="submit">Add new post</button>
+</form>
+
+<script>
+    var simplemde = new window.SimpleMDE()
+    simplemde.render()
+</script>

@@ -14,7 +14,7 @@ $container = $app->getContainer();
 $container['database'] = function (Container $container) : PDO {
     $settings = $container->get('settings')['database'];
 
-    return new PDO($settings['dsn'], $settings['username'], $settings['password']);
+    return new PDO($settings['dsn'], $settings['username'], $settings['password'], $settings['attributes']);
 };
 
 // view renderer
