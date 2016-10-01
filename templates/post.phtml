@@ -1,13 +1,13 @@
-<h1><?= $post['title'] ?></h1>
+<h1><?= $post->getTitle() ?></h1>
 
 <p>
-    <?= $post['body'] ?>
+    <?= $post->getBody() ?>
 </p>
 
-<small class="post-date" title="<?= $post['date_created'] ?>">
-    Posted <?= $post['date_created'] ?>
+<small class="post-date" title="<?= $post->getDateCreated() ?>">
+    Posted <?= $post->getDateCreated() ?>
 
     <?php if (true || $isLoggedIn) : ?>
-        &mdash; <a href="/post/edit/<?= $post['slug'] ?>"><i class="fa fa-pencil"></i> Edit this post</a>
+        &mdash; <a href="/post/edit/<?= $post->getSlug() ?>"><i class="fa fa-pencil"></i> Edit this post</a>
     <?php endif; ?>
 </small>

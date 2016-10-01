@@ -9,7 +9,13 @@ use Slim\Interfaces\InvocationStrategyInterface;
 use Slim\Handlers\Strategies\RequestResponseArgs;
 use Interop\Container\ContainerInterface as Container;
 
+use Sihae\PostRepository;
+
 $container = $app->getContainer();
+
+$container[PostRepository::class] = function (Container $container) : PostRepository {
+    return new PostRepository($container->get('database'));
+};
 
 $container['database'] = function (Container $container) : PDO {
     $settings = $container->get('settings')['database'];

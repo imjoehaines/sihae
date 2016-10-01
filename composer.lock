@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8bcf5a02ae80957994d497f9130356da",
-    "content-hash": "a5cd6a995378bdbbb294eeb0b57f47dd",
+    "hash": "4e182811c3971ccaddae13671e1d4ac5",
+    "content-hash": "efa11658cd331abf3a58f7472fae597f",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -89,6 +89,44 @@
                 "utils"
             ],
             "time": "2016-05-02 15:18:10"
+        },
+        {
+            "name": "imjoehaines/norman",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/imjoehaines/norman.git",
+                "reference": "71106105ec5da3e44a43c4c3efab3ee607a71697"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/imjoehaines/norman/zipball/71106105ec5da3e44a43c4c3efab3ee607a71697",
+                "reference": "71106105ec5da3e44a43c4c3efab3ee607a71697",
+                "shasum": ""
+            },
+            "require": {
+                "danielstjules/stringy": "^2.3"
+            },
+            "require-dev": {
+                "laravel/homestead": "^3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "imjoehaines\\Norman\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "ISC"
+            ],
+            "authors": [
+                {
+                    "name": "Joe Haines",
+                    "email": "hello@joehaines.co.uk"
+                }
+            ],
+            "time": "2016-10-01 20:52:32"
         },
         {
             "name": "monolog/monolog",

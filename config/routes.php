@@ -1,22 +1,15 @@
 <?php
 
+use Sihae\Post;
+use Sihae\PostRepository;
+use Sihae\PostNotFoundException;
 use function Stringy\create as s;
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
 $app->get('/', function (Request $request, Response $response) : Response {
-    $db = $this->get('database');
-
-    $query = 'SELECT * FROM posts ORDER BY date_created DESC;';
-
-    $statement = $db->prepare($query);
-    $statement->execute();
-
-    $posts = array_map(function (array $post) {
-        $post['summary'] = s($post['body'])->safeTruncate(450, '…');
-
-        return $post;
-    }, $statement->fetchAll());
+    $postRepository = $this->get(PostRepository::class);
+    $posts = $postRepository->findAll();
 
     return $this->get('renderer')->render($response, 'layout.phtml', [
         'page' => 'post-list',
@@ -29,37 +22,30 @@ $app->get('/post/new', function (Request $request, Response $response) : Respons
 });
 
 $app->post('/post/new', function (Request $request, Response $response) : Response {
-    $post = $request->getParsedBody();
+    $newPost = $request->getParsedBody();
 
-    if (isset($post['title'], $post['body'])) {
-        $slug = s($post['title'])->slugify();
-
+    if (isset($newPost['title'], $newPost['body'])) {
         $db = $this->get('database');
-        $query = 'INSERT INTO posts (title, slug, body) VALUES (:title, :slug, :body);';
+        $post = new Post($db, ['title' => $newPost['title'], 'body' => $newPost['body']]);
+        $post->slug = s($post->title)->slugify();
 
-        $statement = $db->prepare($query);
-        $statement->execute(['title' => $post['title'], 'slug' => $slug, 'body' => $post['body']]);
+        $post->save();
 
-        return $response->withStatus(302)->withHeader('Location', '/post/' . $slug);
+        return $response->withStatus(302)->withHeader('Location', '/post/' . $post->slug);
     }
 
     return $this->get('renderer')->render($response, 'layout.phtml', [
         'page' => 'post-form',
-        'post' => $post,
+        'post' => $newPost,
     ]);
 });
 
 $app->get('/post/edit/{slug}', function (Request $request, Response $response, string $slug) : Response {
-    $db = $this->get('database');
+    $postRepository = $this->get(PostRepository::class);
 
-    $query = 'SELECT * FROM posts WHERE slug = :slug;';
-
-    $statement = $db->prepare($query);
-    $statement->execute(['slug' => $slug]);
-
-    $post = $statement->fetch();
-
-    if (empty($post)) {
+    try {
+        $post = $postRepository->findBySlug($slug);
+    } catch (PostNotFoundException $e) {
         return $response->withStatus(404);
     }
 
@@ -71,30 +57,21 @@ $app->get('/post/edit/{slug}', function (Request $request, Response $response, s
 });
 
 $app->post('/post/edit/{slug}', function (Request $request, Response $response, string $slug) : Response {
-    $db = $this->get('database');
+    $postRepository = $this->get(PostRepository::class);
 
-    $query = 'SELECT * FROM posts WHERE slug = :slug;';
-
-    $statement = $db->prepare($query);
-    $statement->execute(['slug' => $slug]);
-
-    $post = $statement->fetch();
-
-    if (empty($post)) {
+    try {
+        $post = $postRepository->findBySlug($slug);
+    } catch (PostNotFoundException $e) {
         return $response->withStatus(404);
     }
 
     $updatedPost = $request->getParsedBody();
 
     if (isset($updatedPost['title'], $updatedPost['body'])) {
-        $query ='UPDATE posts SET title = :title, body = :body WHERE slug = :slug;';
+        $post->title = $updatedPost['title'];
+        $post->body = $updatedPost['body'];
 
-        $statement = $db->prepare($query);
-        $statement->execute([
-            'title' => $updatedPost['title'],
-            'body' => $updatedPost['body'],
-            'slug' => $slug,
-        ]);
+        $post->save();
 
         return $response->withStatus(302)->withHeader('Location', '/post/' . $slug);
     }
@@ -107,16 +84,11 @@ $app->post('/post/edit/{slug}', function (Request $request, Response $response, 
 });
 
 $app->get('/post/{slug}', function (Request $request, Response $response, string $slug) : Response {
-    $db = $this->get('database');
+    $postRepository = $this->get(PostRepository::class);
 
-    $query = 'SELECT * FROM posts WHERE slug = :slug;';
-
-    $statement = $db->prepare($query);
-    $statement->execute(['slug' => $slug]);
-
-    $post = $statement->fetch();
-
-    if (empty($post)) {
+    try {
+        $post = $postRepository->findBySlug($slug);
+    } catch (PostNotFoundException $e) {
         return $response->withStatus(404);
     }
 
