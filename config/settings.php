@@ -1,9 +1,11 @@
 <?php
 
+$isProduction = getenv('APP_ENV') === 'production';
+
 return [
     'settings' => [
-        'displayErrorDetails' => true, // set to false in production
-        'addContentLengthHeader' => false, // Allow the web server to send the content-length header
+        'displayErrorDetails' => $isProduction,
+        'addContentLengthHeader' => false,
 
         // Renderer settings
         'renderer' => [
