@@ -1,10 +1,8 @@
 <?php
 
-$isProduction = getenv('APP_ENV') === 'production';
-
 return [
     'settings' => [
-        'displayErrorDetails' => !$isProduction,
+        'displayErrorDetails' => true,
         'addContentLengthHeader' => false,
 
         // Renderer settings
