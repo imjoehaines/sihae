@@ -25,13 +25,15 @@ $app->post('/post/new', function (Request $request, Response $response) : Respon
     $newPost = $request->getParsedBody();
 
     if (isset($newPost['title'], $newPost['body'])) {
-        $db = $this->get('database');
-        $post = new Post($db, ['title' => $newPost['title'], 'body' => $newPost['body']]);
-        $post->slug = s($post->title)->slugify();
+        $post = new Post($this->get('database'), [
+            'title' => $newPost['title'],
+            'body' => $newPost['body'],
+            'slug' => s($newPost['title'])->slugify(),
+        ]);
 
         $post->save();
 
-        return $response->withStatus(302)->withHeader('Location', '/post/' . $post->slug);
+        return $response->withStatus(302)->withHeader('Location', '/post/' . $post->getSlug());
     }
 
     return $this->get('renderer')->render($response, 'layout.phtml', [
@@ -68,8 +70,8 @@ $app->post('/post/edit/{slug}', function (Request $request, Response $response, 
     $updatedPost = $request->getParsedBody();
 
     if (isset($updatedPost['title'], $updatedPost['body'])) {
-        $post->title = $updatedPost['title'];
-        $post->body = $updatedPost['body'];
+        $post->setTitle($updatedPost['title']);
+        $post->setBody($updatedPost['body']);
 
         $post->save();
 

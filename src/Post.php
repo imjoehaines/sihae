@@ -9,20 +9,22 @@ use function Stringy\create as s;
 
 class Post extends Norman
 {
-    public $id;
-    public $title;
-    public $slug;
-    public $body;
-    public $date_created;
-
+    protected $id;
+    protected $title;
+    protected $slug;
+    protected $body;
+    protected $date_created;
     protected $summary;
+
+    protected $columns = ['id', 'title', 'slug', 'body', 'date_created'];
+
+    protected $table = 'posts';
 
     public function __construct(PDO $db, array $properties = [])
     {
         parent::__construct($db, $properties);
 
         $this->summary = s($this->body)->safeTruncate(450, '…');
-        $this->table = 'posts';
     }
 
     public function getSummary() : string
@@ -53,5 +55,19 @@ class Post extends Norman
     public function getDateCreated() : string
     {
         return $this->date_created;
+    }
+
+    public function setTitle(string $title) : Post
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    public function setBody(string $body) : Post
+    {
+        $this->body = $body;
+
+        return $this;
     }
 }

@@ -92,16 +92,16 @@
         },
         {
             "name": "imjoehaines/norman",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imjoehaines/norman.git",
-                "reference": "71106105ec5da3e44a43c4c3efab3ee607a71697"
+                "reference": "f3cc463b35ef5d4ef8ba010097cccc7cc703cb14"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imjoehaines/norman/zipball/71106105ec5da3e44a43c4c3efab3ee607a71697",
-                "reference": "71106105ec5da3e44a43c4c3efab3ee607a71697",
+                "url": "https://api.github.com/repos/imjoehaines/norman/zipball/f3cc463b35ef5d4ef8ba010097cccc7cc703cb14",
+                "reference": "f3cc463b35ef5d4ef8ba010097cccc7cc703cb14",
                 "shasum": ""
             },
             "require": {
@@ -126,7 +126,7 @@
                     "email": "hello@joehaines.co.uk"
                 }
             ],
-            "time": "2016-10-01 20:52:32"
+            "time": "2016-10-01 22:06:48"
         },
         {
             "name": "monolog/monolog",
