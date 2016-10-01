@@ -5,6 +5,8 @@ use Slim\Views\PhpRenderer;
 use Psr\Log\LoggerInterface;
 use Monolog\Handler\StreamHandler;
 use Monolog\Processor\UidProcessor;
+use Slim\Interfaces\InvocationStrategyInterface;
+use Slim\Handlers\Strategies\RequestResponseArgs;
 use Interop\Container\ContainerInterface as Container;
 
 $container = $app->getContainer();
@@ -25,4 +27,8 @@ $container['logger'] = function (Container $container) : LoggerInterface {
     $logger->pushHandler(new StreamHandler($settings['path'], $settings['level']));
 
     return $logger;
+};
+
+$container['foundHandler'] = function (Container $container) : InvocationStrategyInterface {
+    return new RequestResponseArgs();
 };
