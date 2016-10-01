@@ -1,7 +1,0 @@
-default:
-  extensions:
-    Laracasts\Behat\ServiceContainer\BehatExtension:
-      env_path: .env
-    Behat\MinkExtension\ServiceContainer\MinkExtension:
-      default_session: laravel
-      laravel: ~
