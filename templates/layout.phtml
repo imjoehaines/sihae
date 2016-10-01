@@ -17,9 +17,23 @@
         Welcome to your Sihae blog
 
         <ul class="admin">
-            <li><a href="/login">
-                <i class="fa fa-sign-in"></i> Login
-            </a></li>
+            <?php if (true || $isLoggedIn) : ?>
+                <li><a href="/settings">
+                    <i class="fa fa-cog"></i> Settings
+                </a></li>
+
+                <li><a href="/post/new">
+                    <i class="fa fa-plus"></i> Add a new post
+                </a></li>
+
+                <li><a href="/logout">
+                    <i class="fa fa-sign-out"></i> Logout
+                </a></li>
+            <?php else : ?>
+                <li><a href="/login">
+                    <i class="fa fa-sign-in"></i> Login
+                </a></li>
+            <?php endif; ?>
         </ul>
     </aside>
 
