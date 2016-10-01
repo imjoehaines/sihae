@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="/css/sihae.css">
+
+    <title>Sihae</title>
+</head>
+<body>
+    <aside class="sidebar">
+        <header>
+            <h1><a href="/">Sihae</a></h1>
+        </header>
+
+        Welcome to your Sihae blog
+
+        <ul class="admin">
+            <li><a href="/login">
+                <i class="fa fa-sign-in"></i> Login
+            </a></li>
+        </ul>
+    </aside>
+
+    <main>
+        <?php if (isset($page)) : ?>
+            <?= $this->fetch($page . '.phtml'); ?>
+        <?php else : ?>
+            <?php throw new \LogicException('You must specify a page'); ?>
+        <?php endif; ?>
+    </main>
+</body>
+</html>
