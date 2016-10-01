@@ -1,4 +1,8 @@
+<?php if (isset($isEdit) && $isEdit === true) : ?>
+<h1>Edit post</h1>
+<?php else : ?>
 <h1>Add a new post</h1>
+<?php endif; ?>
 
 <?php if (isset($errors) && count($errors) > 0) : ?>
     <h2>Oops &mdash; you seem to be missing something!</h2>
@@ -10,14 +14,24 @@
     </ul>
 <?php endif; ?>
 
+<?php if (isset($isEdit) && $isEdit === true) : ?>
+<form action="/post/edit/<?= $post['slug'] ?>" method="POST">
+<?php else : ?>
 <form action="/post/new" method="POST">
+<?php endif; ?>
     <label for="title">Title</label>
     <input name="title" id="title" maxlength="140" required value="<?= $post['title'] ?? '' ?>">
 
     <label for="body">Post</label>
     <textarea name="body" id="body"><?= $post['body'] ?? '' ?></textarea>
 
-    <button name="submit" type="submit">Add new post</button>
+    <button name="submit" type="submit">
+        <?php if (isset($isEdit) && $isEdit === true) : ?>
+            Edit post
+        <?php else : ?>
+            Add new post
+        <?php endif; ?>
+    </button>
 </form>
 
 <script>

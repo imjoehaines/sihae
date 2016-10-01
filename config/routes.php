@@ -12,9 +12,15 @@ $app->get('/', function (Request $request, Response $response) : Response {
     $statement = $db->prepare($query);
     $statement->execute();
 
+    $posts = array_map(function (array $post) {
+        $post['summary'] = s($post['body'])->safeTruncate(450, '…');
+
+        return $post;
+    }, $statement->fetchAll());
+
     return $this->get('renderer')->render($response, 'layout.phtml', [
         'page' => 'post-list',
-        'posts' => $statement->fetchAll(),
+        'posts' => $posts,
     ]);
 });
 
@@ -26,14 +32,13 @@ $app->post('/post/new', function (Request $request, Response $response) : Respon
     $post = $request->getParsedBody();
 
     if (isset($post['title'], $post['body'])) {
-        $summary = s($post['body'])->safeTruncate(450, '…');
         $slug = s($post['title'])->slugify();
 
         $db = $this->get('database');
-        $query = 'INSERT INTO posts (title, slug, summary, body) VALUES (:title, :slug, :summary, :body);';
+        $query = 'INSERT INTO posts (title, slug, body) VALUES (:title, :slug, :body);';
 
         $statement = $db->prepare($query);
-        $statement->execute(['title' => $post['title'], 'slug' => $slug, 'summary' => $summary, 'body' => $post['body']]);
+        $statement->execute(['title' => $post['title'], 'slug' => $slug, 'body' => $post['body']]);
 
         return $response->withStatus(302)->withHeader('Location', '/');
     }
@@ -44,7 +49,70 @@ $app->post('/post/new', function (Request $request, Response $response) : Respon
     ]);
 });
 
-$app->get('/post/{slug}', function (Request $request, Response $response, $slug) : Response {
+$app->get('/post/edit/{slug}', function (Request $request, Response $response, string $slug) : Response {
+    $db = $this->get('database');
+
+    $query = 'SELECT * FROM posts WHERE slug = :slug;';
+
+    $statement = $db->prepare($query);
+    $statement->execute(['slug' => $slug]);
+
+    $post = $statement->fetch();
+
+    if (empty($post)) {
+        return $response->withStatus(404);
+    }
+
+    return $this->get('renderer')->render($response, 'layout.phtml', [
+        'page' => 'post-form',
+        'post' => $post,
+        'isEdit' => true,
+    ]);
+});
+
+$app->post('/post/edit/{slug}', function (Request $request, Response $response, string $slug) : Response {
+    $db = $this->get('database');
+
+    $query = 'SELECT * FROM posts WHERE slug = :slug;';
+
+    $statement = $db->prepare($query);
+    $statement->execute(['slug' => $slug]);
+
+    $post = $statement->fetch();
+
+    if (empty($post)) {
+        return $response->withStatus(404);
+    }
+
+    $updatedPost = $request->getParsedBody();
+
+    if (isset($updatedPost['title'], $updatedPost['body'])) {
+        $query ='
+            UPDATE posts
+            SET title = :title, slug = :newSlug, body = :body
+            WHERE slug = :slug;';
+
+        $newSlug = s($post['title'])->slugify();
+
+        $statement = $db->prepare($query);
+        $statement->execute([
+            'title' => $updatedPost['title'],
+            'newSlug' => $newSlug,
+            'body' => $updatedPost['body'],
+            'slug' => $slug,
+        ]);
+
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
+
+    return $this->get('renderer')->render($response, 'layout.phtml', [
+        'page' => 'post-form',
+        'post' => $updatedPost,
+        'isEdit' => true,
+    ]);
+});
+
+$app->get('/post/{slug}', function (Request $request, Response $response, string $slug) : Response {
     $db = $this->get('database');
 
     $query = 'SELECT * FROM posts WHERE slug = :slug;';
