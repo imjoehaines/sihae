@@ -9,5 +9,9 @@
     @endif
   </h1>
 
+  <small class="post-date" title="{{ $created->format('jS \o\f F Y \a\t g:ia') }}">
+    Posted {{ $created->diffForHumans() }}
+  </small>
+
   {!! $body !!}
 @endsection

@@ -11,7 +11,11 @@
           {!! $post->summary !!}
         </div>
 
-        <small class="post-date">Posted {{ $post->timeSinceDateCreated() }}
+        <small class="post-date">
+          <span title="{{ $post->dateCreated()->format('jS \o\f F Y \a\t g:ia') }}">
+            Posted {{ $post->timeSinceDateCreated() }}
+          </span>
+
           @if (Auth::check())
             &mdash; <a href="/post/edit/{{ $post->slug }}"><i class="fa fa-pencil"></i> Edit this post</a>
           @endif
