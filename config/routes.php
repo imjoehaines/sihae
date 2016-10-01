@@ -40,7 +40,7 @@ $app->post('/post/new', function (Request $request, Response $response) : Respon
         $statement = $db->prepare($query);
         $statement->execute(['title' => $post['title'], 'slug' => $slug, 'body' => $post['body']]);
 
-        return $response->withStatus(302)->withHeader('Location', '/');
+        return $response->withStatus(302)->withHeader('Location', '/post/' . $slug);
     }
 
     return $this->get('renderer')->render($response, 'layout.phtml', [
@@ -96,7 +96,7 @@ $app->post('/post/edit/{slug}', function (Request $request, Response $response, 
             'slug' => $slug,
         ]);
 
-        return $response->withStatus(302)->withHeader('Location', '/');
+        return $response->withStatus(302)->withHeader('Location', '/post/' . $slug);
     }
 
     return $this->get('renderer')->render($response, 'layout.phtml', [
