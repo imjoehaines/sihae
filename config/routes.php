@@ -16,3 +16,23 @@ $app->get('/', function (Request $request, Response $response) : Response {
         'posts' => $statement->fetchAll(),
     ]);
 });
+
+$app->get('/post/{slug}', function (Request $request, Response $response, $slug) : Response {
+    $db = $this->get('database');
+
+    $query = 'SELECT * FROM posts WHERE slug = :slug;';
+
+    $statement = $db->prepare($query);
+    $statement->execute(['slug' => $slug]);
+
+    $post = $statement->fetch();
+
+    if (empty($post)) {
+        return $response->withStatus(404);
+    }
+
+    return $this->get('renderer')->render($response, 'layout.phtml', [
+        'page' => 'post',
+        'post' => $post,
+    ]);
+});

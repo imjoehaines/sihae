@@ -1,0 +1,17 @@
+<h1>
+    <?= $post['title']; ?>
+
+    <?php if (true || $isLoggedIn) : ?>
+        <small class="post-edit">
+            <a href="/post/edit/<?= $post['slug'] ?>"><i class="fa fa-pencil"></i> Edit this post</a>
+        </small>
+    <?php endif ?>
+</h1>
+
+<small class="post-date" title="<?= $post['date_created']; ?>">
+    Posted <?= $post['date_created'] ?>
+</small>
+
+<p>
+    <?= $post['body']; ?>
+</p>
