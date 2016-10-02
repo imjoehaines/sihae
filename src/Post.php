@@ -14,22 +14,14 @@ class Post extends Norman
     protected $slug;
     protected $body;
     protected $date_created;
-    protected $summary;
 
     protected $columns = ['id', 'title', 'slug', 'body', 'date_created'];
 
     protected $table = 'posts';
 
-    public function __construct(PDO $db, array $properties = [])
-    {
-        parent::__construct($db, $properties);
-
-        $this->summary = s($this->body)->safeTruncate(450, '…');
-    }
-
     public function getSummary() : string
     {
-        return $this->summary;
+        return s($this->body)->safeTruncate(450, '…');
     }
 
     public function getId() : string

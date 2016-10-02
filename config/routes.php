@@ -4,6 +4,7 @@ use Sihae\Post;
 use Sihae\PostRepository;
 use Sihae\PostNotFoundException;
 use function Stringy\create as s;
+use League\CommonMark\CommonMarkConverter;
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
@@ -11,9 +12,17 @@ $app->get('/', function (Request $request, Response $response) : Response {
     $postRepository = $this->get(PostRepository::class);
     $posts = $postRepository->findAll();
 
+    $commonMarkConverter = $this->get(CommonMarkConverter::class);
+
+    $parsedPosts = array_map(function (Post $post) use ($commonMarkConverter) : Post {
+        $parsedBody = $commonMarkConverter->convertToHtml($post->getBody());
+
+        return $post->setBody($parsedBody);
+    }, $posts);
+
     return $this->get('renderer')->render($response, 'layout.phtml', [
         'page' => 'post-list',
-        'posts' => $posts,
+        'posts' => $parsedPosts,
     ]);
 });
 
@@ -94,8 +103,13 @@ $app->get('/post/{slug}', function (Request $request, Response $response, string
         return $response->withStatus(404);
     }
 
+    $commonMarkConverter = $this->get(CommonMarkConverter::class);
+
+    $parsedBody = $commonMarkConverter->convertToHtml($post->getBody());
+    $parsedPost = $post->setBody($parsedBody);
+
     return $this->get('renderer')->render($response, 'layout.phtml', [
         'page' => 'post',
-        'post' => $post,
+        'post' => $parsedPost,
     ]);
 });

@@ -15,6 +15,16 @@ return [
             'attributes' => [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION],
         ],
 
+        // markdown settings
+        'markdown' => [
+            'enable_emphasis' => false,
+            'enable_strong' => false,
+            'use_asterisk' => true,
+            'use_underscore' => true,
+            'html_input' => 'escape',
+            'allow_unsafe_links' => false,
+        ],
+
         'displayErrorDetails' => true,
         'addContentLengthHeader' => false,
 

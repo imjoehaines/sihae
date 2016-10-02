@@ -6,7 +6,8 @@
         "psr/log": "^1.0",
         "container-interop/container-interop": "^1.1",
         "danielstjules/stringy": "^2.3",
-        "imjoehaines/norman": "^1.0"
+        "imjoehaines/norman": "^1.0",
+        "league/commonmark": "^0.15.0"
     },
     "autoload": {
         "psr-4": {

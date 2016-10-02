@@ -5,6 +5,7 @@ use Slim\Views\PhpRenderer;
 use Psr\Log\LoggerInterface;
 use Monolog\Handler\StreamHandler;
 use Monolog\Processor\UidProcessor;
+use League\CommonMark\CommonMarkConverter;
 use Slim\Interfaces\InvocationStrategyInterface;
 use Slim\Handlers\Strategies\RequestResponseArgs;
 use Interop\Container\ContainerInterface as Container;
@@ -21,6 +22,12 @@ $container['database'] = function (Container $container) : PDO {
     $settings = $container->get('settings')['database'];
 
     return new PDO($settings['dsn'], $settings['username'], $settings['password'], $settings['attributes']);
+};
+
+$container[CommonMarkConverter::class] = function (Container $container) : CommonMarkConverter {
+    $settings = $container->get('settings')['markdown'];
+
+    return new CommonMarkConverter($settings);
 };
 
 // view renderer
