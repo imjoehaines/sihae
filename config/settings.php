@@ -17,8 +17,8 @@ return [
 
         // markdown settings
         'markdown' => [
-            'enable_emphasis' => false,
-            'enable_strong' => false,
+            'enable_emphasis' => true,
+            'enable_strong' => true,
             'use_asterisk' => true,
             'use_underscore' => true,
             'html_input' => 'escape',
