@@ -51,7 +51,7 @@ class Post
         return s($this->body)->safeTruncate(450, '…');
     }
 
-    public function getId() : itn
+    public function getId() : int
     {
         return $this->id;
     }
