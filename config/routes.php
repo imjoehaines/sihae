@@ -3,7 +3,6 @@
 use Sihae\Post;
 use Sihae\PostRepository;
 use Sihae\PostNotFoundException;
-use function Stringy\create as s;
 use League\CommonMark\CommonMarkConverter;
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -34,13 +33,14 @@ $app->post('/post/new', function (Request $request, Response $response) : Respon
     $newPost = $request->getParsedBody();
 
     if (isset($newPost['title'], $newPost['body'])) {
-        $post = new Post($this->get('database'), [
-            'title' => $newPost['title'],
-            'body' => $newPost['body'],
-            'slug' => s($newPost['title'])->slugify(),
-        ]);
+        $entityManager = $this->get('entity-manager');
 
-        $post->save();
+        $post = new Post();
+        $post->setTitle($newPost['title']);
+        $post->setBody($newPost['body']);
+
+        $entityManager->persist($post);
+        $entityManager->flush();
 
         return $response->withStatus(302)->withHeader('Location', '/post/' . $post->getSlug());
     }
@@ -79,10 +79,13 @@ $app->post('/post/edit/{slug}', function (Request $request, Response $response, 
     $updatedPost = $request->getParsedBody();
 
     if (isset($updatedPost['title'], $updatedPost['body'])) {
+        $entityManager = $this->get('entity-manager');
+
         $post->setTitle($updatedPost['title']);
         $post->setBody($updatedPost['body']);
 
-        $post->save();
+        $entityManager->persist($post);
+        $entityManager->flush();
 
         return $response->withStatus(302)->withHeader('Location', '/post/' . $slug);
     }

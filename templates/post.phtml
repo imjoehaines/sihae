@@ -4,8 +4,8 @@
     <?= $post->getBody() ?>
 </p>
 
-<small class="post-date" title="<?= $post->getDateCreated() ?>">
-    Posted <?= $post->getDateCreated() ?>
+<small class="post-date" title="<?= $post->getDateCreated()->format('jS \o\f F Y \a\t g:ia') ?>">
+    Posted <?= $post->getDateCreated()->diffForHumans() ?>
 
     <?php if (true || $isLoggedIn) : ?>
         &mdash; <a href="/post/edit/<?= $post->getSlug() ?>"><i class="fa fa-pencil"></i> Edit this post</a>

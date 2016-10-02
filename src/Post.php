@@ -2,29 +2,56 @@
 
 namespace Sihae;
 
-use PDO;
-use ArrayAccess;
-use imjoehaines\Norman\Norman;
+use Carbon\Carbon;
+use Doctrine\ORM\Mapping as ORM;
 use function Stringy\create as s;
 
-class Post extends Norman
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="posts")
+ */
+class Post
 {
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
     protected $id;
+
+    /**
+     * @ORM\Column(type="string")
+     */
     protected $title;
+
+    /**
+     * @ORM\Column(type="string")
+     */
     protected $slug;
+
+    /**
+     * @ORM\Column(type="text")
+     */
     protected $body;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
     protected $date_created;
 
-    protected $columns = ['id', 'title', 'slug', 'body', 'date_created'];
-
-    protected $table = 'posts';
+    public function __construct()
+    {
+        if (!$this->date_created) {
+            $this->date_created = new DateTime();
+        }
+    }
 
     public function getSummary() : string
     {
         return s($this->body)->safeTruncate(450, '…');
     }
 
-    public function getId() : string
+    public function getId() : itn
     {
         return $this->id;
     }
@@ -44,14 +71,18 @@ class Post extends Norman
         return $this->body;
     }
 
-    public function getDateCreated() : string
+    public function getDateCreated() : Carbon
     {
-        return $this->date_created;
+        return Carbon::instance($this->date_created);
     }
 
     public function setTitle(string $title) : Post
     {
         $this->title = $title;
+
+        if (!$this->slug) {
+            $this->slug = (string) s($title)->slugify();
+        }
 
         return $this;
     }

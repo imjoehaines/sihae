@@ -2,43 +2,33 @@
 
 namespace Sihae;
 
-use PDO;
-use Exception;
+use Doctrine\ORM\EntityManager;
 
 class PostRepository
 {
-    private $db;
+    /**
+     * @var EntityManager
+     */
+    protected $entityManager;
 
-    public function __construct(PDO $db)
+    public function __construct(EntityManager $entityManager)
     {
-        $this->db = $db;
+        $this->entityManager = $entityManager;
     }
 
-    public function findAll(array $parameters = []) : array
+    public function findAll() : array
     {
-        $query = 'SELECT * FROM posts ORDER BY date_created DESC;';
-
-        $statement = $this->db->prepare($query);
-        $statement->execute();
-
-        return array_map(function (array $post) : Post {
-            return new Post($this->db, $post);
-        }, $statement->fetchAll());
+        return $this->entityManager->getRepository(Post::class)->findAll();
     }
 
     public function findBySlug(string $slug) : Post
     {
-        $query = 'SELECT * FROM posts WHERE slug = :slug;';
+        $post = $this->entityManager->getRepository(Post::class)->findOneBy(['slug' => $slug]);
 
-        $statement = $this->db->prepare($query);
-        $statement->execute(['slug' => $slug]);
-
-        $result = $statement->fetch();
-
-        if (empty($result)) {
+        if (!$post) {
             throw new PostNotFoundException('No post found with slug ' . $slug);
         }
 
-        return new Post($this->db, $result);
+        return $post;
     }
 }

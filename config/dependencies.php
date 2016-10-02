@@ -3,6 +3,8 @@
 use Monolog\Logger;
 use Slim\Views\PhpRenderer;
 use Psr\Log\LoggerInterface;
+use Doctrine\ORM\Tools\Setup;
+use Doctrine\ORM\EntityManager;
 use Monolog\Handler\StreamHandler;
 use Monolog\Processor\UidProcessor;
 use League\CommonMark\CommonMarkConverter;
@@ -15,19 +17,27 @@ use Sihae\PostRepository;
 $container = $app->getContainer();
 
 $container[PostRepository::class] = function (Container $container) : PostRepository {
-    return new PostRepository($container->get('database'));
-};
-
-$container['database'] = function (Container $container) : PDO {
-    $settings = $container->get('settings')['database'];
-
-    return new PDO($settings['dsn'], $settings['username'], $settings['password'], $settings['attributes']);
+    return new PostRepository($container->get('entity-manager'));
 };
 
 $container[CommonMarkConverter::class] = function (Container $container) : CommonMarkConverter {
     $settings = $container->get('settings')['markdown'];
 
     return new CommonMarkConverter($settings);
+};
+
+$container['entity-manager'] = function (Container $container) : EntityManager {
+    $settings = $container->get('settings')['doctrine'];
+
+    $config = Setup::createAnnotationMetadataConfiguration(
+        $settings['entity_path'],
+        $settings['auto_generate_proxies'],
+        $settings['proxy_dir'],
+        $settings['cache'],
+        false
+    );
+
+    return EntityManager::create($settings['connection'], $config);
 };
 
 // view renderer

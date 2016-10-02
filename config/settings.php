@@ -8,13 +8,6 @@ return [
             'show_login_link' => true,
         ],
 
-        'database' => [
-            'dsn' => 'sqlite:' . __DIR__ . '/../database.sq3',
-            'username' => null,
-            'password' => null,
-            'attributes' => [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION],
-        ],
-
         // markdown settings
         'markdown' => [
             'enable_emphasis' => true,
@@ -24,6 +17,22 @@ return [
             'html_input' => 'escape',
             'allow_unsafe_links' => false,
         ],
+
+        'doctrine' => [
+            'entity_path' => ['src/'],
+            'auto_generate_proxies' => true,
+            'proxy_dir' =>  __DIR__ . '/../data/cache/proxies',
+            'cache' => null,
+            'connection' => [
+                'driver' => 'pdo_sqlite',
+                'path' => __DIR__ . '/../database.sq3',
+                'host' => null,
+                'dbname' => null,
+                'user' => null,
+                'password' => null,
+            ],
+        ],
+
 
         'displayErrorDetails' => true,
         'addContentLengthHeader' => false,
@@ -35,8 +44,8 @@ return [
 
         // Monolog settings
         'logger' => [
-            'name' => 'slim-app',
-            'path' => __DIR__ . '/../logs/app.log',
+            'name' => 'sihae',
+            'path' => __DIR__ . '/../data/logs/app.log',
             'level' => \Monolog\Logger::DEBUG,
         ],
     ],

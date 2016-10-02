@@ -13,8 +13,8 @@
                 </div>
 
                 <small class="post-date">
-                    <span title="<?= $post->getDateCreated() ?>">
-                        Posted <?= $post->getDateCreated() ?>
+                    <span title="<?= $post->getDateCreated()->format('jS \o\f F Y \a\t g:ia') ?>">
+                        Posted <?= $post->getDateCreated()->diffForHumans() ?>
                     </span>
 
                     <?php if (true || $isLoggedIn) : ?>
