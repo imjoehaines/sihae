@@ -1,12 +1,15 @@
 <?php
 
 use Monolog\Logger;
+use Slim\Http\Response;
 use Slim\Views\PhpRenderer;
 use Psr\Log\LoggerInterface;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 use Monolog\Handler\StreamHandler;
 use Monolog\Processor\UidProcessor;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use League\CommonMark\CommonMarkConverter;
 use Slim\Interfaces\InvocationStrategyInterface;
 use Slim\Handlers\Strategies\RequestResponseArgs;
@@ -60,4 +63,11 @@ $container['logger'] = function (Container $container) : LoggerInterface {
 
 $container['foundHandler'] = function (Container $container) : InvocationStrategyInterface {
     return new RequestResponseArgs();
+};
+
+// 404 handler
+$container['notFoundHandler'] = function (Container $container) : callable {
+    return function (RequestInterface $request, ResponseInterface $response) use ($container) {
+        return $container->get('renderer')->render($response, 'layout.phtml', ['page' => '404']);
+    };
 };
