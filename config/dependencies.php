@@ -22,7 +22,7 @@ $container = $app->getContainer();
 $container[PostController::class] = function (Container $container) : PostController {
     return new PostController(
         $container->get('renderer'),
-        $container->get('entity-manager'),
+        $container->get(EntityManager::class),
         $container->get(CommonMarkConverter::class)
     );
 };
@@ -33,7 +33,7 @@ $container[CommonMarkConverter::class] = function (Container $container) : Commo
     return new CommonMarkConverter($settings);
 };
 
-$container['entity-manager'] = function (Container $container) : EntityManager {
+$container[EntityManager::class] = function (Container $container) : EntityManager {
     $settings = $container->get('settings')['doctrine'];
 
     $config = Setup::createAnnotationMetadataConfiguration(
