@@ -196,4 +196,28 @@ class PostController
             'isEdit' => true,
         ]);
     }
+
+    /**
+     * Delete a Post
+     *
+     * TODO: authorisation
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param string $slug
+     * @return Response
+     */
+    public function delete(Request $request, Response $response, string $slug) : Response
+    {
+        $post = $this->entityManager->getRepository(Post::class)->findOneBy(['slug' => $slug]);
+
+        if (!$post) {
+            return $response->withStatus(404);
+        }
+
+        $this->entityManager->remove($post);
+        $this->entityManager->flush();
+
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
 }

@@ -8,6 +8,7 @@
     Posted <?= $post->getDateCreated()->diffForHumans() ?>
 
     <?php if (true || $isLoggedIn) : ?>
-        &mdash; <a href="/post/edit/<?= $post->getSlug() ?>"><i class="fa fa-pencil"></i> Edit this post</a>
+        <a href="/post/edit/<?= $post->getSlug() ?>"><i class="fa fa-pencil"></i> Edit this post</a>
+        <a href="/post/delete/<?= $post->getSlug() ?>"><i class="fa fa-trash"></i> Delete this post</a>
     <?php endif ?>
 </small>

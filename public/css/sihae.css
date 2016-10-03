@@ -132,6 +132,10 @@ a:hover {
   text-transform: lowercase;
 }
 
+.post-date a {
+  margin-left: 0.33rem;
+}
+
 code {
   white-space: pre;
 }
