@@ -5,13 +5,5 @@
 *Sidebar image from [NASA's HubbleSite](http://hubblesite.org/gallery/album/pr2009025i)*
 
 ## Setup
-- Create a postgres database
-- Configure `.env`
 - `composer install`
-- `npm install`
-- `php artisan migrate`
-
-Run tests with `npm test` or individually:
-- phpcs: `npm run sniffer`
-- Behat: `npm run acceptance`
-- phpspec: `npm run unit`
+- `php vendor/bin/doctrine orm:schema-tool:create`
