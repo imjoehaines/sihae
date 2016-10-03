@@ -2,7 +2,7 @@
 <h1>Edit post</h1>
 <?php else : ?>
 <h1>Add a new post</h1>
-<?php endif; ?>
+<?php endif ?>
 
 <?php if (isset($errors) && count($errors) > 0) : ?>
     <h2>Oops &mdash; you seem to be missing something!</h2>
@@ -12,7 +12,7 @@
             <li><?= $error ?></li>
         <?php endforeach ?>
     </ul>
-<?php endif; ?>
+<?php endif ?>
 
 <form method="POST"
     action="/post/<?= isset($isEdit) && $isEdit === true ? 'edit/' . $post->getSlug() : 'new' ?>"
@@ -28,7 +28,7 @@
             Edit post
         <?php else : ?>
             Add new post
-        <?php endif; ?>
+        <?php endif ?>
     </button>
 </form>
 

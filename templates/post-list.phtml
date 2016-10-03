@@ -19,11 +19,11 @@
 
                     <?php if (true || $isLoggedIn) : ?>
                         &mdash; <a href="/post/edit/<?= $post->getSlug() ?>"><i class="fa fa-pencil"></i> Edit this post</a>
-                    <?php endif; ?>
+                    <?php endif ?>
                 </small>
             </li>
-        <?php endforeach; ?>
-    <?php endif; ?>
+        <?php endforeach ?>
+    <?php endif ?>
 </ol>
 
 <?php /*
@@ -34,7 +34,7 @@
                 <a href="<?= $posts->previousPageUrl() ?>" class="disabled">Newer Posts</a>
             <?php else : ?>
                 <a href="<?= $posts->previousPageUrl() ?>">Newer Posts</a>
-            <?php endif; ?>
+            <?php endif ?>
         </li>
 
         <li class="post-pagination-pages">
@@ -46,9 +46,9 @@
                 <a href="<?= $posts->nextPageUrl() ?>">Older Posts</a>
             <?php else : ?>
                 <a href="<?= $posts->nextPageUrl() ?>" class="disabled">Older Posts</a>
-            <?php endif; ?>
+            <?php endif ?>
         </li>
     </ol>
-<?php endif; ?>
+<?php endif ?>
 */
 ?>

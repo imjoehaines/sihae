@@ -29,21 +29,21 @@
                     <li><a href="/logout">
                         <i class="fa fa-sign-out"></i> Logout
                     </a></li>
-                <?php endif; ?>
+                <?php endif ?>
             <?php elseif ($settings['show_login_link'] === true) : ?>
                 <li><a href="/login">
                     <i class="fa fa-sign-in"></i> Login
                 </a></li>
-            <?php endif; ?>
+            <?php endif ?>
         </ul>
     </aside>
 
     <main>
         <?php if (isset($page)) : ?>
-            <?= $this->fetch($page . '.phtml', $data); ?>
+            <?= $this->fetch($page . '.phtml', $data) ?>
         <?php else : ?>
-            <?php throw new \LogicException('You must specify a page'); ?>
-        <?php endif; ?>
+            <?php throw new LogicException('You must specify a page') ?>
+        <?php endif ?>
     </main>
 </body>
 </html>
