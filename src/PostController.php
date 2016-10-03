@@ -26,7 +26,7 @@ class PostController
 
     public function index(Request $request, Response $response) : Response
     {
-        $posts = $this->entityManager->getRepository(Post::class)->findAll();
+        $posts = $this->entityManager->getRepository(Post::class)->findBy([], ['date_created' => 'DESC']);
 
         $parsedPosts = array_map(function (Post $post) : Post {
             $parsedBody = $this->markdown->convertToHtml($post->getBody());
