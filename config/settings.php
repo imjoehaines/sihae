@@ -33,7 +33,6 @@ return [
             ],
         ],
 
-
         'displayErrorDetails' => true,
         'addContentLengthHeader' => false,
 

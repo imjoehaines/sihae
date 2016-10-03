@@ -15,12 +15,16 @@ use Slim\Interfaces\InvocationStrategyInterface;
 use Slim\Handlers\Strategies\RequestResponseArgs;
 use Interop\Container\ContainerInterface as Container;
 
-use Sihae\PostRepository;
+use Sihae\PostController;
 
 $container = $app->getContainer();
 
-$container[PostRepository::class] = function (Container $container) : PostRepository {
-    return new PostRepository($container->get('entity-manager'));
+$container[PostController::class] = function (Container $container) : PostController {
+    return new PostController(
+        $container->get('renderer'),
+        $container->get('entity-manager'),
+        $container->get(CommonMarkConverter::class)
+    );
 };
 
 $container[CommonMarkConverter::class] = function (Container $container) : CommonMarkConverter {
