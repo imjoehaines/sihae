@@ -2,6 +2,7 @@
 
 namespace Sihae;
 
+use DateTime;
 use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
 use function Stringy\create as s;
