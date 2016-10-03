@@ -66,6 +66,8 @@ class PostController
     /**
      * Show form for creating a new Post
      *
+     * TODO: authorisation
+     *
      * @param Request $request
      * @param Response $response
      * @return Response
@@ -78,6 +80,8 @@ class PostController
     /**
      * Save a new Post
      *
+     * TODO: validation
+     * TODO: authorisation
      * TODO: prevent duplicate slugs
      *
      * @param Request $request
@@ -133,6 +137,8 @@ class PostController
     /**
      * Show the form to edit an existing Post
      *
+     * TODO: authorisation
+     *
      * @param Request $request
      * @param Response $response
      * @param string $slug
@@ -155,6 +161,9 @@ class PostController
 
     /**
      * Save updates to an existing Post
+     *
+     * TODO: validation
+     * TODO: authorisation
      *
      * @param Request $request
      * @param Response $response
