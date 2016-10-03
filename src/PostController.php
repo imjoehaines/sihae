@@ -10,6 +10,10 @@ use Psr\Http\Message\ResponseInterface as Response;
 
 class PostController
 {
+    private $renderer;
+    private $entityManager;
+    private $markdown;
+
     public function __construct(
         PhpRenderer $renderer,
         EntityManager $entityManager,
