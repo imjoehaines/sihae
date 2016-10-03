@@ -10,10 +10,26 @@ use Psr\Http\Message\ResponseInterface as Response;
 
 class PostController
 {
+    /**
+     * @var PhpRenderer
+     */
     private $renderer;
+
+    /**
+     * @var EntityManager
+     */
     private $entityManager;
+
+    /**
+     * @var CommonMarkConverter
+     */
     private $markdown;
 
+    /**
+     * @param PhpRenderer $renderer
+     * @param EntityManager $entityManager
+     * @param CommonMarkConverter $markdown
+     */
     public function __construct(
         PhpRenderer $renderer,
         EntityManager $entityManager,
@@ -24,6 +40,13 @@ class PostController
         $this->markdown = $markdown;
     }
 
+    /**
+     * List all Posts
+     *
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     */
     public function index(Request $request, Response $response) : Response
     {
         $posts = $this->entityManager->getRepository(Post::class)->findBy([], ['date_created' => 'DESC']);
@@ -40,11 +63,27 @@ class PostController
         ]);
     }
 
+    /**
+     * Show form for creating a new Post
+     *
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     */
     public function create(Request $request, Response $response) : Response
     {
         return $this->renderer->render($response, 'layout.phtml', ['page' => 'post-form']);
     }
 
+    /**
+     * Save a new Post
+     *
+     * TODO: prevent duplicate slugs
+     *
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     */
     public function store(Request $request, Response $response) : Response
     {
         $newPost = $request->getParsedBody();
@@ -66,6 +105,14 @@ class PostController
         ]);
     }
 
+    /**
+     * Show a single Post
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param string $slug
+     * @return Response
+     */
     public function show(Request $request, Response $response, string $slug) : Response
     {
         $post = $this->entityManager->getRepository(Post::class)->findOneBy(['slug' => $slug]);
@@ -83,6 +130,14 @@ class PostController
         ]);
     }
 
+    /**
+     * Show the form to edit an existing Post
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param string $slug
+     * @return Response
+     */
     public function edit(Request $request, Response $response, string $slug) : Response
     {
         $post = $this->entityManager->getRepository(Post::class)->findOneBy(['slug' => $slug]);
@@ -98,6 +153,14 @@ class PostController
         ]);
     }
 
+    /**
+     * Save updates to an existing Post
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param string $slug
+     * @return Response
+     */
     public function update(Request $request, Response $response, string $slug) : Response
     {
         $post = $this->entityManager->getRepository(Post::class)->findOneBy(['slug' => $slug]);
