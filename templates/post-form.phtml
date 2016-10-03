@@ -14,11 +14,9 @@
     </ul>
 <?php endif; ?>
 
-<?php if (isset($isEdit) && $isEdit === true) : ?>
-<form action="/post/edit/<?= $post->getSlug() ?>" method="POST">
-<?php else : ?>
-<form action="/post/new" method="POST">
-<?php endif; ?>
+<form method="POST"
+    action="/post/<?= isset($isEdit) && $isEdit === true ? 'edit/' . $post->getSlug() : 'new' ?>"
+>
     <label for="title">Title</label>
     <input name="title" id="title" maxlength="140" required value="<?= isset($post) ? $post->getTitle() : '' ?>">
 
