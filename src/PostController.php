@@ -13,11 +13,11 @@ class PostController
     public function __construct(
         PhpRenderer $renderer,
         EntityManager $entityManager,
-        CommonMarkConverter $commonMarkConverter
+        CommonMarkConverter $markdown
     ) {
         $this->renderer = $renderer;
         $this->entityManager = $entityManager;
-        $this->commonMarkConverter = $commonMarkConverter;
+        $this->markdown = $markdown;
     }
 
     public function index(Request $request, Response $response) : Response
@@ -25,7 +25,7 @@ class PostController
         $posts = $this->entityManager->getRepository(Post::class)->findAll();
 
         $parsedPosts = array_map(function (Post $post) : Post {
-            $parsedBody = $this->commonMarkConverter->convertToHtml($post->getBody());
+            $parsedBody = $this->markdown->convertToHtml($post->getBody());
 
             return $post->setBody($parsedBody);
         }, $posts);
@@ -70,7 +70,7 @@ class PostController
             return $response->withStatus(404);
         }
 
-        $parsedBody = $this->commonMarkConverter->convertToHtml($post->getBody());
+        $parsedBody = $this->markdown->convertToHtml($post->getBody());
         $parsedPost = $post->setBody($parsedBody);
 
         return $this->renderer->render($response, 'layout.phtml', [
