@@ -5,6 +5,7 @@ if (PHP_SAPI == 'cli-server') {
     // something which should probably be served as a static file
     $url  = parse_url($_SERVER['REQUEST_URI']);
     $file = __DIR__ . $url['path'];
+
     if (is_file($file)) {
         return false;
     }
@@ -19,15 +20,16 @@ $settings = require __DIR__ . '/../config/settings.php';
 $app = new \Slim\App($settings);
 
 // Set up dependencies
-require __DIR__ . '/../config/dependencies.php';
+$dependencyFactory = require __DIR__ . '/../config/dependencies.php';
+$dependencyFactory($app->getContainer());
 
 // Register middleware
 $middleware = require __DIR__ . '/../config/middleware.php';
-
 array_map([$app, 'add'], $middleware);
 
 // Register routes
-require __DIR__ . '/../config/routes.php';
+$routeFactory = require __DIR__ . '/../config/routes.php';
+$routeFactory($app);
 
 // Run app
 $app->run();

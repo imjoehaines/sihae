@@ -19,72 +19,72 @@ use Sihae\PostController;
 use Sihae\Middleware\SettingsProvider;
 use Sihae\Middleware\NotFoundMiddleware;
 
-$container = $app->getContainer();
+return function (Container $container) {
+    $container[PostController::class] = function (Container $container) : PostController {
+        return new PostController(
+            $container->get('renderer'),
+            $container->get(EntityManager::class),
+            $container->get(CommonMarkConverter::class)
+        );
+    };
 
-$container[PostController::class] = function (Container $container) : PostController {
-    return new PostController(
-        $container->get('renderer'),
-        $container->get(EntityManager::class),
-        $container->get(CommonMarkConverter::class)
-    );
-};
+    $container[NotFoundMiddleware::class] = function (Container $container) : NotFoundMiddleware {
+        return new NotFoundMiddleware($container->get('notFoundHandler'));
+    };
 
-$container[NotFoundMiddleware::class] = function (Container $container) : NotFoundMiddleware {
-    return new NotFoundMiddleware($container->get('notFoundHandler'));
-};
+    $container[SettingsProvider::class] = function (Container $container) : SettingsProvider {
+        return new SettingsProvider(
+            $container->get('renderer'),
+            $container->get('settings')['sihae']
+        );
+    };
 
-$container[SettingsProvider::class] = function (Container $container) : SettingsProvider {
-    return new SettingsProvider(
-        $container->get('renderer'),
-        $container->get('settings')['sihae']
-    );
-};
+    $container[CommonMarkConverter::class] = function (Container $container) : CommonMarkConverter {
+        $settings = $container->get('settings')['markdown'];
 
-$container[CommonMarkConverter::class] = function (Container $container) : CommonMarkConverter {
-    $settings = $container->get('settings')['markdown'];
+        return new CommonMarkConverter($settings);
+    };
 
-    return new CommonMarkConverter($settings);
-};
+    $container[EntityManager::class] = function (Container $container) : EntityManager {
+        $settings = $container->get('settings')['doctrine'];
 
-$container[EntityManager::class] = function (Container $container) : EntityManager {
-    $settings = $container->get('settings')['doctrine'];
+        $config = Setup::createAnnotationMetadataConfiguration(
+            $settings['entity_path'],
+            $settings['auto_generate_proxies'],
+            $settings['proxy_dir'],
+            $settings['cache'],
+            false
+        );
 
-    $config = Setup::createAnnotationMetadataConfiguration(
-        $settings['entity_path'],
-        $settings['auto_generate_proxies'],
-        $settings['proxy_dir'],
-        $settings['cache'],
-        false
-    );
+        return EntityManager::create($settings['connection'], $config);
+    };
 
-    return EntityManager::create($settings['connection'], $config);
-};
+    // view renderer
+    $container['renderer'] = function (Container $container) : PhpRenderer {
+        $settings = $container->get('settings')['renderer'];
 
-// view renderer
-$container['renderer'] = function (Container $container) : PhpRenderer {
-    $settings = $container->get('settings')['renderer'];
+        return new PhpRenderer($settings['template_path']);
+    };
 
-    return new PhpRenderer($settings['template_path']);
-};
+    // monolog
+    $container['logger'] = function (Container $container) : LoggerInterface {
+        $settings = $container->get('settings')['logger'];
 
-// monolog
-$container['logger'] = function (Container $container) : LoggerInterface {
-    $settings = $container->get('settings')['logger'];
+        $logger = new Logger($settings['name']);
+        $logger->pushProcessor(new UidProcessor());
+        $logger->pushHandler(new StreamHandler($settings['path'], $settings['level']));
 
-    $logger = new Logger($settings['name']);
-    $logger->pushProcessor(new UidProcessor());
-    $logger->pushHandler(new StreamHandler($settings['path'], $settings['level']));
+        return $logger;
+    };
 
-    return $logger;
-};
+    $container['foundHandler'] = function (Container $container) : InvocationStrategyInterface {
+        return new RequestResponseArgs();
+    };
 
-$container['foundHandler'] = function (Container $container) : InvocationStrategyInterface {
-    return new RequestResponseArgs();
-};
-
-// 404 handler
-$container['notFoundHandler'] = function (Container $container) : callable {
-    return function (RequestInterface $request, ResponseInterface $response) use ($container) {
-        return $container->get('renderer')->render($response, 'layout.phtml', ['page' => '404']);
+    // 404 handler
+    $container['notFoundHandler'] = function (Container $container) : callable {
+        return function (RequestInterface $request, ResponseInterface $response) use ($container) {
+            return $container->get('renderer')->render($response, 'layout.phtml', ['page' => '404']);
+        };
     };
 };
