@@ -16,6 +16,8 @@ use Slim\Handlers\Strategies\RequestResponseArgs;
 use Interop\Container\ContainerInterface as Container;
 
 use Sihae\PostController;
+use Sihae\Middleware\SettingsProvider;
+use Sihae\Middleware\NotFoundMiddleware;
 
 $container = $app->getContainer();
 
@@ -24,6 +26,17 @@ $container[PostController::class] = function (Container $container) : PostContro
         $container->get('renderer'),
         $container->get(EntityManager::class),
         $container->get(CommonMarkConverter::class)
+    );
+};
+
+$container[NotFoundMiddleware::class] = function (Container $container) : NotFoundMiddleware {
+    return new NotFoundMiddleware($container->get('notFoundHandler'));
+};
+
+$container[SettingsProvider::class] = function (Container $container) : SettingsProvider {
+    return new SettingsProvider(
+        $container->get('renderer'),
+        $container->get('settings')['sihae']
     );
 };
 

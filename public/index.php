@@ -22,7 +22,9 @@ $app = new \Slim\App($settings);
 require __DIR__ . '/../config/dependencies.php';
 
 // Register middleware
-require __DIR__ . '/../config/middleware.php';
+$middleware = require __DIR__ . '/../config/middleware.php';
+
+array_map([$app, 'add'], $middleware);
 
 // Register routes
 require __DIR__ . '/../config/routes.php';
