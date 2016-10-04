@@ -73,7 +73,6 @@ class PostController
             'posts' => $parsedPosts,
             'current_page' => $page,
             'total_pages' => intdiv($total + $limit - 1, $limit),
-            'total' => $total,
         ]);
     }
 
