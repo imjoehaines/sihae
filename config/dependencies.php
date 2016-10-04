@@ -2,6 +2,7 @@
 
 use Monolog\Logger;
 use Slim\Http\Response;
+use Slim\Flash\Messages;
 use Slim\Views\PhpRenderer;
 use Psr\Log\LoggerInterface;
 use Doctrine\ORM\Tools\Setup;
@@ -18,13 +19,15 @@ use Interop\Container\ContainerInterface as Container;
 use Sihae\PostController;
 use Sihae\Middleware\SettingsProvider;
 use Sihae\Middleware\NotFoundMiddleware;
+use Sihae\Middleware\FlashMessageProvider;
 
 return function (Container $container) {
     $container[PostController::class] = function (Container $container) : PostController {
         return new PostController(
             $container->get('renderer'),
             $container->get(EntityManager::class),
-            $container->get(CommonMarkConverter::class)
+            $container->get(CommonMarkConverter::class),
+            $container->get(Messages::class)
         );
     };
 
@@ -37,6 +40,17 @@ return function (Container $container) {
             $container->get('renderer'),
             $container->get('settings')['sihae']
         );
+    };
+
+    $container[FlashMessageProvider::class] = function (Container $container) : FlashMessageProvider {
+        return new FlashMessageProvider(
+            $container->get('renderer'),
+            $container->get(Messages::class)
+        );
+    };
+
+    $container[Messages::class] = function (Container $container) : Messages {
+        return new Messages;
     };
 
     $container[CommonMarkConverter::class] = function (Container $container) : CommonMarkConverter {

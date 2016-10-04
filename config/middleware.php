@@ -2,8 +2,10 @@
 
 use Sihae\Middleware\SettingsProvider;
 use Sihae\Middleware\NotFoundMiddleware;
+use Sihae\Middleware\FlashMessageProvider;
 
 return [
-    NotFoundMiddleware::class, // 404 Handler
-    SettingsProvider::class, // provide $settings to all views
+    NotFoundMiddleware::class,
+    SettingsProvider::class,
+    FlashMessageProvider::class,
 ];

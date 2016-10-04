@@ -2,24 +2,25 @@
 
 namespace Sihae\Middleware;
 
+use Slim\Flash\Messages;
 use Slim\Views\PhpRenderer;
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
-class SettingsProvider
+class FlashMessageProvider
 {
     private $renderer;
-    private $settings;
+    private $flash;
 
-    public function __construct(PhpRenderer $renderer, array $settings)
+    public function __construct(PhpRenderer $renderer, Messages $flash)
     {
         $this->renderer = $renderer;
-        $this->settings = $settings;
+        $this->flash = $flash;
     }
 
     public function __invoke(Request $request, Response $response, callable $next) : Response
     {
-        $this->renderer->addAttribute('settings', $this->settings);
+        $this->renderer->addAttribute('flash_messages', $this->flash->getMessages());
 
         return $next($request, $response);
     }

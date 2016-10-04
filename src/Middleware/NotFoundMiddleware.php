@@ -7,6 +7,8 @@ use Psr\Http\Message\ResponseInterface as Response;
 
 class NotFoundMiddleware
 {
+    private $notFoundHandler;
+
     public function __construct(callable $notFoundHandler)
     {
         $this->notFoundHandler = $notFoundHandler;

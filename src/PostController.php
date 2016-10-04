@@ -2,6 +2,7 @@
 
 namespace Sihae;
 
+use Slim\Flash\Messages;
 use Slim\Views\PhpRenderer;
 use Doctrine\ORM\EntityManager;
 use League\CommonMark\CommonMarkConverter;
@@ -26,18 +27,26 @@ class PostController
     private $markdown;
 
     /**
+     * @var Messages
+     */
+    private $flash;
+
+    /**
      * @param PhpRenderer $renderer
      * @param EntityManager $entityManager
      * @param CommonMarkConverter $markdown
+     * @param Messages $flash
      */
     public function __construct(
         PhpRenderer $renderer,
         EntityManager $entityManager,
-        CommonMarkConverter $markdown
+        CommonMarkConverter $markdown,
+        Messages $flash
     ) {
         $this->renderer = $renderer;
         $this->entityManager = $entityManager;
         $this->markdown = $markdown;
+        $this->flash = $flash;
     }
 
     /**
@@ -112,6 +121,8 @@ class PostController
 
             $this->entityManager->persist($post);
             $this->entityManager->flush();
+
+            $this->flash->addMessage('success', 'Successfully created your new post!');
 
             return $response->withStatus(302)->withHeader('Location', '/post/' . $post->getSlug());
         }
@@ -200,6 +211,8 @@ class PostController
             $this->entityManager->persist($post);
             $this->entityManager->flush();
 
+            $this->flash->addMessage('success', 'Successfully edited your post!');
+
             return $response->withStatus(302)->withHeader('Location', '/post/' . $slug);
         }
 
@@ -230,6 +243,8 @@ class PostController
 
         $this->entityManager->remove($post);
         $this->entityManager->flush();
+
+        $this->flash->addMessage('success', 'Successfully deleted your post!');
 
         return $response->withStatus(302)->withHeader('Location', '/');
     }
