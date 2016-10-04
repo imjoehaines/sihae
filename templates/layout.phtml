@@ -48,7 +48,7 @@
             <?php throw new LogicException('You must specify a page') ?>
         <?php endif ?>
 
-        <?php if (isset($flash_messages)) : ?>
+        <?php if (!empty($flash_messages)) : ?>
             <?php foreach ($flash_messages as $type => $messages) : ?>
                 <script>
                     var type = '<?= $type ?>'
