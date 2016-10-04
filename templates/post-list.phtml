@@ -27,29 +27,26 @@
     <?php endif ?>
 </ol>
 
-<?php /*
 <?php if (count($posts) > 0) : ?>
     <ol class="post-pagination">
         <li class="post-pagination-newer">
-            <?php if ($posts->currentPage() === 1) : ?>
-                <a href="<?= $posts->previousPageUrl() ?>" class="disabled">Newer Posts</a>
+            <?php if ($current_page === 1) : ?>
+                <a href="#" class="disabled">Newer Posts</a>
             <?php else : ?>
-                <a href="<?= $posts->previousPageUrl() ?>">Newer Posts</a>
+                <a href="/page/<?= $current_page - 1 ?>">Newer Posts</a>
             <?php endif ?>
         </li>
 
         <li class="post-pagination-pages">
-            <small>Page <?= $posts->currentPage() ?> of <?= $posts->lastPage() ?></small>
+            <small>Page <?= $current_page ?> of <?= $total_pages ?></small>
         </li>
 
         <li class="post-pagination-older">
-            <?php if ($posts->hasMorePages()) : ?>
-                <a href="<?= $posts->nextPageUrl() ?>">Older Posts</a>
+            <?php if ($current_page != $total_pages) : ?>
+                <a href="/page/<?= $current_page + 1 ?>">Older Posts</a>
             <?php else : ?>
-                <a href="<?= $posts->nextPageUrl() ?>" class="disabled">Older Posts</a>
+                <a href="#" class="disabled">Older Posts</a>
             <?php endif ?>
         </li>
     </ol>
 <?php endif ?>
-*/
-?>

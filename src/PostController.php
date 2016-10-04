@@ -47,9 +47,14 @@ class PostController
      * @param Response $response
      * @return Response
      */
-    public function index(Request $request, Response $response) : Response
+    public function index(Request $request, Response $response, int $page = 1) : Response
     {
-        $posts = $this->entityManager->getRepository(Post::class)->findBy([], ['date_created' => 'DESC']);
+        $postRepository = $this->entityManager->getRepository(Post::class);
+
+        $limit = 5;
+        $offset = $limit * ($page - 1);
+
+        $posts = $postRepository->findBy([], ['date_created' => 'DESC'], $limit, $offset);
 
         $parsedPosts = array_map(function (Post $post) : Post {
             $parsedBody = $this->markdown->convertToHtml($post->getBody());
@@ -57,9 +62,17 @@ class PostController
             return $post->setBody($parsedBody);
         }, $posts);
 
+        $total = $postRepository->createQueryBuilder('Sihae\Post')
+            ->select('COUNT(Sihae\Post.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+
         return $this->renderer->render($response, 'layout.phtml', [
             'page' => 'post-list',
             'posts' => $parsedPosts,
+            'current_page' => $page,
+            'total_pages' => intdiv($total + $limit - 1, $limit),
+            'total' => $total,
         ]);
     }
 
