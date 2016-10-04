@@ -45,6 +45,7 @@ class PostController
      *
      * @param Request $request
      * @param Response $response
+     * @param integer $page
      * @return Response
      */
     public function index(Request $request, Response $response, int $page = 1) : Response
