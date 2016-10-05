@@ -32,7 +32,8 @@ return function (Container $container) {
             $container->get('renderer'),
             $container->get(EntityManager::class),
             $container->get(CommonMarkConverter::class),
-            $container->get(Messages::class)
+            $container->get(Messages::class),
+            $container->get(Session::class)
         );
     };
 

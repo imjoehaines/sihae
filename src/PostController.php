@@ -2,6 +2,7 @@
 
 namespace Sihae;
 
+use RKA\Session;
 use Sihae\Entities\Post;
 use Slim\Flash\Messages;
 use Slim\Views\PhpRenderer;
@@ -42,12 +43,26 @@ class PostController
         PhpRenderer $renderer,
         EntityManager $entityManager,
         CommonMarkConverter $markdown,
-        Messages $flash
+        Messages $flash,
+        Session $session
     ) {
         $this->renderer = $renderer;
         $this->entityManager = $entityManager;
         $this->markdown = $markdown;
         $this->flash = $flash;
+        $this->session = $session;
+    }
+
+    /**
+     * Check if there is a signed in user. We don't have user roles/permissions
+     * so any old user can do what they want because they're all assumed to be
+     * admins. No one should have to login to read your block so this is OK
+     *
+     * @return boolean
+     */
+    private function isUserAuthorised() : bool
+    {
+        return !empty($this->session->get('username'));
     }
 
     /**
@@ -89,14 +104,16 @@ class PostController
     /**
      * Show form for creating a new Post
      *
-     * TODO: authorisation
-     *
      * @param Request $request
      * @param Response $response
      * @return Response
      */
     public function create(Request $request, Response $response) : Response
     {
+        if (!$this->isUserAuthorised()) {
+            return $response->withStatus(403)->withHeader('Location', '/');
+        }
+
         return $this->renderer->render($response, 'layout.phtml', ['page' => 'post-form']);
     }
 
@@ -104,7 +121,6 @@ class PostController
      * Save a new Post
      *
      * TODO: validation
-     * TODO: authorisation
      * TODO: prevent duplicate slugs
      *
      * @param Request $request
@@ -113,6 +129,10 @@ class PostController
      */
     public function store(Request $request, Response $response) : Response
     {
+        if (!$this->isUserAuthorised()) {
+            return $response->withStatus(403)->withHeader('Location', '/');
+        }
+
         $newPost = $request->getParsedBody();
 
         if (isset($newPost['title'], $newPost['body'])) {
@@ -162,8 +182,6 @@ class PostController
     /**
      * Show the form to edit an existing Post
      *
-     * TODO: authorisation
-     *
      * @param Request $request
      * @param Response $response
      * @param string $slug
@@ -171,6 +189,10 @@ class PostController
      */
     public function edit(Request $request, Response $response, string $slug) : Response
     {
+        if (!$this->isUserAuthorised()) {
+            return $response->withStatus(403)->withHeader('Location', '/');
+        }
+
         $post = $this->entityManager->getRepository(Post::class)->findOneBy(['slug' => $slug]);
 
         if (!$post) {
@@ -188,7 +210,6 @@ class PostController
      * Save updates to an existing Post
      *
      * TODO: validation
-     * TODO: authorisation
      *
      * @param Request $request
      * @param Response $response
@@ -197,6 +218,10 @@ class PostController
      */
     public function update(Request $request, Response $response, string $slug) : Response
     {
+        if (!$this->isUserAuthorised()) {
+            return $response->withStatus(403)->withHeader('Location', '/');
+        }
+
         $post = $this->entityManager->getRepository(Post::class)->findOneBy(['slug' => $slug]);
 
         if (!$post) {
@@ -227,8 +252,6 @@ class PostController
     /**
      * Delete a Post
      *
-     * TODO: authorisation
-     *
      * @param Request $request
      * @param Response $response
      * @param string $slug
@@ -236,6 +259,10 @@ class PostController
      */
     public function delete(Request $request, Response $response, string $slug) : Response
     {
+        if (!$this->isUserAuthorised()) {
+            return $response->withStatus(403)->withHeader('Location', '/');
+        }
+
         $post = $this->entityManager->getRepository(Post::class)->findOneBy(['slug' => $slug]);
 
         if (!$post) {
