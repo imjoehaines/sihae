@@ -7,10 +7,10 @@ return function (App $app) {
 
     $app->get('/post/new', 'Sihae\PostController:create');
     $app->post('/post/new', 'Sihae\PostController:store');
-    $app->get('/post/edit/{slug}', 'Sihae\PostController:edit');
-    $app->post('/post/edit/{slug}', 'Sihae\PostController:update');
-    $app->get('/post/delete/{slug}', 'Sihae\PostController:delete');
-    $app->get('/post/{slug}', 'Sihae\PostController:show');
+    $app->get('/post/edit/{slug:[a-zA-Z\d\s-_\-]+}', 'Sihae\PostController:edit');
+    $app->post('/post/edit/{slug:[a-zA-Z\d\s-_\-]+}', 'Sihae\PostController:update');
+    $app->get('/post/delete/{slug:[a-zA-Z\d\s-_\-]+}', 'Sihae\PostController:delete');
+    $app->get('/post/{slug:[a-zA-Z\d\s-_\-]+}', 'Sihae\PostController:show');
 
     $app->get('/login', 'Sihae\LoginController:showForm');
     $app->post('/login', 'Sihae\LoginController:login');
