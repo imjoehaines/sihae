@@ -14,7 +14,7 @@ class RegistrationValidator implements Validator
         $this->validator = V::assoc([
             'Username' => V::text()->min(3)->max(50)->alphanum(),
             'Password' => V::text()->min(7),
-            'Password Confirmation' => V::text()->min(7),
+            'Password confirmation' => V::text()->min(7),
         ]);
     }
 
@@ -24,7 +24,7 @@ class RegistrationValidator implements Validator
         $detailsToValidate = [
             'Username' => $userDetails['username'] ?? null,
             'Password' => $userDetails['password'] ?? null,
-            'Password Confirmation' => $userDetails['password_confirmation'] ?? null,
+            'Password confirmation' => $userDetails['password_confirmation'] ?? null,
         ];
 
         $result = $this->validator->validate($detailsToValidate);
