@@ -40,6 +40,11 @@ class PostController
     private $session;
 
     /**
+     * @var Validator
+     */
+    private $validator;
+
+    /**
      * @param PhpRenderer $renderer
      * @param EntityManager $entityManager
      * @param CommonMarkConverter $markdown
