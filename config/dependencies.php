@@ -1,5 +1,6 @@
 <?php
 
+use RKA\Session;
 use Monolog\Logger;
 use Slim\Http\Response;
 use Slim\Flash\Messages;
@@ -17,10 +18,13 @@ use Slim\Handlers\Strategies\RequestResponseArgs;
 use Interop\Container\ContainerInterface as Container;
 
 use Sihae\PostController;
-use Sihae\AuthController;
+use Sihae\LoginController;
+use Sihae\RegistrationController;
+use Sihae\Middleware\SessionProvider;
 use Sihae\Middleware\SettingsProvider;
 use Sihae\Middleware\NotFoundMiddleware;
 use Sihae\Middleware\FlashMessageProvider;
+use Sihae\Validators\RegistrationValidator;
 
 return function (Container $container) {
     $container[PostController::class] = function (Container $container) : PostController {
@@ -32,8 +36,26 @@ return function (Container $container) {
         );
     };
 
-    $container[AuthController::class] = function (Container $container) : AuthController {
-        return new AuthController($container->get('renderer'));
+    $container[LoginController::class] = function (Container $container) : LoginController {
+        return new LoginController(
+            $container->get('renderer'),
+            $container->get(EntityManager::class),
+            $container->get(Messages::class),
+            $container->get(Session::class)
+        );
+    };
+
+    $container[RegistrationController::class] = function (Container $container) : RegistrationController {
+        return new RegistrationController(
+            $container->get('renderer'),
+            $container->get(RegistrationValidator::class),
+            $container->get(EntityManager::class),
+            $container->get(Messages::class)
+        );
+    };
+
+    $container[RegistrationValidator::class] = function (Container $container) : RegistrationValidator {
+        return new RegistrationValidator();
     };
 
     $container[NotFoundMiddleware::class] = function (Container $container) : NotFoundMiddleware {
@@ -47,11 +69,22 @@ return function (Container $container) {
         );
     };
 
+    $container[SessionProvider::class] = function (Container $container) : SessionProvider {
+        return new SessionProvider(
+            $container->get('renderer'),
+            $container->get(Session::class)
+        );
+    };
+
     $container[FlashMessageProvider::class] = function (Container $container) : FlashMessageProvider {
         return new FlashMessageProvider(
             $container->get('renderer'),
             $container->get(Messages::class)
         );
+    };
+
+    $container[Session::class] = function (Container $container) : Session {
+        return new Session;
     };
 
     $container[Messages::class] = function (Container $container) : Messages {

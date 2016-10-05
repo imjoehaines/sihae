@@ -1,6 +1,6 @@
 <?php
 
-namespace Sihae;
+namespace Sihae\Entities;
 
 use DateTime;
 use Carbon\Carbon;
@@ -9,7 +9,7 @@ use function Stringy\create as s;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="posts")
+ * @ORM\Table(name="post")
  */
 class Post
 {

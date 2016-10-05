@@ -12,10 +12,10 @@ return function (App $app) {
     $app->get('/post/delete/{slug}', 'Sihae\PostController:delete');
     $app->get('/post/{slug}', 'Sihae\PostController:show');
 
-    $app->get('/login', 'Sihae\AuthController:showLoginForm');
-    $app->post('/login', 'Sihae\AuthController:login');
-    $app->get('/logout', 'Sihae\AuthController:logout');
+    $app->get('/login', 'Sihae\LoginController:showForm');
+    $app->post('/login', 'Sihae\LoginController:login');
+    $app->get('/logout', 'Sihae\LoginController:logout');
 
-    $app->get('/register', 'Sihae\AuthController:showRegistrationForm');
-    $app->post('/register', 'Sihae\AuthController:register');
+    $app->get('/register', 'Sihae\RegistrationController:showForm');
+    $app->post('/register', 'Sihae\RegistrationController:register');
 };

@@ -23,7 +23,7 @@
         <?= $settings['summary'] ?>
 
         <ul class="admin">
-            <?php if (true || $isLoggedIn) : ?>
+            <?php if (isset($session) && !empty($session->get('username'))) : ?>
                 <li><a href="/post/new">
                     <i class="fa fa-plus"></i> Add a new post
                 </a></li>

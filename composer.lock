@@ -4,9 +4,55 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7ecb20109b5a0a6270c8b62cd1f92ac7",
-    "content-hash": "851eaa6a8ad7c08bebeba3d5ecd200c8",
+    "hash": "bf4ea11b400e1d4bcbbf5cf555667a39",
+    "content-hash": "05189cd2465adf6f735976d286324997",
     "packages": [
+        {
+            "name": "akrabat/rka-slim-session-middleware",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/akrabat/rka-slim-session-middleware.git",
+                "reference": "e4f8f485f6d52fd4c0a2254d0b12240245629e6a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/akrabat/rka-slim-session-middleware/zipball/e4f8f485f6d52fd4c0a2254d0b12240245629e6a",
+                "reference": "e4f8f485f6d52fd4c0a2254d0b12240245629e6a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5"
+            },
+            "require-dev": {
+                "slim/slim": "^3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "RKA\\": "RKA"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Rob Allen",
+                    "email": "rob@akrabat.com",
+                    "homepage": "http://akrabat.com"
+                }
+            ],
+            "description": "Simple session middleware for Slim Framework",
+            "homepage": "http://github.com/akrabat/rka-slim-session-middleware",
+            "keywords": [
+                "middleware",
+                "session",
+                "slim"
+            ],
+            "time": "2016-04-18 07:52:43"
+        },
         {
             "name": "container-interop/container-interop",
             "version": "1.1.0",
@@ -688,6 +734,36 @@
                 "orm"
             ],
             "time": "2016-09-10 18:51:13"
+        },
+        {
+            "name": "i-am-tom/schemer",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/i-am-tom/schemer.git",
+                "reference": "2b98696a86dcb6a90388cd03ab33a782c9e49c0c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/i-am-tom/schemer/zipball/2b98696a86dcb6a90388cd03ab33a782c9e49c0c",
+                "reference": "2b98696a86dcb6a90388cd03ab33a782c9e49c0c",
+                "shasum": ""
+            },
+            "require-dev": {
+                "crysalead/kahlan": "^2.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Schemer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "ISC"
+            ],
+            "description": "A Joi-like interface for validating data structures.",
+            "time": "2016-08-15 07:15:23"
         },
         {
             "name": "league/commonmark",

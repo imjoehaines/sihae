@@ -2,6 +2,7 @@
 
 namespace Sihae;
 
+use Sihae\Entities\Post;
 use Slim\Flash\Messages;
 use Slim\Views\PhpRenderer;
 use Doctrine\ORM\EntityManager;
@@ -72,8 +73,8 @@ class PostController
             return $post->setBody($parsedBody);
         }, $posts);
 
-        $total = $postRepository->createQueryBuilder('Sihae\Post')
-            ->select('COUNT(Sihae\Post.id)')
+        $total = $postRepository->createQueryBuilder('Post')
+            ->select('COUNT(Post.id)')
             ->getQuery()
             ->getSingleScalarResult();
 

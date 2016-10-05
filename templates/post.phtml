@@ -7,7 +7,7 @@
 <small class="post-date" title="<?= $post->getDateCreated()->format('jS \o\f F Y \a\t g:ia') ?>">
     Posted <?= $post->getDateCreated()->diffForHumans() ?>
 
-    <?php if (true || $isLoggedIn) : ?>
+    <?php if (isset($session) && !empty($session->get('username'))) : ?>
         <a href="/post/edit/<?= $post->getSlug() ?>"><i class="fa fa-pencil"></i> Edit this post</a>
         <a href="/post/delete/<?= $post->getSlug() ?>"><i class="fa fa-trash"></i> Delete this post</a>
     <?php endif ?>
