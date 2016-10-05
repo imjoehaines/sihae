@@ -6,6 +6,7 @@ use RKA\Session;
 use Sihae\Entities\Post;
 use Slim\Flash\Messages;
 use Slim\Views\PhpRenderer;
+use Sihae\Validators\Validator;
 use Doctrine\ORM\EntityManager;
 use League\CommonMark\CommonMarkConverter;
 use Psr\Http\Message\RequestInterface as Request;
@@ -34,23 +35,32 @@ class PostController
     private $flash;
 
     /**
+     * @var Session
+     */
+    private $session;
+
+    /**
      * @param PhpRenderer $renderer
      * @param EntityManager $entityManager
      * @param CommonMarkConverter $markdown
      * @param Messages $flash
+     * @param Session $session
+     * @param Validator $validator
      */
     public function __construct(
         PhpRenderer $renderer,
         EntityManager $entityManager,
         CommonMarkConverter $markdown,
         Messages $flash,
-        Session $session
+        Session $session,
+        Validator $validator
     ) {
         $this->renderer = $renderer;
         $this->entityManager = $entityManager;
         $this->markdown = $markdown;
         $this->flash = $flash;
         $this->session = $session;
+        $this->validator = $validator;
     }
 
     /**
@@ -120,7 +130,6 @@ class PostController
     /**
      * Save a new Post
      *
-     * TODO: validation
      * TODO: prevent duplicate slugs
      *
      * @param Request $request
@@ -135,23 +144,24 @@ class PostController
 
         $newPost = $request->getParsedBody();
 
-        if (isset($newPost['title'], $newPost['body'])) {
-            $post = new Post();
-            $post->setTitle($newPost['title']);
-            $post->setBody($newPost['body']);
+        $post = new Post();
+        $post->setTitle($newPost['title']);
+        $post->setBody($newPost['body']);
 
-            $this->entityManager->persist($post);
-            $this->entityManager->flush();
-
-            $this->flash->addMessage('success', 'Successfully created your new post!');
-
-            return $response->withStatus(302)->withHeader('Location', '/post/' . $post->getSlug());
+        if (!$this->validator->isValid($newPost)) {
+            return $this->renderer->render($response, 'layout.phtml', [
+                'page' => 'post-form',
+                'post' => $post,
+                'errors' => $this->validator->getErrors(),
+            ]);
         }
 
-        return $this->renderer->render($response, 'layout.phtml', [
-            'page' => 'post-form',
-            'post' => $newPost,
-        ]);
+        $this->entityManager->persist($post);
+        $this->entityManager->flush();
+
+        $this->flash->addMessage('success', 'Successfully created your new post!');
+
+        return $response->withStatus(302)->withHeader('Location', '/post/' . $post->getSlug());
     }
 
     /**
@@ -209,8 +219,6 @@ class PostController
     /**
      * Save updates to an existing Post
      *
-     * TODO: validation
-     *
      * @param Request $request
      * @param Response $response
      * @param string $slug
@@ -230,23 +238,24 @@ class PostController
 
         $updatedPost = $request->getParsedBody();
 
-        if (isset($updatedPost['title'], $updatedPost['body'])) {
-            $post->setTitle($updatedPost['title']);
-            $post->setBody($updatedPost['body']);
+        $post->setTitle($updatedPost['title']);
+        $post->setBody($updatedPost['body']);
 
-            $this->entityManager->persist($post);
-            $this->entityManager->flush();
-
-            $this->flash->addMessage('success', 'Successfully edited your post!');
-
-            return $response->withStatus(302)->withHeader('Location', '/post/' . $slug);
+        if (!$this->validator->isValid($updatedPost)) {
+            return $this->renderer->render($response, 'layout.phtml', [
+                'page' => 'post-form',
+                'post' => $post,
+                'errors' => $this->validator->getErrors(),
+                'isEdit' => true,
+            ]);
         }
 
-        return $this->renderer->render($response, 'layout.phtml', [
-            'page' => 'post-form',
-            'post' => $updatedPost,
-            'isEdit' => true,
-        ]);
+        $this->entityManager->persist($post);
+        $this->entityManager->flush();
+
+        $this->flash->addMessage('success', 'Successfully edited your post!');
+
+        return $response->withStatus(302)->withHeader('Location', '/post/' . $slug);
     }
 
     /**

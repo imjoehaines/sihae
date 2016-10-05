@@ -4,7 +4,7 @@
 <h1>Add a new post</h1>
 <?php endif ?>
 
-<?php if (isset($errors) && count($errors) > 0) : ?>
+<?php if (!empty($errors)) : ?>
     <h2>Oops &mdash; you seem to be missing something!</h2>
 
     <ul>
@@ -18,7 +18,7 @@
     action="/post/<?= isset($isEdit) && $isEdit === true ? 'edit/' . $post->getSlug() : 'new' ?>"
 >
     <label for="title">Title</label>
-    <input name="title" id="title" maxlength="140" required value="<?= isset($post) ? $post->getTitle() : '' ?>">
+    <input name="title" id="title" maxlength="50" required value="<?= isset($post) ? $post->getTitle() : '' ?>">
 
     <label for="body">Post</label>
     <textarea name="body" id="body"><?= isset($post) ? $post->getBody() : '' ?></textarea>

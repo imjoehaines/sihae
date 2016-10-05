@@ -20,6 +20,7 @@ use Interop\Container\ContainerInterface as Container;
 use Sihae\PostController;
 use Sihae\LoginController;
 use Sihae\RegistrationController;
+use Sihae\Validators\PostValidator;
 use Sihae\Middleware\SessionProvider;
 use Sihae\Middleware\SettingsProvider;
 use Sihae\Middleware\NotFoundMiddleware;
@@ -33,7 +34,8 @@ return function (Container $container) {
             $container->get(EntityManager::class),
             $container->get(CommonMarkConverter::class),
             $container->get(Messages::class),
-            $container->get(Session::class)
+            $container->get(Session::class),
+            $container->get(PostValidator::class)
         );
     };
 
@@ -57,6 +59,10 @@ return function (Container $container) {
 
     $container[RegistrationValidator::class] = function (Container $container) : RegistrationValidator {
         return new RegistrationValidator();
+    };
+
+    $container[PostValidator::class] = function (Container $container) : PostValidator {
+        return new PostValidator();
     };
 
     $container[NotFoundMiddleware::class] = function (Container $container) : NotFoundMiddleware {
