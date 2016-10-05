@@ -30,7 +30,7 @@ class RegistrationValidator implements Validator
         $result = $this->validator->validate($detailsToValidate);
 
         if ($userDetails['password'] !== $userDetails['password_confirmation']) {
-            $result = (Result::failure('Password confirmation did not match password'))->concat($result);
+            $result = Result::failure('Password confirmation did not match password')->concat($result);
         }
 
         $this->errors = $result->errors();
