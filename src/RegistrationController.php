@@ -2,6 +2,7 @@
 
 namespace Sihae;
 
+use RKA\Session;
 use Sihae\Entities\User;
 use Slim\Flash\Messages;
 use Slim\Views\PhpRenderer;
@@ -33,21 +34,29 @@ class RegistrationController
     private $flash;
 
     /**
+     * @var Session
+     */
+    private $session;
+
+    /**
      * @param PhpRenderer $renderer
      * @param Validator $validator
      * @param EntityManager $entityManager
      * @param Messages $flash
+     * @param Session $session
      */
     public function __construct(
         PhpRenderer $renderer,
         Validator $validator,
         EntityManager $entityManager,
-        Messages $flash
+        Messages $flash,
+        Session $session
     ) {
         $this->renderer = $renderer;
         $this->validator = $validator;
         $this->entityManager = $entityManager;
         $this->flash = $flash;
+        $this->session = $session;
     }
 
     /**
@@ -96,6 +105,10 @@ class RegistrationController
      */
     public function showForm(Request $request, Response $response) : Response
     {
+        if (!empty($this->session->get('username'))) {
+            return $response->withStatus(302)->withHeader('Location', '/');
+        }
+
         return $this->renderer->render($response, 'layout.phtml', ['page' => 'register']);
     }
 }

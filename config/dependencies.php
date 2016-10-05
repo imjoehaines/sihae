@@ -53,7 +53,8 @@ return function (Container $container) {
             $container->get('renderer'),
             $container->get(RegistrationValidator::class),
             $container->get(EntityManager::class),
-            $container->get(Messages::class)
+            $container->get(Messages::class),
+            $container->get(Session::class)
         );
     };
 
