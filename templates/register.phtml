@@ -12,7 +12,7 @@
 
 <form action="/register" method="POST">
     <label for="username">Username</label>
-    <input name="username" id="username" maxlength="60" required value="<?= isset($username) ? $username : '' ?>">
+    <input name="username" id="username" maxlength="50" required value="<?= isset($username) ? $username : '' ?>">
 
     <label for="password">Password</label>
     <input name="password" id="password" type="password" required>
