@@ -56,7 +56,7 @@ class PostController
     /**
      * Check if there is a signed in user. We don't have user roles/permissions
      * so any old user can do what they want because they're all assumed to be
-     * admins. No one should have to login to read your block so this is OK
+     * admins. No one should have to login to read your blog so this is OK
      *
      * @return boolean
      */
