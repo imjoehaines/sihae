@@ -107,6 +107,7 @@ main {
   float: left;
   margin-left: 30%;
   padding: 4rem;
+  overflow-wrap: break-word;
 }
 
 a {
