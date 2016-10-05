@@ -17,6 +17,7 @@ use Slim\Handlers\Strategies\RequestResponseArgs;
 use Interop\Container\ContainerInterface as Container;
 
 use Sihae\PostController;
+use Sihae\AuthController;
 use Sihae\Middleware\SettingsProvider;
 use Sihae\Middleware\NotFoundMiddleware;
 use Sihae\Middleware\FlashMessageProvider;
@@ -29,6 +30,10 @@ return function (Container $container) {
             $container->get(CommonMarkConverter::class),
             $container->get(Messages::class)
         );
+    };
+
+    $container[AuthController::class] = function (Container $container) : AuthController {
+        return new AuthController($container->get('renderer'));
     };
 
     $container[NotFoundMiddleware::class] = function (Container $container) : NotFoundMiddleware {
