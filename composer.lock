@@ -737,16 +737,16 @@
         },
         {
             "name": "i-am-tom/schemer",
-            "version": "2.0.0",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/i-am-tom/schemer.git",
-                "reference": "2b98696a86dcb6a90388cd03ab33a782c9e49c0c"
+                "reference": "854862ab58abb2f9cdc494095d9c073b075f08e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/i-am-tom/schemer/zipball/2b98696a86dcb6a90388cd03ab33a782c9e49c0c",
-                "reference": "2b98696a86dcb6a90388cd03ab33a782c9e49c0c",
+                "url": "https://api.github.com/repos/i-am-tom/schemer/zipball/854862ab58abb2f9cdc494095d9c073b075f08e0",
+                "reference": "854862ab58abb2f9cdc494095d9c073b075f08e0",
                 "shasum": ""
             },
             "require-dev": {
@@ -763,7 +763,7 @@
                 "ISC"
             ],
             "description": "A Joi-like interface for validating data structures.",
-            "time": "2016-08-15 07:15:23"
+            "time": "2016-10-05 20:25:02"
         },
         {
             "name": "league/commonmark",
