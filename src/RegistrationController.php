@@ -12,9 +12,32 @@ use Psr\Http\Message\ResponseInterface as Response;
 
 class RegistrationController
 {
+    /**
+     * @var PhpRenderer
+     */
     private $renderer;
+
+    /**
+     * @var Validator
+     */
     private $validator;
 
+    /**
+     * @var EntityManager
+     */
+    private $entityManager;
+
+    /**
+     * @var Messages
+     */
+    private $flash;
+
+    /**
+     * @param PhpRenderer $renderer
+     * @param Validator $validator
+     * @param EntityManager $entityManager
+     * @param Messages $flash
+     */
     public function __construct(
         PhpRenderer $renderer,
         Validator $validator,
@@ -27,6 +50,16 @@ class RegistrationController
         $this->flash = $flash;
     }
 
+    /**
+     * Register a new user.
+     *
+     * TODO This should be turned off once a user has been registered or a config
+     * value is set and throw if called after this condition
+     *
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     */
     public function register(Request $request, Response $response) : Response
     {
         $userDetails = $request->getParsedBody();
@@ -51,6 +84,16 @@ class RegistrationController
         return $response->withStatus(302)->withHeader('Location', '/');
     }
 
+    /**
+     * Show the registration form
+     *
+     * TODO This should be turned off once a user has been registered or a config
+     * value is set and throw if called after this condition
+     *
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     */
     public function showForm(Request $request, Response $response) : Response
     {
         return $this->renderer->render($response, 'layout.phtml', ['page' => 'register']);

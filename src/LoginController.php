@@ -12,11 +12,32 @@ use Psr\Http\Message\ResponseInterface as Response;
 
 class LoginController
 {
+    /**
+     * @var PhpRenderer
+     */
     private $renderer;
-    private $validator;
+
+    /**
+     * @var EntityManager
+     */
+    private $entityManager;
+
+    /**
+     * @var Messages
+     */
     private $flash;
+
+    /**
+     * @var Session
+     */
     private $session;
 
+    /**
+     * @param PhpRenderer $renderer
+     * @param EntityManager $entityManager
+     * @param Messages $flash
+     * @param Session $session
+     */
     public function __construct(
         PhpRenderer $renderer,
         EntityManager $entityManager,
@@ -29,6 +50,13 @@ class LoginController
         $this->session = $session;
     }
 
+    /**
+     * Log a user in
+     *
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     */
     public function login(Request $request, Response $response) : Response
     {
         $userDetails = $request->getParsedBody();
@@ -51,6 +79,13 @@ class LoginController
         return $response->withStatus(302)->withHeader('Location', '/');
     }
 
+    /**
+     * Log the current user out
+     *
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     */
     public function logout(Request $request, Response $response) : Response
     {
         Session::destroy();
@@ -58,6 +93,13 @@ class LoginController
         return $response->withStatus(302)->withHeader('Location', '/');
     }
 
+    /**
+     * Show the login form
+     *
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     */
     public function showForm(Request $request, Response $response) : Response
     {
         return $this->renderer->render($response, 'layout.phtml', ['page' => 'login']);
