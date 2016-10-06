@@ -2,6 +2,7 @@
 
 use RKA\Session;
 use Monolog\Logger;
+use Slim\Csrf\Guard;
 use Slim\Http\Response;
 use Slim\Flash\Messages;
 use Slim\Views\PhpRenderer;
@@ -20,6 +21,7 @@ use Interop\Container\ContainerInterface as Container;
 use Sihae\PostController;
 use Sihae\LoginController;
 use Sihae\RegistrationController;
+use Sihae\Middleware\CsrfProvider;
 use Sihae\Validators\PostValidator;
 use Sihae\Middleware\AuthMiddleware;
 use Sihae\Middleware\SessionProvider;
@@ -79,6 +81,17 @@ return function (Container $container) {
             $container->get('renderer'),
             $container->get('settings')['sihae']
         );
+    };
+
+    $container[CsrfProvider::class] = function (Container $container) : CsrfProvider {
+        return new CsrfProvider(
+            $container->get('renderer'),
+            $container->get(Guard::class)
+        );
+    };
+
+    $container[Guard::class] = function (Container $container) : Guard {
+        return new Guard();
     };
 
     $container[SessionProvider::class] = function (Container $container) : SessionProvider {

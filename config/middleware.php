@@ -1,5 +1,7 @@
 <?php
 
+use Slim\Csrf\Guard;
+use Sihae\Middleware\CsrfProvider;
 use Sihae\Middleware\SessionProvider;
 use Sihae\Middleware\SettingsProvider;
 use Sihae\Middleware\NotFoundMiddleware;
@@ -10,4 +12,6 @@ return [
     SettingsProvider::class,
     FlashMessageProvider::class,
     SessionProvider::class,
+    CsrfProvider::class,
+    Guard::class,
 ];

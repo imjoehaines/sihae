@@ -11,7 +11,8 @@
         "nesbot/carbon": "^1.21",
         "slim/flash": "^0.1.0",
         "i-am-tom/schemer": "^2.0",
-        "akrabat/rka-slim-session-middleware": "^2.0"
+        "akrabat/rka-slim-session-middleware": "^2.0",
+        "slim/csrf": "^0.7.0"
     },
     "require-dev": {
         "behat/behat": "^3.2",
