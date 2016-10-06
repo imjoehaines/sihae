@@ -8,7 +8,7 @@ Feature: Edit a Blog Post
     Given there is a post:
       | title                | body                |
       | Penny's Perfect Post | Penny's post's text |
-    And I am on "post/edit/pennys-perfect-post"
+    And I am on "edit/pennys-perfect-post"
     When I fill in "title" with "Penny's Perfecter Post"
     And I fill in "body" with "Different post text"
     And I press "submit"

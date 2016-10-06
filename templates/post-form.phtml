@@ -15,7 +15,7 @@
 <?php endif ?>
 
 <form method="POST"
-    action="/post/<?= isset($isEdit) && $isEdit === true ? 'edit/' . $post->getSlug() : 'new' ?>"
+    action="/<?= isset($isEdit) && $isEdit === true ? 'edit/' . $post->getSlug() : 'new' ?>"
 >
     <label for="title">Title</label>
     <input name="title" id="title" maxlength="50" required value="<?= isset($post) ? $post->getTitle() : '' ?>">

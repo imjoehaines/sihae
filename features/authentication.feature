@@ -13,7 +13,7 @@ Feature: Authentication
     Then I should see "Add a new post"
 
   Scenario: Attempting to add a post when not logged in
-    Given I am on "/post/new"
+    Given I am on "new"
     Then I should not see "Add a new post"
     But I should see "Oops!"
     And I should see "I couldn't find the page you requested, maybe you could try this one instead."
