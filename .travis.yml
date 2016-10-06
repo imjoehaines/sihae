@@ -7,6 +7,7 @@ php:
 
 before_script:
   - composer install
+  - php -S localhost:8000 -t public/index.php &
   - php vendor/bin/doctrine orm:schema-tool:create
 
 script:
