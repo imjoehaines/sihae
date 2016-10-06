@@ -29,13 +29,6 @@ class FeatureContext extends MinkContext implements
     }
 
     /**
-     * @BeforeScenario
-     */
-    public static function flushCache()
-    {
-    }
-
-    /**
      * @BeforeScenario @database
      */
     public function cleanDb()
