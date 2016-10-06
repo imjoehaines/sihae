@@ -1,0 +1,41 @@
+<?php if (isset($isEdit) && $isEdit === true) : ?>
+<h1>Edit post</h1>
+<?php else : ?>
+<h1>Add a new post</h1>
+<?php endif ?>
+
+<?php if (!empty($errors)) : ?>
+    <h2>Oops &mdash; you seem to be missing something!</h2>
+
+    <ul>
+        <?php foreach ($errors as $error) : ?>
+            <li><?= $error ?></li>
+        <?php endforeach ?>
+    </ul>
+<?php endif ?>
+
+<form method="POST"
+    action="/<?= isset($isEdit) && $isEdit === true ? 'edit/' . $post->getSlug() : 'new' ?>"
+>
+    <input type="hidden" name="<?= $csrf['nameKey'] ?>" value="<?= $csrf['name'] ?>">
+    <input type="hidden" name="<?= $csrf['valueKey'] ?>" value="<?= $csrf['value'] ?>">
+
+    <label for="title">Title</label>
+    <input name="title" id="title" maxlength="50" required value="<?= isset($post) ? $post->getTitle() : '' ?>">
+
+    <label for="body">Post</label>
+    <textarea name="body" id="body"><?= isset($post) ? $post->getBody() : '' ?></textarea>
+
+    <button name="submit" type="submit">
+        <?php if (isset($isEdit) && $isEdit === true) : ?>
+            Edit post
+        <?php else : ?>
+            Add new post
+        <?php endif ?>
+    </button>
+</form>
+
+<script>
+    var simplemde = new window.SimpleMDE()
+    simplemde.render()
+</script>

@@ -1,17 +1,15 @@
 <?php
 
+use Sihae\Entities\User;
+use Sihae\Entities\Post;
+use Doctrine\ORM\Tools\Setup;
+use Doctrine\ORM\EntityManager;
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\TableNode;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\MinkExtension\Context\MinkContext;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Behat\Tester\Exception\PendingException;
-
-use Sihae\Post;
-use Sihae\User;
-use Sihae\BlogConfig;
-use Illuminate\Support\Facades\Config;
-use Sihae\Http\Controllers\Auth\AuthController;
 
 /**
  * Defines application features from the specific context.
@@ -20,30 +18,32 @@ class FeatureContext extends MinkContext implements
     Context,
     SnippetAcceptingContext
 {
+    protected $entityManager;
+
     /**
      * @BeforeSuite
      */
     public static function prepare()
     {
-        self::cleanDB();
-    }
-
-    /**
-     * @BeforeScenario
-     */
-    public static function flushCache()
-    {
-        Cache::flush();
+        (new static)->cleanDb();
     }
 
     /**
      * @BeforeScenario @database
      */
-    public static function cleanDB()
+    public function cleanDb()
     {
-        BlogConfig::truncate();
-        Post::truncate();
-        User::truncate();
+        $connection = $this->getEntityManager()->getConnection();
+
+        $connection->query('PRAGMA foreign_keys = OFF');
+
+        $tables = $connection->query('SELECT name FROM sqlite_master WHERE type = "table";')->fetchAll();
+
+        foreach ($tables as $table) {
+            $connection->query('DELETE FROM ' . $table['name']);
+        }
+
+        $connection->query('PRAGMA foreign_keys = ON');
     }
 
     /**
@@ -54,7 +54,7 @@ class FeatureContext extends MinkContext implements
         $this->createTestUser();
 
         $this->visit('/login');
-        $this->fillField('email', 'test@test.com');
+        $this->fillField('username', 'testing');
         $this->fillField('password', 'testing');
         $this->pressButton('Login');
     }
@@ -64,20 +64,39 @@ class FeatureContext extends MinkContext implements
      */
     protected function createTestUser()
     {
-        $auth = new AuthController;
-        $auth->create([
-            'name' => 'test',
-            'email' => 'test@test.com',
-            'password' => 'testing'
-        ]);
+        $user = new User;
+        $user->setUsername('testing');
+        $user->setPassword('testing');
+
+        $this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();
+    }
+
+    protected function getEntityManager()
+    {
+        if (!isset($this->entityManager)) {
+            $settings = require __DIR__ . '/../../config/settings.php';
+
+            $config = Setup::createAnnotationMetadataConfiguration(
+                $settings['settings']['doctrine']['entity_path'],
+                $settings['settings']['doctrine']['auto_generate_proxies'],
+                $settings['settings']['doctrine']['proxy_dir'],
+                $settings['settings']['doctrine']['cache'],
+                false
+            );
+
+            $this->entityManager = EntityManager::create($settings['settings']['doctrine']['connection'], $config);
+        }
+
+        return $this->entityManager;
     }
 
     /**
-     * @Given my blog is called :blogTitle
+     * @Given I am logged in
      */
-    public function myBlogIsCalled(string $blogTitle)
+    public function iAmLoggedIn()
     {
-        BlogConfig::set('title', $blogTitle);
+        $this->login();
     }
 
     /**
@@ -94,60 +113,16 @@ class FeatureContext extends MinkContext implements
     public function thereAreSomePosts(TableNode $posts)
     {
         $posts = $posts->getHash();
+
         foreach ($posts as $content) {
             $post = new Post;
-            $post->title = $content['title'];
-            $post->summary = $content['summary'];
-            $post->body = $content['body'];
-            $post->save();
-        }
-    }
 
-    /**
-     * @Given the number of posts per page is :postsPerPage
-     */
-    public function theNumberOfPostsPerPageIs(string $postsPerPage)
-    {
-        BlogConfig::set('postsPerPage', $postsPerPage);
-    }
+            $post->setTitle($content['title']);
+            $post->setBody($content['body']);
 
-    /**
-     * @Given I am logged in
-     */
-    public function iAmLoggedIn()
-    {
-        $this->login();
-    }
-
-    /**
-     * @Given I rename my blog to :name
-     */
-    public function iRenameMyBlogTo(string $name)
-    {
-        $this->fillField('title', $name);
-        $this->pressButton('Save');
-    }
-
-    /**
-     * @Given I summarise my blog as :summary
-     */
-    public function iSummariseMyBlogAs(string $summary)
-    {
-        $this->fillField('summary', $summary);
-        $this->pressButton('Save');
-    }
-
-    /**
-     * @Given I turn :state the login link
-     */
-    public function iTurnTheLoginLink(string $state)
-    {
-        if (strtolower($state) === "on") {
-            $this->checkOption('showLoginLink');
-        } else {
-            $this->uncheckOption('showLoginLink');
+            $this->getEntityManager()->persist($post);
         }
 
-        $this->pressButton('Save');
+        $this->getEntityManager()->flush();
     }
 }

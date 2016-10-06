@@ -5,7 +5,8 @@
 }
 
 body {
-  font-family: 'San Fransisco', 'Source Sans Pro', 'Open Sans', 'Helvetica Neue', Helvetica, 'Lucida Grande', sans-serif;
+  /* GitHub's system font stack */
+  font-family: "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   color: #999;
 }
 
@@ -106,6 +107,7 @@ main {
   float: left;
   margin-left: 30%;
   padding: 4rem;
+  overflow-wrap: break-word;
 }
 
 a {
@@ -131,8 +133,16 @@ a:hover {
   text-transform: lowercase;
 }
 
+.post-date a {
+  margin-left: 0.33rem;
+}
+
 code {
   white-space: pre;
+}
+
+code.hljs {
+  background: #fafafa;
 }
 
 label {

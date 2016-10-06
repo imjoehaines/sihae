@@ -1,0 +1,52 @@
+<ol class="post-list">
+    <?php if (count($posts) === 0) : ?>
+        <li>
+            <h1>There aren't any posts!</h1>
+        </li>
+    <?php else : ?>
+        <?php foreach ($posts as $post) : ?>
+            <li>
+                <h1><a href="/post/<?= $post->getSlug() ?>"><?= $post->getTitle() ?></a></h1>
+
+                <div class="post-summary">
+                    <p><?= $post->getSummary() ?></p>
+                </div>
+
+                <small class="post-date">
+                    <span title="<?= $post->getDateCreated()->format('jS \o\f F Y \a\t g:ia') ?>">
+                        Posted <?= $post->getDateCreated()->diffForHumans() ?>
+                    </span>
+
+                    <?php if (isset($session) && !empty($session->get('username'))) : ?>
+                        <a href="/edit/<?= $post->getSlug() ?>"><i class="fa fa-pencil"></i> Edit this post</a>
+                        <a href="/delete/<?= $post->getSlug() ?>"><i class="fa fa-trash"></i> Delete this post</a>
+                    <?php endif ?>
+                </small>
+            </li>
+        <?php endforeach ?>
+    <?php endif ?>
+</ol>
+
+<?php if (count($posts) > 0) : ?>
+    <ol class="post-pagination">
+        <li class="post-pagination-newer">
+            <?php if ($current_page === 1) : ?>
+                <a href="#" class="disabled">Newer Posts</a>
+            <?php else : ?>
+                <a href="/page/<?= $current_page - 1 ?>">Newer Posts</a>
+            <?php endif ?>
+        </li>
+
+        <li class="post-pagination-pages">
+            <small>Page <?= $current_page ?> of <?= $total_pages ?></small>
+        </li>
+
+        <li class="post-pagination-older">
+            <?php if ($current_page != $total_pages) : ?>
+                <a href="/page/<?= $current_page + 1 ?>">Older Posts</a>
+            <?php else : ?>
+                <a href="#" class="disabled">Older Posts</a>
+            <?php endif ?>
+        </li>
+    </ol>
+<?php endif ?>

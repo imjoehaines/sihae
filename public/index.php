@@ -1,58 +1,42 @@
 <?php
 
-/**
- * Laravel - A PHP Framework For Web Artisans
- *
- * @package  Laravel
- * @author   Taylor Otwell <taylorotwell@gmail.com>
- */
+set_error_handler(function ($severity, $message, $file, $line) {
+    throw new ErrorException($message, 0, $severity, $file, $line);
+}, E_ALL);
 
-/*
-|--------------------------------------------------------------------------
-| Register The Auto Loader
-|--------------------------------------------------------------------------
-|
-| Composer provides a convenient, automatically generated class loader for
-| our application. We just need to utilize it! We'll simply require it
-| into the script here so that we don't have to worry about manual
-| loading any of our classes later on. It feels nice to relax.
-|
-*/
+if (PHP_SAPI == 'cli-server') {
+    // To help the built-in PHP dev server, check if the request was actually for
+    // something which should probably be served as a static file
+    $url  = parse_url($_SERVER['REQUEST_URI']);
+    $file = __DIR__ . $url['path'];
 
-require __DIR__.'/../bootstrap/autoload.php';
+    if (is_file($file)) {
+        return false;
+    }
+}
 
-/*
-|--------------------------------------------------------------------------
-| Turn On The Lights
-|--------------------------------------------------------------------------
-|
-| We need to illuminate PHP development, so let us turn on the lights.
-| This bootstraps the framework and gets it ready for use, then it
-| will load up this application so that we can run it and send
-| the responses back to the browser and delight our users.
-|
-*/
+require __DIR__ . '/../vendor/autoload.php';
 
-$app = require_once __DIR__.'/../bootstrap/app.php';
+session_start([
+    'name' => 'Sihae',
+    'use_strict_mode' => true,
+]);
 
-/*
-|--------------------------------------------------------------------------
-| Run The Application
-|--------------------------------------------------------------------------
-|
-| Once we have the application, we can handle the incoming request
-| through the kernel, and send the associated response back to
-| the client's browser allowing them to enjoy the creative
-| and wonderful application we have prepared for them.
-|
-*/
+// Instantiate the app
+$settings = require __DIR__ . '/../config/settings.php';
+$app = new \Slim\App($settings);
 
-$kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
+// Set up dependencies
+$dependencyFactory = require __DIR__ . '/../config/dependencies.php';
+$dependencyFactory($app->getContainer());
 
-$response = $kernel->handle(
-    $request = Illuminate\Http\Request::capture()
-);
+// Register middleware
+$middleware = require __DIR__ . '/../config/middleware.php';
+array_map([$app, 'add'], $middleware);
 
-$response->send();
+// Register routes
+$routeFactory = require __DIR__ . '/../config/routes.php';
+$routeFactory($app);
 
-$kernel->terminate($request, $response);
+// Run app
+$app->run();

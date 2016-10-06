@@ -6,13 +6,12 @@ php:
   - nightly
 
 before_script:
-  - psql -c 'create database sihae;' -U postgres
   - composer install
-  - cp .env.travis .env
-  - php artisan migrate
+  - php -S localhost:8000 -t public &> /dev/null &
+  - php vendor/bin/doctrine orm:schema-tool:create
 
 script:
-  - npm test
+  - composer test
 
 matrix:
   allow_failures:

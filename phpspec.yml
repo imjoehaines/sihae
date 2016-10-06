@@ -1,5 +1,0 @@
-suites:
-    main:
-        namespace: Sihae
-        psr4_prefix: Sihae
-        src_path: app

@@ -1,58 +1,30 @@
 {
-    "name": "laravel/laravel",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
-    "license": "MIT",
-    "type": "project",
     "require": {
-        "php": ">=5.5.9",
-        "laravel/framework": "5.2.*",
-        "nesbot/carbon": "~1.20",
-        "cviebrock/eloquent-sluggable": "~3.0",
-        "vtalbot/markdown": "~2.0",
-        "mews/purifier": "~2.0",
-        "danielstjules/stringy": "^2.3"
+        "slim/slim": "^3.5",
+        "slim/php-view": "^2.1",
+        "monolog/monolog": "^1.21",
+        "psr/log": "^1.0",
+        "container-interop/container-interop": "^1.1",
+        "danielstjules/stringy": "^2.3",
+        "league/commonmark": "^0.15.0",
+        "doctrine/orm": "^2.5",
+        "nesbot/carbon": "^1.21",
+        "slim/flash": "^0.1.0",
+        "i-am-tom/schemer": "^2.0",
+        "akrabat/rka-slim-session-middleware": "^2.0",
+        "slim/csrf": "^0.7.0"
     },
     "require-dev": {
-        "fzaninotto/faker": "~1.4",
-        "mockery/mockery": "0.9.*",
-        "behat/behat": "^3.0",
-        "behat/mink": "^1.6",
-        "behat/mink-extension": "^2.0",
-        "laracasts/behat-laravel-extension": "^1.0",
-        "phpspec/phpspec": "~2.3",
-        "squizlabs/php_codesniffer": "~2.3",
-        "barryvdh/laravel-debugbar": "~2.0",
-        "symfony/dom-crawler": "^3.1",
-        "symfony/css-selector": "^3.1"
+        "behat/behat": "^3.2",
+        "behat/mink-extension": "^2.2",
+        "behat/mink-goutte-driver": "^1.2"
     },
     "autoload": {
-        "classmap": [
-            "database"
-        ],
         "psr-4": {
-            "Sihae\\": "app/"
+            "Sihae\\": "src/"
         }
     },
     "scripts": {
-        "post-install-cmd": [
-            "php artisan clear-compiled",
-            "php artisan optimize"
-        ],
-        "pre-update-cmd": [
-            "php artisan clear-compiled"
-        ],
-        "post-update-cmd": [
-            "php artisan optimize"
-        ],
-        "post-root-package-install": [
-            "php -r \"copy('.env.example', '.env');\""
-        ],
-        "post-create-project-cmd": [
-            "php artisan key:generate"
-        ]
-    },
-    "config": {
-        "preferred-install": "dist"
+        "test": "behat --colors"
     }
 }

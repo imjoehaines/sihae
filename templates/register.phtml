@@ -1,0 +1,30 @@
+<h1>Create an account</h1>
+
+<?php if (!empty($errors)) : ?>
+    <h2>Oops!</h2>
+
+    <ul>
+        <?php foreach ($errors as $error) : ?>
+            <li><?= $error ?></li>
+        <?php endforeach ?>
+    </ul>
+<?php endif ?>
+
+<form action="/register" method="POST">
+    <input type="hidden" name="<?= $csrf['nameKey'] ?>" value="<?= $csrf['name'] ?>">
+    <input type="hidden" name="<?= $csrf['valueKey'] ?>" value="<?= $csrf['value'] ?>">
+
+    <label for="username">Username</label>
+    <input name="username" id="username" maxlength="50" required value="<?= isset($username) ? $username : '' ?>">
+
+    <label for="password">Password</label>
+    <input name="password" id="password" type="password" required>
+
+    <label for="password_confirmation">Confirm Password</label>
+    <input name="password_confirmation" id="password_confirmation" type="password" required>
+
+    <button name="submit" type="submit">Create an account</button>
+</form>
+
+<?php // TODO: should this exist or should an admin user be pre-created in a setup script? ?>
+<p><a href="/login">Already have an account?</a></p>

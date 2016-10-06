@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+
+    <link rel="stylesheet" href="/css/alert-alert.min.css">
+    <script src="/js/alert-alert.min.js"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/tomorrow.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+
+    <link rel="stylesheet" href="/css/sihae.css">
+
+    <title><?= $settings['title'] ?></title>
+</head>
+<body>
+    <aside class="sidebar">
+        <header>
+            <h1><a href="/"><?= $settings['title'] ?></a></h1>
+        </header>
+
+        <?= $settings['summary'] ?>
+
+        <ul class="admin">
+            <?php if (isset($session) && !empty($session->get('username'))) : ?>
+                <li><a href="/new">
+                    <i class="fa fa-plus"></i> Add a new post
+                </a></li>
+
+                <?php if ($settings['show_login_link'] === true) : ?>
+                    <li><a href="/logout">
+                        <i class="fa fa-sign-out"></i> Logout
+                    </a></li>
+                <?php endif ?>
+            <?php elseif ($settings['show_login_link'] === true) : ?>
+                <li><a href="/login">
+                    <i class="fa fa-sign-in"></i> Login
+                </a></li>
+            <?php endif ?>
+        </ul>
+    </aside>
+
+    <main>
+        <?php if (isset($page)) : ?>
+            <?= $this->fetch($page . '.phtml', $data) ?>
+        <?php else : ?>
+            <?php throw new LogicException('You must specify a page') ?>
+        <?php endif ?>
+
+        <?php if (!empty($flash_messages)) : ?>
+            <?php foreach ($flash_messages as $type => $messages) : ?>
+                <script>
+                    var type = '<?= $type ?>'
+                    var message = '<?= implode(", ", $messages) ?>'
+
+                    window.Alert.alert(type, message, { timeout: 5000 })
+                </script>
+            <?php endforeach ?>
+        <?php endif ?>
+    </main>
+
+    <script>
+        window.hljs.initHighlightingOnLoad()
+    </script>
+</body>
+</html>
