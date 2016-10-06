@@ -2,7 +2,6 @@
 
 namespace Sihae;
 
-use RKA\Session;
 use Sihae\Entities\Post;
 use Slim\Flash\Messages;
 use Slim\Views\PhpRenderer;
@@ -35,11 +34,6 @@ class PostController
     private $flash;
 
     /**
-     * @var Session
-     */
-    private $session;
-
-    /**
      * @var Validator
      */
     private $validator;
@@ -57,27 +51,13 @@ class PostController
         EntityManager $entityManager,
         CommonMarkConverter $markdown,
         Messages $flash,
-        Session $session,
         Validator $validator
     ) {
         $this->renderer = $renderer;
         $this->entityManager = $entityManager;
         $this->markdown = $markdown;
         $this->flash = $flash;
-        $this->session = $session;
         $this->validator = $validator;
-    }
-
-    /**
-     * Check if there is a signed in user. We don't have user roles/permissions
-     * so any old user can do what they want because they're all assumed to be
-     * admins. No one should have to login to read your blog so this is OK
-     *
-     * @return boolean
-     */
-    private function isUserAuthorised() : bool
-    {
-        return !empty($this->session->get('username'));
     }
 
     /**
@@ -125,10 +105,6 @@ class PostController
      */
     public function create(Request $request, Response $response) : Response
     {
-        if (!$this->isUserAuthorised()) {
-            return $response->withStatus(403)->withHeader('Location', '/');
-        }
-
         return $this->renderer->render($response, 'layout.phtml', ['page' => 'post-form']);
     }
 
@@ -143,10 +119,6 @@ class PostController
      */
     public function store(Request $request, Response $response) : Response
     {
-        if (!$this->isUserAuthorised()) {
-            return $response->withStatus(403)->withHeader('Location', '/');
-        }
-
         $newPost = $request->getParsedBody();
 
         $post = new Post();
@@ -204,10 +176,6 @@ class PostController
      */
     public function edit(Request $request, Response $response, string $slug) : Response
     {
-        if (!$this->isUserAuthorised()) {
-            return $response->withStatus(403)->withHeader('Location', '/');
-        }
-
         $post = $this->entityManager->getRepository(Post::class)->findOneBy(['slug' => $slug]);
 
         if (!$post) {
@@ -231,10 +199,6 @@ class PostController
      */
     public function update(Request $request, Response $response, string $slug) : Response
     {
-        if (!$this->isUserAuthorised()) {
-            return $response->withStatus(403)->withHeader('Location', '/');
-        }
-
         $post = $this->entityManager->getRepository(Post::class)->findOneBy(['slug' => $slug]);
 
         if (!$post) {
@@ -273,10 +237,6 @@ class PostController
      */
     public function delete(Request $request, Response $response, string $slug) : Response
     {
-        if (!$this->isUserAuthorised()) {
-            return $response->withStatus(403)->withHeader('Location', '/');
-        }
-
         $post = $this->entityManager->getRepository(Post::class)->findOneBy(['slug' => $slug]);
 
         if (!$post) {
