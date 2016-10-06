@@ -141,6 +141,10 @@ code {
   white-space: pre;
 }
 
+code.hljs {
+  background: #fafafa;
+}
+
 label {
   margin: 0 0 0.5rem;
   display: block;
