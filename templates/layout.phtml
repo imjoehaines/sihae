@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="/css/alert-alert.min.css">
     <script src="/js/alert-alert.min.js"></script>
 
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/tomorrow.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+
     <link rel="stylesheet" href="/css/sihae.css">
 
     <title><?= $settings['title'] ?></title>
@@ -59,5 +62,9 @@
             <?php endforeach ?>
         <?php endif ?>
     </main>
+
+    <script>
+        window.hljs.initHighlightingOnLoad()
+    </script>
 </body>
 </html>
