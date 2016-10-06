@@ -17,5 +17,10 @@
         "psr-4": {
             "Sihae\\": "src/"
         }
+    },
+    "require-dev": {
+        "behat/behat": "^3.2",
+        "behat/mink-extension": "^2.2",
+        "behat/mink-goutte-driver": "^1.2"
     }
 }
