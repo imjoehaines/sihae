@@ -88,6 +88,8 @@ class RegistrationController
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
+        $this->session->set('username', $user->getUsername());
+
         $this->flash->addMessage('success', 'Successfully registered!');
 
         return $response->withStatus(302)->withHeader('Location', '/');
