@@ -2,16 +2,16 @@
 <html>
 <head>
     <link rel="stylesheet" href="/css/normalize.css">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
-    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+    <link rel="stylesheet" href="/css/simplemde.min.css">
+    <script src="/js/simplemde.min.js"></script>
 
     <link rel="stylesheet" href="/css/alert-alert.min.css">
     <script src="/js/alert-alert.min.js"></script>
 
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/tomorrow.min.css">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+    <link rel="stylesheet" href="/css/hljs-tomorrow.min.css">
+    <script src="/js/highlight.min.js"></script>
 
     <link rel="stylesheet" href="/css/sihae.css">
 
@@ -31,14 +31,15 @@
                     <i class="fa fa-plus"></i> Add a new post
                 </a></li>
 
-                <?php if ($settings['show_login_link'] === true) : ?>
-                    <li><a href="/logout">
-                        <i class="fa fa-sign-out"></i> Logout
-                    </a></li>
-                <?php endif ?>
-            <?php elseif ($settings['show_login_link'] === true) : ?>
+                <li><a href="/logout">
+                    <i class="fa fa-sign-out"></i> Logout
+                </a></li>
+            <?php else : ?>
                 <li><a href="/login">
                     <i class="fa fa-sign-in"></i> Login
+                </a></li>
+                <li><a href="/register">
+                    <i class="fa fa-user-plus"></i> Create an account
                 </a></li>
             <?php endif ?>
         </ul>
