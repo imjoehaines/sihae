@@ -6,12 +6,12 @@ Feature: Edit a Blog Post
   @database @loginAdmin
   Scenario: Editing a post
     Given there is a post:
-      | title                | body                |
-      | Penny's Perfect Post | Penny's post's text |
+      | title                | body                | date_created        |
+      | Penny's Perfect Post | Penny's post's text | 2016-01-01 00:00:00 |
     And I am on "post/pennys-perfect-post"
     And I should see "Penny's Perfect Post"
     And I should see "Penny's post's text"
-    And I should see text matching "[pP]osted (\d*) second(s?) ago"
+    And I should see text matching "[pP]osted (\d*) (second|month|year)(s?) ago"
     When I follow "Edit this post"
     And I fill in "title" with "Penny's Perfecter Post"
     And I fill in "body" with "Different post text"

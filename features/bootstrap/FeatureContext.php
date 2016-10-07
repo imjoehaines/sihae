@@ -159,8 +159,16 @@ class FeatureContext extends MinkContext implements
             $post->setBody($content['body']);
 
             $this->getEntityManager()->persist($post);
-        }
+            $this->getEntityManager()->flush();
 
-        $this->getEntityManager()->flush();
+            if (isset($content['date_created'])) {
+                $this->getEntityManager()->getConnection()->executeUpdate(
+                    'UPDATE post
+                     SET date_created = :date_created
+                     WHERE title = :title',
+                    [':date_created' => $content['date_created'], ':title' => $content['title']]
+                );
+            }
+        }
     }
 }
