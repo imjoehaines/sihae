@@ -23,9 +23,9 @@ use Sihae\LoginController;
 use Sihae\ArchiveController;
 use Sihae\RegistrationController;
 use Sihae\Middleware\CsrfProvider;
+use Sihae\Middleware\UserProvider;
 use Sihae\Validators\PostValidator;
 use Sihae\Middleware\AuthMiddleware;
-use Sihae\Middleware\SessionProvider;
 use Sihae\Formatters\ArchiveFormatter;
 use Sihae\Middleware\SettingsProvider;
 use Sihae\Middleware\NotFoundMiddleware;
@@ -108,10 +108,11 @@ return function (Container $container) {
         return new Guard();
     };
 
-    $container[SessionProvider::class] = function (Container $container) : SessionProvider {
-        return new SessionProvider(
+    $container[UserProvider::class] = function (Container $container) : UserProvider {
+        return new UserProvider(
             $container->get('renderer'),
-            $container->get(Session::class)
+            $container->get(Session::class),
+            $container->get(EntityManager::class)
         );
     };
 

@@ -29,6 +29,11 @@ class User
     protected $password;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $is_admin;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     protected $date_created;
@@ -38,6 +43,8 @@ class User
         if (!$this->date_created) {
             $this->date_created = new DateTime();
         }
+
+        $this->is_admin = false;
     }
 
     public function getId() : int
@@ -55,6 +62,11 @@ class User
         return $this->password;
     }
 
+    public function getIsAdmin() : bool
+    {
+        return $this->is_admin;
+    }
+
     public function setUsername(string $username) : User
     {
         $this->username = $username;
@@ -65,6 +77,13 @@ class User
     public function setPassword(string $password) : User
     {
         $this->password = password_hash($password, PASSWORD_DEFAULT);
+
+        return $this;
+    }
+
+    public function setIsAdmin(bool $isAdmin) : User
+    {
+        $this->is_admin = $isAdmin;
 
         return $this;
     }

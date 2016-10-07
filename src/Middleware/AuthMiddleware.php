@@ -17,10 +17,10 @@ class AuthMiddleware
 
     public function __invoke(Request $request, Response $response, callable $next) : Response
     {
-        if (empty($this->session->get('username'))) {
-            return $response->withStatus(404);
+        if (isset($this->session->user) && $this->session->user->getIsAdmin() === true) {
+            return $next($request, $response);
         }
 
-        return $next($request, $response);
+        return $response->withStatus(404);
     }
 }

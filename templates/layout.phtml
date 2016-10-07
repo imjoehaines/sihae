@@ -30,10 +30,12 @@
         </ul>
 
         <ul class="admin">
-            <?php if (isset($session) && !empty($session->get('username'))) : ?>
-                <li><a href="/new">
-                    <i class="fa fa-plus"></i> Add a new post
-                </a></li>
+            <?php if (isset($user)) : ?>
+                <?php if ($user->getIsAdmin() === true) : ?>
+                    <li><a href="/new">
+                        <i class="fa fa-plus"></i> Add a new post
+                    </a></li>
+                <?php endif ?>
 
                 <li><a href="/logout">
                     <i class="fa fa-sign-out"></i> Logout

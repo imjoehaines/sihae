@@ -17,7 +17,7 @@
                         Posted <?= $post->getDateCreated()->diffForHumans() ?>
                     </span>
 
-                    <?php if (isset($session) && !empty($session->get('username'))) : ?>
+                    <?php if (isset($user) && $user->getIsAdmin() === true) : ?>
                         <a href="/edit/<?= $post->getSlug() ?>"><i class="fa fa-pencil"></i> Edit this post</a>
                         <a href="/delete/<?= $post->getSlug() ?>"><i class="fa fa-trash"></i> Delete this post</a>
                     <?php endif ?>

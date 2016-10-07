@@ -88,7 +88,8 @@ class RegistrationController
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
-        $this->session->set('username', $user->getUsername());
+        $this->entityManager->detach($user);
+        $this->session->set('user', $user);
 
         $this->flash->addMessage('success', 'Successfully registered!');
 
@@ -107,7 +108,7 @@ class RegistrationController
      */
     public function showForm(Request $request, Response $response) : Response
     {
-        if (!empty($this->session->get('username'))) {
+        if (!empty($this->session->get('user'))) {
             return $response->withStatus(302)->withHeader('Location', '/');
         }
 

@@ -76,7 +76,20 @@ class FeatureContext extends MinkContext implements
     public function login()
     {
         $this->createTestUser();
+        $this->loginTestUser();
+    }
 
+    /**
+     * @BeforeScenario @loginAdmin
+     */
+    public function loginAdmin()
+    {
+        $this->createTestUser(true);
+        $this->loginTestUser();
+    }
+
+    protected function loginTestUser()
+    {
         $this->visit('/login');
         $this->fillField('username', 'testing');
         $this->fillField('password', 'testing');
@@ -86,11 +99,12 @@ class FeatureContext extends MinkContext implements
     /**
      * Adds a test user to the database
      */
-    protected function createTestUser()
+    protected function createTestUser(bool $isAdmin = false)
     {
         $user = new User;
         $user->setUsername('testing');
         $user->setPassword('testing');
+        $user->setIsAdmin($isAdmin);
 
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();

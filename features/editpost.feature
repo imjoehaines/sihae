@@ -3,7 +3,7 @@ Feature: Edit a Blog Post
   I want to be able to edit a blog post
   So that I can fix spelling errors and update posts
 
-  @database @login
+  @database @loginAdmin
   Scenario: Editing a post
     Given there is a post:
       | title                | body                |
