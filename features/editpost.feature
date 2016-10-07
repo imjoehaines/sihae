@@ -8,11 +8,16 @@ Feature: Edit a Blog Post
     Given there is a post:
       | title                | body                |
       | Penny's Perfect Post | Penny's post's text |
-    And I am on "edit/pennys-perfect-post"
-    When I fill in "title" with "Penny's Perfecter Post"
+    And I am on "post/pennys-perfect-post"
+    And I should see "Penny's Perfect Post"
+    And I should see "Penny's post's text"
+    And I should see text matching "[pP]osted (\d*) second(s?) ago"
+    When I follow "Edit this post"
+    And I fill in "title" with "Penny's Perfecter Post"
     And I fill in "body" with "Different post text"
     And I press "submit"
     Then I should be on "post/pennys-perfect-post"
     And I should see "Successfully edited your post!"
     And I should see "Penny's Perfecter Post"
     And I should see "Different post text"
+    And I should see text matching "[eE]dited (\d*) second(s?) ago"
