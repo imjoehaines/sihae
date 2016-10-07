@@ -1,0 +1,13 @@
+<h1>Archive</h1>
+
+<?php foreach ($archiveData as $date => $posts) : ?>
+    <h2><?= $date ?></h2>
+
+    <?php foreach ($posts as $post) : ?>
+        <p><a href="/post/<?= $post->getSlug() ?>">
+            <?= $post->getDateCreated()->format('jS F') ?>
+            &mdash;
+            <?= $post->getTitle() ?>
+        </a></p>
+    <?php endforeach ?>
+<?php endforeach ?>

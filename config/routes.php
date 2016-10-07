@@ -14,6 +14,8 @@ return function (App $app) {
         $this->get('delete/{slug:[a-zA-Z\d\s-_\-]+}', 'Sihae\PostController:delete');
     })->add(AuthMiddleware::class);
 
+    $app->get('/archive', 'Sihae\ArchiveController:index');
+
     $app->get('/post/{slug:[a-zA-Z\d\s-_\-]+}', 'Sihae\PostController:show');
 
     $app->get('/login', 'Sihae\LoginController:showForm');

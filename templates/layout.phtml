@@ -23,7 +23,11 @@
             <h1><a href="/"><?= $settings['title'] ?></a></h1>
         </header>
 
-        <?= $settings['summary'] ?>
+        <p><?= $settings['summary'] ?></p>
+
+        <ul>
+            <li><a href="/archive">Archive</a></li>
+        </ul>
 
         <ul class="admin">
             <?php if (isset($session) && !empty($session->get('username'))) : ?>

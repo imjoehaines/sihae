@@ -20,11 +20,13 @@ use Interop\Container\ContainerInterface as Container;
 
 use Sihae\PostController;
 use Sihae\LoginController;
+use Sihae\ArchiveController;
 use Sihae\RegistrationController;
 use Sihae\Middleware\CsrfProvider;
 use Sihae\Validators\PostValidator;
 use Sihae\Middleware\AuthMiddleware;
 use Sihae\Middleware\SessionProvider;
+use Sihae\Formatters\ArchiveFormatter;
 use Sihae\Middleware\SettingsProvider;
 use Sihae\Middleware\NotFoundMiddleware;
 use Sihae\Middleware\FlashMessageProvider;
@@ -38,6 +40,14 @@ return function (Container $container) {
             $container->get(CommonMarkConverter::class),
             $container->get(Messages::class),
             $container->get(PostValidator::class)
+        );
+    };
+
+    $container[ArchiveController::class] = function (Container $container) : ArchiveController {
+        return new ArchiveController(
+            $container->get('renderer'),
+            $container->get(EntityManager::class),
+            $container->get(ArchiveFormatter::class)
         );
     };
 
@@ -58,6 +68,10 @@ return function (Container $container) {
             $container->get(Messages::class),
             $container->get(Session::class)
         );
+    };
+
+    $container[ArchiveFormatter::class] = function (Container $container) : ArchiveFormatter {
+        return new ArchiveFormatter();
     };
 
     $container[RegistrationValidator::class] = function (Container $container) : RegistrationValidator {
