@@ -18,19 +18,19 @@ use Slim\Interfaces\InvocationStrategyInterface;
 use Slim\Handlers\Strategies\RequestResponseArgs;
 use Interop\Container\ContainerInterface as Container;
 
-use Sihae\PostController;
-use Sihae\LoginController;
-use Sihae\ArchiveController;
-use Sihae\RegistrationController;
 use Sihae\Middleware\CsrfProvider;
 use Sihae\Middleware\UserProvider;
 use Sihae\Validators\PostValidator;
 use Sihae\Middleware\AuthMiddleware;
+use Sihae\Controllers\PostController;
 use Sihae\Formatters\ArchiveFormatter;
 use Sihae\Middleware\SettingsProvider;
+use Sihae\Controllers\LoginController;
+use Sihae\Controllers\ArchiveController;
 use Sihae\Middleware\NotFoundMiddleware;
 use Sihae\Middleware\FlashMessageProvider;
 use Sihae\Validators\RegistrationValidator;
+use Sihae\Controllers\RegistrationController;
 
 return function (Container $container) {
     $container[PostController::class] = function (Container $container) : PostController {

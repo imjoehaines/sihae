@@ -1,6 +1,6 @@
 <?php
 
-namespace Sihae;
+namespace Sihae\Controllers;
 
 use RKA\Session;
 use Sihae\Entities\User;
