@@ -2,17 +2,19 @@
 
 namespace Sihae\Entities;
 
-use DateTime;
-use Carbon\Carbon;
+use Sihae\Timestamps;
 use Doctrine\ORM\Mapping as ORM;
 use function Stringy\create as s;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="post")
+ * @ORM\HasLifecycleCallbacks
  */
 class Post
 {
+    use Timestamps;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -34,18 +36,6 @@ class Post
      * @ORM\Column(type="text")
      */
     protected $body;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    protected $date_created;
-
-    public function __construct()
-    {
-        if (!$this->date_created) {
-            $this->date_created = new DateTime();
-        }
-    }
 
     public function getSummary() : string
     {
@@ -70,11 +60,6 @@ class Post
     public function getBody() : string
     {
         return $this->body;
-    }
-
-    public function getDateCreated() : Carbon
-    {
-        return Carbon::instance($this->date_created);
     }
 
     public function setTitle(string $title) : Post

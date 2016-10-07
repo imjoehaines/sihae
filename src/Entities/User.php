@@ -2,15 +2,18 @@
 
 namespace Sihae\Entities;
 
-use DateTime;
+use Sihae\Timestamps;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="user")
+ * @ORM\HasLifecycleCallbacks
  */
 class User
 {
+    use Timestamps;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -31,21 +34,7 @@ class User
     /**
      * @ORM\Column(type="boolean")
      */
-    protected $is_admin;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    protected $date_created;
-
-    public function __construct()
-    {
-        if (!$this->date_created) {
-            $this->date_created = new DateTime();
-        }
-
-        $this->is_admin = false;
-    }
+    protected $is_admin = false;
 
     public function getId() : int
     {
