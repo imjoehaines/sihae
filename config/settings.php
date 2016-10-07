@@ -18,7 +18,7 @@ return [
         ],
 
         'doctrine' => [
-            'entity_path' => ['src/'],
+            'entity_path' => ['src/Entities'],
             'auto_generate_proxies' => true,
             'proxy_dir' =>  __DIR__ . '/../data/cache/proxies',
             'cache' => null,
