@@ -13,9 +13,17 @@
                 </div>
 
                 <small class="post-date">
-                    <span title="<?= $post->getDateCreated()->format('jS \o\f F Y \a\t g:ia') ?>">
-                        Posted <?= $post->getDateCreated()->diffForHumans() ?>
-                    </span>
+                    Posted
+                    <abbr title="<?= $post->getDateCreated()->format('jS \o\f F Y \a\t g:ia') ?>">
+                        <?= $post->getDateCreated()->diffForHumans() ?>
+                    </abbr>
+
+                    <?php if ($post->hasBeenModified()) : ?>
+                        and edited
+                        <abbr title="<?= $post->getDateModified()->format('jS \o\f F Y \a\t g:ia') ?>">
+                            <?= $post->getDateModified()->diffForHumans() ?>
+                        </abbr>
+                    <?php endif ?>
 
                     <?php if (isset($user) && $user->getIsAdmin() === true) : ?>
                         <a href="/edit/<?= $post->getSlug() ?>"><i class="fa fa-pencil"></i> Edit this post</a>
