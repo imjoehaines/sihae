@@ -18,17 +18,19 @@ use Slim\Interfaces\InvocationStrategyInterface;
 use Slim\Handlers\Strategies\RequestResponseArgs;
 use Interop\Container\ContainerInterface as Container;
 
-use Sihae\PostController;
-use Sihae\LoginController;
-use Sihae\RegistrationController;
 use Sihae\Middleware\CsrfProvider;
+use Sihae\Middleware\UserProvider;
 use Sihae\Validators\PostValidator;
 use Sihae\Middleware\AuthMiddleware;
-use Sihae\Middleware\SessionProvider;
+use Sihae\Controllers\PostController;
+use Sihae\Formatters\ArchiveFormatter;
 use Sihae\Middleware\SettingsProvider;
+use Sihae\Controllers\LoginController;
+use Sihae\Controllers\ArchiveController;
 use Sihae\Middleware\NotFoundMiddleware;
 use Sihae\Middleware\FlashMessageProvider;
 use Sihae\Validators\RegistrationValidator;
+use Sihae\Controllers\RegistrationController;
 
 return function (Container $container) {
     $container[PostController::class] = function (Container $container) : PostController {
@@ -38,6 +40,14 @@ return function (Container $container) {
             $container->get(CommonMarkConverter::class),
             $container->get(Messages::class),
             $container->get(PostValidator::class)
+        );
+    };
+
+    $container[ArchiveController::class] = function (Container $container) : ArchiveController {
+        return new ArchiveController(
+            $container->get('renderer'),
+            $container->get(EntityManager::class),
+            $container->get(ArchiveFormatter::class)
         );
     };
 
@@ -58,6 +68,10 @@ return function (Container $container) {
             $container->get(Messages::class),
             $container->get(Session::class)
         );
+    };
+
+    $container[ArchiveFormatter::class] = function (Container $container) : ArchiveFormatter {
+        return new ArchiveFormatter();
     };
 
     $container[RegistrationValidator::class] = function (Container $container) : RegistrationValidator {
@@ -94,10 +108,11 @@ return function (Container $container) {
         return new Guard();
     };
 
-    $container[SessionProvider::class] = function (Container $container) : SessionProvider {
-        return new SessionProvider(
+    $container[UserProvider::class] = function (Container $container) : UserProvider {
+        return new UserProvider(
             $container->get('renderer'),
-            $container->get(Session::class)
+            $container->get(Session::class),
+            $container->get(EntityManager::class)
         );
     };
 

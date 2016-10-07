@@ -1,6 +1,6 @@
 <?php
 
-namespace Sihae;
+namespace Sihae\Controllers;
 
 use Sihae\Entities\Post;
 use Slim\Flash\Messages;

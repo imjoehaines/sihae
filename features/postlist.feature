@@ -17,6 +17,7 @@ Feature: Blog Post List
     Then I should see "Penny's Perfect Post"
     And I should see "Penny's post's text"
     And I should see text matching "[pP]osted (\d*) second(s?) ago"
+    And I should not see text matching "[eE]dited (\d*) second(s?) ago"
     And I should see "Newer Posts"
     And I should see text matching "Page (\d*) of (\d*)"
     And I should see "Older Posts"

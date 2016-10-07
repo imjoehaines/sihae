@@ -2,15 +2,18 @@
 
 namespace Sihae\Entities;
 
-use DateTime;
+use Sihae\Timestamps;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="user")
+ * @ORM\HasLifecycleCallbacks
  */
 class User
 {
+    use Timestamps;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -29,16 +32,9 @@ class User
     protected $password;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="boolean")
      */
-    protected $date_created;
-
-    public function __construct()
-    {
-        if (!$this->date_created) {
-            $this->date_created = new DateTime();
-        }
-    }
+    protected $is_admin = false;
 
     public function getId() : int
     {
@@ -55,6 +51,11 @@ class User
         return $this->password;
     }
 
+    public function getIsAdmin() : bool
+    {
+        return $this->is_admin;
+    }
+
     public function setUsername(string $username) : User
     {
         $this->username = $username;
@@ -65,6 +66,13 @@ class User
     public function setPassword(string $password) : User
     {
         $this->password = password_hash($password, PASSWORD_DEFAULT);
+
+        return $this;
+    }
+
+    public function setIsAdmin(bool $isAdmin) : User
+    {
+        $this->is_admin = $isAdmin;
 
         return $this;
     }

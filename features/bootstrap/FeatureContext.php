@@ -35,15 +35,39 @@ class FeatureContext extends MinkContext implements
     {
         $connection = $this->getEntityManager()->getConnection();
 
-        $connection->query('PRAGMA foreign_keys = OFF');
+        switch (getenv('DB_DRIVER')) {
+            case 'pdo_mysql':
+                $connection->query('SET foreign_key_checks = 0');
 
-        $tables = $connection->query('SELECT name FROM sqlite_master WHERE type = "table";')->fetchAll();
+                $tables = $connection->executeQuery(
+                    'SELECT table_name
+                     FROM information_schema.tables
+                     WHERE table_schema = :db_name',
+                    ['db_name' => getenv('DB_NAME')]
+                )->fetchAll();
 
-        foreach ($tables as $table) {
-            $connection->query('DELETE FROM ' . $table['name']);
+                foreach ($tables as $table) {
+                    $connection->query('TRUNCATE TABLE ' . $table['table_name']);
+                }
+
+                $connection->query('SET foreign_key_checks = 1');
+                break;
+
+            case 'pdo_sqlite':
+                $connection->query('PRAGMA foreign_keys = OFF');
+
+                $tables = $connection->query('SELECT name FROM sqlite_master WHERE type = "table";')->fetchAll();
+
+                foreach ($tables as $table) {
+                    $connection->query('DELETE FROM ' . $table['name']);
+                }
+
+                $connection->query('PRAGMA foreign_keys = ON');
+                break;
+
+            default:
+                throw new PendingException();
         }
-
-        $connection->query('PRAGMA foreign_keys = ON');
     }
 
     /**
@@ -52,7 +76,20 @@ class FeatureContext extends MinkContext implements
     public function login()
     {
         $this->createTestUser();
+        $this->loginTestUser();
+    }
 
+    /**
+     * @BeforeScenario @loginAdmin
+     */
+    public function loginAdmin()
+    {
+        $this->createTestUser(true);
+        $this->loginTestUser();
+    }
+
+    protected function loginTestUser()
+    {
         $this->visit('/login');
         $this->fillField('username', 'testing');
         $this->fillField('password', 'testing');
@@ -62,11 +99,12 @@ class FeatureContext extends MinkContext implements
     /**
      * Adds a test user to the database
      */
-    protected function createTestUser()
+    protected function createTestUser(bool $isAdmin = false)
     {
         $user = new User;
         $user->setUsername('testing');
         $user->setPassword('testing');
+        $user->setIsAdmin($isAdmin);
 
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
@@ -121,8 +159,16 @@ class FeatureContext extends MinkContext implements
             $post->setBody($content['body']);
 
             $this->getEntityManager()->persist($post);
-        }
+            $this->getEntityManager()->flush();
 
-        $this->getEntityManager()->flush();
+            if (isset($content['date_created'])) {
+                $this->getEntityManager()->getConnection()->executeUpdate(
+                    'UPDATE post
+                     SET date_created = :date_created
+                     WHERE title = :title',
+                    [':date_created' => $content['date_created'], ':title' => $content['title']]
+                );
+            }
+        }
     }
 }

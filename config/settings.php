@@ -1,5 +1,8 @@
 <?php
 
+$dotenv = new Dotenv\Dotenv(__DIR__ . '/..');
+$dotenv->load();
+
 return [
     'settings' => [
         'sihae' => [
@@ -23,12 +26,12 @@ return [
             'proxy_dir' =>  __DIR__ . '/../data/cache/proxies',
             'cache' => null,
             'connection' => [
-                'driver' => 'pdo_sqlite',
-                'path' => __DIR__ . '/../database.sq3',
-                'host' => null,
-                'dbname' => null,
-                'user' => null,
-                'password' => null,
+                'driver' => getenv('DB_DRIVER') ?: 'pdo_mysql',
+                'path' => getenv('DB_PATH') ?: __DIR__ . '/../data/database.sq3',
+                'host' => getenv('DB_HOST') ?: 'localhost',
+                'dbname' => getenv('DB_NAME') ?: 'sihae',
+                'user' => getenv('DB_USER') ?: 'root',
+                'password' => getenv('DB_PASSWORD') ?: '',
             ],
         ],
 

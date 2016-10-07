@@ -1,6 +1,6 @@
 <?php
 
-namespace Sihae;
+namespace Sihae\Controllers;
 
 use RKA\Session;
 use Sihae\Entities\User;
@@ -72,7 +72,8 @@ class LoginController
             ]);
         }
 
-        $this->session->set('username', $user->getUsername());
+        $this->entityManager->detach($user);
+        $this->session->set('user', $user);
 
         $this->flash->addMessage('success', 'Welcome back ' . $user->getUsername());
 
