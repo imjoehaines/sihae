@@ -5,7 +5,6 @@ return [
         'sihae' => [
             'title' => 'Sihae',
             'summary' => 'Welcome to your Sihae blog',
-            'show_login_link' => true,
         ],
 
         // markdown settings

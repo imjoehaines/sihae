@@ -31,12 +31,10 @@
                     <i class="fa fa-plus"></i> Add a new post
                 </a></li>
 
-                <?php if ($settings['show_login_link'] === true) : ?>
-                    <li><a href="/logout">
-                        <i class="fa fa-sign-out"></i> Logout
-                    </a></li>
-                <?php endif ?>
-            <?php elseif ($settings['show_login_link'] === true) : ?>
+                <li><a href="/logout">
+                    <i class="fa fa-sign-out"></i> Logout
+                </a></li>
+            <?php else : ?>
                 <li><a href="/login">
                     <i class="fa fa-sign-in"></i> Login
                 </a></li>
