@@ -35,15 +35,39 @@ class FeatureContext extends MinkContext implements
     {
         $connection = $this->getEntityManager()->getConnection();
 
-        $connection->query('PRAGMA foreign_keys = OFF');
+        switch (getenv('DB_DRIVER')) {
+            case 'pdo_mysql':
+                $connection->query('SET foreign_key_checks = 0');
 
-        $tables = $connection->query('SELECT name FROM sqlite_master WHERE type = "table";')->fetchAll();
+                $tables = $connection->executeQuery(
+                    'SELECT table_name
+                     FROM information_schema.tables
+                     WHERE table_schema = :db_name',
+                    ['db_name' => getenv('DB_NAME')]
+                )->fetchAll();
 
-        foreach ($tables as $table) {
-            $connection->query('DELETE FROM ' . $table['name']);
+                foreach ($tables as $table) {
+                    $connection->query('TRUNCATE TABLE ' . $table['table_name']);
+                }
+
+                $connection->query('SET foreign_key_checks = 1');
+                break;
+
+            case 'pdo_sqlite':
+                $connection->query('PRAGMA foreign_keys = OFF');
+
+                $tables = $connection->query('SELECT name FROM sqlite_master WHERE type = "table";')->fetchAll();
+
+                foreach ($tables as $table) {
+                    $connection->query('DELETE FROM ' . $table['name']);
+                }
+
+                $connection->query('PRAGMA foreign_keys = ON');
+                break;
+
+            default:
+                throw new PendingException();
         }
-
-        $connection->query('PRAGMA foreign_keys = ON');
     }
 
     /**
