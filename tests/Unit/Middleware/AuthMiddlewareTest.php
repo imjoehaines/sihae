@@ -31,6 +31,8 @@ class AuthMiddlewareTest extends TestCase
 
         $expected = 404;
         $actual = $authMiddleware($request->reveal(), new Response, $next)->getStatusCode();
+
+        $this->assertSame($expected, $actual);
     }
 
     public function testIt404sWhenLoggedInButNotAnAdmin()
@@ -53,6 +55,8 @@ class AuthMiddlewareTest extends TestCase
 
         $expected = 404;
         $actual = $authMiddleware($request->reveal(), new Response, $next)->getStatusCode();
+
+        $this->assertSame($expected, $actual);
     }
 
     public function testItCallsNextWhenAnAdminIsLoggedIn()

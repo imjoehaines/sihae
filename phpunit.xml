@@ -1,4 +1,4 @@
-<phpunit>
+<phpunit beStrictAboutTestsThatDoNotTestAnything="true">
   <filter>
     <whitelist>
       <directory suffix=".php">./src</directory>
