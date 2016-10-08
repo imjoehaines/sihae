@@ -12,7 +12,11 @@ before_script:
   - php vendor/bin/doctrine orm:schema-tool:create
 
 script:
-  - composer test
+  - composer test:coverage
+  - composer test:acceptance
+
+after_success:
+  - php vendor/bin/coveralls -v
 
 matrix:
   allow_failures:
