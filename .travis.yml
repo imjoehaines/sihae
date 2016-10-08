@@ -16,7 +16,7 @@ script:
   - composer test:acceptance
 
 after_success:
-  - php vendor/bin/coveralls -v
+  - php vendor/bin/coveralls -v -x tests/_output/coverage.xml
 
 matrix:
   allow_failures:
