@@ -16,9 +16,7 @@ use Behat\Behat\Tester\Exception\PendingException;
 /**
  * Defines application features from the specific context.
  */
-class FeatureContext extends MinkContext implements
-    Context,
-    SnippetAcceptingContext
+class FeatureContext extends MinkContext implements Context, SnippetAcceptingContext
 {
     protected $entityManager;
 
