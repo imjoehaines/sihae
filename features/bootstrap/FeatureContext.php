@@ -163,7 +163,7 @@ class FeatureContext extends MinkContext implements
     public function thereAreSomePosts(TableNode $posts)
     {
         $posts = $posts->getHash();
-        $user = $this->entityManager->getRepository(User::class)->findOneBy(['username' => 'testing']);
+        $user = $this->getEntityManager()->getRepository(User::class)->findOneBy(['username' => 'testing']);
 
         foreach ($posts as $content) {
             $post = new Post;
