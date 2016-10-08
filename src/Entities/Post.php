@@ -37,6 +37,12 @@ class Post
      */
     protected $body;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="posts")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     */
+    protected $user;
+
     public function getSummary() : string
     {
         return s($this->body)->safeTruncate(450, '…');
@@ -62,6 +68,11 @@ class Post
         return $this->body;
     }
 
+    public function getUser() : User
+    {
+        return $this->user;
+    }
+
     public function setTitle(string $title) : Post
     {
         $this->title = $title;
@@ -76,6 +87,13 @@ class Post
     public function setBody(string $body) : Post
     {
         $this->body = $body;
+
+        return $this;
+    }
+
+    public function setUser(User $user) : Post
+    {
+        $this->user = $user;
 
         return $this;
     }
