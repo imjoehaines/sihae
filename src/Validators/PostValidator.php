@@ -6,6 +6,7 @@ use Schemer\Validator as V;
 
 class PostValidator implements Validator
 {
+    private $validator;
     private $errors = [];
 
     public function __construct()
