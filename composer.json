@@ -25,7 +25,12 @@
             "Sihae\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Sihae\\Tests\\": "tests/"
+        }
+    },
     "scripts": {
-        "test": "behat --colors"
+        "test": "behat --colors -v"
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+namespace Sihae\Tests\Features;
+
 use Sihae\Entities\User;
 use Sihae\Entities\Post;
 use Doctrine\ORM\Tools\Setup;

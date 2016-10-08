@@ -1,5 +1,8 @@
-# behat.yml
 default:
+  suites:
+    all:
+      paths: [tests/Features]
+      contexts: [Sihae\Tests\Features\FeatureContext]
   extensions:
     Behat\MinkExtension:
       base_url:  'http://localhost:8000'
