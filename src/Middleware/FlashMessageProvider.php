@@ -7,6 +7,9 @@ use Slim\Views\PhpRenderer;
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
+/**
+ * Provides flash messages to the PhpRenderer
+ */
 class FlashMessageProvider
 {
     /**
@@ -30,6 +33,8 @@ class FlashMessageProvider
     }
 
     /**
+     * Provide any flash messages to the PhpRenderer
+     *
      * @param Request $request
      * @param Response $response
      * @param callable $next

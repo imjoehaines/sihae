@@ -6,6 +6,10 @@ use RKA\Session;
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
+/**
+ * Checks the user in the current session is an admin, if they are not a 404
+ * will be returned
+ */
 class AuthMiddleware
 {
     /**

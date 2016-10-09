@@ -7,6 +7,9 @@ use Slim\Views\PhpRenderer;
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
+/**
+ * Provides data for CSRF protection to the PhpRenderer
+ */
 class CsrfProvider
 {
     /**
@@ -30,6 +33,8 @@ class CsrfProvider
     }
 
     /**
+     * Provide data for CSRF protection to the PhpRenderer
+     *
      * @param Request $request
      * @param Response $response
      * @param callable $next

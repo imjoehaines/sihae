@@ -8,6 +8,9 @@ use Doctrine\ORM\EntityManager;
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
+/**
+ * Provides the logged in user to the PhpRenderer
+ */
 class UserProvider
 {
     /**
@@ -38,6 +41,8 @@ class UserProvider
     }
 
     /**
+     * Provide the logged in user to the PhpRenderer
+     *
      * @param Request $request
      * @param Response $response
      * @param callable $next

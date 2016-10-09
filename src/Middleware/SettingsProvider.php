@@ -6,6 +6,9 @@ use Slim\Views\PhpRenderer;
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
+/**
+ * Provides the Sihae settings to the PhpRenderer
+ */
 class SettingsProvider
 {
     /**
@@ -29,6 +32,8 @@ class SettingsProvider
     }
 
     /**
+     * Provide the Sihae settings to the PhpRenderer
+     *
      * @param Request $request
      * @param Response $response
      * @param callable $next
