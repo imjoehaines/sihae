@@ -7,8 +7,19 @@ use Schemer\Formatter as F;
 
 class RegistrationValidator implements Validator
 {
+    /**
+     * @var Validator
+     */
     private $validator;
+
+    /**
+     * @var Formatter
+     */
     private $formatter;
+
+    /**
+     * @var array
+     */
     private $errors = [];
 
     public function __construct()
@@ -35,6 +46,10 @@ class RegistrationValidator implements Validator
         ]);
     }
 
+    /**
+     * @param array $userDetails
+     * @return boolean
+     */
     public function isValid(array $userDetails) : bool
     {
         $detailsToValidate = $this->formatter->format($userDetails);
@@ -45,6 +60,9 @@ class RegistrationValidator implements Validator
         return !$result->isError();
     }
 
+    /**
+     * @return array
+     */
     public function getErrors() : array
     {
         return $this->errors;

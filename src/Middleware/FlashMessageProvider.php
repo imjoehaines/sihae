@@ -9,15 +9,32 @@ use Psr\Http\Message\ResponseInterface as Response;
 
 class FlashMessageProvider
 {
+    /**
+     * @var PhpRenderer
+     */
     private $renderer;
+
+    /**
+     * @var Messages
+     */
     private $flash;
 
+    /**
+     * @param PhpRenderer $renderer
+     * @param Messages $flash
+     */
     public function __construct(PhpRenderer $renderer, Messages $flash)
     {
         $this->renderer = $renderer;
         $this->flash = $flash;
     }
 
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @param callable $next
+     * @return Response
+     */
     public function __invoke(Request $request, Response $response, callable $next) : Response
     {
         $this->renderer->addAttribute('flash_messages', $this->flash->getMessages());

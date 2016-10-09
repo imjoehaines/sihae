@@ -22,8 +22,14 @@ class ArchiveController
     private $entityManager;
 
     /**
+     * @var Formatter
+     */
+    private $formatter;
+
+    /**
      * @param PhpRenderer $renderer
      * @param EntityManager $entityManager
+     * @param Formatter $formatter
      */
     public function __construct(
         PhpRenderer $renderer,
