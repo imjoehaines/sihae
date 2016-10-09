@@ -1,6 +1,6 @@
 <?php
 
-namespace Sihae;
+namespace Sihae\Entities\Traits;
 
 use DateTime;
 use Carbon\Carbon;

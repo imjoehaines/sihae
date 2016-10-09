@@ -2,9 +2,9 @@
 
 namespace Sihae\Entities;
 
-use Sihae\Timestamps;
 use Doctrine\ORM\Mapping as ORM;
 use function Stringy\create as s;
+use Sihae\Entities\Traits\Timestamps;
 
 /**
  * @ORM\Entity

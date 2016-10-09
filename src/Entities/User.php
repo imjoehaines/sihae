@@ -2,8 +2,8 @@
 
 namespace Sihae\Entities;
 
-use Sihae\Timestamps;
 use Doctrine\ORM\Mapping as ORM;
+use Sihae\Entities\Traits\Timestamps;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
