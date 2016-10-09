@@ -48,6 +48,9 @@ class User
         $this->posts = new ArrayCollection;
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function getId() : int
     {
         return $this->id;

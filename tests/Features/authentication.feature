@@ -7,6 +7,7 @@ Feature: Authentication
     Given I am on the homepage
     Then I should not see "Add a new post"
 
+  @database
   Scenario: Logged in as non-admin
     Given I am logged in
     And I am on the homepage
