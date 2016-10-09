@@ -398,4 +398,50 @@ class PostControllerTest extends TestCase
         $prophet->checkPredictions();
         unset($_SESSION);
     }
+
+    public function testStoreRendersTheCreateFormWhenThePostIsInvalid()
+    {
+        $prophet = new Prophet();
+
+        $renderer = $prophet->prophesize(PhpRenderer::class);
+        $entityManager = $prophet->prophesize(EntityManager::class);
+        $markdown = $prophet->prophesize(CommonMarkConverter::class);
+        $flash = $prophet->prophesize(Messages::class);
+        $validator = $prophet->prophesize(Validator::class);
+
+        $postArray = ['title' => 'a', 'body' => 'b'];
+
+        $request = $prophet->prophesize(Request::class);
+        $request->getParsedBody()->shouldBeCalled()->willReturn($postArray);
+
+        $validator->isValid($postArray)->shouldBeCalled()->willReturn(false);
+        $validator->getErrors()->shouldBeCalled()->willReturn(['naughty']);
+
+        $post = new Post();
+        $post->setTitle('a');
+        $post->setBody('b');
+
+        $response = new Response();
+
+        $renderer->render($response, 'layout.phtml', [
+            'page' => 'post-form',
+            'post' => $post,
+            'errors' => ['naughty'],
+        ])->shouldBeCalled()->willReturn($response);
+
+        $postController = new PostController(
+            $renderer->reveal(),
+            $entityManager->reveal(),
+            $markdown->reveal(),
+            $flash->reveal(),
+            $validator->reveal(),
+            new Session()
+        );
+
+        $actual = $postController->store($request->reveal(), $response);
+
+        $this->assertSame(200, $actual->getStatusCode());
+
+        $prophet->checkPredictions();
+    }
 }
