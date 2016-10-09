@@ -40,10 +40,9 @@ class ArchiveController
      *
      * @param Request $request
      * @param Response $response
-     * @param integer $page
      * @return Response
      */
-    public function index(Request $request, Response $response, int $page = 1) : Response
+    public function index(Request $request, Response $response) : Response
     {
         $postRepository = $this->entityManager->getRepository(Post::class);
 
