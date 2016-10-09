@@ -28,14 +28,14 @@ class LoginControllerTest extends TestCase
         $renderer->render($response, 'layout.phtml', ['page' => 'login'])
             ->shouldBeCalled()->willReturn($response->reveal());
 
-        $postController = new LoginController(
+        $loginController = new LoginController(
             $renderer->reveal(),
             $entityManager->reveal(),
             $flash->reveal(),
             new Session()
         );
 
-        $actual = $postController->showForm($request->reveal(), $response->reveal());
+        $actual = $loginController->showForm($request->reveal(), $response->reveal());
 
         $this->assertSame($response->reveal(), $actual);
 
