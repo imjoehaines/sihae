@@ -1,5 +1,7 @@
 <?php
 
+namespace Sihae\Tests\Features;
+
 use Sihae\Entities\User;
 use Sihae\Entities\Post;
 use Doctrine\ORM\Tools\Setup;
@@ -14,9 +16,7 @@ use Behat\Behat\Tester\Exception\PendingException;
 /**
  * Defines application features from the specific context.
  */
-class FeatureContext extends MinkContext implements
-    Context,
-    SnippetAcceptingContext
+class FeatureContext extends MinkContext implements Context, SnippetAcceptingContext
 {
     protected $entityManager;
 
@@ -84,8 +84,19 @@ class FeatureContext extends MinkContext implements
      */
     public function loginAdmin()
     {
-        $this->createTestUser(true);
+        $this->createTestAdmin();
         $this->loginTestUser();
+    }
+
+    public function createTestAdmin()
+    {
+        $user = new User;
+        $user->setUsername('testing');
+        $user->setPassword('testing');
+        $user->setIsAdmin(true);
+
+        $this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();
     }
 
     protected function loginTestUser()
@@ -98,13 +109,14 @@ class FeatureContext extends MinkContext implements
 
     /**
      * Adds a test user to the database
+     *
+     * @BeforeScenario @createUser
      */
-    protected function createTestUser(bool $isAdmin = false)
+    public function createTestUser()
     {
         $user = new User;
         $user->setUsername('testing');
         $user->setPassword('testing');
-        $user->setIsAdmin($isAdmin);
 
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
@@ -151,12 +163,14 @@ class FeatureContext extends MinkContext implements
     public function thereAreSomePosts(TableNode $posts)
     {
         $posts = $posts->getHash();
+        $user = $this->getEntityManager()->getRepository(User::class)->findOneBy(['username' => 'testing']);
 
         foreach ($posts as $content) {
             $post = new Post;
 
             $post->setTitle($content['title']);
             $post->setBody($content['body']);
+            $post->setUser($user);
 
             $this->getEntityManager()->persist($post);
             $this->getEntityManager()->flush();

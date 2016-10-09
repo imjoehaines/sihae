@@ -12,9 +12,14 @@ before_script:
   - php vendor/bin/doctrine orm:schema-tool:create
 
 script:
-  - composer test
+  - composer test:coverage
+  - composer test:acceptance
+
+after_success:
+  - php vendor/bin/coveralls -v -x tests/_output/coverage.xml
 
 matrix:
+  fast_finish: true
   allow_failures:
     - php: 7.1
     - php: nightly

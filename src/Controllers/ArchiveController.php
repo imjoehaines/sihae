@@ -22,8 +22,14 @@ class ArchiveController
     private $entityManager;
 
     /**
+     * @var Formatter
+     */
+    private $formatter;
+
+    /**
      * @param PhpRenderer $renderer
      * @param EntityManager $entityManager
+     * @param Formatter $formatter
      */
     public function __construct(
         PhpRenderer $renderer,
@@ -40,10 +46,9 @@ class ArchiveController
      *
      * @param Request $request
      * @param Response $response
-     * @param integer $page
      * @return Response
      */
-    public function index(Request $request, Response $response, int $page = 1) : Response
+    public function index(Request $request, Response $response) : Response
     {
         $postRepository = $this->entityManager->getRepository(Post::class);
 

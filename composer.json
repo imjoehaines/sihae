@@ -18,14 +18,25 @@
     "require-dev": {
         "behat/behat": "^3.2",
         "behat/mink-extension": "^2.2",
-        "behat/mink-goutte-driver": "^1.2"
+        "behat/mink-goutte-driver": "^1.2",
+        "phpunit/phpunit": "^5.6",
+        "phpspec/prophecy": "^1.6",
+        "satooshi/php-coveralls": "^1.0"
     },
     "autoload": {
         "psr-4": {
             "Sihae\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Sihae\\Tests\\": "tests/"
+        }
+    },
     "scripts": {
-        "test": "behat --colors"
+        "test": "composer test:unit ; composer test:acceptance",
+        "test:acceptance": "behat --colors -v",
+        "test:unit": "phpunit tests/Unit",
+        "test:coverage": "phpunit tests/Unit --coverage-clover ./tests/_output/coverage.xml"
     }
 }

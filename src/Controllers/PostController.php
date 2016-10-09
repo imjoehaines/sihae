@@ -2,6 +2,7 @@
 
 namespace Sihae\Controllers;
 
+use RKA\Session;
 use Sihae\Entities\Post;
 use Slim\Flash\Messages;
 use Slim\Views\PhpRenderer;
@@ -39,25 +40,32 @@ class PostController
     private $validator;
 
     /**
+     * @var Session
+     */
+    private $session;
+
+    /**
      * @param PhpRenderer $renderer
      * @param EntityManager $entityManager
      * @param CommonMarkConverter $markdown
      * @param Messages $flash
-     * @param Session $session
      * @param Validator $validator
+     * @param Session $session
      */
     public function __construct(
         PhpRenderer $renderer,
         EntityManager $entityManager,
         CommonMarkConverter $markdown,
         Messages $flash,
-        Validator $validator
+        Validator $validator,
+        Session $session
     ) {
         $this->renderer = $renderer;
         $this->entityManager = $entityManager;
         $this->markdown = $markdown;
         $this->flash = $flash;
         $this->validator = $validator;
+        $this->session = $session;
     }
 
     /**
@@ -132,6 +140,9 @@ class PostController
                 'errors' => $this->validator->getErrors(),
             ]);
         }
+
+        $user = $this->entityManager->merge($this->session->get('user'));
+        $post->setUser($user);
 
         $this->entityManager->persist($post);
         $this->entityManager->flush();

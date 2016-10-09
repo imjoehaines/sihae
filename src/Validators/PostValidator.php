@@ -6,6 +6,14 @@ use Schemer\Validator as V;
 
 class PostValidator implements Validator
 {
+    /**
+     * @var Validator
+     */
+    private $validator;
+
+    /**
+     * @var array
+     */
     private $errors = [];
 
     public function __construct()
@@ -16,6 +24,10 @@ class PostValidator implements Validator
         ]);
     }
 
+    /**
+     * @param array $postDetails
+     * @return boolean
+     */
     public function isValid(array $postDetails) : bool
     {
         $result = $this->validator->validate($postDetails);
@@ -25,6 +37,9 @@ class PostValidator implements Validator
         return !$result->isError();
     }
 
+    /**
+     * @return array
+     */
     public function getErrors() : array
     {
         return $this->errors;

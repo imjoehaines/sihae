@@ -2,8 +2,10 @@
 
 namespace Sihae\Entities;
 
-use Sihae\Timestamps;
 use Doctrine\ORM\Mapping as ORM;
+use Sihae\Entities\Traits\Timestamps;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
@@ -36,6 +38,16 @@ class User
      */
     protected $is_admin = false;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Post", mappedBy="user")
+     */
+    protected $posts;
+
+    public function __construct()
+    {
+        $this->posts = new ArrayCollection;
+    }
+
     public function getId() : int
     {
         return $this->id;
@@ -54,6 +66,11 @@ class User
     public function getIsAdmin() : bool
     {
         return $this->is_admin;
+    }
+
+    public function getPosts() : Collection
+    {
+        return $this->posts;
     }
 
     public function setUsername(string $username) : User

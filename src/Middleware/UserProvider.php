@@ -8,10 +8,31 @@ use Doctrine\ORM\EntityManager;
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
+/**
+ * Provides the logged in user to the PhpRenderer
+ */
 class UserProvider
 {
+    /**
+     * @var PhpRenderer
+     */
     private $renderer;
 
+    /**
+     * @var Session
+     */
+    private $session;
+
+    /**
+     * @var EntityManager
+     */
+    private $entityManager;
+
+    /**
+     * @param PhpRenderer $renderer
+     * @param Session $session
+     * @param EntityManager $entityManager
+     */
     public function __construct(PhpRenderer $renderer, Session $session, EntityManager $entityManager)
     {
         $this->renderer = $renderer;
@@ -19,6 +40,14 @@ class UserProvider
         $this->entityManager = $entityManager;
     }
 
+    /**
+     * Provide the logged in user to the PhpRenderer
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param callable $next
+     * @return Response
+     */
     public function __invoke(Request $request, Response $response, callable $next) : Response
     {
         if ($user = $this->session->get('user')) {

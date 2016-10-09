@@ -8,7 +8,7 @@ Feature: Blog Post List
     Given I am on the homepage
     Then I should see "There aren't any posts!"
 
-  @database
+  @database @createUser
   Scenario: Visiting a Sihae blog with a single blog post
     Given there is a post:
       | title                | body                |
@@ -22,7 +22,7 @@ Feature: Blog Post List
     And I should see text matching "Page (\d*) of (\d*)"
     And I should see "Older Posts"
 
-  @database
+  @database @createUser
   Scenario: Visiting a Sihae blog with multiple blog posts
     Given there are some posts:
       | title                | body                |
@@ -37,15 +37,15 @@ Feature: Blog Post List
     And I should see "Penny's Premium Post"
     And I should see "Some more text"
 
-  @database
+  @database @createUser
   Scenario: Visiting a Sihae blog with multiple pages of blog posts
     Given there are some posts:
-      | title                   | body                |
-      | Penny's Perfect Post    | Penny's post's text |
-      | Penny's Alright Post    | Another post's text |
-      | Penny's Premium Post    | Some more text      |
-      | Penny's P-repetive Post | Yet more text       |
-      | Penny pls stop          | And more text       |
+      | title                   | body                | date_created        |
+      | Penny's Perfect Post    | Penny's post's text | 2016-01-05 00:00:00 |
+      | Penny's Alright Post    | Another post's text | 2016-01-04 00:00:00 |
+      | Penny's Premium Post    | Some more text      | 2016-01-03 00:00:00 |
+      | Penny's P-repetive Post | Yet more text       | 2016-01-02 00:00:00 |
+      | Penny pls stop          | And more text       | 2016-01-01 00:00:00 |
     And I am on the homepage
     Then I should see "Penny's Perfect Post"
     And I should see "Penny's Alright Post"

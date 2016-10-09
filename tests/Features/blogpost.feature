@@ -3,7 +3,7 @@ Feature: Blog Post
   I want to be able to read a single blog post
   So that I can share my thoughts
 
-  @database
+  @database @createUser
   Scenario: Reading a Sihae blog post
     Given there is a post:
       | title       | body                                                                      |
