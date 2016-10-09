@@ -11,6 +11,8 @@ use Slim\Flash\Messages;
 use Sihae\Entities\Post;
 use Sihae\Entities\User;
 use Slim\Views\PhpRenderer;
+use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\AbstractQuery;
 use Sihae\Validators\Validator;
 use Doctrine\ORM\EntityManager;
 use PHPUnit\Framework\TestCase;
@@ -497,5 +499,63 @@ class PostControllerTest extends TestCase
         $this->assertSame(['Location' => ['/post/a']], $actual->getHeaders());
 
         $prophet->checkPredictions();
+        unset($_SESSION);
+    }
+
+    public function testIndex()
+    {
+        $prophet = new Prophet();
+
+        $renderer = $prophet->prophesize(PhpRenderer::class);
+        $entityManager = $prophet->prophesize(EntityManager::class);
+        $markdown = $prophet->prophesize(CommonMarkConverter::class);
+        $flash = $prophet->prophesize(Messages::class);
+        $validator = $prophet->prophesize(Validator::class);
+
+        $repository = $prophet->prophesize(EntityRepository::class);
+
+        $post1 = new Post();
+        $post1->setTitle('hello');
+        $post1->setBody('hello *pal*');
+
+        $post2 = new Post();
+        $post2->setTitle('hey');
+        $post2->setBody('hey _buddy_');
+
+        $markdown->convertToHtml('hello *pal*')->shouldBeCalled()->willReturn('hello <strong>pal</strong>');
+        $markdown->convertToHtml('hey _buddy_')->shouldBeCalled()->willReturn('hey <em>buddy</em>');
+
+        $entityManager->getRepository(Post::class)->shouldBeCalled()->willReturn($repository->reveal());
+        $repository->findBy([], ['date_created' => 'DESC'], 4, 0)->shouldBeCalled()->willReturn([$post1, $post2]);
+
+        $queryBuilder = $prophet->prophesize(QueryBuilder::class);
+        $query = $prophet->prophesize(AbstractQuery::class);
+
+        $repository->createQueryBuilder('Post')->shouldBeCalled()->willReturn($queryBuilder->reveal());
+
+        $queryBuilder->select('COUNT(Post.id)')->shouldBeCalled()->willReturn($queryBuilder->reveal());
+        $queryBuilder->getQuery()->shouldBeCalled()->willReturn($query->reveal());
+        $query->getSingleScalarResult()->shouldBeCalled()->willReturn(2);
+
+        $response = new Response();
+        $request = $prophet->prophesize(Request::class);
+
+        $renderer->render($response, 'layout.phtml', Argument::type('array'))->shouldBeCalled()->willReturn($response);
+
+        $postController = new PostController(
+            $renderer->reveal(),
+            $entityManager->reveal(),
+            $markdown->reveal(),
+            $flash->reveal(),
+            $validator->reveal(),
+            new Session()
+        );
+
+        $actual = $postController->index($request->reveal(), $response);
+
+        $this->assertSame(200, $actual->getStatusCode());
+
+        $prophet->checkPredictions();
+        unset($_SESSION);
     }
 }
