@@ -48,6 +48,9 @@ class Post
         return s($this->body)->safeTruncate(450, '…');
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function getId() : int
     {
         return $this->id;

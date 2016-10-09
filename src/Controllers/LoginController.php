@@ -83,6 +83,9 @@ class LoginController
     /**
      * Log the current user out
      *
+     * This can't be tested due to the static Session::destroy call
+     * @codeCoverageIgnore
+     *
      * @param Request $request
      * @param Response $response
      * @return Response
