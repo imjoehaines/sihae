@@ -6,6 +6,18 @@ use DateTime;
 use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * A trait to add similar functionality to Eloquent's "timestamps".
+ *
+ * The date_created and date_modified properties will be added to the entity,
+ * along with matching getters. Doctrine lifecycle callbacks are used to
+ * generate and update these, so a class using this trait *must* add a
+ * "@ORM\HasLifecycleCallbacks" annotation.
+ *
+ * There is also a convenience method "hasBeenModified" to quickly check if
+ * any entity using this traite has ever been modified (i.e. the date_modified
+ * is not the same as the date_created).
+ */
 trait Timestamps
 {
     /**
