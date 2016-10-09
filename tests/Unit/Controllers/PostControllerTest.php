@@ -4,6 +4,7 @@ namespace Sihae\Tests\Controllers;
 
 use RKA\Session;
 use Prophecy\Prophet;
+use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Flash\Messages;
 use Sihae\Entities\Post;
@@ -14,7 +15,6 @@ use PHPUnit\Framework\TestCase;
 use Doctrine\ORM\EntityRepository;
 use Sihae\Controllers\PostController;
 use League\CommonMark\CommonMarkConverter;
-use Psr\Http\Message\RequestInterface as Request;
 
 class PostControllerTest extends TestCase
 {
@@ -84,6 +84,45 @@ class PostControllerTest extends TestCase
         $prophet->checkPredictions();
     }
 
+    public function testDeleteRemovesTheMatchingPost()
+    {
+        $prophet = new Prophet();
+
+        $renderer = $prophet->prophesize(PhpRenderer::class);
+        $entityManager = $prophet->prophesize(EntityManager::class);
+        $markdown = $prophet->prophesize(CommonMarkConverter::class);
+        $flash = $prophet->prophesize(Messages::class);
+        $validator = $prophet->prophesize(Validator::class);
+
+        $request = $prophet->prophesize(Request::class);
+
+        $repository = $prophet->prophesize(EntityRepository::class);
+
+        $post = new Post();
+
+        $entityManager->getRepository(Post::class)->shouldBeCalled()->willReturn($repository->reveal());
+        $repository->findOneBy(['slug' => 'hello'])->shouldBeCalled()->willReturn($post);
+
+        $entityManager->remove($post)->shouldBeCalled();
+        $entityManager->flush()->shouldBeCalled();
+        $flash->addMessage('success', 'Successfully deleted your post!')->shouldBeCalled();
+
+        $postController = new PostController(
+            $renderer->reveal(),
+            $entityManager->reveal(),
+            $markdown->reveal(),
+            $flash->reveal(),
+            $validator->reveal(),
+            new Session()
+        );
+
+        $actual = $postController->delete($request->reveal(), new Response(), 'hello');
+
+        $this->assertSame(302, $actual->getStatusCode());
+
+        $prophet->checkPredictions();
+    }
+
     public function testUpdate404sWhenNoMatchingPostIsFound()
     {
         $prophet = new Prophet();
@@ -113,6 +152,101 @@ class PostControllerTest extends TestCase
         $actual = $postController->update($request->reveal(), new Response(), 'hello');
 
         $this->assertSame(404, $actual->getStatusCode());
+
+        $prophet->checkPredictions();
+    }
+
+    public function testUpdateReturnsToTheFormWhenTheMatchingPostIsNotValid()
+    {
+        $prophet = new Prophet();
+
+        $renderer = $prophet->prophesize(PhpRenderer::class);
+        $entityManager = $prophet->prophesize(EntityManager::class);
+        $markdown = $prophet->prophesize(CommonMarkConverter::class);
+        $flash = $prophet->prophesize(Messages::class);
+        $validator = $prophet->prophesize(Validator::class);
+
+        $updatedPost = ['title' => 'a', 'body' => 'b'];
+
+        $request = $prophet->prophesize(Request::class);
+        $request->getParsedBody()->shouldBeCalled()->willReturn($updatedPost);
+
+        $validator->isValid($updatedPost)->shouldBeCalled()->willReturn(false);
+        $validator->getErrors()->shouldBeCalled()->willReturn(['bad']);
+
+        $post = new Post();
+        $response = new Response();
+
+        $renderer->render($response, 'layout.phtml', [
+            'page' => 'post-form',
+            'post' => $post,
+            'errors' => ['bad'],
+            'isEdit' => true,
+        ])->shouldBeCalled()->willReturn($response);
+
+        $repository = $prophet->prophesize(EntityRepository::class);
+
+        $entityManager->getRepository(Post::class)->shouldBeCalled()->willReturn($repository->reveal());
+        $repository->findOneBy(['slug' => 'hello'])->shouldBeCalled()->willReturn($post);
+
+        $postController = new PostController(
+            $renderer->reveal(),
+            $entityManager->reveal(),
+            $markdown->reveal(),
+            $flash->reveal(),
+            $validator->reveal(),
+            new Session()
+        );
+
+        $actual = $postController->update($request->reveal(), $response, 'hello');
+
+        $this->assertSame(200, $actual->getStatusCode());
+
+        $prophet->checkPredictions();
+    }
+
+    public function testUpdateRedirectsToPostWhenSuccessful()
+    {
+        $prophet = new Prophet();
+
+        $renderer = $prophet->prophesize(PhpRenderer::class);
+        $entityManager = $prophet->prophesize(EntityManager::class);
+        $markdown = $prophet->prophesize(CommonMarkConverter::class);
+        $flash = $prophet->prophesize(Messages::class);
+        $validator = $prophet->prophesize(Validator::class);
+
+        $updatedPost = ['title' => 'a', 'body' => 'b'];
+
+        $request = $prophet->prophesize(Request::class);
+        $request->getParsedBody()->shouldBeCalled()->willReturn($updatedPost);
+
+        $validator->isValid($updatedPost)->shouldBeCalled()->willReturn(true);
+
+        $post = new Post();
+        $response = new Response();
+
+        $repository = $prophet->prophesize(EntityRepository::class);
+
+        $entityManager->getRepository(Post::class)->shouldBeCalled()->willReturn($repository->reveal());
+        $repository->findOneBy(['slug' => 'hello'])->shouldBeCalled()->willReturn($post);
+
+        $entityManager->persist($post)->shouldBeCalled();
+        $entityManager->flush()->shouldBeCalled();
+        $flash->addMessage('success', 'Successfully edited your post!')->shouldBeCalled();
+
+        $postController = new PostController(
+            $renderer->reveal(),
+            $entityManager->reveal(),
+            $markdown->reveal(),
+            $flash->reveal(),
+            $validator->reveal(),
+            new Session()
+        );
+
+        $actual = $postController->update($request->reveal(), $response, 'hello');
+
+        $this->assertSame(302, $actual->getStatusCode());
+        $this->assertSame(['Location' => ['/post/hello']], $actual->getHeaders());
 
         $prophet->checkPredictions();
     }
