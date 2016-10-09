@@ -4,10 +4,12 @@ namespace Sihae\Tests\Controllers;
 
 use RKA\Session;
 use Prophecy\Prophet;
+use Prophecy\Argument;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Flash\Messages;
 use Sihae\Entities\Post;
+use Sihae\Entities\User;
 use Slim\Views\PhpRenderer;
 use Sihae\Validators\Validator;
 use Doctrine\ORM\EntityManager;
@@ -441,6 +443,58 @@ class PostControllerTest extends TestCase
         $actual = $postController->store($request->reveal(), $response);
 
         $this->assertSame(200, $actual->getStatusCode());
+
+        $prophet->checkPredictions();
+    }
+
+    public function testStorePersistsThePostAndRedirectsWhenThePostIsValid()
+    {
+        $prophet = new Prophet();
+
+        $renderer = $prophet->prophesize(PhpRenderer::class);
+        $entityManager = $prophet->prophesize(EntityManager::class);
+        $markdown = $prophet->prophesize(CommonMarkConverter::class);
+        $flash = $prophet->prophesize(Messages::class);
+        $validator = $prophet->prophesize(Validator::class);
+
+        $postArray = ['title' => 'a', 'body' => 'b'];
+
+        $request = $prophet->prophesize(Request::class);
+        $request->getParsedBody()->shouldBeCalled()->willReturn($postArray);
+
+        $validator->isValid($postArray)->shouldBeCalled()->willReturn(true);
+
+        $post = new Post();
+        $post->setTitle('a');
+        $post->setBody('b');
+
+        $response = new Response();
+
+        $user = new User();
+
+        $entityManager->merge($user)->shouldBeCalled()->willReturn($user);
+        $entityManager->persist(Argument::type(Post::class))->shouldBeCalled();
+        $entityManager->flush()->shouldBeCalled();
+
+        $flash->addMessage('success', 'Successfully created your new post!')->shouldBeCalled();
+
+        $_SESSION = [];
+        $session = new Session();
+        $session->set('user', $user);
+
+        $postController = new PostController(
+            $renderer->reveal(),
+            $entityManager->reveal(),
+            $markdown->reveal(),
+            $flash->reveal(),
+            $validator->reveal(),
+            $session
+        );
+
+        $actual = $postController->store($request->reveal(), $response);
+
+        $this->assertSame(302, $actual->getStatusCode());
+        $this->assertSame(['Location' => ['/post/a']], $actual->getHeaders());
 
         $prophet->checkPredictions();
     }
