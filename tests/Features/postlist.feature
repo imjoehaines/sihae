@@ -15,12 +15,6 @@ Feature: Blog Post List
       | Penny's Perfect Post | Penny's post's text |
     And I am on the homepage
     Then I should see "Penny's Perfect Post"
-    And I should see "Penny's post's text"
-    And I should see text matching "[pP]osted (\d*) second(s?) ago"
-    And I should not see text matching "[eE]dited (\d*) second(s?) ago"
-    And I should see "Newer Posts"
-    And I should see text matching "Page (\d*) of (\d*)"
-    And I should see "Older Posts"
 
   @database @createUser
   Scenario: Visiting a Sihae blog with multiple blog posts
@@ -31,26 +25,31 @@ Feature: Blog Post List
       | Penny's Premium Post | Some more text      |
     And I am on the homepage
     Then I should see "Penny's Perfect Post"
-    And I should see "Penny's post's text"
     And I should see "Penny's Alright Post"
-    And I should see "Another post's text"
     And I should see "Penny's Premium Post"
-    And I should see "Some more text"
 
   @database @createUser
   Scenario: Visiting a Sihae blog with multiple pages of blog posts
     Given there are some posts:
-      | title                   | body                | date_created        |
-      | Penny's Perfect Post    | Penny's post's text | 2016-01-05 00:00:00 |
-      | Penny's Alright Post    | Another post's text | 2016-01-04 00:00:00 |
-      | Penny's Premium Post    | Some more text      | 2016-01-03 00:00:00 |
-      | Penny's P-repetive Post | Yet more text       | 2016-01-02 00:00:00 |
-      | Penny pls stop          | And more text       | 2016-01-01 00:00:00 |
+      | title                    | body                | date_created        |
+      | Penny's Perfect Post     | Penny's post's text | 2016-01-05 00:00:00 |
+      | Penny's Alright Post     | Another post's text | 2016-01-04 00:00:00 |
+      | Penny's Premium Post     | Some more text      | 2016-01-03 00:00:00 |
+      | Penny's Prepetive Post 1 | Yet more text       | 2016-01-02 00:00:00 |
+      | Penny's Prepetive Post 2 | Yet more text       | 2016-01-02 00:00:00 |
+      | Penny's Prepetive Post 3 | Yet more text       | 2016-01-02 00:00:00 |
+      | Penny's Prepetive Post 4 | Yet more text       | 2016-01-02 00:00:00 |
+      | Penny's Prepetive Post 5 | Yet more text       | 2016-01-02 00:00:00 |
+      | Penny pls stop           | And more text       | 2016-01-01 00:00:00 |
     And I am on the homepage
     Then I should see "Penny's Perfect Post"
     And I should see "Penny's Alright Post"
     And I should see "Penny's Premium Post"
-    And I should see "Penny's P-repetive Post"
+    And I should see "Penny's Prepetive Post 1"
+    And I should see "Penny's Prepetive Post 2"
+    And I should see "Penny's Prepetive Post 3"
+    And I should see "Penny's Prepetive Post 4"
+    And I should see "Penny's Prepetive Post 5"
     And I should see "Newer Posts"
     And I should see "Page 1 of 2"
     And I should see "Older Posts"

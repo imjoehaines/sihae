@@ -5,8 +5,12 @@
         <?= $post->getDateCreated()->format('jS M Y') ?>
 
         <?php if (isset($user) && $user->getIsAdmin() === true) : ?>
-            <a href="/edit/<?= $post->getSlug() ?>"><i class="fa fa-pencil"></i></a>
-            <a href="/delete/<?= $post->getSlug() ?>"><i class="fa fa-trash"></i></a>
+            <a href="/edit/<?= $post->getSlug() ?>" title="Edit this post">
+                <i class="fa fa-pencil"></i>
+            </a>
+            <a href="/delete/<?= $post->getSlug() ?>" title="Delete this post">
+                <i class="fa fa-trash"></i>
+            </a>
         <?php endif ?>
     </small>
 </h2>
