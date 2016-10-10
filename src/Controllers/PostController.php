@@ -80,7 +80,7 @@ class PostController
     {
         $postRepository = $this->entityManager->getRepository(Post::class);
 
-        $limit = 4;
+        $limit = 8;
         $offset = $limit * ($page - 1);
 
         $posts = $postRepository->findBy([], ['date_created' => 'DESC'], $limit, $offset);
