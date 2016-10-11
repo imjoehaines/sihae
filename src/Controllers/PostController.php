@@ -11,6 +11,7 @@ use Doctrine\ORM\EntityManager;
 use League\CommonMark\CommonMarkConverter;
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 
 class PostController
 {
@@ -119,8 +120,6 @@ class PostController
     /**
      * Save a new Post
      *
-     * TODO: prevent duplicate slugs
-     *
      * @param Request $request
      * @param Response $response
      * @return Response
@@ -143,6 +142,11 @@ class PostController
 
         $user = $this->entityManager->merge($this->session->get('user'));
         $post->setUser($user);
+
+        // if there is already a post with the slug we just generated, generate a new one
+        if ($this->entityManager->getRepository(Post::class)->findOneBy(['slug' => $post->getSlug()])) {
+            $post->regenerateSlug();
+        }
 
         $this->entityManager->persist($post);
         $this->entityManager->flush();

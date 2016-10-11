@@ -474,6 +474,11 @@ class PostControllerTest extends TestCase
 
         $user = new User();
 
+        $repository = $prophet->prophesize(EntityRepository::class);
+
+        $entityManager->getRepository(Post::class)->shouldBeCalled()->willReturn($repository->reveal());
+        $repository->findOneBy(['slug' => 'a'])->shouldBeCalled()->willReturn(null);
+
         $entityManager->merge($user)->shouldBeCalled()->willReturn($user);
         $entityManager->persist(Argument::type(Post::class))->shouldBeCalled();
         $entityManager->flush()->shouldBeCalled();
