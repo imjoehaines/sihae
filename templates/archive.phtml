@@ -6,10 +6,10 @@
     <?php foreach ($archiveData as $date => $posts) : ?>
         <h3><?= $date ?></h3>
 
-        <ol class="post-list">
+        <ol class="post-list archive">
             <?php foreach ($posts as $post) : ?>
                 <li>
-                    <h2>
+                    <p>
                         <a href="/post/<?= $post->getSlug() ?>">
                             <?= $post->getTitle() ?>
                         </a>
@@ -26,7 +26,7 @@
                                 </a>
                             <?php endif ?>
                         </small>
-                    </h2>
+                    </p>
                 </li>
             <?php endforeach ?>
         </ol>
