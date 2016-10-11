@@ -11,7 +11,7 @@ Feature: Edit a Blog Post
     And I am on "post/pennys-perfect-post"
     And I should see "Penny's Perfect Post"
     And I should see "Penny's post's text"
-    And I should see text matching "[pP]osted (\d*) (second|month|year)(s?) ago"
+    And I should see "1st Jan 2016"
     When I follow "Edit this post"
     And I fill in "title" with "Penny's Perfecter Post"
     And I fill in "body" with "Different post text"
@@ -20,4 +20,3 @@ Feature: Edit a Blog Post
     And I should see "Successfully edited your post!"
     And I should see "Penny's Perfecter Post"
     And I should see "Different post text"
-    And I should see text matching "[eE]dited (\d*) second(s?) ago"

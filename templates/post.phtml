@@ -1,24 +1,21 @@
-<h1><?= $post->getTitle() ?></h1>
+<h2>
+    <?= $post->getTitle() ?>
+
+    <small class="post-date">
+        <?= $post->getDateCreated()->format('jS M Y') ?>
+
+        <?php if (isset($user) && $user->getIsAdmin() === true) : ?>
+            <a href="/edit/<?= $post->getSlug() ?>" title="Edit this post">
+                <i class="fa fa-pencil"></i>
+            </a>
+            <a href="/delete/<?= $post->getSlug() ?>" title="Delete this post">
+                <i class="fa fa-trash"></i>
+            </a>
+        <?php endif ?>
+    </small>
+</h2>
 
 <p>
     <?= $post->getBody() ?>
 </p>
 
-<small class="post-date">
-    Posted
-    <abbr title="<?= $post->getDateCreated()->format('jS \o\f F Y \a\t g:ia') ?>">
-        <?= $post->getDateCreated()->diffForHumans() ?>
-    </abbr>
-
-    <?php if ($post->hasBeenModified()) : ?>
-        and edited
-        <abbr title="<?= $post->getDateModified()->format('jS \o\f F Y \a\t g:ia') ?>">
-            <?= $post->getDateModified()->diffForHumans() ?>
-        </abbr>
-    <?php endif ?>
-
-    <?php if (isset($user) && $user->getIsAdmin() === true) : ?>
-        <a href="/edit/<?= $post->getSlug() ?>"><i class="fa fa-pencil"></i> Edit this post</a>
-        <a href="/delete/<?= $post->getSlug() ?>"><i class="fa fa-trash"></i> Delete this post</a>
-    <?php endif ?>
-</small>

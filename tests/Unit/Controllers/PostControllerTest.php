@@ -526,7 +526,7 @@ class PostControllerTest extends TestCase
         $markdown->convertToHtml('hey _buddy_')->shouldBeCalled()->willReturn('hey <em>buddy</em>');
 
         $entityManager->getRepository(Post::class)->shouldBeCalled()->willReturn($repository->reveal());
-        $repository->findBy([], ['date_created' => 'DESC'], 4, 0)->shouldBeCalled()->willReturn([$post1, $post2]);
+        $repository->findBy([], ['date_created' => 'DESC'], 8, 0)->shouldBeCalled()->willReturn([$post1, $post2]);
 
         $queryBuilder = $prophet->prophesize(QueryBuilder::class);
         $query = $prophet->prophesize(AbstractQuery::class);
