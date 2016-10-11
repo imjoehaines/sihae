@@ -23,7 +23,7 @@ class Post
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=100)
      */
     protected $title;
 
@@ -97,6 +97,13 @@ class Post
     public function setUser(User $user) : Post
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function regenerateSlug() : Post
+    {
+        $this->slug = (string) s($this->title . ' ' . time())->slugify();
 
         return $this;
     }

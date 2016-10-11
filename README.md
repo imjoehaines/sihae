@@ -1,4 +1,4 @@
-# Sihae [![Build Status](https://travis-ci.org/imjoehaines/sihae.svg)](https://travis-ci.org/imjoehaines/sihae) [![StyleCI](https://styleci.io/repos/42362618/shield)](https://styleci.io/repos/42362618) [![Coverage](https://coveralls.io/repos/github/imjoehaines/sihae/badge.svg)](https://coveralls.io/github/imjoehaines/sihae)
+# Sihae [![Build Status](https://travis-ci.org/imjoehaines/sihae.svg)](https://travis-ci.org/imjoehaines/sihae) [![StyleCI](https://styleci.io/repos/42362618/shield)](https://styleci.io/repos/42362618)
 
 [![Sihae home page](screenshot.png)](https://raw.githubusercontent.com/imjoehaines/sihae/master/screenshot.png)
 
@@ -6,4 +6,5 @@
 
 ## Setup
 - `composer install`
+- `cp .env.example .env`
 - `php vendor/bin/doctrine orm:schema-tool:create`
