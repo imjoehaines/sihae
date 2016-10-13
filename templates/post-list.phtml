@@ -9,7 +9,9 @@
         <?php foreach ($posts as $post) : ?>
             <li>
                 <h2>
-                    <a href="/post/<?= $post->getSlug() ?>"><?= $post->getTitle() ?></a>
+                    <a href="/post/<?= $post->getSlug() ?>">
+                        <?= $this->e($post->getTitle()) ?>
+                    </a>
 
                     <?php $this->insert('partials/post-date', ['post' => $post]) ?>
                 </h2>

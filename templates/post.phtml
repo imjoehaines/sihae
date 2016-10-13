@@ -1,7 +1,7 @@
 <?php $this->layout('layout') ?>
 
 <h2>
-    <?= $post->getTitle() ?>
+    <?= $this->e($post->getTitle()) ?>
 
     <?php $this->insert('partials/post-date', ['post' => $post]) ?>
 </h2>

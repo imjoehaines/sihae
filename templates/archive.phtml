@@ -13,7 +13,7 @@
                 <li>
                     <p>
                         <a href="/post/<?= $post->getSlug() ?>">
-                            <?= $post->getTitle() ?>
+                            <?= $this->e($post->getTitle()) ?>
                         </a>
 
                         <?php $this->insert('partials/post-date', ['post' => $post]) ?>
