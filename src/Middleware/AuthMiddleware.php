@@ -3,6 +3,8 @@
 namespace Sihae\Middleware;
 
 use RKA\Session;
+use Sihae\Entities\User;
+use Doctrine\ORM\EntityManager;
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
@@ -18,11 +20,17 @@ class AuthMiddleware
     private $session;
 
     /**
+     * @var EntityManager
+     */
+    private $entityManager;
+
+    /**
      * @param Session $session
      */
-    public function __construct(Session $session)
+    public function __construct(Session $session, EntityManager $entityManager)
     {
         $this->session = $session;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -36,8 +44,12 @@ class AuthMiddleware
      */
     public function __invoke(Request $request, Response $response, callable $next) : Response
     {
-        if (isset($this->session->user) && $this->session->user->getIsAdmin() === true) {
-            return $next($request, $response);
+        if ($username = $this->session->get('username')) {
+            $user = $this->entityManager->getRepository(User::class)->findOneBy(['username' => $username]);
+
+            if ($user->getIsAdmin() === true) {
+                return $next($request, $response);
+            }
         }
 
         return $response->withStatus(404);

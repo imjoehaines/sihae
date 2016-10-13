@@ -42,11 +42,7 @@
     </header>
 
     <main>
-        <?php if (isset($page)) : ?>
-            <?= $this->fetch($page . '.phtml', $data) ?>
-        <?php else : ?>
-            <?php throw new LogicException('You must specify a page') ?>
-        <?php endif ?>
+        <?= $this->section('content') ?>
 
         <?php if (!empty($flash_messages)) : ?>
             <?php foreach ($flash_messages as $type => $messages) : ?>

@@ -40,7 +40,8 @@ return [
 
         // Renderer settings
         'renderer' => [
-            'template_path' => __DIR__ . '/../templates/',
+            'path' => __DIR__ . '/../templates/',
+            'extension' => 'phtml',
         ],
 
         // Monolog settings

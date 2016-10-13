@@ -2,18 +2,18 @@
 
 namespace Sihae\Middleware;
 
+use Sihae\Renderer;
 use Slim\Flash\Messages;
-use Slim\Views\PhpRenderer;
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
 /**
- * Provides flash messages to the PhpRenderer
+ * Provides flash messages to the Renderer
  */
 class FlashMessageProvider
 {
     /**
-     * @var PhpRenderer
+     * @var Renderer
      */
     private $renderer;
 
@@ -23,17 +23,17 @@ class FlashMessageProvider
     private $flash;
 
     /**
-     * @param PhpRenderer $renderer
+     * @param Renderer $renderer
      * @param Messages $flash
      */
-    public function __construct(PhpRenderer $renderer, Messages $flash)
+    public function __construct(Renderer $renderer, Messages $flash)
     {
         $this->renderer = $renderer;
         $this->flash = $flash;
     }
 
     /**
-     * Provide any flash messages to the PhpRenderer
+     * Provide any flash messages to the Renderer
      *
      * @param Request $request
      * @param Response $response
@@ -42,7 +42,7 @@ class FlashMessageProvider
      */
     public function __invoke(Request $request, Response $response, callable $next) : Response
     {
-        $this->renderer->addAttribute('flash_messages', $this->flash->getMessages());
+        $this->renderer->addData(['flash_messages' => $this->flash->getMessages()]);
 
         return $next($request, $response);
     }

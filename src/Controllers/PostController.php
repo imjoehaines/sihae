@@ -3,9 +3,9 @@
 namespace Sihae\Controllers;
 
 use RKA\Session;
+use Sihae\Renderer;
 use Sihae\Entities\Post;
 use Slim\Flash\Messages;
-use Slim\Views\PhpRenderer;
 use Sihae\Validators\Validator;
 use Doctrine\ORM\EntityManager;
 use League\CommonMark\CommonMarkConverter;
@@ -16,7 +16,7 @@ use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 class PostController
 {
     /**
-     * @var PhpRenderer
+     * @var Renderer
      */
     private $renderer;
 
@@ -46,7 +46,7 @@ class PostController
     private $session;
 
     /**
-     * @param PhpRenderer $renderer
+     * @param Renderer $renderer
      * @param EntityManager $entityManager
      * @param CommonMarkConverter $markdown
      * @param Messages $flash
@@ -54,7 +54,7 @@ class PostController
      * @param Session $session
      */
     public function __construct(
-        PhpRenderer $renderer,
+        Renderer $renderer,
         EntityManager $entityManager,
         CommonMarkConverter $markdown,
         Messages $flash,
@@ -97,8 +97,7 @@ class PostController
             ->getQuery()
             ->getSingleScalarResult();
 
-        return $this->renderer->render($response, 'layout.phtml', [
-            'page' => 'post-list',
+        return $this->renderer->render($response, 'post-list', [
             'posts' => $parsedPosts,
             'current_page' => $page,
             'total_pages' => intdiv($total + $limit - 1, $limit),
@@ -114,7 +113,7 @@ class PostController
      */
     public function create(Request $request, Response $response) : Response
     {
-        return $this->renderer->render($response, 'layout.phtml', ['page' => 'post-form']);
+        return $this->renderer->render($response, 'post-form');
     }
 
     /**
@@ -133,14 +132,14 @@ class PostController
         $post->setBody($newPost['body']);
 
         if (!$this->validator->isValid($newPost)) {
-            return $this->renderer->render($response, 'layout.phtml', [
-                'page' => 'post-form',
+            return $this->renderer->render($response, 'post-form', [
                 'post' => $post,
                 'errors' => $this->validator->getErrors(),
             ]);
         }
 
-        $user = $this->entityManager->merge($this->session->get('user'));
+        $username = $this->session->get('username');
+        $user = $this->entityManager->getRepository(User::class)->findOneBy(['username' => $username]);
         $post->setUser($user);
 
         // if there is already a post with the slug we just generated, generate a new one
@@ -175,10 +174,7 @@ class PostController
         $parsedBody = $this->markdown->convertToHtml($post->getBody());
         $parsedPost = $post->setBody($parsedBody);
 
-        return $this->renderer->render($response, 'layout.phtml', [
-            'page' => 'post',
-            'post' => $parsedPost,
-        ]);
+        return $this->renderer->render($response, 'post', ['post' => $parsedPost]);
     }
 
     /**
@@ -197,11 +193,7 @@ class PostController
             return $response->withStatus(404);
         }
 
-        return $this->renderer->render($response, 'layout.phtml', [
-            'page' => 'post-form',
-            'post' => $post,
-            'isEdit' => true,
-        ]);
+        return $this->renderer->render($response, 'post-form', ['post' => $post, 'isEdit' => true]);
     }
 
     /**
@@ -226,8 +218,7 @@ class PostController
         $post->setBody($updatedPost['body']);
 
         if (!$this->validator->isValid($updatedPost)) {
-            return $this->renderer->render($response, 'layout.phtml', [
-                'page' => 'post-form',
+            return $this->renderer->render($response, 'post-form', [
                 'post' => $post,
                 'errors' => $this->validator->getErrors(),
                 'isEdit' => true,
