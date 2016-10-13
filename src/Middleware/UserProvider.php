@@ -3,18 +3,19 @@
 namespace Sihae\Middleware;
 
 use RKA\Session;
-use Slim\Views\PhpRenderer;
+use Sihae\Renderer;
+use Sihae\Entities\User;
 use Doctrine\ORM\EntityManager;
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
 /**
- * Provides the logged in user to the PhpRenderer
+ * Provides the logged in user to the Renderer
  */
 class UserProvider
 {
     /**
-     * @var PhpRenderer
+     * @var Renderer
      */
     private $renderer;
 
@@ -29,11 +30,11 @@ class UserProvider
     private $entityManager;
 
     /**
-     * @param PhpRenderer $renderer
+     * @param Renderer $renderer
      * @param Session $session
      * @param EntityManager $entityManager
      */
-    public function __construct(PhpRenderer $renderer, Session $session, EntityManager $entityManager)
+    public function __construct(Renderer $renderer, Session $session, EntityManager $entityManager)
     {
         $this->renderer = $renderer;
         $this->session = $session;
@@ -41,7 +42,7 @@ class UserProvider
     }
 
     /**
-     * Provide the logged in user to the PhpRenderer
+     * Provide the logged in user to the Renderer
      *
      * @param Request $request
      * @param Response $response
@@ -50,10 +51,10 @@ class UserProvider
      */
     public function __invoke(Request $request, Response $response, callable $next) : Response
     {
-        if ($user = $this->session->get('user')) {
-            $user = $this->entityManager->merge($user);
+        if ($username = $this->session->get('username')) {
+            $user = $this->entityManager->getRepository(User::class)->findOneBy(['username' => $username]);
 
-            $this->renderer->addAttribute('user', $user);
+            $this->renderer->addData(['user' => $user]);
         }
 
         return $next($request, $response);

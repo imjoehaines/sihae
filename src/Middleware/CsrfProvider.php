@@ -2,18 +2,18 @@
 
 namespace Sihae\Middleware;
 
+use Sihae\Renderer;
 use Slim\Csrf\Guard;
-use Slim\Views\PhpRenderer;
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
 /**
- * Provides data for CSRF protection to the PhpRenderer
+ * Provides data for CSRF protection to the Renderer
  */
 class CsrfProvider
 {
     /**
-     * @var PhpRenderer
+     * @var Renderer
      */
     private $renderer;
 
@@ -23,17 +23,17 @@ class CsrfProvider
     private $csrf;
 
     /**
-     * @param PhpRenderer $renderer
+     * @param Renderer $renderer
      * @param Guard $csrf
      */
-    public function __construct(PhpRenderer $renderer, Guard $csrf)
+    public function __construct(Renderer $renderer, Guard $csrf)
     {
         $this->renderer = $renderer;
         $this->csrf = $csrf;
     }
 
     /**
-     * Provide data for CSRF protection to the PhpRenderer
+     * Provide data for CSRF protection to the Renderer
      *
      * @param Request $request
      * @param Response $response
@@ -45,12 +45,12 @@ class CsrfProvider
         $nameKey = $this->csrf->getTokenNameKey();
         $valueKey = $this->csrf->getTokenValueKey();
 
-        $this->renderer->addAttribute('csrf', [
+        $this->renderer->addData(['csrf' => [
             'nameKey' => $nameKey,
             'valueKey' => $valueKey,
             'name' => $request->getAttribute($nameKey),
             'value' => $request->getAttribute($valueKey),
-        ]);
+        ]]);
 
         return $next($request, $response);
     }

@@ -3,9 +3,9 @@
 namespace Sihae\Controllers;
 
 use RKA\Session;
+use Sihae\Renderer;
 use Sihae\Entities\User;
 use Slim\Flash\Messages;
-use Slim\Views\PhpRenderer;
 use Doctrine\ORM\EntityManager;
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -13,7 +13,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 class LoginController
 {
     /**
-     * @var PhpRenderer
+     * @var Renderer
      */
     private $renderer;
 
@@ -33,13 +33,13 @@ class LoginController
     private $session;
 
     /**
-     * @param PhpRenderer $renderer
+     * @param Renderer $renderer
      * @param EntityManager $entityManager
      * @param Messages $flash
      * @param Session $session
      */
     public function __construct(
-        PhpRenderer $renderer,
+        Renderer $renderer,
         EntityManager $entityManager,
         Messages $flash,
         Session $session
@@ -65,15 +65,13 @@ class LoginController
             ->findOneBy(['username' => $userDetails['username']]);
 
         if (!$user || !password_verify($userDetails['password'], $user->getPassword())) {
-            return $this->renderer->render($response, 'layout.phtml', [
-                'page' => 'login',
+            return $this->renderer->render($response, 'login', [
                 'errors' => ['No user was found with these credentials, please try again'],
                 'username' => $userDetails['username'],
             ]);
         }
 
-        $this->entityManager->detach($user);
-        $this->session->set('user', $user);
+        $this->session->set('username', $user->getUsername());
 
         $this->flash->addMessage('success', 'Welcome back ' . $user->getUsername());
 
@@ -106,6 +104,6 @@ class LoginController
      */
     public function showForm(Request $request, Response $response) : Response
     {
-        return $this->renderer->render($response, 'layout.phtml', ['page' => 'login']);
+        return $this->renderer->render($response, 'login');
     }
 }

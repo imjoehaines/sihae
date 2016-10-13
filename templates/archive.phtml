@@ -1,3 +1,5 @@
+<?php $this->layout('layout') ?>
+
 <h2>Archive</h2>
 
 <?php if (empty($archiveData)) : ?>
@@ -11,21 +13,10 @@
                 <li>
                     <p>
                         <a href="/post/<?= $post->getSlug() ?>">
-                            <?= $post->getTitle() ?>
+                            <?= $this->e($post->getTitle()) ?>
                         </a>
 
-                        <small class="post-date">
-                            <?= $post->getDateCreated()->format('jS M Y') ?>
-
-                            <?php if (isset($user) && $user->getIsAdmin() === true) : ?>
-                                <a href="/edit/<?= $post->getSlug() ?>" title="Edit this post">
-                                    <i class="fa fa-pencil"></i>
-                                </a>
-                                <a href="/delete/<?= $post->getSlug() ?>" title="Delete this post">
-                                    <i class="fa fa-trash"></i>
-                                </a>
-                            <?php endif ?>
-                        </small>
+                        <?php $this->insert('partials/post-date', ['post' => $post]) ?>
                     </p>
                 </li>
             <?php endforeach ?>

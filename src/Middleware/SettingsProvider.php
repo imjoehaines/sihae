@@ -2,17 +2,17 @@
 
 namespace Sihae\Middleware;
 
-use Slim\Views\PhpRenderer;
+use Sihae\Renderer;
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
 /**
- * Provides the Sihae settings to the PhpRenderer
+ * Provides the Sihae settings to the Renderer
  */
 class SettingsProvider
 {
     /**
-     * @var PhpRenderer
+     * @var Renderer
      */
     private $renderer;
 
@@ -22,17 +22,17 @@ class SettingsProvider
     private $settings;
 
     /**
-     * @param PhpRenderer $renderer
+     * @param Renderer $renderer
      * @param array $settings
      */
-    public function __construct(PhpRenderer $renderer, array $settings)
+    public function __construct(Renderer $renderer, array $settings)
     {
         $this->renderer = $renderer;
         $this->settings = $settings;
     }
 
     /**
-     * Provide the Sihae settings to the PhpRenderer
+     * Provide the Sihae settings to the Renderer
      *
      * @param Request $request
      * @param Response $response
@@ -41,7 +41,7 @@ class SettingsProvider
      */
     public function __invoke(Request $request, Response $response, callable $next) : Response
     {
-        $this->renderer->addAttribute('settings', $this->settings);
+        $this->renderer->addData(['settings' => $this->settings]);
 
         return $next($request, $response);
     }

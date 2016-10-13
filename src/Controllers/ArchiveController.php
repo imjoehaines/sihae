@@ -2,8 +2,8 @@
 
 namespace Sihae\Controllers;
 
+use Sihae\Renderer;
 use Sihae\Entities\Post;
-use Slim\Views\PhpRenderer;
 use Doctrine\ORM\EntityManager;
 use Sihae\Formatters\Formatter;
 use Psr\Http\Message\RequestInterface as Request;
@@ -27,12 +27,12 @@ class ArchiveController
     private $formatter;
 
     /**
-     * @param PhpRenderer $renderer
+     * @param Renderer $renderer
      * @param EntityManager $entityManager
      * @param Formatter $formatter
      */
     public function __construct(
-        PhpRenderer $renderer,
+        Renderer $renderer,
         EntityManager $entityManager,
         Formatter $formatter
     ) {
@@ -54,8 +54,7 @@ class ArchiveController
 
         $posts = $postRepository->findBy([], ['date_created' => 'DESC']);
 
-        return $this->renderer->render($response, 'layout.phtml', [
-            'page' => 'archive',
+        return $this->renderer->render($response, 'archive', [
             'archiveData' => $this->formatter->format($posts),
         ]);
     }

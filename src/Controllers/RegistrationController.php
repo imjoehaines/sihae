@@ -3,9 +3,9 @@
 namespace Sihae\Controllers;
 
 use RKA\Session;
+use Sihae\Renderer;
 use Sihae\Entities\User;
 use Slim\Flash\Messages;
-use Slim\Views\PhpRenderer;
 use Sihae\Validators\Validator;
 use Doctrine\ORM\EntityManager;
 use Psr\Http\Message\RequestInterface as Request;
@@ -14,7 +14,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 class RegistrationController
 {
     /**
-     * @var PhpRenderer
+     * @var Renderer
      */
     private $renderer;
 
@@ -39,14 +39,14 @@ class RegistrationController
     private $session;
 
     /**
-     * @param PhpRenderer $renderer
+     * @param Renderer $renderer
      * @param Validator $validator
      * @param EntityManager $entityManager
      * @param Messages $flash
      * @param Session $session
      */
     public function __construct(
-        PhpRenderer $renderer,
+        Renderer $renderer,
         Validator $validator,
         EntityManager $entityManager,
         Messages $flash,
@@ -62,9 +62,6 @@ class RegistrationController
     /**
      * Register a new user.
      *
-     * TODO This should be turned off once a user has been registered or a config
-     * value is set and throw if called after this condition
-     *
      * @param Request $request
      * @param Response $response
      * @return Response
@@ -74,8 +71,7 @@ class RegistrationController
         $userDetails = $request->getParsedBody();
 
         if (!$this->validator->isValid($userDetails)) {
-            return $this->renderer->render($response, 'layout.phtml', [
-                'page' => 'register',
+            return $this->renderer->render($response, 'register', [
                 'errors' => $this->validator->getErrors(),
                 'username' => $userDetails['username'],
             ]);
@@ -88,8 +84,7 @@ class RegistrationController
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
-        $this->entityManager->detach($user);
-        $this->session->set('user', $user);
+        $this->session->set('username', $user->getUsername());
 
         $this->flash->addMessage('success', 'Successfully registered!');
 
@@ -99,19 +94,16 @@ class RegistrationController
     /**
      * Show the registration form
      *
-     * TODO This should be turned off once a user has been registered or a config
-     * value is set and throw if called after this condition
-     *
      * @param Request $request
      * @param Response $response
      * @return Response
      */
     public function showForm(Request $request, Response $response) : Response
     {
-        if (!empty($this->session->get('user'))) {
+        if (!empty($this->session->get('username'))) {
             return $response->withStatus(302)->withHeader('Location', '/');
         }
 
-        return $this->renderer->render($response, 'layout.phtml', ['page' => 'register']);
+        return $this->renderer->render($response, 'register');
     }
 }
