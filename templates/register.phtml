@@ -13,8 +13,7 @@
 <?php endif ?>
 
 <form action="/register" method="POST">
-    <input type="hidden" name="<?= $csrf['nameKey'] ?>" value="<?= $csrf['name'] ?>">
-    <input type="hidden" name="<?= $csrf['valueKey'] ?>" value="<?= $csrf['value'] ?>">
+    <?php $this->insert('partials/csrf', ['csrf' => $csrf]) ?>
 
     <label for="username">Username</label>
     <input name="username" id="username" maxlength="50" required value="<?= isset($username) ? $username : '' ?>">

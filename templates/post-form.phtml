@@ -19,8 +19,7 @@
 <form method="POST"
     action="/<?= isset($isEdit) && $isEdit === true ? 'edit/' . $post->getSlug() : 'new' ?>"
 >
-    <input type="hidden" name="<?= $csrf['nameKey'] ?>" value="<?= $csrf['name'] ?>">
-    <input type="hidden" name="<?= $csrf['valueKey'] ?>" value="<?= $csrf['value'] ?>">
+    <?php $this->insert('partials/csrf', ['csrf' => $csrf]) ?>
 
     <label for="title">Title</label>
     <input name="title" id="title" maxlength="50" required value="<?= isset($post) ? $post->getTitle() : '' ?>">

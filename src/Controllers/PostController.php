@@ -5,6 +5,7 @@ namespace Sihae\Controllers;
 use RKA\Session;
 use Sihae\Renderer;
 use Sihae\Entities\Post;
+use Sihae\Entities\User;
 use Slim\Flash\Messages;
 use Sihae\Validators\Validator;
 use Doctrine\ORM\EntityManager;
