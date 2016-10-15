@@ -246,6 +246,18 @@ img {
     font-size: 14px;
   }
 
+  header {
+    padding: 1rem;
+  }
+
+  header p {
+    margin: 0;
+  }
+
+  main {
+    padding: 0 1rem;
+  }
+
   .post-date {
     float: none;
     display: block;
@@ -254,7 +266,11 @@ img {
 }
 
 @media only screen and (max-width: 400px) {
-  html {
-    font-size: 12px;
+  header {
+    padding: 0.5rem 0.5rem 1rem;
+  }
+
+  main {
+    padding: 0 0.5rem;
   }
 }
