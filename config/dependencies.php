@@ -9,6 +9,7 @@ use League\Plates\Engine;
 use Psr\Log\LoggerInterface;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
+use League\Plates\Extension\Asset;
 use Monolog\Handler\StreamHandler;
 use Monolog\Processor\UidProcessor;
 use Psr\Http\Message\RequestInterface;
@@ -37,7 +38,10 @@ return function (Container $container) {
     $container[Engine::class] = function (Container $container) : Engine {
         $settings = $container->get('settings')['renderer'];
 
-        return new Engine($settings['path'], $settings['extension']);
+        $engine = new Engine($settings['path'], $settings['extension']);
+        $engine->loadExtension(new Asset(__DIR__ . '/../public/'));
+
+        return $engine;
     };
 
     $container[Renderer::class] = function (Container $container) : Renderer {

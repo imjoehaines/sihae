@@ -1,7 +1,7 @@
 <?php $this->layout('layout') ?>
 
 <?php $this->start('styles') ?>
-    <link rel="stylesheet" href="/css/hljs-tomorrow.min.css">
+    <link rel="stylesheet" href="<?= $this->asset('/css/hljs-tomorrow.min.css') ?> " />
 <?php $this->stop('styles') ?>
 
 <h2>
@@ -10,11 +10,9 @@
     <?php $this->insert('partials/post-date', ['post' => $post]) ?>
 </h2>
 
-<p>
-    <?= $post->getBody() ?>
-</p>
+<?= $post->getBody() ?>
 
-<script src="/js/highlight.min.js"></script>
+<script src="<?= $this->asset('/js/highlight.min.js') ?>"></script>
 <script>
     window.hljs.initHighlightingOnLoad()
 </script>

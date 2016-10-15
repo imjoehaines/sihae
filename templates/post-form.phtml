@@ -1,7 +1,7 @@
 <?php $this->layout('layout') ?>
 
 <?php $this->start('styles') ?>
-    <link rel="stylesheet" href="/css/simplemde.min.css">
+    <link rel="stylesheet" href="<?= $this->asset('/css/simplemde.min.css') ?> " />
 <?php $this->stop('styles') ?>
 
 <?php if (isset($isEdit) && $isEdit === true) : ?>
@@ -40,7 +40,7 @@
     </button>
 </form>
 
-<script src="/js/simplemde.min.js"></script>
+<script src="<?= $this->asset('/js/simplemde.min.js') ?>"></script>
 <script>
     var simplemde = new window.SimpleMDE()
     simplemde.render()
