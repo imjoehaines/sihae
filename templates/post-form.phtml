@@ -1,9 +1,13 @@
 <?php $this->layout('layout') ?>
 
+<?php $this->start('styles') ?>
+    <link rel="stylesheet" href="/css/simplemde.min.css">
+<?php $this->stop('styles') ?>
+
 <?php if (isset($isEdit) && $isEdit === true) : ?>
-<h1>Edit post</h1>
+    <h1>Edit post</h1>
 <?php else : ?>
-<h1>Add a new post</h1>
+    <h1>Add a new post</h1>
 <?php endif ?>
 
 <?php if (!empty($errors)) : ?>
@@ -36,6 +40,7 @@
     </button>
 </form>
 
+<script src="/js/simplemde.min.js"></script>
 <script>
     var simplemde = new window.SimpleMDE()
     simplemde.render()

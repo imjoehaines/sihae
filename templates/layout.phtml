@@ -4,14 +4,10 @@
     <link rel="stylesheet" href="/css/normalize.css">
     <link rel="stylesheet" href="/css/font-awesome.min.css">
 
-    <link rel="stylesheet" href="/css/simplemde.min.css">
-    <script src="/js/simplemde.min.js"></script>
-
     <link rel="stylesheet" href="/css/alert-alert.min.css">
     <script src="/js/alert-alert.min.js"></script>
 
-    <link rel="stylesheet" href="/css/hljs-tomorrow.min.css">
-    <script src="/js/highlight.min.js"></script>
+    <?= $this->section('styles') ?>
 
     <link rel="stylesheet" href="/css/sihae.css">
 
@@ -55,9 +51,5 @@
             <?php endforeach ?>
         <?php endif ?>
     </main>
-
-    <script>
-        window.hljs.initHighlightingOnLoad()
-    </script>
 </body>
 </html>

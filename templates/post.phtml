@@ -1,5 +1,9 @@
 <?php $this->layout('layout') ?>
 
+<?php $this->start('styles') ?>
+    <link rel="stylesheet" href="/css/hljs-tomorrow.min.css">
+<?php $this->stop('styles') ?>
+
 <h2>
     <?= $this->e($post->getTitle()) ?>
 
@@ -9,3 +13,8 @@
 <p>
     <?= $post->getBody() ?>
 </p>
+
+<script src="/js/highlight.min.js"></script>
+<script>
+    window.hljs.initHighlightingOnLoad()
+</script>
