@@ -12,7 +12,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 class ArchiveController
 {
     /**
-     * @var PhpRenderer
+     * @var Renderer
      */
     private $renderer;
 
