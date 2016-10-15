@@ -101,7 +101,7 @@ class PostController
         return $this->renderer->render($response, 'post-list', [
             'posts' => $parsedPosts,
             'current_page' => $page,
-            'total_pages' => intdiv($total + $limit - 1, $limit),
+            'total_pages' => ceil($total / $limit) ?: 1,
         ]);
     }
 
