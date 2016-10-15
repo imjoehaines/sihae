@@ -158,12 +158,14 @@ h3 {
   margin-left: 0.33rem;
 }
 
-code {
+code,
+code.hljs {
   white-space: pre;
+  background: #f6f6f6;
 }
 
-code.hljs {
-  background: #fafafa;
+code:not(.hljs) {
+  padding: 0 0.25rem;
 }
 
 label {
@@ -171,7 +173,8 @@ label {
   display: block;
 }
 
-input, textarea {
+input,
+textarea {
   margin: 0 0 1rem;
   padding: 0.5rem;
   display: block;
@@ -203,7 +206,7 @@ button {
 
 blockquote {
   display: block;
-  margin: 2rem 0;
+  margin: 1rem;
   padding-left: 1rem;
   overflow: hidden;
   border-left: 0.25rem solid #0096cc;
