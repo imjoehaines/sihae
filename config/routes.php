@@ -15,6 +15,11 @@ return function (App $app) {
     })->add(AuthMiddleware::class);
 
     $app->get('/archive', 'Sihae\Controllers\ArchiveController:index');
+    $app->get('/about', function ($request, $response) {
+        $renderer = $this->get('Sihae\Renderer');
+
+        return $renderer->render($response, 'about');
+    });
 
     $app->get('/post/{slug:[a-zA-Z\d\s-_\-]+}', 'Sihae\Controllers\PostController:show');
 

@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="<?= $this->asset('/css/normalize.css') ?> " />
 
     <?php if (isset($user) && $user->getIsAdmin() === true) : ?>
@@ -18,23 +20,6 @@
     <title><?= $settings['title'] ?></title>
 </head>
 <body>
-    <nav>
-        <ul>
-            <?php if (isset($user)) : ?>
-                <?php if ($user->getIsAdmin() === true) : ?>
-                    <li><a href="/new">Add a new post</a></li>
-                <?php endif ?>
-
-                <li><a href="/archive">Archive</a></li>
-                <li><a href="/logout">Logout</a></li>
-            <?php else : ?>
-                <li><a href="/archive">Archive</a></li>
-                <li><a href="/login">Login</a></li>
-                <li><a href="/register">Create an account</a></li>
-            <?php endif ?>
-        </ul>
-    </nav>
-
     <header>
         <h1><a href="/"><?= $settings['title'] ?></a></h1>
 
@@ -57,5 +42,22 @@
             <?php endforeach ?>
         <?php endif ?>
     </main>
+
+    <footer>
+        <nav>
+            <ul>
+                <li><a <?= $this->uri('/about', 'class="selected"') ?> href="/about">About</a></li>
+                <li><a <?= $this->uri('/archive', 'class="selected"') ?> href="/archive">Archive</a></li>
+
+                <?php if (isset($user)) : ?>
+                    <?php if ($user->getIsAdmin() === true) : ?>
+                        <li><a <?= $this->uri('/new', 'class="selected"') ?> href="/new">Add a new post</a></li>
+                    <?php endif ?>
+
+                    <li><a href="/logout">Logout</a></li>
+                <?php endif ?>
+            </ul>
+        </nav>
+    </footer>
 </body>
 </html>

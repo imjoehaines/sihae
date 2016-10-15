@@ -7,13 +7,13 @@
 body {
   /* GitHub's system font stack */
   font-family: "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  color: #333;
+  color: #666;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
   margin-top: 0;
-  color: #333;
+  color: #666;
   line-height: 1.5;
 }
 
@@ -24,16 +24,18 @@ header {
 
 header h1 {
   font-size: 3rem;
-  margin-top: 2rem;
   margin-bottom: 0;
   font-weight: normal;
 }
 
+p {
+  line-height: 1.3;
+}
+
 nav {
-  max-width: 800px;
-  margin: 0;
-  padding: 1rem 0;
-  float: right;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 0 2rem;
   font-weight: lighter;
 }
 
@@ -46,6 +48,10 @@ nav li {
   padding: 0 1rem;
 }
 
+nav a.selected {
+  color: #666;
+}
+
 nav ul, .post-list, .post-pagination {
   margin: 0;
   padding: 0;
@@ -55,7 +61,7 @@ nav ul, .post-list, .post-pagination {
 main {
   max-width: 600px;
   margin: 0 auto;
-  padding: 0 2rem 4rem;
+  padding: 0 2rem 2rem;
   overflow-wrap: break-word;
 }
 
@@ -230,4 +236,22 @@ img {
 .CodeMirror .cm-spell-error:not(.cm-url):not(.cm-comment):not(.cm-tag):not(.cm-word) {
    border-bottom: 2px dotted rgba(255, 0, 0, 1);
    background: none;
+}
+
+@media only screen and (max-width: 600px) {
+  html {
+    font-size: 14px;
+  }
+
+  .post-date {
+    float: none;
+    display: block;
+    line-height: 1.5;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  html {
+    font-size: 12px;
+  }
 }
