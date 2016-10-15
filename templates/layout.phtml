@@ -2,10 +2,14 @@
 <html>
 <head>
     <link rel="stylesheet" href="<?= $this->asset('/css/normalize.css') ?> " />
-    <link rel="stylesheet" href="<?= $this->asset('/css/font-awesome.min.css') ?> " />
 
-    <link rel="stylesheet" href="<?= $this->asset('/css/alert-alert.min.css') ?> " />
-    <script src="<?= $this->asset('/js/alert-alert.min.js') ?>"></script>
+    <?php if (isset($user) && $user->getIsAdmin() === true) : ?>
+        <!-- font-awesome is only used when the user is an admin -->
+        <link rel="stylesheet" href="<?= $this->asset('/css/font-awesome.min.css') ?> " />
+
+        <!-- alert-alert is only used when the user is an admin -->
+        <link rel="stylesheet" href="<?= $this->asset('/css/alert-alert.min.css') ?> " />
+    <?php endif ?>
 
     <?= $this->section('styles') ?>
 
@@ -41,6 +45,8 @@
         <?= $this->section('content') ?>
 
         <?php if (!empty($flash_messages)) : ?>
+            <script src="<?= $this->asset('/js/alert-alert.min.js') ?>"></script>
+
             <?php foreach ($flash_messages as $type => $messages) : ?>
                 <script>
                     var type = '<?= $type ?>'
