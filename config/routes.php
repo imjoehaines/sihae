@@ -27,6 +27,6 @@ return function (App $app) {
     $app->post('/login', 'Sihae\Controllers\LoginController:login');
     $app->get('/logout', 'Sihae\Controllers\LoginController:logout');
 
-    $app->get('/register', 'Sihae\Controllers\RegistrationController:showForm');
-    $app->post('/register', 'Sihae\Controllers\RegistrationController:register');
+    // $app->get('/register', 'Sihae\Controllers\RegistrationController:showForm');
+    // $app->post('/register', 'Sihae\Controllers\RegistrationController:register');
 };
