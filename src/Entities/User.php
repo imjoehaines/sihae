@@ -34,7 +34,7 @@ class User
     protected $password;
 
     /**
-     * @ORM\Column(type="string", length=256, unique=true)
+     * @ORM\Column(type="string", length=256)
      */
     protected $token;
 
