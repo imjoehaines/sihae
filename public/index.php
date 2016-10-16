@@ -1,5 +1,8 @@
 <?php
 
+require __DIR__ . '/../vendor/autoload.php';
+
+// convert all warnings, notices etc... into ErrorExceptions
 set_error_handler(function ($severity, $message, $file, $line) {
     throw new ErrorException($message, 0, $severity, $file, $line);
 }, E_ALL);
@@ -15,7 +18,14 @@ if (PHP_SAPI == 'cli-server') {
     }
 }
 
-require __DIR__ . '/../vendor/autoload.php';
+// load environment variables
+$dotenv = new Dotenv\Dotenv(__DIR__ . '/..');
+$dotenv->load();
+
+// enable debug bar if we're not in production
+if (getenv('APPLICATION_ENV') !== 'production') {
+    \Tracy\Debugger::enable();
+}
 
 session_start([
     'name' => 'Sihae',
