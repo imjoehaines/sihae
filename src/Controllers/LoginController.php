@@ -71,7 +71,13 @@ class LoginController
             ]);
         }
 
-        $this->session->set('username', $user->getUsername());
+        // generate a new token for the user
+        $user->setToken(bin2hex(random_bytes(128)));
+
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+
+        $this->session->set('token', $user->getToken());
 
         $this->flash->addMessage('success', 'Welcome back ' . $user->getUsername());
 

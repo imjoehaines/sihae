@@ -30,6 +30,12 @@ if (getenv('APPLICATION_ENV') !== 'production') {
 session_start([
     'name' => 'Sihae',
     'use_strict_mode' => true,
+    'use_only_cookies' => true,
+    'gc_maxlifetime' => 60 * 15,
+    'cookie_lifetime' => 0,
+    'cookie_httponly' => true,
+    // 'sid_length' => 256, TODO: enable this in PHP 7.1
+    // 'sid_bits_per_character' => 6, TODO: enable this in PHP 7.1
 ]);
 
 // Instantiate the app

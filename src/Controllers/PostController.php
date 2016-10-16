@@ -138,8 +138,9 @@ class PostController
             ]);
         }
 
-        $username = $this->session->get('username');
-        $user = $this->entityManager->getRepository(User::class)->findOneBy(['username' => $username]);
+        $token = $this->session->get('token');
+        $user = $this->entityManager->getRepository(User::class)->findOneBy(['token' => $token]);
+
         $post->setUser($user);
 
         // if there is already a post with the slug we just generated, generate a new one
