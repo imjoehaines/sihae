@@ -24,8 +24,10 @@ use Sihae\Renderer;
 use Sihae\Middleware\CsrfProvider;
 use Sihae\Middleware\UserProvider;
 use Sihae\Validators\PostValidator;
+use Sihae\Validators\PageValidator;
 use Sihae\Middleware\AuthMiddleware;
 use Sihae\Controllers\PostController;
+use Sihae\Controllers\PageController;
 use Sihae\Formatters\ArchiveFormatter;
 use Sihae\Middleware\SettingsProvider;
 use Sihae\Controllers\LoginController;
@@ -58,6 +60,15 @@ return function (Container $container) {
             $container->get(Messages::class),
             $container->get(PostValidator::class),
             $container->get(Session::class)
+        );
+    };
+
+    $container[PageController::class] = function (Container $container) : PageController {
+        return new PageController(
+            $container->get(Renderer::class),
+            $container->get(CommonMarkConverter::class),
+            $container->get(Messages::class),
+            $container->get(PageValidator::class)
         );
     };
 
@@ -98,6 +109,10 @@ return function (Container $container) {
 
     $container[PostValidator::class] = function (Container $container) : PostValidator {
         return new PostValidator();
+    };
+
+    $container[PageValidator::class] = function (Container $container) : PageValidator {
+        return new PageValidator();
     };
 
     $container[AuthMiddleware::class] = function (Container $container) : AuthMiddleware {

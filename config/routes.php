@@ -3,6 +3,7 @@
 use Slim\App;
 use Sihae\Middleware\AuthMiddleware;
 use Sihae\Controllers\PostController;
+use Sihae\Controllers\PageController;
 use Sihae\Controllers\LoginController;
 use Sihae\Controllers\ArchiveController;
 use League\CommonMark\CommonMarkConverter;
@@ -23,9 +24,17 @@ return function (App $app) {
 
     $app->get('/archive', ArchiveController::class . ':index');
 
-    $app->get('/static/{page}', function ($request, $response, $page) {
+    $app->group('/page', function () {
+        $this->get('/new', PageController::class . ':create');
+        $this->post('/new', PageController::class . ':store');
+        $this->get('/edit/{slug:[a-zA-Z\d\s-_\-]+}', PageController::class . ':edit');
+        $this->post('/edit/{slug:[a-zA-Z\d\s-_\-]+}', PageController::class . ':update');
+        $this->get('/delete/{slug:[a-zA-Z\d\s-_\-]+}', PageController::class . ':delete');
+    })->add(AuthMiddleware::class);
+
+    $app->get('/page/{slug:[a-zA-Z\d\s-_\-]+}', function ($request, $response, $slug) {
         $renderer = $this->get('Sihae\Renderer');
-        $path = __DIR__ . '/../data/static/' . $page . '.md';
+        $path = __DIR__ . '/../data/static/' . $slug . '.md';
 
         if (!file_exists($path)) {
             return $response->withStatus(404);
