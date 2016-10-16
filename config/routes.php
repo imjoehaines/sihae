@@ -2,22 +2,26 @@
 
 use Slim\App;
 use Sihae\Middleware\AuthMiddleware;
+use Sihae\Controllers\PostController;
+use Sihae\Controllers\LoginController;
+use Sihae\Controllers\ArchiveController;
 use League\CommonMark\CommonMarkConverter;
+use Sihae\Controllers\RegistrationController;
 
 return function (App $app) {
-    $app->get('/[page/{page:[1-9][0-9]*}]', 'Sihae\Controllers\PostController:index');
+    $app->get('/[page/{page:[1-9][0-9]*}]', PostController::class . ':index');
 
     $app->group('/post', function () {
-        $this->get('/new', 'Sihae\Controllers\PostController:create');
-        $this->post('/new', 'Sihae\Controllers\PostController:store');
-        $this->get('/edit/{slug:[a-zA-Z\d\s-_\-]+}', 'Sihae\Controllers\PostController:edit');
-        $this->post('/edit/{slug:[a-zA-Z\d\s-_\-]+}', 'Sihae\Controllers\PostController:update');
-        $this->get('/delete/{slug:[a-zA-Z\d\s-_\-]+}', 'Sihae\Controllers\PostController:delete');
+        $this->get('/new', PostController::class . ':create');
+        $this->post('/new', PostController::class . ':store');
+        $this->get('/edit/{slug:[a-zA-Z\d\s-_\-]+}', PostController::class . ':edit');
+        $this->post('/edit/{slug:[a-zA-Z\d\s-_\-]+}', PostController::class . ':update');
+        $this->get('/delete/{slug:[a-zA-Z\d\s-_\-]+}', PostController::class . ':delete');
     })->add(AuthMiddleware::class);
 
-    $app->get('/post/{slug:[a-zA-Z\d\s-_\-]+}', 'Sihae\Controllers\PostController:show');
+    $app->get('/post/{slug:[a-zA-Z\d\s-_\-]+}', PostController::class . ':show');
 
-    $app->get('/archive', 'Sihae\Controllers\ArchiveController:index');
+    $app->get('/archive', ArchiveController::class . ':index');
 
     $app->get('/static/{page}', function ($request, $response, $page) {
         $renderer = $this->get('Sihae\Renderer');
@@ -35,10 +39,10 @@ return function (App $app) {
         return $renderer->render($response, 'static', ['content' => $content]);
     });
 
-    $app->get('/login', 'Sihae\Controllers\LoginController:showForm');
-    $app->post('/login', 'Sihae\Controllers\LoginController:login');
-    $app->get('/logout', 'Sihae\Controllers\LoginController:logout');
+    $app->get('/login', LoginController::class . ':showForm');
+    $app->post('/login', LoginController::class . ':login');
+    $app->get('/logout', LoginController::class . ':logout');
 
-    // $app->get('/register', 'Sihae\Controllers\RegistrationController:showForm');
-    // $app->post('/register', 'Sihae\Controllers\RegistrationController:register');
+    // $app->get('/register', RegistrationController::class . ':showForm');
+    // $app->post('/register', RegistrationController::class . ':register');
 };
