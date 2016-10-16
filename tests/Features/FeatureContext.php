@@ -25,6 +25,9 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
      */
     public static function prepare()
     {
+        $dotenv = new \Dotenv\Dotenv(__DIR__ . '/../../');
+        $dotenv->load();
+
         (new static)->cleanDb();
     }
 
