@@ -46,6 +46,13 @@ class PostController
     private $session;
 
     /**
+     * Strings that are used in routes and therefore can't be slugs
+     *
+     * @var array
+     */
+    private $reservedSlugs = ['new', 'edit', 'delete'];
+
+    /**
      * @param Renderer $renderer
      * @param EntityManager $entityManager
      * @param CommonMarkConverter $markdown
@@ -145,7 +152,9 @@ class PostController
         $post->setUser($user);
 
         // if there is already a post with the slug we just generated, generate a new one
-        if ($this->entityManager->getRepository(Post::class)->findOneBy(['slug' => $post->getSlug()])) {
+        if ($this->entityManager->getRepository(Post::class)->findOneBy(['slug' => $post->getSlug()]) ||
+            in_array($post->getSlug(), $this->reservedSlugs, true)
+        ) {
             $post->regenerateSlug();
         }
 
