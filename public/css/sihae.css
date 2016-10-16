@@ -18,7 +18,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 header {
-  padding: 2rem;
+  margin: 2rem;
   text-align: center;
 }
 
@@ -34,8 +34,8 @@ p {
 
 nav {
   max-width: 600px;
-  margin: 0 auto;
-  padding: 0 0 2rem;
+  margin: 0 auto 2rem;
+  padding: 0;
   font-weight: lighter;
 }
 
@@ -60,8 +60,8 @@ nav ul, .post-list, .post-pagination {
 
 main {
   max-width: 600px;
-  margin: 0 auto;
-  padding: 0 2rem 2rem;
+  margin: 0 auto 2rem;
+  padding: 0 2rem;
   overflow-wrap: break-word;
 }
 
@@ -72,10 +72,6 @@ a {
 
 a:hover {
   color: #007199;
-}
-
-.post-list {
-  margin-bottom: 2rem;
 }
 
 .post-list h2 {
@@ -246,31 +242,9 @@ img {
     font-size: 14px;
   }
 
-  header {
-    padding: 1rem;
-  }
-
-  header p {
-    margin: 0;
-  }
-
-  main {
-    padding: 0 1rem;
-  }
-
   .post-date {
     float: none;
     display: block;
     line-height: 1.5;
-  }
-}
-
-@media only screen and (max-width: 400px) {
-  header {
-    padding: 0.5rem 0.5rem 1rem;
-  }
-
-  main {
-    padding: 0 0.5rem;
   }
 }
