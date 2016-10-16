@@ -1,15 +1,9 @@
 <?php $this->layout('layout') ?>
 
-<h1>Login</h1>
+<h2>Login</h2>
 
 <?php if (!empty($errors)) : ?>
-    <h2>Oops!</h2>
-
-    <ul>
-        <?php foreach ($errors as $error) : ?>
-            <li><?= $error ?></li>
-        <?php endforeach ?>
-    </ul>
+    <?= $this->insert('partials/errors', ['errors' => $errors]) ?>
 <?php endif ?>
 
 <form action="/login" method="POST">

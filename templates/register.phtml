@@ -1,15 +1,9 @@
 <?php $this->layout('layout') ?>
 
-<h1>Create an account</h1>
+<h2>Create an account</h2>
 
 <?php if (!empty($errors)) : ?>
-    <h2>Oops!</h2>
-
-    <ul>
-        <?php foreach ($errors as $error) : ?>
-            <li><?= $error ?></li>
-        <?php endforeach ?>
-    </ul>
+    <?= $this->insert('partials/errors', ['errors' => $errors]) ?>
 <?php endif ?>
 
 <form action="/register" method="POST">

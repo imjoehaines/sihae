@@ -5,19 +5,13 @@
 <?php $this->stop('styles') ?>
 
 <?php if (isset($isEdit) && $isEdit === true) : ?>
-    <h1>Edit post</h1>
+    <h2>Edit post</h2>
 <?php else : ?>
-    <h1>Add a new post</h1>
+    <h2>Add a new post</h2>
 <?php endif ?>
 
 <?php if (!empty($errors)) : ?>
-    <h2>Oops &mdash; you seem to be missing something!</h2>
-
-    <ul>
-        <?php foreach ($errors as $error) : ?>
-            <li><?= $error ?></li>
-        <?php endforeach ?>
-    </ul>
+    <?= $this->insert('partials/errors', ['errors' => $errors]) ?>
 <?php endif ?>
 
 <form method="POST"
