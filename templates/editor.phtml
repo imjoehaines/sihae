@@ -5,9 +5,9 @@
 <?php $this->stop('styles') ?>
 
 <?php if (isset($isEdit) && $isEdit === true) : ?>
-    <h2>Edit post</h2>
+    <h2>Edit <?= $type ?></h2>
 <?php else : ?>
-    <h2>Add a new post</h2>
+    <h2>Add a new <?= $type ?></h2>
 <?php endif ?>
 
 <?php if (!empty($errors)) : ?>
@@ -15,21 +15,21 @@
 <?php endif ?>
 
 <form method="POST"
-    action="/<?= isset($isEdit) && $isEdit === true ? 'edit/' . $post->getSlug() : 'new' ?>"
+    action="/<?= $type ?>/<?= isset($isEdit) && $isEdit ? 'edit/' . $entity->getSlug() : 'new' ?>"
 >
     <?php $this->insert('partials/csrf', ['csrf' => $csrf]) ?>
 
     <label for="title">Title</label>
-    <input name="title" id="title" maxlength="50" required value="<?= isset($post) ? $post->getTitle() : '' ?>">
+    <input name="title" id="title" maxlength="50" required value="<?= isset($entity) ? $entity->getTitle() : '' ?>">
 
-    <label for="body">Post</label>
-    <textarea name="body" id="body"><?= isset($post) ? $post->getBody() : '' ?></textarea>
+    <label for="body">Content</label>
+    <textarea name="body" id="body"><?= isset($entity) ? $entity->getBody() : '' ?></textarea>
 
     <button name="submit" type="submit">
         <?php if (isset($isEdit) && $isEdit === true) : ?>
-            Edit post
+            Edit <?= $type ?>
         <?php else : ?>
-            Add new post
+            Add new <?= $type ?>
         <?php endif ?>
     </button>
 </form>

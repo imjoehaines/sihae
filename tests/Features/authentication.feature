@@ -14,14 +14,14 @@ Feature: Authentication
     Then I should not see "Add a new post"
 
   Scenario: Attempting to add a post when not logged in
-    Given I am on "new"
+    Given I am on "post/new"
     Then I should not see "Add a new post"
     But I should see "Oops!"
     And I should see "I couldn't find the page you requested, maybe you could try this one instead."
 
   @database @login
   Scenario: Attempting to add a post when logged in as a non-admin
-    Given I am on "new"
+    Given I am on "post/new"
     Then I should not see "Add a new post"
     But I should see "Oops!"
     And I should see "I couldn't find the page you requested, maybe you could try this one instead."

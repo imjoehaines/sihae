@@ -5,7 +5,7 @@ Feature: Create a New Blog Post
 
   @database @loginAdmin
   Scenario: Creating a new post
-    Given I am on "new"
+    Given I am on "post/new"
     When I fill in "title" with "my post"
     And I fill in "body" with "some good text that i wrote"
     And I press "submit"

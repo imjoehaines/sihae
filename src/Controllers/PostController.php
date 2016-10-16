@@ -113,7 +113,7 @@ class PostController
      */
     public function create(Request $request, Response $response) : Response
     {
-        return $this->renderer->render($response, 'post-form');
+        return $this->renderer->render($response, 'editor', ['type' => 'post']);
     }
 
     /**
@@ -132,8 +132,9 @@ class PostController
         $post->setBody($newPost['body']);
 
         if (!$this->validator->isValid($newPost)) {
-            return $this->renderer->render($response, 'post-form', [
-                'post' => $post,
+            return $this->renderer->render($response, 'editor', [
+                'type' => 'post',
+                'entity' => $post,
                 'errors' => $this->validator->getErrors(),
             ]);
         }
@@ -194,7 +195,7 @@ class PostController
             return $response->withStatus(404);
         }
 
-        return $this->renderer->render($response, 'post-form', ['post' => $post, 'isEdit' => true]);
+        return $this->renderer->render($response, 'editor', ['type' => 'post', 'entity' => $post, 'isEdit' => true]);
     }
 
     /**
@@ -219,8 +220,9 @@ class PostController
         $post->setBody($updatedPost['body']);
 
         if (!$this->validator->isValid($updatedPost)) {
-            return $this->renderer->render($response, 'post-form', [
-                'post' => $post,
+            return $this->renderer->render($response, 'editor', [
+                'type' => 'post',
+                'entity' => $post,
                 'errors' => $this->validator->getErrors(),
                 'isEdit' => true,
             ]);
