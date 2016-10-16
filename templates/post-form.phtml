@@ -11,13 +11,7 @@
 <?php endif ?>
 
 <?php if (!empty($errors)) : ?>
-    <h3>Oops &mdash; you seem to be missing something!</h3>
-
-    <ul>
-        <?php foreach ($errors as $error) : ?>
-            <li><?= $error ?></li>
-        <?php endforeach ?>
-    </ul>
+    <?= $this->insert('partials/errors', ['errors' => $errors]) ?>
 <?php endif ?>
 
 <form method="POST"

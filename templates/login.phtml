@@ -3,13 +3,7 @@
 <h2>Login</h2>
 
 <?php if (!empty($errors)) : ?>
-    <h3>Oops!</h3>
-
-    <ul>
-        <?php foreach ($errors as $error) : ?>
-            <li><?= $error ?></li>
-        <?php endforeach ?>
-    </ul>
+    <?= $this->insert('partials/errors', ['errors' => $errors]) ?>
 <?php endif ?>
 
 <form action="/login" method="POST">
