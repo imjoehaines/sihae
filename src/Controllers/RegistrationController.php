@@ -8,8 +8,8 @@ use Sihae\Entities\User;
 use Slim\Flash\Messages;
 use Sihae\Validators\Validator;
 use Doctrine\ORM\EntityManager;
-use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 class RegistrationController
 {

@@ -10,9 +10,8 @@ use Slim\Flash\Messages;
 use Sihae\Validators\Validator;
 use Doctrine\ORM\EntityManager;
 use League\CommonMark\CommonMarkConverter;
-use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
-use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 class PostController
 {
