@@ -25,6 +25,9 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
      */
     public static function prepare()
     {
+        $dotenv = new \Dotenv\Dotenv(__DIR__ . '/../../');
+        $dotenv->load();
+
         (new static)->cleanDb();
     }
 
@@ -93,6 +96,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
         $user = new User;
         $user->setUsername('testing');
         $user->setPassword('testing');
+        $user->setToken('testing');
         $user->setIsAdmin(true);
 
         $this->getEntityManager()->persist($user);
@@ -117,6 +121,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
         $user = new User;
         $user->setUsername('testing');
         $user->setPassword('testing');
+        $user->setToken('testing');
 
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();

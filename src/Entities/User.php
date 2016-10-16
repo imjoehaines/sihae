@@ -34,6 +34,11 @@ class User
     protected $password;
 
     /**
+     * @ORM\Column(type="string", length=256, unique=true)
+     */
+    protected $token;
+
+    /**
      * @ORM\Column(type="boolean")
      */
     protected $is_admin = false;
@@ -66,6 +71,11 @@ class User
         return $this->password;
     }
 
+    public function getToken() : string
+    {
+        return $this->token;
+    }
+
     public function getIsAdmin() : bool
     {
         return $this->is_admin;
@@ -86,6 +96,13 @@ class User
     public function setPassword(string $password) : User
     {
         $this->password = password_hash($password, PASSWORD_DEFAULT);
+
+        return $this;
+    }
+
+    public function setToken(string $token) : User
+    {
+        $this->token = $token;
 
         return $this;
     }

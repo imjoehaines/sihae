@@ -7,7 +7,7 @@ use Schemer\Validator as V;
 class PostValidator implements Validator
 {
     /**
-     * @var Validator
+     * @var \Schemer\Validator\ValidatorInterface
      */
     private $validator;
 

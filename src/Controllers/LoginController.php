@@ -7,8 +7,8 @@ use Sihae\Renderer;
 use Sihae\Entities\User;
 use Slim\Flash\Messages;
 use Doctrine\ORM\EntityManager;
-use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 class LoginController
 {
@@ -71,7 +71,13 @@ class LoginController
             ]);
         }
 
-        $this->session->set('username', $user->getUsername());
+        // generate a new token for the user
+        $user->setToken(bin2hex(random_bytes(128)));
+
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+
+        $this->session->set('token', $user->getToken());
 
         $this->flash->addMessage('success', 'Welcome back ' . $user->getUsername());
 

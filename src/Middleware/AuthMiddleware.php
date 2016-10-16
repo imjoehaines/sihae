@@ -44,10 +44,10 @@ class AuthMiddleware
      */
     public function __invoke(Request $request, Response $response, callable $next) : Response
     {
-        if ($username = $this->session->get('username')) {
-            $user = $this->entityManager->getRepository(User::class)->findOneBy(['username' => $username]);
+        if ($token = $this->session->get('token')) {
+            $user = $this->entityManager->getRepository(User::class)->findOneBy(['token' => $token]);
 
-            if ($user->getIsAdmin() === true) {
+            if ($user && $user->getIsAdmin() === true) {
                 return $next($request, $response);
             }
         }

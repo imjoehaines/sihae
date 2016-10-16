@@ -18,7 +18,9 @@
     "require-dev": {
         "behat/behat": "^3.2",
         "behat/mink-extension": "^2.2",
-        "behat/mink-goutte-driver": "^1.2"
+        "behat/mink-goutte-driver": "^1.2",
+        "tracy/tracy": "^2.4",
+        "macfja/tracy-doctrine-sql": "@dev"
     },
     "autoload": {
         "psr-4": {

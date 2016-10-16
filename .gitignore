@@ -1,4 +1,6 @@
 phpDocumentor.phar
+phan.phar
+/.phan
 
 /data/database.sq3
 

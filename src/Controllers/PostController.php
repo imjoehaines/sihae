@@ -10,9 +10,8 @@ use Slim\Flash\Messages;
 use Sihae\Validators\Validator;
 use Doctrine\ORM\EntityManager;
 use League\CommonMark\CommonMarkConverter;
-use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
-use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 class PostController
 {
@@ -139,8 +138,9 @@ class PostController
             ]);
         }
 
-        $username = $this->session->get('username');
-        $user = $this->entityManager->getRepository(User::class)->findOneBy(['username' => $username]);
+        $token = $this->session->get('token');
+        $user = $this->entityManager->getRepository(User::class)->findOneBy(['token' => $token]);
+
         $post->setUser($user);
 
         // if there is already a post with the slug we just generated, generate a new one

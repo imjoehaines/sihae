@@ -8,12 +8,12 @@ use Schemer\Formatter as F;
 class RegistrationValidator implements Validator
 {
     /**
-     * @var Validator
+     * @var \Schemer\Validator\ValidatorInterface
      */
     private $validator;
 
     /**
-     * @var Formatter
+     * @var \Schemer\Validator\FormatterInterface
      */
     private $formatter;
 

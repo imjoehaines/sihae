@@ -8,8 +8,8 @@ use Sihae\Entities\User;
 use Slim\Flash\Messages;
 use Sihae\Validators\Validator;
 use Doctrine\ORM\EntityManager;
-use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 class RegistrationController
 {
@@ -80,11 +80,12 @@ class RegistrationController
         $user = new User;
         $user->setUsername($userDetails['username']);
         $user->setPassword($userDetails['password']);
+        $user->setToken(bin2hex(random_bytes(128)));
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
-        $this->session->set('username', $user->getUsername());
+        $this->session->set('token', $user->getToken());
 
         $this->flash->addMessage('success', 'Successfully registered!');
 
@@ -100,7 +101,7 @@ class RegistrationController
      */
     public function showForm(Request $request, Response $response) : Response
     {
-        if (!empty($this->session->get('username'))) {
+        if (!empty($this->session->get('token'))) {
             return $response->withStatus(302)->withHeader('Location', '/');
         }
 

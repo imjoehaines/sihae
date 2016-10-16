@@ -169,7 +169,13 @@ return function (Container $container) {
             false
         );
 
-        return EntityManager::create($settings['connection'], $config);
+        $entityManager = EntityManager::create($settings['connection'], $config);
+
+        if (getenv('APPLICATION_ENV') !== 'production') {
+            \MacFJA\Tracy\DoctrineSql::init($entityManager);
+        }
+
+        return $entityManager;
     };
 
     // monolog

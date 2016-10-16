@@ -4,8 +4,8 @@ namespace Sihae\Middleware;
 
 use Sihae\Renderer;
 use Slim\Csrf\Guard;
-use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 /**
  * Provides data for CSRF protection to the Renderer

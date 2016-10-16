@@ -1,5 +1,8 @@
 <?php
 
+require __DIR__ . '/../vendor/autoload.php';
+
+// convert all warnings, notices etc... into ErrorExceptions
 set_error_handler(function ($severity, $message, $file, $line) {
     throw new ErrorException($message, 0, $severity, $file, $line);
 }, E_ALL);
@@ -15,11 +18,24 @@ if (PHP_SAPI == 'cli-server') {
     }
 }
 
-require __DIR__ . '/../vendor/autoload.php';
+// load environment variables
+$dotenv = new Dotenv\Dotenv(__DIR__ . '/..');
+$dotenv->load();
+
+// enable debug bar if we're not in production
+if (getenv('APPLICATION_ENV') !== 'production') {
+    \Tracy\Debugger::enable();
+}
 
 session_start([
     'name' => 'Sihae',
     'use_strict_mode' => true,
+    'use_only_cookies' => true,
+    'gc_maxlifetime' => 60 * 15,
+    'cookie_lifetime' => 0,
+    'cookie_httponly' => true,
+    // 'sid_length' => 256, TODO: enable this in PHP 7.1
+    // 'sid_bits_per_character' => 6, TODO: enable this in PHP 7.1
 ]);
 
 // Instantiate the app

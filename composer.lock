@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "efde8f10d874a1d7792800ae61b00b94",
-    "content-hash": "f7e8e01a16f3c7337c5ab19f4c2c41d5",
+    "hash": "581cb6a70438203ee4ab1501643e8c64",
+    "content-hash": "4d6ae0ec6bdfe3203d8276db1ce8ee06",
     "packages": [
         {
             "name": "akrabat/rka-slim-session-middleware",
@@ -2332,6 +2332,51 @@
             "time": "2016-06-24 23:00:38"
         },
         {
+            "name": "macfja/tracy-doctrine-sql",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/MacFJA/tracy-doctrine-sql.git",
+                "reference": "17ba9a5249a6dde5f4f5c9079a19c5bf0960be36"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/MacFJA/tracy-doctrine-sql/zipball/17ba9a5249a6dde5f4f5c9079a19c5bf0960be36",
+                "reference": "17ba9a5249a6dde5f4f5c9079a19c5bf0960be36",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/dbal": "~2",
+                "doctrine/orm": "~2",
+                "tracy/tracy": "~2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MacFJA\\Tracy\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "MacFJA"
+                }
+            ],
+            "description": "A Tracy panel for Doctrine SQL queries",
+            "keywords": [
+                "bar",
+                "debugger",
+                "doctrine",
+                "panel",
+                "sql",
+                "tracy"
+            ],
+            "time": "2016-02-01 17:34:54"
+        },
+        {
             "name": "symfony/browser-kit",
             "version": "v3.1.5",
             "source": {
@@ -2823,11 +2868,75 @@
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
             "time": "2016-09-25 08:27:07"
+        },
+        {
+            "name": "tracy/tracy",
+            "version": "v2.4.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nette/tracy.git",
+                "reference": "9c352f10f41c374c5bb19191e385076430e39a20"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nette/tracy/zipball/9c352f10f41c374c5bb19191e385076430e39a20",
+                "reference": "9c352f10f41c374c5bb19191e385076430e39a20",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-session": "*",
+                "php": ">=5.4.4"
+            },
+            "require-dev": {
+                "nette/di": "~2.3",
+                "nette/tester": "~2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.4-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src"
+                ],
+                "files": [
+                    "src/shortcuts.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause",
+                "GPL-2.0",
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "David Grudl",
+                    "homepage": "https://davidgrudl.com"
+                },
+                {
+                    "name": "Nette Community",
+                    "homepage": "https://nette.org/contributors"
+                }
+            ],
+            "description": "Tracy: useful PHP debugger",
+            "homepage": "https://tracy.nette.org",
+            "keywords": [
+                "debug",
+                "debugger",
+                "nette"
+            ],
+            "time": "2016-09-30 14:17:54"
         }
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "macfja/tracy-doctrine-sql": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

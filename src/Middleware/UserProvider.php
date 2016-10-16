@@ -51,10 +51,13 @@ class UserProvider
      */
     public function __invoke(Request $request, Response $response, callable $next) : Response
     {
-        if ($username = $this->session->get('username')) {
-            $user = $this->entityManager->getRepository(User::class)->findOneBy(['username' => $username]);
+        if ($token = $this->session->get('token')) {
+            $user = $this->entityManager->getRepository(User::class)->findOneBy(['token' => $token]);
 
-            $this->renderer->addData(['user' => $user]);
+            if ($user) {
+                Session::regenerate();
+                $this->renderer->addData(['user' => $user]);
+            }
         }
 
         return $next($request, $response);
