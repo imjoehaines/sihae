@@ -48,17 +48,21 @@
             <ul>
                 <li><a <?= $this->uri('/page/about', 'class="selected"') ?> href="/page/about">About</a></li>
                 <li><a <?= $this->uri('/archive', 'class="selected"') ?> href="/archive">Archive</a></li>
+            </ul>
+        </nav>
 
-                <?php if (isset($user)) : ?>
+        <?php if (isset($user)) : ?>
+            <nav>
+                <ul>
                     <?php if ($user->getIsAdmin() === true) : ?>
                         <li><a <?= $this->uri('/post/new', 'class="selected"') ?> href="/post/new">Add a new post</a></li>
                         <li><a <?= $this->uri('/page/new', 'class="selected"') ?> href="/page/new">Add a new page</a></li>
                     <?php endif ?>
 
                     <li><a href="/logout">Logout</a></li>
-                <?php endif ?>
-            </ul>
-        </nav>
+                </ul>
+            </nav>
+        <?php endif ?>
     </footer>
 </body>
 </html>
