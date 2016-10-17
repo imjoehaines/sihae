@@ -10,8 +10,10 @@ use Psr\Log\LoggerInterface;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 use League\Plates\Extension\URI;
+use League\Flysystem\Filesystem;
 use League\Plates\Extension\Asset;
 use Monolog\Handler\StreamHandler;
+use League\Flysystem\Adapter\Local;
 use Monolog\Processor\UidProcessor;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -48,6 +50,12 @@ return function (Container $container) {
         return $engine;
     };
 
+    $container[Filesystem::class] = function (Container $container) : Filesystem {
+        $adapter = new Local(__DIR__ . '/../data/static');
+
+        return new Filesystem($adapter);
+    };
+
     $container[Renderer::class] = function (Container $container) : Renderer {
         return new Renderer($container->get(Engine::class));
     };
@@ -68,7 +76,8 @@ return function (Container $container) {
             $container->get(Renderer::class),
             $container->get(CommonMarkConverter::class),
             $container->get(Messages::class),
-            $container->get(PageValidator::class)
+            $container->get(PageValidator::class),
+            $container->get(Filesystem::class)
         );
     };
 

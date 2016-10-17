@@ -32,21 +32,7 @@ return function (App $app) {
         $this->get('/delete/{slug:[a-zA-Z\d\s-_\-]+}', PageController::class . ':delete');
     })->add(AuthMiddleware::class);
 
-    $app->get('/page/{slug:[a-zA-Z\d\s-_\-]+}', function ($request, $response, $slug) {
-        $renderer = $this->get('Sihae\Renderer');
-        $path = __DIR__ . '/../data/static/' . $slug . '.md';
-
-        if (!file_exists($path)) {
-            return $response->withStatus(404);
-        }
-
-        $rawContent = file_get_contents($path);
-
-        $markdown = $this->get(CommonMarkConverter::class);
-        $content = $markdown->convertToHtml($rawContent);
-
-        return $renderer->render($response, 'static', ['content' => $content]);
-    });
+    $app->get('/page/{slug:[a-zA-Z\d\s-_\-]+}', PageController::class . ':show');
 
     $app->get('/login', LoginController::class . ':showForm');
     $app->post('/login', LoginController::class . ':login');

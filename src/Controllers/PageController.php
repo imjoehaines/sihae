@@ -7,9 +7,12 @@ use Sihae\Renderer;
 use Sihae\Entities\Page;
 use Slim\Flash\Messages;
 use Sihae\Validators\Validator;
+use League\Flysystem\Filesystem;
 use League\CommonMark\CommonMarkConverter;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+
+use function Stringy\create as s;
 
 class PageController
 {
@@ -34,9 +37,9 @@ class PageController
     private $validator;
 
     /**
-     * @var string
+     * @var Filesystem
      */
-    private $path;
+    private $staticDirectory;
 
     /**
      * @param Renderer $renderer
@@ -50,15 +53,14 @@ class PageController
         Renderer $renderer,
         CommonMarkConverter $markdown,
         Messages $flash,
-        Validator $validator
+        Validator $validator,
+        Filesystem $staticDirectory
     ) {
         $this->renderer = $renderer;
         $this->markdown = $markdown;
         $this->flash = $flash;
         $this->validator = $validator;
-
-        // TODO: swap this for a flysystem instance
-        $this->path = __DIR__ . '/../../data/static/';
+        $this->staticDirectory = $staticDirectory;
     }
 
     /**
@@ -96,9 +98,7 @@ class PageController
             ]);
         }
 
-        $markdown = sprintf("## %s\n\n%s", $page->getTitle(), $page->getBody());
-
-        file_put_contents($this->path . $page->getSlug() . '.md', $markdown);
+        $this->staticDirectory->write($page->getSlug() . '.md', $page->getBody());
 
         $this->flash->addMessage('success', 'Successfully created your new page!');
 
@@ -115,7 +115,19 @@ class PageController
      */
     public function show(Request $request, Response $response, string $slug) : Response
     {
-        throw new Exception('Not yet implemented');
+        $file = $slug . '.md';
+
+        if (!$this->staticDirectory->has($file)) {
+            return $response->withStatus(404);
+        }
+
+        $rawContent = $this->staticDirectory->read($file);
+
+        $content = $this->markdown->convertToHtml($rawContent);
+
+        $title = (string) s($slug)->replace('-', ' ')->toTitleCase();
+
+        return $this->renderer->render($response, 'static', ['title' => $title, 'content' => $content]);
     }
 
     /**
