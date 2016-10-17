@@ -35,6 +35,7 @@ use Sihae\Middleware\SettingsProvider;
 use Sihae\Controllers\LoginController;
 use Sihae\Controllers\ArchiveController;
 use Sihae\Middleware\NotFoundMiddleware;
+use Sihae\Middleware\StaticPageProvider;
 use Sihae\Middleware\FlashMessageProvider;
 use Sihae\Validators\RegistrationValidator;
 use Sihae\Controllers\RegistrationController;
@@ -54,6 +55,13 @@ return function (Container $container) {
         $adapter = new Local(__DIR__ . '/../data/static');
 
         return new Filesystem($adapter);
+    };
+
+    $container[StaticPageProvider::class] = function (Container $container) : StaticPageProvider {
+        return new StaticPageProvider(
+            $container->get(Renderer::class),
+            $container->get(Filesystem::class)
+        );
     };
 
     $container[Renderer::class] = function (Container $container) : Renderer {

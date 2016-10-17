@@ -46,7 +46,12 @@
     <footer>
         <nav>
             <ul>
-                <li><a <?= $this->uri('/page/about', 'class="selected"') ?> href="/page/about">About</a></li>
+                <?php foreach ($static_pages as $page) : ?>
+                    <li><a <?= $this->uri('/page/' . $page['slug'], 'class="selected"') ?> href="/page/<?= $page['slug'] ?>">
+                        <?= $page['title'] ?>
+                    </a></li>
+                <?php endforeach ?>
+
                 <li><a <?= $this->uri('/archive', 'class="selected"') ?> href="/archive">Archive</a></li>
             </ul>
         </nav>
