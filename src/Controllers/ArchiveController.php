@@ -55,7 +55,7 @@ class ArchiveController
     {
         $postRepository = $this->entityManager->getRepository(Post::class);
 
-        $posts = $postRepository->findBy([], ['date_created' => 'DESC']);
+        $posts = $postRepository->findBy(['is_page' => false], ['date_created' => 'DESC']);
 
         return $this->renderer->render($response, 'archive', [
             'archiveData' => $this->formatter->format($posts),
