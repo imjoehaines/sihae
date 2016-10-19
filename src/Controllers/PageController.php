@@ -14,6 +14,9 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 use function Stringy\create as s;
 
+/**
+ * Controller for "static" pages (i.e. not blog posts)
+ */
 class PageController
 {
     /**

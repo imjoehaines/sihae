@@ -5,6 +5,9 @@ namespace Sihae\Validators;
 use Schemer\Validator as V;
 use Schemer\Formatter as F;
 
+/**
+ * Validator for new Users
+ */
 class RegistrationValidator implements Validator
 {
     /**
@@ -22,6 +25,9 @@ class RegistrationValidator implements Validator
      */
     private $errors = [];
 
+    /**
+     * Initialise validator rules and formatter
+     */
     public function __construct()
     {
         $this->validator = V::assoc([

@@ -9,6 +9,9 @@ use Sihae\Formatters\Formatter;
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
+/**
+ * Controller for the Archive page
+ */
 class ArchiveController
 {
     /**

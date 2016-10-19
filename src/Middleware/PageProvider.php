@@ -10,6 +10,9 @@ use Psr\Http\Message\ResponseInterface as Response;
 
 use function Stringy\create as s;
 
+/**
+ * Provides the list of all pages to templates
+ */
 class PageProvider
 {
     /**
@@ -24,6 +27,7 @@ class PageProvider
 
     /**
      * @param Renderer $renderer
+     * @param EntityManager $entityManager
      */
     public function __construct(Renderer $renderer, EntityManager $entityManager)
     {

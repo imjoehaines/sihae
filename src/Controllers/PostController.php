@@ -13,6 +13,9 @@ use League\CommonMark\CommonMarkConverter;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
+/**
+ * Controller for handling creating/updating/deleting/showing blog posts
+ */
 class PostController
 {
     /**

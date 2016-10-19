@@ -4,6 +4,9 @@ namespace Sihae\Formatters;
 
 use Sihae\Entities\Post;
 
+/**
+ * Formatter for an array of posts for use on the Archive page
+ */
 class ArchiveFormatter implements Formatter
 {
     /**
