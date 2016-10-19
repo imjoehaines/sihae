@@ -123,7 +123,7 @@ class PostController
      */
     public function create(Request $request, Response $response) : Response
     {
-        return $this->renderer->render($response, 'editor', ['type' => 'post']);
+        return $this->renderer->render($response, 'editor');
     }
 
     /**
@@ -143,8 +143,7 @@ class PostController
 
         if (!$this->validator->isValid($newPost)) {
             return $this->renderer->render($response, 'editor', [
-                'type' => 'post',
-                'entity' => $post,
+                'post' => $post,
                 'errors' => $this->validator->getErrors(),
             ]);
         }
@@ -207,7 +206,7 @@ class PostController
             return $response->withStatus(404);
         }
 
-        return $this->renderer->render($response, 'editor', ['type' => 'post', 'entity' => $post, 'isEdit' => true]);
+        return $this->renderer->render($response, 'editor', ['post' => $post, 'isEdit' => true]);
     }
 
     /**
@@ -233,8 +232,7 @@ class PostController
 
         if (!$this->validator->isValid($updatedPost)) {
             return $this->renderer->render($response, 'editor', [
-                'type' => 'post',
-                'entity' => $post,
+                'post' => $post,
                 'errors' => $this->validator->getErrors(),
                 'isEdit' => true,
             ]);
