@@ -53,7 +53,7 @@ class PostController
      *
      * @var array
      */
-    private $reservedSlugs = ['new', 'edit', 'delete'];
+    private $reservedSlugs = ['new', 'edit', 'delete', 'login', 'logout', 'register', 'archive', 'convert'];
 
     /**
      * @param Renderer $renderer
@@ -94,7 +94,7 @@ class PostController
         $limit = 8;
         $offset = $limit * ($page - 1);
 
-        $posts = $postRepository->findBy([], ['date_created' => 'DESC'], $limit, $offset);
+        $posts = $postRepository->findBy(['is_page' => false], ['date_created' => 'DESC'], $limit, $offset);
 
         $parsedPosts = array_map(function (Post $post) : Post {
             $parsedBody = $this->markdown->convertToHtml($post->getBody());
@@ -270,5 +270,35 @@ class PostController
         $this->flash->addMessage('success', 'Successfully deleted your post!');
 
         return $response->withStatus(302)->withHeader('Location', '/');
+    }
+
+    /**
+     * Convert a Post to a Page or vice versa
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param string $slug
+     * @return Response
+     */
+    public function convert(Request $request, Response $response, string $slug) : Response
+    {
+        $entity = $this->entityManager->getRepository(Post::class)->findOneBy(['slug' => $slug]);
+
+        if (!$entity) {
+            return $response->withStatus(404);
+        }
+
+        $entity->setIsPage(!$entity->getIsPage());
+
+        $this->entityManager->persist($entity);
+        $this->entityManager->flush();
+
+        $path = '/' . $entity->getSlug();
+
+        if ($entity->getIsPage() === false) {
+            $path = '/post' . $path;
+        }
+
+        return $response->withStatus(302)->withHeader('Location', $path);
     }
 }

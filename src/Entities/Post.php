@@ -49,6 +49,12 @@ class Post
     protected $user;
 
     /**
+     * @ORM\Column(type="boolean")
+     * @var boolean
+     */
+    protected $is_page = false;
+
+    /**
      * @return integer
      */
     public function getId() : int
@@ -81,11 +87,19 @@ class Post
     }
 
     /**
-     * @return string
+     * @return User
      */
     public function getUser() : User
     {
         return $this->user;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getIsPage() : bool
+    {
+        return $this->is_page;
     }
 
     /**
@@ -121,6 +135,17 @@ class Post
     public function setUser(User $user) : Post
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @param boolean $isPage
+     * @return Post
+     */
+    public function setIsPage(bool $isPage) : Post
+    {
+        $this->is_page = $isPage;
 
         return $this;
     }

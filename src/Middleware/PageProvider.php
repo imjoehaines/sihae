@@ -3,7 +3,7 @@
 namespace Sihae\Middleware;
 
 use Sihae\Renderer;
-use Sihae\Entities\Page;
+use Sihae\Entities\Post;
 use Doctrine\ORM\EntityManager;
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -43,7 +43,7 @@ class PageProvider
      */
     public function __invoke(Request $request, Response $response, callable $next) : Response
     {
-        $pages = $this->entityManager->getRepository(Page::class)->findBy([]);
+        $pages = $this->entityManager->getRepository(Post::class)->findBy(['is_page' => true]);
 
         $this->renderer->addData(['pages' => $pages]);
 

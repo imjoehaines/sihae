@@ -7,7 +7,7 @@
 <h2>
     <?= $this->e($post->getTitle()) ?>
 
-    <?php $this->insert('partials/post-date', ['post' => $post]) ?>
+    <?php $this->insert('partials/post-date', ['post' => $post, 'show_date' => false]) ?>
 </h2>
 
 <?= $post->getBody() ?>

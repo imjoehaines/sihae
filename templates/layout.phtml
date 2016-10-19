@@ -34,7 +34,7 @@
         <nav>
             <ul>
                 <?php foreach ($pages as $page) : ?>
-                    <li><a <?= $this->uri('/page/' . $page->getSlug(), 'class="selected"') ?> href="/page/<?= $page->getSlug() ?>">
+                    <li><a <?= $this->uri('/' . $page->getSlug(), 'class="selected"') ?> href="/<?= $page->getSlug() ?>">
                         <?= $page->getTitle() ?>
                     </a></li>
                 <?php endforeach ?>
@@ -48,7 +48,6 @@
                 <ul>
                     <?php if ($user->getIsAdmin() === true) : ?>
                         <li><a <?= $this->uri('/post/new', 'class="selected"') ?> href="/post/new">Add a new post</a></li>
-                        <li><a <?= $this->uri('/page/new', 'class="selected"') ?> href="/page/new">Add a new page</a></li>
                     <?php endif ?>
 
                     <li><a href="/logout">Logout</a></li>
