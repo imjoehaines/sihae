@@ -10,10 +10,8 @@ use Psr\Log\LoggerInterface;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 use League\Plates\Extension\URI;
-use League\Flysystem\Filesystem;
 use League\Plates\Extension\Asset;
 use Monolog\Handler\StreamHandler;
-use League\Flysystem\Adapter\Local;
 use Monolog\Processor\UidProcessor;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -24,6 +22,7 @@ use Interop\Container\ContainerInterface as Container;
 
 use Sihae\Renderer;
 use Sihae\Middleware\CsrfProvider;
+use Sihae\Middleware\PageProvider;
 use Sihae\Middleware\UserProvider;
 use Sihae\Validators\PostValidator;
 use Sihae\Validators\PageValidator;
@@ -35,7 +34,6 @@ use Sihae\Middleware\SettingsProvider;
 use Sihae\Controllers\LoginController;
 use Sihae\Controllers\ArchiveController;
 use Sihae\Middleware\NotFoundMiddleware;
-use Sihae\Middleware\StaticPageProvider;
 use Sihae\Middleware\FlashMessageProvider;
 use Sihae\Validators\RegistrationValidator;
 use Sihae\Controllers\RegistrationController;
@@ -51,16 +49,10 @@ return function (Container $container) {
         return $engine;
     };
 
-    $container[Filesystem::class] = function (Container $container) : Filesystem {
-        $adapter = new Local(__DIR__ . '/../data/static');
-
-        return new Filesystem($adapter);
-    };
-
-    $container[StaticPageProvider::class] = function (Container $container) : StaticPageProvider {
-        return new StaticPageProvider(
+    $container[PageProvider::class] = function (Container $container) : PageProvider {
+        return new PageProvider(
             $container->get(Renderer::class),
-            $container->get(Filesystem::class)
+            $container->get(EntityManager::class)
         );
     };
 
@@ -85,7 +77,7 @@ return function (Container $container) {
             $container->get(CommonMarkConverter::class),
             $container->get(Messages::class),
             $container->get(PageValidator::class),
-            $container->get(Filesystem::class)
+            $container->get(EntityManager::class)
         );
     };
 

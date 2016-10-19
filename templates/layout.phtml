@@ -28,27 +28,14 @@
 
     <main>
         <?= $this->section('content') ?>
-
-        <?php if (!empty($flash_messages)) : ?>
-            <script src="<?= $this->asset('/js/alert-alert.min.js') ?>"></script>
-
-            <?php foreach ($flash_messages as $type => $messages) : ?>
-                <script>
-                    var type = '<?= $type ?>'
-                    var message = '<?= implode(", ", $messages) ?>'
-
-                    window.Alert.alert(type, message, { timeout: 5000 })
-                </script>
-            <?php endforeach ?>
-        <?php endif ?>
     </main>
 
     <footer>
         <nav>
             <ul>
-                <?php foreach ($static_pages as $page) : ?>
-                    <li><a <?= $this->uri('/page/' . $page['slug'], 'class="selected"') ?> href="/page/<?= $page['slug'] ?>">
-                        <?= $page['title'] ?>
+                <?php foreach ($pages as $page) : ?>
+                    <li><a <?= $this->uri('/page/' . $page->getSlug(), 'class="selected"') ?> href="/page/<?= $page->getSlug() ?>">
+                        <?= $page->getTitle() ?>
                     </a></li>
                 <?php endforeach ?>
 
@@ -69,5 +56,18 @@
             </nav>
         <?php endif ?>
     </footer>
+
+    <?php if (!empty($flash_messages)) : ?>
+        <script src="<?= $this->asset('/js/alert-alert.min.js') ?>"></script>
+
+        <?php foreach ($flash_messages as $type => $messages) : ?>
+            <script>
+                var type = '<?= $type ?>'
+                var message = '<?= implode(", ", $messages) ?>'
+
+                window.Alert.alert(type, message, { timeout: 5000 })
+            </script>
+        <?php endforeach ?>
+    <?php endif ?>
 </body>
 </html>

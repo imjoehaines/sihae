@@ -7,7 +7,7 @@ use Sihae\Renderer;
 use Sihae\Entities\Page;
 use Slim\Flash\Messages;
 use Sihae\Validators\Validator;
-use League\Flysystem\Filesystem;
+use Doctrine\ORM\EntityManager;
 use League\CommonMark\CommonMarkConverter;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -37,30 +37,29 @@ class PageController
     private $validator;
 
     /**
-     * @var Filesystem
+     * @var EntityManager
      */
-    private $staticDirectory;
+    private $entityManager;
 
     /**
      * @param Renderer $renderer
-     * @param EntityManager $entityManager
      * @param CommonMarkConverter $markdown
      * @param Messages $flash
      * @param Validator $validator
-     * @param Session $session
+     * @param EntityManager $entityManager
      */
     public function __construct(
         Renderer $renderer,
         CommonMarkConverter $markdown,
         Messages $flash,
         Validator $validator,
-        Filesystem $staticDirectory
+        EntityManager $entityManager
     ) {
         $this->renderer = $renderer;
         $this->markdown = $markdown;
         $this->flash = $flash;
         $this->validator = $validator;
-        $this->staticDirectory = $staticDirectory;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -98,7 +97,8 @@ class PageController
             ]);
         }
 
-        $this->staticDirectory->write($page->getSlug() . '.md', $page->getBody());
+        $this->entityManager->persist($page);
+        $this->entityManager->flush();
 
         $this->flash->addMessage('success', 'Successfully created your new page!');
 
@@ -115,19 +115,13 @@ class PageController
      */
     public function show(Request $request, Response $response, string $slug) : Response
     {
-        $file = $slug . '.md';
+        $page = $this->entityManager->getRepository(Page::class)->findOneBy(['slug' => $slug]);
 
-        if (!$this->staticDirectory->has($file)) {
+        if (!$page) {
             return $response->withStatus(404);
         }
 
-        $rawContent = $this->staticDirectory->read($file);
-
-        $content = $this->markdown->convertToHtml($rawContent);
-
-        $title = (string) s($slug)->replace('-', ' ')->toTitleCase();
-
-        return $this->renderer->render($response, 'static', ['title' => $title, 'content' => $content]);
+        return $this->renderer->render($response, 'page', ['page' => $page]);
     }
 
     /**
