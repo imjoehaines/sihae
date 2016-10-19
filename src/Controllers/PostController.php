@@ -188,7 +188,7 @@ class PostController
         $parsedBody = $this->markdown->convertToHtml($post->getBody());
         $parsedPost = $post->setBody($parsedBody);
 
-        return $this->renderer->render($response, 'post', ['post' => $parsedPost]);
+        return $this->renderer->render($response, 'post', ['post' => $parsedPost, 'show_date' => !$post->getIsPage()]);
     }
 
     /**
