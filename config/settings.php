@@ -32,7 +32,7 @@ return [
             ],
         ],
 
-        'displayErrorDetails' => true,
+        'displayErrorDetails' => getenv('APPLICATION_ENV') !== 'production',
         'addContentLengthHeader' => false,
 
         // Renderer settings
