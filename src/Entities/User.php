@@ -20,72 +20,100 @@ class User
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @var integer
      */
     protected $id;
 
     /**
      * @ORM\Column(type="string", length=50, unique=true)
+     * @var string
      */
     protected $username;
 
     /**
      * @ORM\Column(type="string")
+     * @var string
      */
     protected $password;
 
     /**
      * @ORM\Column(type="string", length=256)
+     * @var string
      */
     protected $token;
 
     /**
      * @ORM\Column(type="boolean")
+     * @var boolean
      */
     protected $is_admin = false;
 
     /**
      * @ORM\OneToMany(targetEntity="Post", mappedBy="user")
+     * @var Collection
      */
     protected $posts;
 
+    /**
+     * Initialise posts as an empty ArrayCollection
+     */
     public function __construct()
     {
         $this->posts = new ArrayCollection;
     }
 
     /**
-     * @codeCoverageIgnore
+     * @return integer
      */
     public function getId() : int
     {
         return $this->id;
     }
 
+    /**
+     * @return string
+     */
     public function getUsername() : string
     {
         return $this->username;
     }
 
+    /**
+     * @return string
+     */
     public function getPassword() : string
     {
         return $this->password;
     }
 
+    /**
+     * @return string
+     */
     public function getToken() : string
     {
         return $this->token;
     }
 
+    /**
+     * @return boolean
+     */
     public function getIsAdmin() : bool
     {
         return $this->is_admin;
     }
 
+    /**
+     * @return Collection
+     */
     public function getPosts() : Collection
     {
         return $this->posts;
     }
 
+    /**
+     * @param string $username
+     * @return User
+     */
     public function setUsername(string $username) : User
     {
         $this->username = $username;
@@ -93,6 +121,10 @@ class User
         return $this;
     }
 
+    /**
+     * @param string $password
+     * @return User
+     */
     public function setPassword(string $password) : User
     {
         $this->password = password_hash($password, PASSWORD_DEFAULT);
@@ -100,6 +132,10 @@ class User
         return $this;
     }
 
+    /**
+     * @param string $token
+     * @return User
+     */
     public function setToken(string $token) : User
     {
         $this->token = $token;
@@ -107,6 +143,10 @@ class User
         return $this;
     }
 
+    /**
+     * @param boolean $isAdmin
+     * @return User
+     */
     public function setIsAdmin(bool $isAdmin) : User
     {
         $this->is_admin = $isAdmin;

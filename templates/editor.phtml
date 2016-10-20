@@ -15,14 +15,14 @@
 <?php endif ?>
 
 <form method="POST"
-    action="/<?= isset($isEdit) && $isEdit === true ? 'edit/' . $post->getSlug() : 'new' ?>"
+    action="/post/<?= isset($isEdit) && $isEdit ? 'edit/' . $post->getSlug() : 'new' ?>"
 >
     <?php $this->insert('partials/csrf', ['csrf' => $csrf]) ?>
 
     <label for="title">Title</label>
     <input name="title" id="title" maxlength="50" required value="<?= isset($post) ? $post->getTitle() : '' ?>">
 
-    <label for="body">Post</label>
+    <label for="body">Content</label>
     <textarea name="body" id="body"><?= isset($post) ? $post->getBody() : '' ?></textarea>
 
     <button name="submit" type="submit">

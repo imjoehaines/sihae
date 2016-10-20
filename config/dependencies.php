@@ -22,6 +22,7 @@ use Interop\Container\ContainerInterface as Container;
 
 use Sihae\Renderer;
 use Sihae\Middleware\CsrfProvider;
+use Sihae\Middleware\PageProvider;
 use Sihae\Middleware\UserProvider;
 use Sihae\Validators\PostValidator;
 use Sihae\Middleware\AuthMiddleware;
@@ -44,6 +45,13 @@ return function (Container $container) {
         $engine->loadExtension(new URI($container->get('request')->getUri()->getPath()));
 
         return $engine;
+    };
+
+    $container[PageProvider::class] = function (Container $container) : PageProvider {
+        return new PageProvider(
+            $container->get(Renderer::class),
+            $container->get(EntityManager::class)
+        );
     };
 
     $container[Renderer::class] = function (Container $container) : Renderer {
@@ -196,7 +204,7 @@ return function (Container $container) {
     // 404 handler
     $container['notFoundHandler'] = function (Container $container) : callable {
         return function (RequestInterface $request, ResponseInterface $response) use ($container) {
-            return $container->get(Renderer::class)->render($response, '404');
+            return $container->get(Renderer::class)->render($response->withStatus(404), '404');
         };
     };
 };

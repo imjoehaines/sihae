@@ -28,36 +28,45 @@
 
     <main>
         <?= $this->section('content') ?>
-
-        <?php if (!empty($flash_messages)) : ?>
-            <script src="<?= $this->asset('/js/alert-alert.min.js') ?>"></script>
-
-            <?php foreach ($flash_messages as $type => $messages) : ?>
-                <script>
-                    var type = '<?= $type ?>'
-                    var message = '<?= implode(", ", $messages) ?>'
-
-                    window.Alert.alert(type, message, { timeout: 5000 })
-                </script>
-            <?php endforeach ?>
-        <?php endif ?>
     </main>
 
     <footer>
         <nav>
             <ul>
-                <li><a <?= $this->uri('/about', 'class="selected"') ?> href="/about">About</a></li>
-                <li><a <?= $this->uri('/archive', 'class="selected"') ?> href="/archive">Archive</a></li>
+                <?php foreach ($pages as $page) : ?>
+                    <li><a <?= $this->uri('/' . $page->getSlug(), 'class="selected"') ?> href="/<?= $page->getSlug() ?>">
+                        <?= $page->getTitle() ?>
+                    </a></li>
+                <?php endforeach ?>
 
-                <?php if (isset($user)) : ?>
+                <li><a <?= $this->uri('/archive', 'class="selected"') ?> href="/archive">Archive</a></li>
+            </ul>
+        </nav>
+
+        <?php if (isset($user)) : ?>
+            <nav>
+                <ul>
                     <?php if ($user->getIsAdmin() === true) : ?>
-                        <li><a <?= $this->uri('/new', 'class="selected"') ?> href="/new">Add a new post</a></li>
+                        <li><a <?= $this->uri('/post/new', 'class="selected"') ?> href="/post/new">Add a new post</a></li>
                     <?php endif ?>
 
                     <li><a href="/logout">Logout</a></li>
-                <?php endif ?>
-            </ul>
-        </nav>
+                </ul>
+            </nav>
+        <?php endif ?>
     </footer>
+
+    <?php if (!empty($flash_messages)) : ?>
+        <script src="<?= $this->asset('/js/alert-alert.min.js') ?>"></script>
+
+        <?php foreach ($flash_messages as $type => $messages) : ?>
+            <script>
+                var type = '<?= $type ?>'
+                var message = '<?= implode(", ", $messages) ?>'
+
+                window.Alert.alert(type, message, { timeout: 5000 })
+            </script>
+        <?php endforeach ?>
+    <?php endif ?>
 </body>
 </html>

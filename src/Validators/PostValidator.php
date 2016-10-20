@@ -4,6 +4,9 @@ namespace Sihae\Validators;
 
 use Schemer\Validator as V;
 
+/**
+ * Validator for new Posts
+ */
 class PostValidator implements Validator
 {
     /**
@@ -16,6 +19,9 @@ class PostValidator implements Validator
      */
     private $errors = [];
 
+    /**
+     * Initialise validator rules
+     */
     public function __construct()
     {
         $this->validator = V::assoc([

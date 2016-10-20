@@ -26,6 +26,7 @@ class AuthMiddleware
 
     /**
      * @param Session $session
+     * @param EntityManager $entityManager
      */
     public function __construct(Session $session, EntityManager $entityManager)
     {

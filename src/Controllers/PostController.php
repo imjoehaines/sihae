@@ -13,6 +13,9 @@ use League\CommonMark\CommonMarkConverter;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
+/**
+ * Controller for handling creating/updating/deleting/showing blog posts
+ */
 class PostController
 {
     /**
@@ -44,6 +47,13 @@ class PostController
      * @var Session
      */
     private $session;
+
+    /**
+     * Strings that are used in routes and therefore can't be slugs
+     *
+     * @var array
+     */
+    private $reservedSlugs = ['new', 'edit', 'delete', 'login', 'logout', 'register', 'archive', 'convert'];
 
     /**
      * @param Renderer $renderer
@@ -84,7 +94,7 @@ class PostController
         $limit = 8;
         $offset = $limit * ($page - 1);
 
-        $posts = $postRepository->findBy([], ['date_created' => 'DESC'], $limit, $offset);
+        $posts = $postRepository->findBy(['is_page' => false], ['date_created' => 'DESC'], $limit, $offset);
 
         $parsedPosts = array_map(function (Post $post) : Post {
             $parsedBody = $this->markdown->convertToHtml($post->getBody());
@@ -113,7 +123,7 @@ class PostController
      */
     public function create(Request $request, Response $response) : Response
     {
-        return $this->renderer->render($response, 'post-form');
+        return $this->renderer->render($response, 'editor');
     }
 
     /**
@@ -132,7 +142,7 @@ class PostController
         $post->setBody($newPost['body']);
 
         if (!$this->validator->isValid($newPost)) {
-            return $this->renderer->render($response, 'post-form', [
+            return $this->renderer->render($response, 'editor', [
                 'post' => $post,
                 'errors' => $this->validator->getErrors(),
             ]);
@@ -144,7 +154,9 @@ class PostController
         $post->setUser($user);
 
         // if there is already a post with the slug we just generated, generate a new one
-        if ($this->entityManager->getRepository(Post::class)->findOneBy(['slug' => $post->getSlug()])) {
+        if ($this->entityManager->getRepository(Post::class)->findOneBy(['slug' => $post->getSlug()]) ||
+            in_array($post->getSlug(), $this->reservedSlugs, true)
+        ) {
             $post->regenerateSlug();
         }
 
@@ -175,7 +187,7 @@ class PostController
         $parsedBody = $this->markdown->convertToHtml($post->getBody());
         $parsedPost = $post->setBody($parsedBody);
 
-        return $this->renderer->render($response, 'post', ['post' => $parsedPost]);
+        return $this->renderer->render($response, 'post', ['post' => $parsedPost, 'show_date' => !$post->getIsPage()]);
     }
 
     /**
@@ -194,7 +206,7 @@ class PostController
             return $response->withStatus(404);
         }
 
-        return $this->renderer->render($response, 'post-form', ['post' => $post, 'isEdit' => true]);
+        return $this->renderer->render($response, 'editor', ['post' => $post, 'isEdit' => true]);
     }
 
     /**
@@ -219,7 +231,7 @@ class PostController
         $post->setBody($updatedPost['body']);
 
         if (!$this->validator->isValid($updatedPost)) {
-            return $this->renderer->render($response, 'post-form', [
+            return $this->renderer->render($response, 'editor', [
                 'post' => $post,
                 'errors' => $this->validator->getErrors(),
                 'isEdit' => true,
@@ -256,5 +268,35 @@ class PostController
         $this->flash->addMessage('success', 'Successfully deleted your post!');
 
         return $response->withStatus(302)->withHeader('Location', '/');
+    }
+
+    /**
+     * Convert a Post to a Page or vice versa
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param string $slug
+     * @return Response
+     */
+    public function convert(Request $request, Response $response, string $slug) : Response
+    {
+        $entity = $this->entityManager->getRepository(Post::class)->findOneBy(['slug' => $slug]);
+
+        if (!$entity) {
+            return $response->withStatus(404);
+        }
+
+        $entity->setIsPage(!$entity->getIsPage());
+
+        $this->entityManager->persist($entity);
+        $this->entityManager->flush();
+
+        $path = '/' . $entity->getSlug();
+
+        if ($entity->getIsPage() === false) {
+            $path = '/post' . $path;
+        }
+
+        return $response->withStatus(302)->withHeader('Location', $path);
     }
 }

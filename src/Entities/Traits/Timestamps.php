@@ -39,6 +39,7 @@ trait Timestamps
      * and date_modified to the current date & time
      *
      * @ORM\PrePersist
+     * @return void
      */
     public function onPrePersist()
     {
@@ -52,6 +53,7 @@ trait Timestamps
      * Before updating this entity, update date_modified to the current date & time
      *
      * @ORM\PreUpdate
+     * @return void
      */
     public function onPreUpdate()
     {
