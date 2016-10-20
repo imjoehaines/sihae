@@ -168,7 +168,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     public function thereAreSomePosts(TableNode $posts)
     {
         $posts = $posts->getHash();
-        $user = $this->getEntityManager()->getRepository(User::class)->findOneBy(['username' => 'testing']);
+        $user = $this->getEntityManager()->getRepository(User::class)->findOneBy([]);
 
         foreach ($posts as $content) {
             $post = new Post;
