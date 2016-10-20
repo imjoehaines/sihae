@@ -3,8 +3,8 @@
 return [
     'settings' => [
         'sihae' => [
-            'title' => 'Sihae',
-            'summary' => 'Welcome to your Sihae blog',
+            'title' => getenv('SIHAE_TITLE') ?: 'Sihae',
+            'summary' => getenv('SIHAE_SUMMARY') ?: 'Welcome to your Sihae blog',
         ],
 
         // markdown settings
