@@ -49,7 +49,7 @@ class AuthMiddleware
             $user = $this->entityManager->getRepository(User::class)->findOneBy(['token' => $token]);
 
             if ($user && $user->getIsAdmin() === true) {
-                return $next($request, $response);
+                return $next($request->withAttribute('user', $user), $response);
             }
         }
 

@@ -1,18 +1,34 @@
 <?php $this->layout('layout') ?>
 
 <?php $this->start('styles') ?>
-    <link rel="stylesheet" href="<?= $this->asset('/css/hljs-tomorrow.min.css') ?> " />
+    <link rel="stylesheet" href="<?= $this->asset('/css/prism.css') ?> " />
 <?php $this->stop('styles') ?>
 
 <h2>
     <?= $this->e($post->getTitle()) ?>
 
-    <?php $this->insert('partials/post-date', ['post' => $post, 'show_date' => $show_date]) ?>
+    <small class="post-date">
+        <?php if ($show_date === true) : ?>
+            <?= $post->getDateCreated()->format('jS M Y') ?>
+        <?php endif ?>
+
+        <?php if (isset($user) && $user->getIsAdmin() === true) : ?>
+            <a href="/post/convert/<?= $post->getSlug() ?>" title="Convert between page and post">
+                <i class="fa fa-exchange" aria-hidden="true"></i>
+            </a>
+            <a href="/post/edit/<?= $post->getSlug() ?>" title="Edit this post">
+                <i class="fa fa-pencil" aria-hidden="true"></i>
+            </a>
+            <a href="/post/delete/<?= $post->getSlug() ?>" title="Delete this post">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+            </a>
+        <?php endif ?>
+    </small>
 </h2>
 
 <?= $post->getBody() ?>
 
-<script src="<?= $this->asset('/js/highlight.min.js') ?>"></script>
+<script src="<?= $this->asset('/js/prism.js') ?>"></script>
 <script>
-    window.hljs.initHighlightingOnLoad()
+    window.Prism.plugins.autoloader.languages_path = '/js/prism-grammars/'
 </script>

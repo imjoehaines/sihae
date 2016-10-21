@@ -21,6 +21,7 @@ use Slim\Handlers\Strategies\RequestResponseArgs;
 use Interop\Container\ContainerInterface as Container;
 
 use Sihae\Renderer;
+use Sihae\Middleware\PostLocator;
 use Sihae\Middleware\CsrfProvider;
 use Sihae\Middleware\PageProvider;
 use Sihae\Middleware\UserProvider;
@@ -52,6 +53,10 @@ return function (Container $container) {
             $container->get(Renderer::class),
             $container->get(EntityManager::class)
         );
+    };
+
+    $container[PostLocator::class] = function (Container $container) : PostLocator {
+        return new PostLocator($container->get(EntityManager::class));
     };
 
     $container[Renderer::class] = function (Container $container) : Renderer {

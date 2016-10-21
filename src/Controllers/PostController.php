@@ -110,7 +110,7 @@ class PostController
         return $this->renderer->render($response, 'post-list', [
             'posts' => $parsedPosts,
             'current_page' => $page,
-            'total_pages' => (int) ceil($total / $limit) ?: 1,
+            'total_pages' => ceil($total / $limit) ?: 1,
         ]);
     }
 
@@ -149,9 +149,8 @@ class PostController
         }
 
         $token = $this->session->get('token');
-        $user = $this->entityManager->getRepository(User::class)->findOneBy(['token' => $token]);
 
-        $post->setUser($user);
+        $post->setUser($request->getAttribute('user'));
 
         // if there is already a post with the slug we just generated, generate a new one
         if ($this->entityManager->getRepository(Post::class)->findOneBy(['slug' => $post->getSlug()]) ||
@@ -178,11 +177,7 @@ class PostController
      */
     public function show(Request $request, Response $response, string $slug) : Response
     {
-        $post = $this->entityManager->getRepository(Post::class)->findOneBy(['slug' => $slug]);
-
-        if (!$post) {
-            return $response->withStatus(404);
-        }
+        $post = $request->getAttribute('post');
 
         $parsedBody = $this->markdown->convertToHtml($post->getBody());
         $parsedPost = $post->setBody($parsedBody);
@@ -200,11 +195,7 @@ class PostController
      */
     public function edit(Request $request, Response $response, string $slug) : Response
     {
-        $post = $this->entityManager->getRepository(Post::class)->findOneBy(['slug' => $slug]);
-
-        if (!$post) {
-            return $response->withStatus(404);
-        }
+        $post = $request->getAttribute('post');
 
         return $this->renderer->render($response, 'editor', ['post' => $post, 'isEdit' => true]);
     }
@@ -219,11 +210,7 @@ class PostController
      */
     public function update(Request $request, Response $response, string $slug) : Response
     {
-        $post = $this->entityManager->getRepository(Post::class)->findOneBy(['slug' => $slug]);
-
-        if (!$post) {
-            return $response->withStatus(404);
-        }
+        $post = $request->getAttribute('post');
 
         $updatedPost = $request->getParsedBody();
 
@@ -256,11 +243,7 @@ class PostController
      */
     public function delete(Request $request, Response $response, string $slug) : Response
     {
-        $post = $this->entityManager->getRepository(Post::class)->findOneBy(['slug' => $slug]);
-
-        if (!$post) {
-            return $response->withStatus(404);
-        }
+        $post = $request->getAttribute('post');
 
         $this->entityManager->remove($post);
         $this->entityManager->flush();
@@ -281,10 +264,6 @@ class PostController
     public function convert(Request $request, Response $response, string $slug) : Response
     {
         $entity = $this->entityManager->getRepository(Post::class)->findOneBy(['slug' => $slug]);
-
-        if (!$entity) {
-            return $response->withStatus(404);
-        }
 
         $entity->setIsPage(!$entity->getIsPage());
 
