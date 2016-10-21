@@ -29,3 +29,6 @@
 <?= $post->getBody() ?>
 
 <script src="<?= $this->asset('/js/prism.js') ?>"></script>
+<script>
+    window.Prism.plugins.autoloader.languages_path = '/js/prism-grammars/'
+</script>
