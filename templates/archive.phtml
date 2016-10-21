@@ -16,7 +16,9 @@
                             <?= $this->e($post->getTitle()) ?>
                         </a>
 
-                        <?php $this->insert('partials/post-date', ['post' => $post]) ?>
+                        <small class="post-date">
+                            <?= $post->getDateCreated()->format('jS M Y') ?>
+                        </small>
                     </p>
                 </li>
             <?php endforeach ?>

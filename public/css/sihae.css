@@ -4,17 +4,21 @@
   -webkit-box-sizing: border-box;
 }
 
+html {
+  font-size: 18px;
+}
+
 body {
   /* GitHub's system font stack */
   font-family: "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  color: #666;
+  color: #333;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
   margin-top: 0;
-  color: #666;
-  line-height: 1.5;
+  color: #333;
+  line-height: 1.3;
 }
 
 header {
@@ -28,15 +32,19 @@ header h1 {
   font-weight: normal;
 }
 
+header p {
+  margin-top: 0;
+}
+
 p {
-  line-height: 1.3;
+  line-height: 1.5;
 }
 
 nav {
-  max-width: 600px;
+  max-width: 40rem;
   margin: 0 auto 2rem;
   padding: 0;
-  font-weight: lighter;
+  font-weight: normal;
 }
 
 nav ul {
@@ -59,19 +67,19 @@ nav ul, .post-list, .post-pagination {
 }
 
 main {
-  max-width: 600px;
+  max-width: 40rem;
   margin: 0 auto 2rem;
   padding: 0 2rem;
   overflow-wrap: break-word;
 }
 
 a {
-  color: #0096cc;
+  color: #007fad;
   text-decoration: none;
 }
 
 a:hover {
-  color: #007199;
+  color: #005e80;
 }
 
 .post-list h2 {
@@ -128,14 +136,14 @@ a:hover {
 }
 
 .post-date {
-  color: #999;
+  color: #666;
   font-size: 1rem;
 
   /* 1rem (16px) * 2.25 = 36px - matches h2 (1.5rem (24px) * 2.5) */
   line-height: 2.25;
   vertical-align: middle;
   float: right;
-  font-weight: lighter;
+  font-weight: normal;
 }
 
 .archive .post-date {
@@ -154,14 +162,19 @@ h3 {
   margin-left: 0.33rem;
 }
 
-code,
-code.hljs {
-  white-space: pre;
-  background: #f6f6f6;
+code {
+  background: #f5f2f0;
 }
 
-code:not(.hljs) {
+code:not([class*=language-]) {
   padding: 0 0.25rem;
+}
+
+div.prism-show-language > div.prism-show-language-label {
+  border-radius: 0;
+  padding: 0.2rem 0.5rem;
+  text-transform: uppercase;
+  background: rgba(0, 0, 0, 0.05);
 }
 
 label {
@@ -205,7 +218,7 @@ blockquote {
   margin: 1rem;
   padding-left: 1rem;
   overflow: hidden;
-  border-left: 0.25rem solid #0096cc;
+  border-left: 0.25rem solid #007fad;
 }
 
 img {
@@ -246,7 +259,7 @@ img {
 
 @media only screen and (max-width: 600px) {
   html {
-    font-size: 14px;
+    font-size: 16px;
   }
 
   .post-date {
