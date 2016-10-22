@@ -34,6 +34,9 @@ return [
 
         'displayErrorDetails' => getenv('APPLICATION_ENV') !== 'production',
         'addContentLengthHeader' => false,
+        'routerCacheFile' => getenv('APPLICATION_ENV') === 'production'
+            ? __DIR__ . '/../data/cache/router.php'
+            : false,
 
         // Renderer settings
         'renderer' => [
