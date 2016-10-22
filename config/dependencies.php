@@ -121,7 +121,7 @@ return function (Container $container) {
     };
 
     $container[NotFoundMiddleware::class] = function (Container $container) : NotFoundMiddleware {
-        return new NotFoundMiddleware($container->get('notFoundHandler'));
+        return new NotFoundMiddleware($container->get(Renderer::class));
     };
 
     $container[SettingsProvider::class] = function (Container $container) : SettingsProvider {
@@ -209,7 +209,7 @@ return function (Container $container) {
     // 404 handler
     $container['notFoundHandler'] = function (Container $container) : callable {
         return function (RequestInterface $request, ResponseInterface $response) use ($container) {
-            return $container->get(Renderer::class)->render($response->withStatus(404), '404');
+            return $container->get('response')->withStatus(404);
         };
     };
 };
