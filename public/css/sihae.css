@@ -78,7 +78,8 @@ a {
   text-decoration: none;
 }
 
-a:hover {
+a:hover,
+a:focus {
   color: #005e80;
 }
 
@@ -126,13 +127,11 @@ a:hover {
   width: 33%;
 }
 
-.disabled {
+.disabled,
+.disabled:hover,
+.disabled:focus {
   color: #ccc;
-  cursor: default;
-}
-
-.disabled:hover {
-  color: #ccc;
+  cursor: not-allowed;
 }
 
 .post-date {
@@ -177,10 +176,10 @@ code:not([class*=language-]) {
 .prism-show-language-label {
   border-radius: 0;
   padding: 0.2rem 0.5rem;
+  margin: 0.1rem;
   text-transform: uppercase;
   background: rgba(255, 255, 255, 0.8);
   color: #000;
-  border: 2px solid #282c34;
   position: absolute;
   top: 0;
   right: 0;
@@ -275,5 +274,9 @@ img {
     float: none;
     display: block;
     line-height: 1.5;
+  }
+
+  main {
+    padding: 0 1rem;
   }
 }
