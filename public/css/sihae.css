@@ -127,13 +127,11 @@ a:focus {
   width: 33%;
 }
 
-.disabled {
+.disabled,
+.disabled:hover,
+.disabled:focus {
   color: #ccc;
-  cursor: default;
-}
-
-.disabled:hover {
-  color: #ccc;
+  cursor: not-allowed;
 }
 
 .post-date {
