@@ -183,6 +183,7 @@ code:not([class*=language-]) {
   position: absolute;
   top: 0;
   right: 0;
+  z-index: 3;
 }
 
 label {
@@ -254,6 +255,10 @@ img {
 /* SimpleMDE */
 .editor-toolbar {
   border-radius: 0;
+}
+
+.editor-preview {
+  background: #fff;
 }
 
 .CodeMirror {
