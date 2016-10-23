@@ -259,6 +259,7 @@ img {
 
 .editor-preview {
   background: #fff;
+  overflow: auto;
 }
 
 .CodeMirror {
