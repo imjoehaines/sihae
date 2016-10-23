@@ -2,6 +2,7 @@
 
 <?php $this->start('styles') ?>
     <link rel="stylesheet" href="<?= $this->asset('/css/simplemde.min.css') ?> " />
+    <link rel="stylesheet" href="<?= $this->asset('/css/prism.css') ?> " />
 <?php $this->stop('styles') ?>
 
 <?php if (isset($isEdit) && $isEdit === true) : ?>
@@ -35,7 +36,18 @@
 </form>
 
 <script src="<?= $this->asset('/js/simplemde.min.js') ?>"></script>
+<script src="<?= $this->asset('/js/prism.js') ?>"></script>
 <script>
-    var simplemde = new window.SimpleMDE()
+    window.Prism.plugins.autoloader.languages_path = '/js/prism-grammars/'
+
+    var simplemde = new window.SimpleMDE({
+      // override the preview renderer to allow Prism.js highlighting
+      previewRender: function (plainText, preview) {
+        window.requestAnimationFrame(() => window.Prism.highlightAll())
+
+        return this.parent.markdown(plainText)
+      }
+    })
+
     simplemde.render()
 </script>
