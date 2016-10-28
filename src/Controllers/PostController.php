@@ -4,6 +4,8 @@ namespace Sihae\Controllers;
 
 use RKA\Session;
 use Sihae\Renderer;
+use Doctrine\ORM\Query;
+use Sihae\Entities\Tag;
 use Sihae\Entities\Post;
 use Sihae\Entities\User;
 use Slim\Flash\Messages;
@@ -123,7 +125,15 @@ class PostController
      */
     public function create(Request $request, Response $response) : Response
     {
-        return $this->renderer->render($response, 'editor');
+        $query = $this->entityManager->createQuery(
+            'SELECT partial t.{id, name}
+             FROM Sihae\Entities\Tag t
+             ORDER BY t.name DESC'
+        );
+
+        $tags = $query->getResult(Query::HYDRATE_ARRAY);
+
+        return $this->renderer->render($response, 'editor', ['tags' => json_encode($tags)]);
     }
 
     /**
@@ -197,7 +207,32 @@ class PostController
     {
         $post = $request->getAttribute('post');
 
-        return $this->renderer->render($response, 'editor', ['post' => $post, 'isEdit' => true]);
+        $query = $this->entityManager->createQuery(
+            'SELECT partial t.{id, name}
+             FROM Sihae\Entities\Tag t
+             ORDER BY t.name DESC'
+        );
+
+        $tags = $query->getResult(Query::HYDRATE_ARRAY);
+
+        $query = $this->entityManager->createQuery(
+            'SELECT partial t.{id, name}
+             FROM Sihae\Entities\Tag t
+             JOIN Sihae\Entities\Post p
+             WHERE :post MEMBER OF t.posts
+             GROUP BY t.id
+             ORDER BY t.name DESC'
+        );
+
+        $query->setParameter('post', $post);
+        $selectedTags = $query->getResult(Query::HYDRATE_ARRAY);
+
+        return $this->renderer->render($response, 'editor', [
+            'post' => $post,
+            'isEdit' => true,
+            'tags' => json_encode($tags),
+            'selected_tags' => json_encode($selectedTags),
+        ]);
     }
 
     /**

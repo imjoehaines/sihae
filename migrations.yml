@@ -1,0 +1,4 @@
+name: Migrations
+migrations_namespace: Sihae\Migrations
+table_name: migrations
+migrations_directory: migrations
