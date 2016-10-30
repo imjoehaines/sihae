@@ -3,16 +3,15 @@
 namespace Sihae\Controllers;
 
 use Sihae\Renderer;
-use Sihae\Entities\Post;
+use Sihae\Entities\Tag;
 use Doctrine\ORM\EntityManager;
-use Sihae\Formatters\Formatter;
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
 /**
- * Controller for the Archive page
+ * Controller for the Tag page
  */
-class ArchiveController
+class TagController
 {
     /**
      * @var Renderer
@@ -25,27 +24,19 @@ class ArchiveController
     private $entityManager;
 
     /**
-     * @var Formatter
-     */
-    private $formatter;
-
-    /**
      * @param Renderer $renderer
      * @param EntityManager $entityManager
-     * @param Formatter $formatter
      */
     public function __construct(
         Renderer $renderer,
-        EntityManager $entityManager,
-        Formatter $formatter
+        EntityManager $entityManager
     ) {
         $this->renderer = $renderer;
         $this->entityManager = $entityManager;
-        $this->formatter = $formatter;
     }
 
     /**
-     * List all Posts
+     * List all Tags
      *
      * @param Request $request
      * @param Response $response
@@ -53,11 +44,17 @@ class ArchiveController
      */
     public function index(Request $request, Response $response) : Response
     {
-        $posts = $this->entityManager->getRepository(Post::class)
-            ->findBy(['is_page' => false], ['date_created' => 'DESC']);
+        $dql =
+            'SELECT t, p
+             FROM Sihae\Entities\Tag t
+             JOIN t.posts p';
 
-        return $this->renderer->render($response, 'archive', [
-            'archiveData' => $this->formatter->format($posts),
-        ]);
+        $tags = $this->entityManager->createQuery($dql)->getResult();
+
+        usort($tags, function (Tag $a, Tag $b) : int {
+            return $b->getPosts()->count() <=> $a->getPosts()->count();
+        });
+
+        return $this->renderer->render($response, 'tags', ['tags' => $tags]);
     }
 }

@@ -5,6 +5,8 @@ namespace Sihae\Entities;
 use Doctrine\ORM\Mapping as ORM;
 use function Stringy\create as s;
 use Sihae\Entities\Traits\Timestamps;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
@@ -49,10 +51,27 @@ class Post
     protected $user;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="users")
+     * @ORM\JoinTable(
+     *  name="post_tag",
+     *  joinColumns={@ORM\JoinColumn(name="post_id", referencedColumnName="id")},
+     *  inverseJoinColumns={@ORM\JoinColumn(name="tag_id", referencedColumnName="id")}
+     * )
+     *
+     * @var Collection
+     */
+    protected $tags;
+
+    /**
      * @ORM\Column(type="boolean")
      * @var boolean
      */
     protected $is_page = false;
+
+    public function __construct()
+    {
+        $this->tags = new ArrayCollection;
+    }
 
     /**
      * @return integer
@@ -161,6 +180,50 @@ class Post
     public function regenerateSlug() : Post
     {
         $this->slug = (string) s($this->title . ' ' . time())->slugify();
+
+        return $this;
+    }
+
+    public function getTags() : Collection
+    {
+        return $this->tags;
+    }
+
+    /**
+     * @param Tag $tag
+     * @return Post
+     */
+    public function addTag(Tag $tag)
+    {
+        if ($this->tags->contains($tag)) {
+            return;
+        }
+
+        $this->tags->add($tag);
+        $tag->addPost($this);
+
+        return $this;
+    }
+
+    /**
+     * @param Tag $tag
+     * @return Post
+     */
+    public function removeTag(Tag $tag)
+    {
+        if (!$this->tags->contains($tag)) {
+            return;
+        }
+
+        $this->tags->removeElement($tag);
+        $tag->removePost($this);
+
+        return $this;
+    }
+
+    public function clearTags() : Post
+    {
+        $this->tags = new ArrayCollection();
 
         return $this;
     }

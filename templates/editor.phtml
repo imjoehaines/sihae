@@ -1,8 +1,9 @@
 <?php $this->layout('layout') ?>
 
 <?php $this->start('styles') ?>
-    <link rel="stylesheet" href="<?= $this->asset('/css/simplemde.min.css') ?> " />
-    <link rel="stylesheet" href="<?= $this->asset('/css/prism.css') ?> " />
+    <link rel="stylesheet" href="<?= $this->asset('/css/simplemde.min.css') ?>" />
+    <link rel="stylesheet" href="<?= $this->asset('/css/tokenfield.css') ?>" />
+    <link rel="stylesheet" href="<?= $this->asset('/css/prism.css') ?>" />
 <?php $this->stop('styles') ?>
 
 <?php if (isset($isEdit) && $isEdit === true) : ?>
@@ -26,6 +27,9 @@
     <label for="body">Content</label>
     <textarea name="body" id="body"><?= isset($post) ? $post->getBody() : '' ?></textarea>
 
+    <label for="tags">Tags</label>
+    <input id="tags">
+
     <button name="submit" type="submit">
         <?php if (isset($isEdit) && $isEdit === true) : ?>
             Edit post
@@ -35,6 +39,7 @@
     </button>
 </form>
 
+<script src="<?= $this->asset('/js/tokenfield.min.js') ?>"></script>
 <script src="<?= $this->asset('/js/simplemde.min.js') ?>"></script>
 <script src="<?= $this->asset('/js/prism.js') ?>"></script>
 <script>
@@ -50,4 +55,12 @@
     })
 
     simplemde.render()
+
+    var tf = new window.Tokenfield({
+      el: document.getElementById('tags'),
+      items: <?= $tags ?>,
+      setItems: <?= $selected_tags ?? '[]' ?>,
+      itemName: 'tags',
+      newItemName: 'new_tags'
+    })
 </script>

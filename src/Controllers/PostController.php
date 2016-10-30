@@ -4,6 +4,8 @@ namespace Sihae\Controllers;
 
 use RKA\Session;
 use Sihae\Renderer;
+use Doctrine\ORM\Query;
+use Sihae\Entities\Tag;
 use Sihae\Entities\Post;
 use Sihae\Entities\User;
 use Slim\Flash\Messages;
@@ -96,19 +98,13 @@ class PostController
 
         $posts = $postRepository->findBy(['is_page' => false], ['date_created' => 'DESC'], $limit, $offset);
 
-        $parsedPosts = array_map(function (Post $post) : Post {
-            $parsedBody = $this->markdown->convertToHtml($post->getBody());
-
-            return $post->setBody($parsedBody);
-        }, $posts);
-
         $total = $postRepository->createQueryBuilder('Post')
             ->select('COUNT(Post.id)')
             ->getQuery()
             ->getSingleScalarResult();
 
         return $this->renderer->render($response, 'post-list', [
-            'posts' => $parsedPosts,
+            'posts' => $posts,
             'current_page' => $page,
             'total_pages' => ceil($total / $limit) ?: 1,
         ]);
@@ -123,7 +119,15 @@ class PostController
      */
     public function create(Request $request, Response $response) : Response
     {
-        return $this->renderer->render($response, 'editor');
+        $query = $this->entityManager->createQuery(
+            'SELECT partial t.{id, name}
+             FROM Sihae\Entities\Tag t
+             ORDER BY t.name DESC'
+        );
+
+        $tags = $query->getResult(Query::HYDRATE_ARRAY);
+
+        return $this->renderer->render($response, 'editor', ['tags' => json_encode($tags)]);
     }
 
     /**
@@ -157,6 +161,16 @@ class PostController
             in_array($post->getSlug(), $this->reservedSlugs, true)
         ) {
             $post->regenerateSlug();
+        }
+
+        $post->clearTags();
+
+        if (!empty($updatedPost['tags'])) {
+            $this->handleExistingTags($updatedPost['tags'], $post);
+        }
+
+        if (!empty($updatedPost['new_tags'])) {
+            $this->handleNewTags($updatedPost['new_tags'], $post);
         }
 
         $this->entityManager->persist($post);
@@ -197,7 +211,30 @@ class PostController
     {
         $post = $request->getAttribute('post');
 
-        return $this->renderer->render($response, 'editor', ['post' => $post, 'isEdit' => true]);
+        $query = $this->entityManager->createQuery(
+            'SELECT partial t.{id, name}
+             FROM Sihae\Entities\Tag t'
+        );
+
+        $tags = $query->getResult(Query::HYDRATE_ARRAY);
+
+        $query = $this->entityManager->createQuery(
+            'SELECT partial t.{id, name}
+             FROM Sihae\Entities\Tag t
+             JOIN t.posts p
+             WHERE :post MEMBER OF t.posts
+             GROUP BY t.id'
+        );
+
+        $query->setParameter('post', $post);
+        $selectedTags = $query->getResult(Query::HYDRATE_ARRAY);
+
+        return $this->renderer->render($response, 'editor', [
+            'post' => $post,
+            'isEdit' => true,
+            'tags' => json_encode($tags),
+            'selected_tags' => json_encode($selectedTags),
+        ]);
     }
 
     /**
@@ -225,12 +262,50 @@ class PostController
             ]);
         }
 
+        $post->clearTags();
+
+        if (!empty($updatedPost['tags'])) {
+            $this->handleExistingTags($updatedPost['tags'], $post);
+        }
+
+        if (!empty($updatedPost['new_tags'])) {
+            $this->handleNewTags($updatedPost['new_tags'], $post);
+        }
+
         $this->entityManager->persist($post);
         $this->entityManager->flush();
 
         $this->flash->addMessage('success', 'Successfully edited your post!');
 
         return $response->withStatus(302)->withHeader('Location', '/post/' . $slug);
+    }
+
+    private function handleExistingTags(array $existingTags, Post $post)
+    {
+        $query = $this->entityManager->createQuery(
+            'SELECT t
+             FROM Sihae\Entities\Tag t
+             WHERE t.id IN (:tagIds)'
+        );
+
+        $query->setParameter(':tagIds', $existingTags);
+
+        $tags = $query->getResult();
+
+        foreach ($tags as $tag) {
+            $post->addTag($tag);
+        }
+    }
+
+    private function handleNewTags(array $newTags, Post $post)
+    {
+        foreach ($newTags as $newTag) {
+            $tag = new Tag();
+            $tag->setName($newTag);
+            $post->addTag($tag);
+
+            $this->entityManager->persist($tag);
+        }
     }
 
     /**
@@ -277,5 +352,47 @@ class PostController
         }
 
         return $response->withStatus(302)->withHeader('Location', $path);
+    }
+
+    public function tagged(Request $request, Response $response, string $slug, int $page = 1) : Response
+    {
+        $tag = $this->entityManager->getRepository(Tag::class)->findOneBy(['slug' => $slug]);
+
+        if (!$tag) {
+            return $response->withStatus(404);
+        }
+
+        $limit = 8;
+        $offset = $limit * ($page - 1);
+
+        $dql =
+            'SELECT p, t
+             FROM Sihae\Entities\Post p
+             JOIN p.tags t
+             WHERE t.slug = :slug
+             ORDER BY p.date_created DESC';
+
+        $query = $this->entityManager->createQuery($dql)
+            ->setFirstResult($limit * ($page - 1))
+            ->setMaxResults($limit)
+            ->setParameter(':slug', $slug);
+
+        $posts = $query->getResult();
+
+        $total = $this->entityManager->getRepository(Post::class)
+            ->createQueryBuilder('Post')
+            ->select('COUNT(Post.id)')
+            ->join('Post.tags', 't')
+            ->where('t.slug = :slug')
+            ->setParameter(':slug', $slug)
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        return $this->renderer->render($response, 'post-list', [
+            'posts' => $posts,
+            'current_page' => $page,
+            'total_pages' => ceil($total / $limit) ?: 1,
+            'tag' => $tag,
+        ]);
     }
 }

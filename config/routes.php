@@ -3,6 +3,7 @@
 use Slim\App;
 use Sihae\Middleware\PostLocator;
 use Sihae\Middleware\AuthMiddleware;
+use Sihae\Controllers\TagController;
 use Sihae\Controllers\PostController;
 use Sihae\Controllers\LoginController;
 use Sihae\Controllers\ArchiveController;
@@ -27,7 +28,10 @@ return function (App $app) {
     $app->get('/post/{slug:[a-zA-Z\d\s-_\-]+}', PostController::class . ':show')
         ->add(PostLocator::class);
 
+    $app->get('/tagged/{slug:[a-zA-Z\d\s-_\-]+}[/page/{page:[1-9][0-9]*}]', PostController::class . ':tagged');
+
     $app->get('/archive', ArchiveController::class . ':index');
+    $app->get('/tags', TagController::class . ':index');
 
     $app->get('/login', LoginController::class . ':showForm');
     $app->post('/login', LoginController::class . ':login');

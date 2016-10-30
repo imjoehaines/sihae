@@ -22,7 +22,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 header {
-  margin: 2rem;
+  margin: 1rem 2rem 2rem;
   text-align: center;
 }
 
@@ -252,6 +252,30 @@ img {
   margin: 1.5rem 0;
 }
 
+.post-tags {
+  color: #666;
+  list-style-type: none;
+  padding: 0;
+}
+
+.post-tags li {
+  display: inline;
+}
+
+.post-tags li:first-child::before {
+  content: 'Tagged ';
+}
+
+/* add commas between all but the last or second-to-last list items */
+.post-tags li:not(:last-child):not(:nth-last-child(2))::after {
+  content: ',';
+}
+
+/* add an "and" between the second-to-last and last list items */
+.post-tags li:nth-last-child(2)::after {
+  content: ' and ';
+}
+
 /* SimpleMDE */
 .editor-toolbar {
   border-radius: 0;
@@ -259,6 +283,7 @@ img {
 
 .editor-preview {
   background: #fff;
+  overflow: auto;
 }
 
 .CodeMirror {
@@ -268,6 +293,32 @@ img {
 .CodeMirror .cm-spell-error:not(.cm-url):not(.cm-comment):not(.cm-tag):not(.cm-word) {
    border-bottom: 2px dotted rgba(255, 0, 0, 1);
    background: none;
+}
+
+/* tokenfield */
+.tokenfield.tokenfield-mode-tokens {
+  margin-bottom: 1rem;
+  border-radius: 0;
+  border: 1px solid #ddd;
+  transition: none;
+  font-size: inherit;
+  padding: 0;
+}
+
+.tokenfield .tokenfield-input {
+  padding: 0.5rem;
+  margin: 0;
+  width: auto !important;
+}
+
+.tokenfield .tokenfield-set > ul > li {
+  margin: 0.5rem 0 0 0.5rem;
+  border-radius: 0;
+  font-size: 0.8rem;
+}
+
+.tokenfield .tokenfield-set > ul > li:last-child {
+  margin-right: 0;
 }
 
 @media only screen and (max-width: 600px) {
