@@ -163,14 +163,12 @@ class PostController
             $post->regenerateSlug();
         }
 
-        $post->clearTags();
-
-        if (!empty($updatedPost['tags'])) {
-            $this->handleExistingTags($updatedPost['tags'], $post);
+        if (!empty($newPost['tags'])) {
+            $this->handleExistingTags($newPost['tags'], $post);
         }
 
-        if (!empty($updatedPost['new_tags'])) {
-            $this->handleNewTags($updatedPost['new_tags'], $post);
+        if (!empty($newPost['new_tags'])) {
+            $this->handleNewTags($newPost['new_tags'], $post);
         }
 
         $this->entityManager->persist($post);
@@ -299,12 +297,18 @@ class PostController
 
     private function handleNewTags(array $newTags, Post $post)
     {
-        foreach ($newTags as $newTag) {
-            $tag = new Tag();
-            $tag->setName($newTag);
-            $post->addTag($tag);
+        $tagRepository = $this->entityManager->getRepository(Tag::class);
 
-            $this->entityManager->persist($tag);
+        foreach ($newTags as $newTag) {
+            // check for an existing tag with this name first
+            if (!$tag = $tagRepository->findOneBy(['name' => $newTag])) {
+                $tag = new Tag();
+                $tag->setName($newTag);
+
+                $this->entityManager->persist($tag);
+            }
+
+            $post->addTag($tag);
         }
     }
 
