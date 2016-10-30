@@ -169,6 +169,8 @@ class PostController
             $post->regenerateSlug();
         }
 
+        $post->clearTags();
+
         if (!empty($updatedPost['tags'])) {
             $this->handleExistingTags($updatedPost['tags'], $post);
         }
@@ -267,6 +269,8 @@ class PostController
                 'isEdit' => true,
             ]);
         }
+
+        $post->clearTags();
 
         if (!empty($updatedPost['tags'])) {
             $this->handleExistingTags($updatedPost['tags'], $post);

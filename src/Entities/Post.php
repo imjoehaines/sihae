@@ -220,4 +220,11 @@ class Post
 
         return $this;
     }
+
+    public function clearTags() : Post
+    {
+        $this->tags = new ArrayCollection();
+
+        return $this;
+    }
 }
