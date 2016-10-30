@@ -27,6 +27,7 @@ use Sihae\Middleware\PageProvider;
 use Sihae\Middleware\UserProvider;
 use Sihae\Validators\PostValidator;
 use Sihae\Middleware\AuthMiddleware;
+use Sihae\Controllers\TagController;
 use Sihae\Controllers\PostController;
 use Sihae\Formatters\ArchiveFormatter;
 use Sihae\Middleware\SettingsProvider;
@@ -79,6 +80,13 @@ return function (Container $container) {
             $container->get(Renderer::class),
             $container->get(EntityManager::class),
             $container->get(ArchiveFormatter::class)
+        );
+    };
+
+    $container[TagController::class] = function (Container $container) : TagController {
+        return new TagController(
+            $container->get(Renderer::class),
+            $container->get(EntityManager::class)
         );
     };
 

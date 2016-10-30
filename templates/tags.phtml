@@ -1,0 +1,23 @@
+<?php $this->layout('layout') ?>
+
+<h2>Tags</h2>
+
+<?php if (empty($tags)) : ?>
+    <h3>There aren't any tags!</h3>
+<?php else : ?>
+    <ol class="post-list archive">
+        <?php foreach ($tags as $tag) : ?>
+            <li>
+                <p>
+                    <a href="/tagged/<?= $tag->getSlug() ?>">
+                        <?= $this->e($tag->getName()) ?>
+                    </a>
+
+                    <small class="post-date">
+                        <?= $tag->getPosts()->count() ?> post<?= $tag->getPosts()->count() === 1 ? '' : 's' ?>
+                    </small>
+                </p>
+            </li>
+        <?php endforeach ?>
+    </ol>
+<?php endif ?>
