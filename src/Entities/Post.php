@@ -188,7 +188,7 @@ class Post
      * @param Tag $tag
      * @return Post
      */
-    public function addTag(Tag $tag) : Post
+    public function addTag(Tag $tag)
     {
         if ($this->tags->contains($tag)) {
             return;
@@ -204,7 +204,7 @@ class Post
      * @param Tag $tag
      * @return Post
      */
-    public function removeTag(Tag $tag) : Post
+    public function removeTag(Tag $tag)
     {
         if (!$this->tags->contains($tag)) {
             return;

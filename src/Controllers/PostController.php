@@ -169,6 +169,32 @@ class PostController
             $post->regenerateSlug();
         }
 
+        if (!empty($newPost['tags'])) {
+            $query = $this->entityManager->createQuery(
+                'SELECT t
+                 FROM Sihae\Entities\Tag t
+                 WHERE t.id IN (:tagIds)'
+            );
+
+            $query->setParameter(':tagIds', $newPost['tags']);
+
+            $tags = $query->getResult();
+
+            foreach ($tags as $tag) {
+                $post->addTag($tag);
+            }
+        }
+
+        if (!empty($newPost['new_tags'])) {
+            foreach ($newPost['new_tags'] as $newTag) {
+                $tag = new Tag();
+                $tag->setName($newTag);
+                $post->addTag($tag);
+
+                $this->entityManager->persist($tag);
+            }
+        }
+
         $this->entityManager->persist($post);
         $this->entityManager->flush();
 

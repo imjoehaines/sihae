@@ -5,6 +5,8 @@ namespace Sihae\Entities;
 use Doctrine\ORM\Mapping as ORM;
 use function Stringy\create as s;
 use Sihae\Entities\Traits\Timestamps;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
@@ -74,7 +76,7 @@ class Tag
      * @param string $title
      * @return Tag
      */
-    public function setName(string $name) : Tag
+    public function setName(string $name)
     {
         $this->name = $name;
 
@@ -89,7 +91,7 @@ class Tag
      * @param Post $post
      * @return Post
      */
-    public function addPost(Post $post) : Post
+    public function addPost(Post $post)
     {
         if ($this->posts->contains($post)) {
             return;

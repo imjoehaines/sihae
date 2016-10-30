@@ -293,9 +293,6 @@ img {
   font-size: 0.8rem;
 }
 
-.tokenfield .tokenfield-set > ul > li:first-child {
-}
-
 .tokenfield .tokenfield-set > ul > li:last-child {
   margin-right: 0;
 }
