@@ -184,6 +184,11 @@ class Post
         return $this;
     }
 
+    public function getTags() : Collection
+    {
+        return $this->tags;
+    }
+
     /**
      * @param Tag $tag
      * @return Post

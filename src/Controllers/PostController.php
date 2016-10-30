@@ -169,30 +169,12 @@ class PostController
             $post->regenerateSlug();
         }
 
-        if (!empty($newPost['tags'])) {
-            $query = $this->entityManager->createQuery(
-                'SELECT t
-                 FROM Sihae\Entities\Tag t
-                 WHERE t.id IN (:tagIds)'
-            );
-
-            $query->setParameter(':tagIds', $newPost['tags']);
-
-            $tags = $query->getResult();
-
-            foreach ($tags as $tag) {
-                $post->addTag($tag);
-            }
+        if (!empty($updatedPost['tags'])) {
+            $this->handleExistingTags($updatedPost['tags'], $post);
         }
 
-        if (!empty($newPost['new_tags'])) {
-            foreach ($newPost['new_tags'] as $newTag) {
-                $tag = new Tag();
-                $tag->setName($newTag);
-                $post->addTag($tag);
-
-                $this->entityManager->persist($tag);
-            }
+        if (!empty($updatedPost['new_tags'])) {
+            $this->handleNewTags($updatedPost['new_tags'], $post);
         }
 
         $this->entityManager->persist($post);
@@ -286,12 +268,48 @@ class PostController
             ]);
         }
 
+        if (!empty($updatedPost['tags'])) {
+            $this->handleExistingTags($updatedPost['tags'], $post);
+        }
+
+        if (!empty($updatedPost['new_tags'])) {
+            $this->handleNewTags($updatedPost['new_tags'], $post);
+        }
+
         $this->entityManager->persist($post);
         $this->entityManager->flush();
 
         $this->flash->addMessage('success', 'Successfully edited your post!');
 
         return $response->withStatus(302)->withHeader('Location', '/post/' . $slug);
+    }
+
+    private function handleExistingTags(array $existingTags, Post $post)
+    {
+        $query = $this->entityManager->createQuery(
+            'SELECT t
+             FROM Sihae\Entities\Tag t
+             WHERE t.id IN (:tagIds)'
+        );
+
+        $query->setParameter(':tagIds', $existingTags);
+
+        $tags = $query->getResult();
+
+        foreach ($tags as $tag) {
+            $post->addTag($tag);
+        }
+    }
+
+    private function handleNewTags(array $newTags, Post $post)
+    {
+        foreach ($newTags as $newTag) {
+            $tag = new Tag();
+            $tag->setName($newTag);
+            $post->addTag($tag);
+
+            $this->entityManager->persist($tag);
+        }
     }
 
     /**

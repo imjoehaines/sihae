@@ -28,6 +28,12 @@
 
 <?= $post->getBody() ?>
 
+<ul class="post-tags">
+    <?php foreach ($post->getTags() as $tag) : ?>
+        <li><a href="/tagged/<?= $tag->getSlug() ?>"><?= $tag->getName() ?></a></li>
+    <?php endforeach ?>
+</ul>
+
 <script src="<?= $this->asset('/js/prism.js') ?>"></script>
 <script>
     window.Prism.plugins.autoloader.languages_path = '/js/prism-grammars/'
