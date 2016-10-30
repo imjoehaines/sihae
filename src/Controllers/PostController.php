@@ -98,19 +98,13 @@ class PostController
 
         $posts = $postRepository->findBy(['is_page' => false], ['date_created' => 'DESC'], $limit, $offset);
 
-        $parsedPosts = array_map(function (Post $post) : Post {
-            $parsedBody = $this->markdown->convertToHtml($post->getBody());
-
-            return $post->setBody($parsedBody);
-        }, $posts);
-
         $total = $postRepository->createQueryBuilder('Post')
             ->select('COUNT(Post.id)')
             ->getQuery()
             ->getSingleScalarResult();
 
         return $this->renderer->render($response, 'post-list', [
-            'posts' => $parsedPosts,
+            'posts' => $posts,
             'current_page' => $page,
             'total_pages' => ceil($total / $limit) ?: 1,
         ]);
@@ -219,8 +213,7 @@ class PostController
 
         $query = $this->entityManager->createQuery(
             'SELECT partial t.{id, name}
-             FROM Sihae\Entities\Tag t
-             ORDER BY t.name DESC'
+             FROM Sihae\Entities\Tag t'
         );
 
         $tags = $query->getResult(Query::HYDRATE_ARRAY);
@@ -228,10 +221,9 @@ class PostController
         $query = $this->entityManager->createQuery(
             'SELECT partial t.{id, name}
              FROM Sihae\Entities\Tag t
-             JOIN Sihae\Entities\Post p
+             JOIN t.posts p
              WHERE :post MEMBER OF t.posts
-             GROUP BY t.id
-             ORDER BY t.name DESC'
+             GROUP BY t.id'
         );
 
         $query->setParameter('post', $post);
@@ -360,5 +352,47 @@ class PostController
         }
 
         return $response->withStatus(302)->withHeader('Location', $path);
+    }
+
+    public function tagged(Request $request, Response $response, string $slug, int $page = 1) : Response
+    {
+        $tag = $this->entityManager->getRepository(Tag::class)->findOneBy(['slug' => $slug]);
+
+        if (!$tag) {
+            return $response->withStatus(404);
+        }
+
+        $limit = 8;
+        $offset = $limit * ($page - 1);
+
+        $dql =
+            'SELECT p, t
+             FROM Sihae\Entities\Post p
+             JOIN p.tags t
+             WHERE t.slug = :slug
+             ORDER BY p.date_created DESC';
+
+        $query = $this->entityManager->createQuery($dql)
+            ->setFirstResult($limit * ($page - 1))
+            ->setMaxResults($limit)
+            ->setParameter(':slug', $slug);
+
+        $posts = $query->getResult();
+
+        $total = $this->entityManager->getRepository(Post::class)
+            ->createQueryBuilder('Post')
+            ->select('COUNT(Post.id)')
+            ->join('Post.tags', 't')
+            ->where('t.slug = :slug')
+            ->setParameter(':slug', $slug)
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        return $this->renderer->render($response, 'post-list', [
+            'posts' => $posts,
+            'current_page' => $page,
+            'total_pages' => ceil($total / $limit) ?: 1,
+            'tag' => $tag,
+        ]);
     }
 }

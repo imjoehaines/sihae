@@ -1,5 +1,9 @@
 <?php $this->layout('layout') ?>
 
+<?php if (isset($tag)) : ?>
+    <h2>Posts tagged &ldquo;<?= $tag->getName() ?>&rdquo;</h2>
+<?php endif ?>
+
 <ol class="post-list">
     <?php if (count($posts) === 0) : ?>
         <li>
@@ -28,7 +32,9 @@
             <?php if ($current_page === 1) : ?>
                 <a href="#" class="disabled">Newer Posts</a>
             <?php else : ?>
-                <a href="/page/<?= $current_page - 1 ?>">Newer Posts</a>
+                <a href="<?= isset($tag) ? '/tagged/' . $tag->getSlug() : '' ?>/page/<?= $current_page - 1 ?>">
+                    Newer Posts
+                </a>
             <?php endif ?>
         </li>
 
@@ -38,7 +44,9 @@
 
         <li class="post-pagination-older">
             <?php if ($current_page != $total_pages) : ?>
-                <a href="/page/<?= $current_page + 1 ?>">Older Posts</a>
+                <a href="<?= isset($tag) ? '/tagged/' . $tag->getSlug() : '' ?>/page/<?= $current_page + 1 ?>">
+                    Older Posts
+                </a>
             <?php else : ?>
                 <a href="#" class="disabled">Older Posts</a>
             <?php endif ?>
