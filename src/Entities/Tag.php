@@ -21,24 +21,28 @@ class Tag
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @var integer
+     *
+     * @var int
      */
     protected $id;
 
     /**
      * @ORM\Column(type="string", length=50)
+     *
      * @var string
      */
     protected $name;
 
     /**
      * @ORM\Column(type="string", unique=true)
+     *
      * @var string
      */
     protected $slug;
 
     /**
      * @ORM\ManyToMany(targetEntity="Post", mappedBy="tags")
+     *
      * @var Post
      */
     protected $posts;
@@ -49,7 +53,7 @@ class Tag
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getId() : int
     {
@@ -73,54 +77,47 @@ class Tag
     }
 
     /**
-     * @param string $title
-     * @return Tag
+     * @return Collection
      */
-    public function setName(string $name)
-    {
-        $this->name = $name;
-
-        if (!$this->slug) {
-            $this->slug = (string) s($name)->slugify();
-        }
-
-        return $this;
-    }
-
     public function getPosts() : Collection
     {
         return $this->posts;
     }
 
     /**
-     * @param Post $post
-     * @return Post
+     * @param string $title
+     * @return void
      */
-    public function addPost(Post $post)
+    public function setName(string $name) : void
     {
-        if ($this->posts->contains($post)) {
-            return;
+        $this->name = $name;
+
+        if (!$this->slug) {
+            $this->slug = (string) s($name)->slugify();
         }
-
-        $this->posts->add($post);
-        $post->addTag($this);
-
-        return $this;
     }
 
     /**
      * @param Post $post
-     * @return Post
+     * @return void
      */
-    public function removePost(Post $post) : Post
+    public function addPost(Post $post) : void
     {
         if (!$this->posts->contains($post)) {
-            return;
+            $this->posts->add($post);
+            $post->addTag($this);
         }
+    }
 
-        $this->posts->removeElement($post);
-        $post->removeTag($this);
-
-        return $this;
+    /**
+     * @param Post $post
+     * @return void
+     */
+    public function removePost(Post $post) : void
+    {
+        if ($this->posts->contains($post)) {
+            $this->posts->removeElement($post);
+            $post->removeTag($this);
+        }
     }
 }

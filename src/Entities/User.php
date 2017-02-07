@@ -20,36 +20,42 @@ class User
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @var integer
+     *
+     * @var int
      */
     protected $id;
 
     /**
      * @ORM\Column(type="string", length=50, unique=true)
+     *
      * @var string
      */
     protected $username;
 
     /**
      * @ORM\Column(type="string")
+     *
      * @var string
      */
     protected $password;
 
     /**
      * @ORM\Column(type="string", length=256)
+     *
      * @var string
      */
     protected $token;
 
     /**
      * @ORM\Column(type="boolean")
-     * @var boolean
+     *
+     * @var bool
      */
     protected $is_admin = false;
 
     /**
      * @ORM\OneToMany(targetEntity="Post", mappedBy="user")
+     *
      * @var Collection
      */
     protected $posts;
@@ -63,7 +69,7 @@ class User
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getId() : int
     {
@@ -112,45 +118,37 @@ class User
 
     /**
      * @param string $username
-     * @return User
+     * @return void
      */
-    public function setUsername(string $username) : User
+    public function setUsername(string $username) : void
     {
         $this->username = $username;
-
-        return $this;
     }
 
     /**
      * @param string $password
-     * @return User
+     * @return void
      */
-    public function setPassword(string $password) : User
+    public function setPassword(string $password) : void
     {
         $this->password = password_hash($password, PASSWORD_DEFAULT);
-
-        return $this;
     }
 
     /**
      * @param string $token
-     * @return User
+     * @return void
      */
-    public function setToken(string $token) : User
+    public function setToken(string $token) : void
     {
         $this->token = $token;
-
-        return $this;
     }
 
     /**
      * @param boolean $isAdmin
-     * @return User
+     * @return void
      */
-    public function setIsAdmin(bool $isAdmin) : User
+    public function setIsAdmin(bool $isAdmin) : void
     {
         $this->is_admin = $isAdmin;
-
-        return $this;
     }
 }
