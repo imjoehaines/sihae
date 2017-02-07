@@ -152,8 +152,6 @@ class PostController
             ]);
         }
 
-        $token = $this->session->get('token');
-
         $post->setUser($request->getAttribute('user'));
 
         // if there is already a post with the slug we just generated, generate a new one
