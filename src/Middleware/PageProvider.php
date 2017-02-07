@@ -5,8 +5,8 @@ namespace Sihae\Middleware;
 use Sihae\Renderer;
 use Sihae\Entities\Post;
 use Doctrine\ORM\EntityManager;
-use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 use function Stringy\create as s;
 
