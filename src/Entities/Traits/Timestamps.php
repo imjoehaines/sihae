@@ -39,9 +39,10 @@ trait Timestamps
      * and date_modified to the current date & time
      *
      * @ORM\PrePersist
+     *
      * @return void
      */
-    public function onPrePersist()
+    public function onPrePersist() : void
     {
         $date = new DateTime();
 
@@ -53,9 +54,10 @@ trait Timestamps
      * Before updating this entity, update date_modified to the current date & time
      *
      * @ORM\PreUpdate
+     *
      * @return void
      */
-    public function onPreUpdate()
+    public function onPreUpdate() : void
     {
         $this->date_modified = new DateTime();
     }
@@ -63,7 +65,7 @@ trait Timestamps
     /**
      * Check if an entity has ever been modified
      *
-     * @return boolean
+     * @return bool
      */
     public function hasBeenModified() : bool
     {

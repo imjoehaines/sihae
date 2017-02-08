@@ -5,8 +5,8 @@ namespace Sihae\Controllers;
 use Sihae\Renderer;
 use Sihae\Entities\Tag;
 use Doctrine\ORM\EntityManager;
-use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 /**
  * Controller for the Tag page
@@ -36,7 +36,10 @@ class TagController
     }
 
     /**
-     * List all Tags
+     * List all Tags ordered by the number of posts tagged with them
+     *
+     * For example if "PHP" has 10 posts, "JS" 4 and "Elixir" 1 then the order
+     * will be "PHP", "JS", "Elixir"
      *
      * @param Request $request
      * @param Response $response

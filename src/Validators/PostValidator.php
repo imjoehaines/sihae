@@ -32,7 +32,7 @@ class PostValidator implements Validator
 
     /**
      * @param array $postDetails
-     * @return boolean
+     * @return bool
      */
     public function isValid(array $postDetails) : bool
     {

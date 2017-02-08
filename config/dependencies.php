@@ -13,7 +13,7 @@ use League\Plates\Extension\URI;
 use League\Plates\Extension\Asset;
 use Monolog\Handler\StreamHandler;
 use Monolog\Processor\UidProcessor;
-use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use League\CommonMark\CommonMarkConverter;
 use Slim\Interfaces\InvocationStrategyInterface;
@@ -216,7 +216,7 @@ return function (Container $container) {
 
     // 404 handler
     $container['notFoundHandler'] = function (Container $container) : callable {
-        return function (RequestInterface $request, ResponseInterface $response) use ($container) {
+        return function (ServerRequestInterface $request, ResponseInterface $response) use ($container) {
             return $container->get('response')->withStatus(404);
         };
     };

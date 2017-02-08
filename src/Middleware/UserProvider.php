@@ -6,8 +6,8 @@ use RKA\Session;
 use Sihae\Renderer;
 use Sihae\Entities\User;
 use Doctrine\ORM\EntityManager;
-use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 /**
  * Provides the logged in user to the Renderer

@@ -5,8 +5,8 @@ namespace Sihae\Middleware;
 use RKA\Session;
 use Sihae\Entities\User;
 use Doctrine\ORM\EntityManager;
-use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 /**
  * Checks the user in the current session is an admin, if they are not a 404

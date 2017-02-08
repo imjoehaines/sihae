@@ -3,8 +3,8 @@
 namespace Sihae\Middleware;
 
 use Sihae\Renderer;
-use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 /**
  * Provides the Sihae settings to the Renderer

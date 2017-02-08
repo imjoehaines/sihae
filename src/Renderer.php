@@ -43,7 +43,7 @@ class Renderer
      * @param array $data
      * @return void
      */
-    public function addData(array $data)
+    public function addData(array $data) : void
     {
         $this->engine->addData($data);
     }

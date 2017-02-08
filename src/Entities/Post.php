@@ -21,24 +21,28 @@ class Post
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @var integer
+     *
+     * @var int
      */
     protected $id;
 
     /**
      * @ORM\Column(type="string", length=100)
+     *
      * @var string
      */
     protected $title;
 
     /**
      * @ORM\Column(type="string", unique=true)
+     *
      * @var string
      */
     protected $slug;
 
     /**
      * @ORM\Column(type="text")
+     *
      * @var string
      */
     protected $body;
@@ -46,6 +50,7 @@ class Post
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="posts")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     *
      * @var User
      */
     protected $user;
@@ -64,17 +69,21 @@ class Post
 
     /**
      * @ORM\Column(type="boolean")
-     * @var boolean
+     *
+     * @var bool
      */
     protected $is_page = false;
 
+    /**
+     * Initialise the $tags property on creation
+     */
     public function __construct()
     {
         $this->tags = new ArrayCollection;
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getId() : int
     {
@@ -114,7 +123,7 @@ class Post
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getIsPage() : bool
     {
@@ -122,51 +131,51 @@ class Post
     }
 
     /**
-     * @param string $title
-     * @return Post
+     * @return Collection
      */
-    public function setTitle(string $title) : Post
+    public function getTags() : Collection
+    {
+        return $this->tags;
+    }
+
+    /**
+     * @param string $title
+     * @return void
+     */
+    public function setTitle(string $title) : void
     {
         $this->title = $title;
 
         if (!$this->slug) {
             $this->slug = (string) s($title)->slugify();
         }
-
-        return $this;
     }
 
     /**
      * @param string $body
-     * @return Post
+     * @return void
      */
-    public function setBody(string $body) : Post
+    public function setBody(string $body) : void
     {
         $this->body = $body;
-
-        return $this;
     }
 
     /**
      * @param User $user
-     * @return Post
+     * @return void
      */
-    public function setUser(User $user) : Post
+    public function setUser(User $user) : void
     {
         $this->user = $user;
-
-        return $this;
     }
 
     /**
-     * @param boolean $isPage
-     * @return Post
+     * @param bool $isPage
+     * @return void
      */
-    public function setIsPage(bool $isPage) : Post
+    public function setIsPage(bool $isPage) : void
     {
         $this->is_page = $isPage;
-
-        return $this;
     }
 
     /**
@@ -175,56 +184,42 @@ class Post
      * This doesn't *actually* ensure anything and will need to be updated if
      * this is to be used in situations where multiple users can be creating posts
      *
-     * @return Page
+     * @return void
      */
-    public function regenerateSlug() : Post
+    public function regenerateSlug() : void
     {
         $this->slug = (string) s($this->title . ' ' . time())->slugify();
-
-        return $this;
-    }
-
-    public function getTags() : Collection
-    {
-        return $this->tags;
     }
 
     /**
      * @param Tag $tag
-     * @return Post
+     * @return void
      */
-    public function addTag(Tag $tag)
-    {
-        if ($this->tags->contains($tag)) {
-            return;
-        }
-
-        $this->tags->add($tag);
-        $tag->addPost($this);
-
-        return $this;
-    }
-
-    /**
-     * @param Tag $tag
-     * @return Post
-     */
-    public function removeTag(Tag $tag)
+    public function addTag(Tag $tag) : void
     {
         if (!$this->tags->contains($tag)) {
-            return;
+            $this->tags->add($tag);
+            $tag->addPost($this);
         }
-
-        $this->tags->removeElement($tag);
-        $tag->removePost($this);
-
-        return $this;
     }
 
-    public function clearTags() : Post
+    /**
+     * @param Tag $tag
+     * @return void
+     */
+    public function removeTag(Tag $tag) : void
+    {
+        if ($this->tags->contains($tag)) {
+            $this->tags->removeElement($tag);
+            $tag->removePost($this);
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function clearTags() : void
     {
         $this->tags = new ArrayCollection();
-
-        return $this;
     }
 }

@@ -4,8 +4,8 @@ namespace Sihae\Middleware;
 
 use Sihae\Entities\Post;
 use Doctrine\ORM\EntityManager;
-use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 /**
  * Finds a post by slug in the request
