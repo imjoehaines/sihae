@@ -154,7 +154,8 @@ class PostController
 
         $post->setUser($request->getAttribute('user'));
 
-        // if there is already a post with the slug we just generated, generate a new one
+        // if there is already a post with the slug we just generated or the slug
+        // is "reserved", generate a new one
         if ($this->entityManager->getRepository(Post::class)->findOneBy(['slug' => $post->getSlug()]) ||
             in_array($post->getSlug(), $this->reservedSlugs, true)
         ) {
