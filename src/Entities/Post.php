@@ -74,6 +74,9 @@ class Post
      */
     protected $is_page = false;
 
+    /**
+     * Initialise the $tags property on creation
+     */
     public function __construct()
     {
         $this->tags = new ArrayCollection;
@@ -167,7 +170,7 @@ class Post
     }
 
     /**
-     * @param boolean $isPage
+     * @param bool $isPage
      * @return void
      */
     public function setIsPage(bool $isPage) : void

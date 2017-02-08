@@ -8,7 +8,7 @@ interface Validator
      * Check if the given data is valid. This *must* be called before `getErrors`
      *
      * @param array $data
-     * @return boolean
+     * @return bool
      */
     public function isValid(array $data) : bool;
 

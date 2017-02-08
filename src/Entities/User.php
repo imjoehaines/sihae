@@ -101,7 +101,7 @@ class User
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getIsAdmin() : bool
     {
@@ -144,7 +144,7 @@ class User
     }
 
     /**
-     * @param boolean $isAdmin
+     * @param bool $isAdmin
      * @return void
      */
     public function setIsAdmin(bool $isAdmin) : void

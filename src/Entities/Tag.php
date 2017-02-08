@@ -47,6 +47,9 @@ class Tag
      */
     protected $posts;
 
+    /**
+     * Initialise the posts property on creation
+     */
     public function __construct()
     {
         $this->posts = new ArrayCollection;
@@ -85,7 +88,7 @@ class Tag
     }
 
     /**
-     * @param string $title
+     * @param string $name
      * @return void
      */
     public function setName(string $name) : void

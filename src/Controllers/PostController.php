@@ -86,7 +86,7 @@ class PostController
      *
      * @param Request $request
      * @param Response $response
-     * @param integer $page
+     * @param int $page
      * @return Response
      */
     public function index(Request $request, Response $response, int $page = 1) : Response
@@ -276,7 +276,14 @@ class PostController
         return $response->withStatus(302)->withHeader('Location', '/post/' . $slug);
     }
 
-    private function handleExistingTags(array $existingTags, Post $post)
+    /**
+     * Add tags that already exist to the given post
+     *
+     * @param array $existingTags an array of `tag.id`s
+     * @param Post $post
+     * @return void
+     */
+    private function handleExistingTags(array $existingTags, Post $post) : void
     {
         $query = $this->entityManager->createQuery(
             'SELECT t
@@ -293,7 +300,14 @@ class PostController
         }
     }
 
-    private function handleNewTags(array $newTags, Post $post)
+    /**
+     * Add tags that do not exist to the `tag` table, as well as the given Post
+     *
+     * @param array $newTags array of strings which will become `tag.name`s
+     * @param Post $post
+     * @return void
+     */
+    private function handleNewTags(array $newTags, Post $post) : void
     {
         $tagRepository = $this->entityManager->getRepository(Tag::class);
 
@@ -356,6 +370,15 @@ class PostController
         return $response->withStatus(302)->withHeader('Location', $path);
     }
 
+    /**
+     * Find all posts tagged with the given tag's slug
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param string $slug
+     * @param int $page
+     * @return Response
+     */
     public function tagged(Request $request, Response $response, string $slug, int $page = 1) : Response
     {
         $tag = $this->entityManager->getRepository(Tag::class)->findOneBy(['slug' => $slug]);

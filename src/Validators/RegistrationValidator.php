@@ -54,7 +54,7 @@ class RegistrationValidator implements Validator
 
     /**
      * @param array $userDetails
-     * @return boolean
+     * @return bool
      */
     public function isValid(array $userDetails) : bool
     {

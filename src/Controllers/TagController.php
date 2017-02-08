@@ -36,7 +36,10 @@ class TagController
     }
 
     /**
-     * List all Tags
+     * List all Tags ordered by the number of posts tagged with them
+     *
+     * For example if "PHP" has 10 posts, "JS" 4 and "Elixir" 1 then the order
+     * will be "PHP", "JS", "Elixir"
      *
      * @param Request $request
      * @param Response $response
