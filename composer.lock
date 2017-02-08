@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "4381b3a3cbd29eecc8cd32600b8d93f5",
+    "content-hash": "f178fe2cd10fe4057e8ca2de9c4a8992",
     "packages": [
         {
             "name": "akrabat/rka-slim-session-middleware",
@@ -415,16 +415,16 @@
         },
         {
             "name": "doctrine/dbal",
-            "version": "v2.5.11",
+            "version": "v2.5.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "1b1effbddbdc0f40d1c8f849f44bcddac4f52a48"
+                "reference": "7b9e911f9d8b30d43b96853dab26898c710d8f44"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/1b1effbddbdc0f40d1c8f849f44bcddac4f52a48",
-                "reference": "1b1effbddbdc0f40d1c8f849f44bcddac4f52a48",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/7b9e911f9d8b30d43b96853dab26898c710d8f44",
+                "reference": "7b9e911f9d8b30d43b96853dab26898c710d8f44",
                 "shasum": ""
             },
             "require": {
@@ -482,7 +482,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2017-02-04T21:20:13+00:00"
+            "time": "2017-02-08T12:53:47+00:00"
         },
         {
             "name": "doctrine/inflector",
@@ -1495,16 +1495,16 @@
         },
         {
             "name": "slim/csrf",
-            "version": "0.7.0",
+            "version": "0.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/slimphp/Slim-Csrf.git",
-                "reference": "788f658de275e5d856d498aa8698cde70029decd"
+                "reference": "96f2019d2626d71985dc0ca41948f49c3454f4d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/slimphp/Slim-Csrf/zipball/788f658de275e5d856d498aa8698cde70029decd",
-                "reference": "788f658de275e5d856d498aa8698cde70029decd",
+                "url": "https://api.github.com/repos/slimphp/Slim-Csrf/zipball/96f2019d2626d71985dc0ca41948f49c3454f4d1",
+                "reference": "96f2019d2626d71985dc0ca41948f49c3454f4d1",
                 "shasum": ""
             },
             "require": {
@@ -1541,24 +1541,27 @@
                 "middleware",
                 "slim"
             ],
-            "time": "2016-06-08T18:26:56+00:00"
+            "time": "2016-12-20T20:45:43+00:00"
         },
         {
             "name": "slim/flash",
-            "version": "0.1.0",
+            "version": "0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/slimphp/Slim-Flash.git",
-                "reference": "1995ed53b77b8eeb67adf032de93c319f76aa5cd"
+                "reference": "3c9a26b3163820acc48080336c504d0a3cac6f30"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/slimphp/Slim-Flash/zipball/1995ed53b77b8eeb67adf032de93c319f76aa5cd",
-                "reference": "1995ed53b77b8eeb67adf032de93c319f76aa5cd",
+                "url": "https://api.github.com/repos/slimphp/Slim-Flash/zipball/3c9a26b3163820acc48080336c504d0a3cac6f30",
+                "reference": "3c9a26b3163820acc48080336c504d0a3cac6f30",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.0"
             },
             "type": "library",
             "autoload": {
@@ -1586,7 +1589,7 @@
                 "provider",
                 "slim"
             ],
-            "time": "2015-08-16T22:49:06+00:00"
+            "time": "2016-11-11T16:29:19+00:00"
         },
         {
             "name": "slim/slim",
