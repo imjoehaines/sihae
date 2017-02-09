@@ -4,6 +4,8 @@ namespace Sihae\Validators;
 
 use Schemer\Validator as V;
 use Schemer\Formatter as F;
+use Schemer\Validator\ValidatorInterface;
+use Schemer\Formatter\FormatterInterface;
 
 /**
  * Validator for new Users
@@ -11,12 +13,12 @@ use Schemer\Formatter as F;
 class RegistrationValidator implements Validator
 {
     /**
-     * @var \Schemer\Validator\ValidatorInterface
+     * @var ValidatorInterface
      */
     private $validator;
 
     /**
-     * @var \Schemer\Validator\FormatterInterface
+     * @var FormatterInterface
      */
     private $formatter;
 

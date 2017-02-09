@@ -18,12 +18,16 @@ use Behat\Behat\Tester\Exception\PendingException;
  */
 class FeatureContext extends MinkContext implements Context, SnippetAcceptingContext
 {
+    /**
+     * @var EntityManager
+     */
     protected $entityManager;
 
     /**
      * @BeforeSuite
+     * @return void
      */
-    public static function prepare()
+    public static function prepare() : void
     {
         $dotenv = new \Dotenv\Dotenv(__DIR__ . '/../../');
         $dotenv->load();
@@ -33,8 +37,10 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
 
     /**
      * @BeforeScenario @database
+     * @throws PendingException when the database driver isn't supported
+     * @return void
      */
-    public function cleanDb()
+    public function cleanDb() : void
     {
         $connection = $this->getEntityManager()->getConnection();
 
@@ -75,8 +81,9 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
 
     /**
      * @BeforeScenario @login
+     * @return void
      */
-    public function login()
+    public function login() : void
     {
         $this->createTestUser();
         $this->loginTestUser();
@@ -84,14 +91,18 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
 
     /**
      * @BeforeScenario @loginAdmin
+     * @return void
      */
-    public function loginAdmin()
+    public function loginAdmin() : void
     {
         $this->createTestAdmin();
         $this->loginTestUser();
     }
 
-    public function createTestAdmin()
+    /**
+     * @return void
+     */
+    public function createTestAdmin() : void
     {
         $user = new User;
         $user->setUsername('testing');
@@ -103,7 +114,10 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
         $this->getEntityManager()->flush();
     }
 
-    protected function loginTestUser()
+    /**
+     * @return void
+     */
+    protected function loginTestUser() : void
     {
         $this->visit('/login');
         $this->fillField('username', 'testing');
@@ -115,8 +129,9 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
      * Adds a test user to the database
      *
      * @BeforeScenario @createUser
+     * @return void
      */
-    public function createTestUser()
+    public function createTestUser() : void
     {
         $user = new User;
         $user->setUsername('testing');
@@ -127,7 +142,12 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
         $this->getEntityManager()->flush();
     }
 
-    protected function getEntityManager()
+    /**
+     * Get an instance of Doctrine's EntityManager
+     *
+     * @return EntityManager
+     */
+    protected function getEntityManager() : EntityManager
     {
         if (!isset($this->entityManager)) {
             $settings = require __DIR__ . '/../../config/settings.php';
@@ -148,24 +168,27 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
 
     /**
      * @Given I am logged in
+     * @return void
      */
-    public function iAmLoggedIn()
+    public function iAmLoggedIn() : void
     {
         $this->login();
     }
 
     /**
      * @Given there is a post:
+     * @return void
      */
-    public function thereIsAPost(TableNode $posts)
+    public function thereIsAPost(TableNode $posts) : void
     {
         $this->thereAreSomePosts($posts);
     }
 
     /**
      * @Given there are some posts:
+     * @return void
      */
-    public function thereAreSomePosts(TableNode $posts)
+    public function thereAreSomePosts(TableNode $posts) : void
     {
         $posts = $posts->getHash();
         $user = $this->getEntityManager()->getRepository(User::class)->findOneBy([]);
