@@ -58,7 +58,7 @@
 
     var tf = new window.Tokenfield({
       el: document.getElementById('tags'),
-      items: <?= $tags ?>,
+      items: <?= $tags ?? '[]' ?>,
       setItems: <?= $selected_tags ?? '[]' ?>,
       itemName: 'tags',
       newItemName: 'new_tags'
