@@ -8,8 +8,6 @@ use Doctrine\ORM\EntityManager;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-use function Stringy\create as s;
-
 /**
  * Provides the list of all pages to templates
  */
