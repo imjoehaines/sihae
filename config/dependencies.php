@@ -13,6 +13,7 @@ use League\Plates\Extension\URI;
 use League\Plates\Extension\Asset;
 use Monolog\Handler\StreamHandler;
 use Monolog\Processor\UidProcessor;
+use Monolog\Processor\WebProcessor;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use League\CommonMark\CommonMarkConverter;
@@ -32,6 +33,7 @@ use Sihae\Controllers\PostController;
 use Sihae\Repositories\TagRepository;
 use Sihae\Formatters\ArchiveFormatter;
 use Sihae\Middleware\SettingsProvider;
+use Sihae\Controllers\ErrorController;
 use Sihae\Controllers\LoginController;
 use Sihae\Controllers\ArchiveController;
 use Sihae\Middleware\NotFoundMiddleware;
@@ -218,7 +220,10 @@ return function (Container $container) {
         $settings = $container->get('settings')['logger'];
 
         $logger = new Logger($settings['name']);
+
         $logger->pushProcessor(new UidProcessor());
+        $logger->pushProcessor(new WebProcessor());
+
         $logger->pushHandler(new StreamHandler($settings['path'], $settings['level']));
 
         return $logger;
@@ -234,4 +239,21 @@ return function (Container $container) {
             return $container->get('response')->withStatus(404);
         };
     };
+
+    if (getenv('APPLICATION_ENV') === 'production') {
+        $errorHandler = function (Container $container) : callable {
+            return new ErrorController(
+                $container->get('logger'),
+                $container->get('response'),
+                $container->get(Renderer::class)
+            );
+        };
+
+        $container['errorHandler'] = $errorHandler;
+        $container['phpErrorHandler'] = $errorHandler;
+    } else {
+        // in development we don't care about error handlers as Tracy will do it for us
+        unset($container['errorHandler']);
+        unset($container['phpErrorHandler']);
+    }
 };
