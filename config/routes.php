@@ -7,11 +7,12 @@ use Sihae\Controllers\TagController;
 use Sihae\Controllers\PostController;
 use Sihae\Controllers\LoginController;
 use Sihae\Controllers\ArchiveController;
+use Sihae\Controllers\PostListController;
 use League\CommonMark\CommonMarkConverter;
 use Sihae\Controllers\RegistrationController;
 
 return function (App $app) {
-    $app->get('/[page/{page:[1-9][0-9]*}]', PostController::class . ':index');
+    $app->get('/[page/{page:[1-9][0-9]*}]', PostListController::class . ':index');
 
     $app->group('/post', function () {
         $this->get('/new', PostController::class . ':create');
@@ -28,7 +29,7 @@ return function (App $app) {
     $app->get('/post/{slug:[a-zA-Z\d\s-_\-]+}', PostController::class . ':show')
         ->add(PostLocator::class);
 
-    $app->get('/tagged/{slug:[a-zA-Z\d\s-_\-]+}[/page/{page:[1-9][0-9]*}]', PostController::class . ':tagged');
+    $app->get('/tagged/{slug:[a-zA-Z\d\s-_\-]+}[/page/{page:[1-9][0-9]*}]', PostListController::class . ':tagged');
 
     $app->get('/archive', ArchiveController::class . ':index');
     $app->get('/tags', TagController::class . ':index');

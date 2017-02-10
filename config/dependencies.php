@@ -34,6 +34,7 @@ use Sihae\Middleware\SettingsProvider;
 use Sihae\Controllers\LoginController;
 use Sihae\Controllers\ArchiveController;
 use Sihae\Middleware\NotFoundMiddleware;
+use Sihae\Controllers\PostListController;
 use Sihae\Middleware\FlashMessageProvider;
 use Sihae\Validators\RegistrationValidator;
 use Sihae\Controllers\RegistrationController;
@@ -72,6 +73,13 @@ return function (Container $container) {
             $container->get(Messages::class),
             $container->get(PostValidator::class),
             $container->get(Session::class)
+        );
+    };
+
+    $container[PostListController::class] = function (Container $container) : PostListController {
+        return new PostListController(
+            $container->get(Renderer::class),
+            $container->get(EntityManager::class)
         );
     };
 
