@@ -29,6 +29,7 @@ use Sihae\Validators\PostValidator;
 use Sihae\Middleware\AuthMiddleware;
 use Sihae\Controllers\TagController;
 use Sihae\Controllers\PostController;
+use Sihae\Repositories\TagRepository;
 use Sihae\Formatters\ArchiveFormatter;
 use Sihae\Middleware\SettingsProvider;
 use Sihae\Controllers\LoginController;
@@ -65,6 +66,10 @@ return function (Container $container) {
         return new Renderer($container->get(Engine::class));
     };
 
+    $container[TagRepository::class] = function (Container $container) : TagRepository {
+        return new TagRepository($container->get(EntityManager::class));
+    };
+
     $container[PostController::class] = function (Container $container) : PostController {
         return new PostController(
             $container->get(Renderer::class),
@@ -72,7 +77,8 @@ return function (Container $container) {
             $container->get(CommonMarkConverter::class),
             $container->get(Messages::class),
             $container->get(PostValidator::class),
-            $container->get(Session::class)
+            $container->get(Session::class),
+            $container->get(TagRepository::class)
         );
     };
 
