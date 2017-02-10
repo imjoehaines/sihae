@@ -1,5 +1,7 @@
 <?php
 
+$isProduction = getenv('APPLICATION_ENV') === 'production';
+
 return [
     'settings' => [
         'sihae' => [
@@ -32,11 +34,9 @@ return [
             ],
         ],
 
-        'displayErrorDetails' => getenv('APPLICATION_ENV') !== 'production',
+        'displayErrorDetails' => !$isProduction,
         'addContentLengthHeader' => false,
-        'routerCacheFile' => getenv('APPLICATION_ENV') === 'production'
-            ? __DIR__ . '/../data/cache/router.php'
-            : false,
+        'routerCacheFile' => $isProduction ? __DIR__ . '/../data/cache/router.php' : false,
 
         // Renderer settings
         'renderer' => [
