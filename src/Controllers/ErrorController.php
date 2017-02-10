@@ -10,6 +10,26 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 class ErrorController
 {
+    /**
+     * @var Logger
+     */
+    private $logger;
+
+    /**
+     * @var Response
+     */
+    private $response;
+
+    /**
+     * @var Renderer
+     */
+    private $renderer;
+
+    /**
+     * @param Logger $logger
+     * @param Response $response
+     * @param Renderer $renderer
+     */
     public function __construct(
         Logger $logger,
         Response $response,
@@ -20,6 +40,14 @@ class ErrorController
         $this->renderer = $renderer;
     }
 
+    /**
+     * Handler the given error by logging it and rendering the error page
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param Throwable $exception
+     * @return Response
+     */
     public function __invoke(Request $request, Response $response, Throwable $exception) : Response
     {
         try {
