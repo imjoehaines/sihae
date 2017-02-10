@@ -11,6 +11,7 @@ use Sihae\Entities\User;
 use Slim\Flash\Messages;
 use Sihae\Validators\Validator;
 use Doctrine\ORM\EntityManager;
+use Sihae\Repositories\TagRepository;
 use League\CommonMark\CommonMarkConverter;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -51,6 +52,11 @@ class PostController
     private $session;
 
     /**
+     * @var TagRepository
+     */
+    private $tagRepository;
+
+    /**
      * Strings that are used in routes and therefore can't be slugs
      *
      * @var array
@@ -64,6 +70,7 @@ class PostController
      * @param Messages $flash
      * @param Validator $validator
      * @param Session $session
+     * @param TagRepository $tagRepository
      */
     public function __construct(
         Renderer $renderer,
@@ -71,7 +78,8 @@ class PostController
         CommonMarkConverter $markdown,
         Messages $flash,
         Validator $validator,
-        Session $session
+        Session $session,
+        TagRepository $tagRepository
     ) {
         $this->renderer = $renderer;
         $this->entityManager = $entityManager;
@@ -79,35 +87,7 @@ class PostController
         $this->flash = $flash;
         $this->validator = $validator;
         $this->session = $session;
-    }
-
-    /**
-     * List all Posts
-     *
-     * @param Request $request
-     * @param Response $response
-     * @param int $page
-     * @return Response
-     */
-    public function index(Request $request, Response $response, int $page = 1) : Response
-    {
-        $postRepository = $this->entityManager->getRepository(Post::class);
-
-        $limit = 8;
-        $offset = $limit * ($page - 1);
-
-        $posts = $postRepository->findBy(['is_page' => false], ['date_created' => 'DESC'], $limit, $offset);
-
-        $total = $postRepository->createQueryBuilder('Post')
-            ->select('COUNT(Post.id)')
-            ->getQuery()
-            ->getSingleScalarResult();
-
-        return $this->renderer->render($response, 'post-list', [
-            'posts' => $posts,
-            'current_page' => $page,
-            'total_pages' => ceil($total / $limit) ?: 1,
-        ]);
+        $this->tagRepository = $tagRepository;
     }
 
     /**
@@ -156,19 +136,18 @@ class PostController
 
         // if there is already a post with the slug we just generated or the slug
         // is "reserved", generate a new one
-        if ($this->entityManager->getRepository(Post::class)->findOneBy(['slug' => $post->getSlug()]) ||
-            in_array($post->getSlug(), $this->reservedSlugs, true)
+        if (in_array($post->getSlug(), $this->reservedSlugs, true) ||
+            $this->entityManager->getRepository(Post::class)->findOneBy(['slug' => $post->getSlug()])
         ) {
             $post->regenerateSlug();
         }
 
-        if (!empty($newPost['tags'])) {
-            $this->handleExistingTags($newPost['tags'], $post);
-        }
+        $tags = $this->tagRepository->getAll(
+            $updatedPost['tags'] ?? [],
+            $updatedPost['new_tags'] ?? []
+        );
 
-        if (!empty($newPost['new_tags'])) {
-            $this->handleNewTags($newPost['new_tags'], $post);
-        }
+        array_walk($tags, [$post, 'addTag']);
 
         $this->entityManager->persist($post);
         $this->entityManager->flush();
@@ -193,7 +172,7 @@ class PostController
         $parsedBody = $this->markdown->convertToHtml($post->getBody());
         $post->setBody($parsedBody);
 
-        return $this->renderer->render($response, 'post', ['post' => $post, 'show_date' => !$post->getIsPage()]);
+        return $this->renderer->render($response, 'post', ['post' => $post]);
     }
 
     /**
@@ -261,13 +240,12 @@ class PostController
 
         $post->clearTags();
 
-        if (!empty($updatedPost['tags'])) {
-            $this->handleExistingTags($updatedPost['tags'], $post);
-        }
+        $tags = $this->tagRepository->getAll(
+            $updatedPost['tags'] ?? [],
+            $updatedPost['new_tags'] ?? []
+        );
 
-        if (!empty($updatedPost['new_tags'])) {
-            $this->handleNewTags($updatedPost['new_tags'], $post);
-        }
+        array_walk($tags, [$post, 'addTag']);
 
         $this->entityManager->persist($post);
         $this->entityManager->flush();
@@ -275,54 +253,6 @@ class PostController
         $this->flash->addMessage('success', 'Successfully edited your post!');
 
         return $response->withStatus(302)->withHeader('Location', '/post/' . $slug);
-    }
-
-    /**
-     * Add tags that already exist to the given post
-     *
-     * @param array $existingTags an array of `tag.id`s
-     * @param Post $post
-     * @return void
-     */
-    private function handleExistingTags(array $existingTags, Post $post) : void
-    {
-        $query = $this->entityManager->createQuery(
-            'SELECT t
-             FROM Sihae\Entities\Tag t
-             WHERE t.id IN (:tagIds)'
-        );
-
-        $query->setParameter(':tagIds', $existingTags);
-
-        $tags = $query->getResult();
-
-        foreach ($tags as $tag) {
-            $post->addTag($tag);
-        }
-    }
-
-    /**
-     * Add tags that do not exist to the `tag` table, as well as the given Post
-     *
-     * @param array $newTags array of strings which will become `tag.name`s
-     * @param Post $post
-     * @return void
-     */
-    private function handleNewTags(array $newTags, Post $post) : void
-    {
-        $tagRepository = $this->entityManager->getRepository(Tag::class);
-
-        foreach ($newTags as $newTag) {
-            // check for an existing tag with this name first
-            if (!$tag = $tagRepository->findOneBy(['name' => $newTag])) {
-                $tag = new Tag();
-                $tag->setName($newTag);
-
-                $this->entityManager->persist($tag);
-            }
-
-            $post->addTag($tag);
-        }
     }
 
     /**
@@ -369,56 +299,5 @@ class PostController
         }
 
         return $response->withStatus(302)->withHeader('Location', $path);
-    }
-
-    /**
-     * Find all posts tagged with the given tag's slug
-     *
-     * @param Request $request
-     * @param Response $response
-     * @param string $slug
-     * @param int $page
-     * @return Response
-     */
-    public function tagged(Request $request, Response $response, string $slug, int $page = 1) : Response
-    {
-        $tag = $this->entityManager->getRepository(Tag::class)->findOneBy(['slug' => $slug]);
-
-        if (!$tag) {
-            return $response->withStatus(404);
-        }
-
-        $limit = 8;
-        $offset = $limit * ($page - 1);
-
-        $dql =
-            'SELECT p, t
-             FROM Sihae\Entities\Post p
-             JOIN p.tags t
-             WHERE t.slug = :slug
-             ORDER BY p.date_created DESC';
-
-        $query = $this->entityManager->createQuery($dql)
-            ->setFirstResult($limit * ($page - 1))
-            ->setMaxResults($limit)
-            ->setParameter(':slug', $slug);
-
-        $posts = $query->getResult();
-
-        $total = $this->entityManager->getRepository(Post::class)
-            ->createQueryBuilder('Post')
-            ->select('COUNT(Post.id)')
-            ->join('Post.tags', 't')
-            ->where('t.slug = :slug')
-            ->setParameter(':slug', $slug)
-            ->getQuery()
-            ->getSingleScalarResult();
-
-        return $this->renderer->render($response, 'post-list', [
-            'posts' => $posts,
-            'current_page' => $page,
-            'total_pages' => ceil($total / $limit) ?: 1,
-            'tag' => $tag,
-        ]);
     }
 }

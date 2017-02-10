@@ -8,7 +8,7 @@
     <?= $this->e($post->getTitle()) ?>
 
     <small class="post-date">
-        <?php if ($show_date === true) : ?>
+        <?php if ($post->getIsPage() === false) : ?>
             <?= $post->getDateCreated()->format('jS M Y') ?>
         <?php endif ?>
 
