@@ -39,7 +39,7 @@
         }
     },
     "scripts": {
-        "test": "composer test:unit ; composer test:acceptance ; composer test:phpstan ; composer test:types",
+        "test": "composer test:unit && composer test:acceptance && composer test:phpstan && composer test:types",
         "test:acceptance": "behat --colors -v",
         "test:unit": "phpunit tests/Unit/",
         "test:phpstan": "phpstan analyse src tests --level 4",
