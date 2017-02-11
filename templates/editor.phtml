@@ -45,12 +45,36 @@
 <script>
     window.Prism.plugins.autoloader.languages_path = '/js/prism-grammars/'
 
-    var simplemde = new window.SimpleMDE({
-      // override the preview renderer to allow Prism.js highlighting
-      previewRender: function (plainText, preview) {
-        window.requestAnimationFrame(() => window.Prism.highlightAll())
+    const csrfKey = document.querySelector('[name=<?= $csrf['nameKey'] ?>]')
+    const csrfValue = document.querySelector('[name=<?= $csrf['valueKey'] ?>]')
 
-        return this.parent.markdown(plainText)
+    const simplemde = new window.SimpleMDE({
+      previewRender: function (plainText, preview) {
+        window.fetch('/api/v1/render', {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            post: plainText,
+            <?= $csrf['nameKey'] ?>: csrfKey.value,
+            <?= $csrf['valueKey'] ?>: csrfValue.value
+          })
+        })
+        .then(response => response.json())
+        .then(response => {
+            preview.innerHTML = response.html
+
+            // update the CSRF tokens
+            csrfKey.value = response.csrfKey
+            csrfValue.value = response.csrfValue
+
+            // use Prism.js to add syntax highlighting
+            window.requestAnimationFrame(window.Prism.highlightAll)
+        })
+
+        return 'Loading...'
       }
     })
 

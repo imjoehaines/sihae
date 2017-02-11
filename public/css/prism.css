@@ -2,22 +2,29 @@
  * Prism.js Ayu light theme
  * Based on Ayu theme for Sublime Text by @dempfi (https://github.com/dempfi/ayu)
  */
+pre,
 code,
-pre[class*="language-"] {
+.editor-preview pre,
+.editor-preview code {
   color: #5c6773;
   background: #fafafa;
   font-family: Menlo, Monaco, Consolas, 'Roboto Mono', monospace;
   line-height: 1.5;
 }
 
-pre[class*="language-"] {
+pre,
+.editor-preview pre {
   padding: 1rem;
   margin: .5rem 0;
   overflow: auto;
   font-size: 0.8rem;
 }
 
-code:not([class*=language-]) {
+pre code {
+  background: none;
+}
+
+p code {
   padding: 0.1rem 0.25rem;
 }
 
