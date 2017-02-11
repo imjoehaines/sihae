@@ -39,6 +39,7 @@ use Sihae\Controllers\ArchiveController;
 use Sihae\Middleware\NotFoundMiddleware;
 use Sihae\Controllers\PostListController;
 use Sihae\Middleware\FlashMessageProvider;
+use Sihae\Api\V1\Controllers\ApiController;
 use Sihae\Validators\RegistrationValidator;
 use Sihae\Controllers\RegistrationController;
 
@@ -70,6 +71,13 @@ return function (Container $container) {
 
     $container[TagRepository::class] = function (Container $container) : TagRepository {
         return new TagRepository($container->get(EntityManager::class));
+    };
+
+    $container[ApiController::class] = function (Container $container) : ApiController {
+        return new ApiController(
+            $container->get(CommonMarkConverter::class),
+            $container->get(Guard::class)
+        );
     };
 
     $container[PostController::class] = function (Container $container) : PostController {

@@ -9,6 +9,7 @@ use Sihae\Controllers\LoginController;
 use Sihae\Controllers\ArchiveController;
 use Sihae\Controllers\PostListController;
 use League\CommonMark\CommonMarkConverter;
+use Sihae\Api\V1\Controllers\ApiController;
 use Sihae\Controllers\RegistrationController;
 
 return function (App $app) {
@@ -24,6 +25,12 @@ return function (App $app) {
             $this->get('/delete/{slug:[a-zA-Z\d\s-_\-]+}', PostController::class . ':delete');
             $this->get('/convert/{slug:[a-zA-Z\d\s-_\-]+}', PostController::class . ':convert');
         })->add(PostLocator::class);
+    })->add(AuthMiddleware::class);
+
+    $app->group('/api', function () {
+        $this->group('/v1', function () {
+            $this->post('/render', ApiController::class . ':render');
+        });
     })->add(AuthMiddleware::class);
 
     $app->get('/post/{slug:[a-zA-Z\d\s-_\-]+}', PostController::class . ':show')
