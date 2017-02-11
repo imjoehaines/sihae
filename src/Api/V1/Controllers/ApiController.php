@@ -10,6 +10,16 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 class ApiController
 {
     /**
+     * @var CommonMarkConverter
+     */
+    private $markdown;
+
+    /**
+     * @var Guard
+     */
+    private $csrf;
+
+    /**
      * @param CommonMarkConverter $markdown
      * @param Guard $csrf
      */
