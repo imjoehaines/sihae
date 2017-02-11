@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 $isProduction = getenv('APPLICATION_ENV') === 'production';
 
