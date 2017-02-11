@@ -7,7 +7,6 @@
         "danielstjules/stringy": "^2.3",
         "league/commonmark": "^0.15.0",
         "doctrine/orm": "^2.5",
-        "nesbot/carbon": "^1.21",
         "slim/flash": "^0.2.0",
         "i-am-tom/schemer": "^2.0",
         "akrabat/rka-slim-session-middleware": "^2.0",
