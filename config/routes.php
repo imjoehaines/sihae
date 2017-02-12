@@ -45,8 +45,10 @@ return function (App $app) {
     $app->post('/login', LoginController::class . ':login');
     $app->get('/logout', LoginController::class . ':logout');
 
-    // $app->get('/register', RegistrationController::class . ':showForm');
-    // $app->post('/register', RegistrationController::class . ':register');
+    if (getenv('ENABLE_REGISTRATION') === 'true') {
+        $app->get('/register', RegistrationController::class . ':showForm');
+        $app->post('/register', RegistrationController::class . ':register');
+    }
 
     $app->get('/{slug:[a-zA-Z\d\s-_\-]+}', PostController::class . ':show')
         ->add(PostLocator::class);
