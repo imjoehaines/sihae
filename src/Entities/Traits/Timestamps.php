@@ -3,7 +3,7 @@
 namespace Sihae\Entities\Traits;
 
 use DateTime;
-use Carbon\Carbon;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -75,20 +75,20 @@ trait Timestamps
     /**
      * Get the date this entity was created
      *
-     * @return Carbon
+     * @return DateTimeImmutable
      */
-    public function getDateCreated() : Carbon
+    public function getDateCreated() : DateTimeImmutable
     {
-        return Carbon::instance($this->date_created);
+        return DateTimeImmutable::createFromMutable($this->date_created);
     }
 
     /**
      * Get the date this entity was last modified
      *
-     * @return Carbon
+     * @return DateTimeImmutable
      */
-    public function getDateModified() : Carbon
+    public function getDateModified() : DateTimeImmutable
     {
-        return Carbon::instance($this->date_modified);
+        return DateTimeImmutable::createFromMutable($this->date_modified);
     }
 }
