@@ -8,7 +8,6 @@ use Doctrine\ORM\Query;
 use Sihae\Entities\Tag;
 use Sihae\Entities\Post;
 use Sihae\Entities\User;
-use Slim\Flash\Messages;
 use Sihae\Validators\Validator;
 use Doctrine\ORM\EntityManager;
 use Sihae\Repositories\TagRepository;
@@ -37,11 +36,6 @@ class PostController
     private $markdown;
 
     /**
-     * @var Messages
-     */
-    private $flash;
-
-    /**
      * @var Validator
      */
     private $validator;
@@ -67,7 +61,6 @@ class PostController
      * @param Renderer $renderer
      * @param EntityManager $entityManager
      * @param CommonMarkConverter $markdown
-     * @param Messages $flash
      * @param Validator $validator
      * @param Session $session
      * @param TagRepository $tagRepository
@@ -76,7 +69,6 @@ class PostController
         Renderer $renderer,
         EntityManager $entityManager,
         CommonMarkConverter $markdown,
-        Messages $flash,
         Validator $validator,
         Session $session,
         TagRepository $tagRepository
@@ -84,7 +76,6 @@ class PostController
         $this->renderer = $renderer;
         $this->entityManager = $entityManager;
         $this->markdown = $markdown;
-        $this->flash = $flash;
         $this->validator = $validator;
         $this->session = $session;
         $this->tagRepository = $tagRepository;
@@ -107,7 +98,9 @@ class PostController
 
         $tags = $query->getResult(Query::HYDRATE_ARRAY);
 
-        return $this->renderer->render($response, 'editor', ['tags' => json_encode($tags)]);
+        return $this->renderer->render($response, 'editor', [
+            'tag_data' => json_encode(['tags' => $tags]),
+        ]);
     }
 
     /**
@@ -151,8 +144,6 @@ class PostController
 
         $this->entityManager->persist($post);
         $this->entityManager->flush();
-
-        $this->flash->addMessage('success', 'Successfully created your new post!');
 
         return $response->withStatus(302)->withHeader('Location', '/post/' . $post->getSlug());
     }
@@ -208,8 +199,10 @@ class PostController
         return $this->renderer->render($response, 'editor', [
             'post' => $post,
             'isEdit' => true,
-            'tags' => json_encode($tags),
-            'selected_tags' => json_encode($selectedTags),
+            'tag_data' => json_encode([
+                'tags' => $tags,
+                'selected_tags' => $selectedTags,
+            ]),
         ]);
     }
 
@@ -250,8 +243,6 @@ class PostController
         $this->entityManager->persist($post);
         $this->entityManager->flush();
 
-        $this->flash->addMessage('success', 'Successfully edited your post!');
-
         return $response->withStatus(302)->withHeader('Location', '/post/' . $slug);
     }
 
@@ -269,8 +260,6 @@ class PostController
 
         $this->entityManager->remove($post);
         $this->entityManager->flush();
-
-        $this->flash->addMessage('success', 'Successfully deleted your post!');
 
         return $response->withStatus(302)->withHeader('Location', '/');
     }

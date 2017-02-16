@@ -39,52 +39,10 @@
     </button>
 </form>
 
+<div id="tag-data" style="display: none;"><?= $tag_data ?? '' ?></div>
+
 <script src="<?= $this->asset('/js/tokenfield.min.js') ?>"></script>
 <script src="<?= $this->asset('/js/simplemde.min.js') ?>"></script>
 <script src="<?= $this->asset('/js/prism.js') ?>"></script>
-<script>
-    window.Prism.plugins.autoloader.languages_path = '/js/prism-grammars/'
-
-    const csrfKey = document.querySelector('[name=<?= $csrf['nameKey'] ?>]')
-    const csrfValue = document.querySelector('[name=<?= $csrf['valueKey'] ?>]')
-
-    const simplemde = new window.SimpleMDE({
-      previewRender: function (plainText, preview) {
-        window.fetch('/api/v1/render', {
-          method: 'POST',
-          credentials: 'same-origin',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            post: plainText,
-            <?= $csrf['nameKey'] ?>: csrfKey.value,
-            <?= $csrf['valueKey'] ?>: csrfValue.value
-          })
-        })
-        .then(response => response.json())
-        .then(response => {
-            preview.innerHTML = response.html
-
-            // update the CSRF tokens
-            csrfKey.value = response.csrfKey
-            csrfValue.value = response.csrfValue
-
-            // use Prism.js to add syntax highlighting
-            window.requestAnimationFrame(window.Prism.highlightAll)
-        })
-
-        return 'Loading...'
-      }
-    })
-
-    simplemde.render()
-
-    var tf = new window.Tokenfield({
-      el: document.getElementById('tags'),
-      items: <?= $tags ?? '[]' ?>,
-      setItems: <?= $selected_tags ?? '[]' ?>,
-      itemName: 'tags',
-      newItemName: 'new_tags'
-    })
-</script>
+<script src="<?= $this->asset('/js/sihae-prism-loader.js') ?>"></script>
+<script src="<?= $this->asset('/js/sihae-editor.js') ?>"></script>

@@ -4,7 +4,6 @@ use RKA\Session;
 use Monolog\Logger;
 use Slim\Csrf\Guard;
 use Slim\Http\Response;
-use Slim\Flash\Messages;
 use League\Plates\Engine;
 use Psr\Log\LoggerInterface;
 use Doctrine\ORM\Tools\Setup;
@@ -14,9 +13,9 @@ use League\Plates\Extension\Asset;
 use Monolog\Handler\StreamHandler;
 use Monolog\Processor\UidProcessor;
 use Monolog\Processor\WebProcessor;
-use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use League\CommonMark\CommonMarkConverter;
+use Psr\Http\Message\ServerRequestInterface;
 use Slim\Interfaces\InvocationStrategyInterface;
 use Slim\Handlers\Strategies\RequestResponseArgs;
 use Interop\Container\ContainerInterface as Container;
@@ -38,7 +37,6 @@ use Sihae\Controllers\LoginController;
 use Sihae\Controllers\ArchiveController;
 use Sihae\Middleware\NotFoundMiddleware;
 use Sihae\Controllers\PostListController;
-use Sihae\Middleware\FlashMessageProvider;
 use Sihae\Api\V1\Controllers\ApiController;
 use Sihae\Validators\RegistrationValidator;
 use Sihae\Controllers\RegistrationController;
@@ -85,7 +83,6 @@ return function (Container $container) {
             $container->get(Renderer::class),
             $container->get(EntityManager::class),
             $container->get(CommonMarkConverter::class),
-            $container->get(Messages::class),
             $container->get(PostValidator::class),
             $container->get(Session::class),
             $container->get(TagRepository::class)
@@ -118,7 +115,6 @@ return function (Container $container) {
         return new LoginController(
             $container->get(Renderer::class),
             $container->get(EntityManager::class),
-            $container->get(Messages::class),
             $container->get(Session::class)
         );
     };
@@ -128,7 +124,6 @@ return function (Container $container) {
             $container->get(Renderer::class),
             $container->get(RegistrationValidator::class),
             $container->get(EntityManager::class),
-            $container->get(Messages::class),
             $container->get(Session::class)
         );
     };
@@ -182,19 +177,8 @@ return function (Container $container) {
         );
     };
 
-    $container[FlashMessageProvider::class] = function (Container $container) : FlashMessageProvider {
-        return new FlashMessageProvider(
-            $container->get(Renderer::class),
-            $container->get(Messages::class)
-        );
-    };
-
     $container[Session::class] = function (Container $container) : Session {
         return new Session;
-    };
-
-    $container[Messages::class] = function (Container $container) : Messages {
-        return new Messages;
     };
 
     $container[CommonMarkConverter::class] = function (Container $container) : CommonMarkConverter {
