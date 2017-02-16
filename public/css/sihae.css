@@ -223,6 +223,10 @@ img {
   content: ' and ';
 }
 
+#tag-data {
+  display: none;
+}
+
 /* SimpleMDE */
 .editor-toolbar {
   border-radius: 0;

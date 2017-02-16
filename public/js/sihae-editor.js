@@ -4,6 +4,8 @@ const csrfKey = document.getElementById('csrfKey')
 const csrfValue = document.getElementById('csrfValue')
 
 const simplemde = new window.SimpleMDE({
+  autoDownloadFontAwesome: false,
+  spellChecker: false,
   previewRender: function (plainText, preview) {
     window.fetch('/api/v1/render', {
       method: 'POST',
