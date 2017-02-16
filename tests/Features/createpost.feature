@@ -10,7 +10,6 @@ Feature: Create a New Blog Post
     And I fill in "body" with "some good text that i wrote"
     And I press "submit"
     Then I should be on "post/my-post"
-    And I should see "Successfully created your new post!"
     And I should see "my post"
     And I should see "some good text that i wrote"
 
@@ -35,7 +34,6 @@ Feature: Create a New Blog Post
     And I fill in "body" with "some good text that i wrote"
     And I press "submit"
     Then the url should match "post/a-cool-post-[0-9]{8}"
-    And I should see "Successfully created your new post!"
     And I should see "A Cool Post"
     And I should see "some good text that i wrote"
     Given I am on "/"

@@ -5,7 +5,6 @@ namespace Sihae\Controllers;
 use RKA\Session;
 use Sihae\Renderer;
 use Sihae\Entities\User;
-use Slim\Flash\Messages;
 use Doctrine\ORM\EntityManager;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -26,11 +25,6 @@ class LoginController
     private $entityManager;
 
     /**
-     * @var Messages
-     */
-    private $flash;
-
-    /**
      * @var Session
      */
     private $session;
@@ -38,18 +32,15 @@ class LoginController
     /**
      * @param Renderer $renderer
      * @param EntityManager $entityManager
-     * @param Messages $flash
      * @param Session $session
      */
     public function __construct(
         Renderer $renderer,
         EntityManager $entityManager,
-        Messages $flash,
         Session $session
     ) {
         $this->renderer = $renderer;
         $this->entityManager = $entityManager;
-        $this->flash = $flash;
         $this->session = $session;
     }
 
@@ -86,8 +77,6 @@ class LoginController
         $this->entityManager->flush();
 
         $this->session->set('token', $user->getToken());
-
-        $this->flash->addMessage('success', 'Welcome back ' . $user->getUsername());
 
         return $response->withStatus(302)->withHeader('Location', '/');
     }

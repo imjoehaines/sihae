@@ -5,7 +5,6 @@ namespace Sihae\Controllers;
 use RKA\Session;
 use Sihae\Renderer;
 use Sihae\Entities\User;
-use Slim\Flash\Messages;
 use Sihae\Validators\Validator;
 use Doctrine\ORM\EntityManager;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -32,11 +31,6 @@ class RegistrationController
     private $entityManager;
 
     /**
-     * @var Messages
-     */
-    private $flash;
-
-    /**
      * @var Session
      */
     private $session;
@@ -45,20 +39,17 @@ class RegistrationController
      * @param Renderer $renderer
      * @param Validator $validator
      * @param EntityManager $entityManager
-     * @param Messages $flash
      * @param Session $session
      */
     public function __construct(
         Renderer $renderer,
         Validator $validator,
         EntityManager $entityManager,
-        Messages $flash,
         Session $session
     ) {
         $this->renderer = $renderer;
         $this->validator = $validator;
         $this->entityManager = $entityManager;
-        $this->flash = $flash;
         $this->session = $session;
     }
 
@@ -89,8 +80,6 @@ class RegistrationController
         $this->entityManager->flush();
 
         $this->session->set('token', $user->getToken());
-
-        $this->flash->addMessage('success', 'Successfully registered!');
 
         return $response->withStatus(302)->withHeader('Location', '/');
     }

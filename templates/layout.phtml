@@ -8,9 +8,6 @@
     <?php if (isset($user) && $user->getIsAdmin() === true) : ?>
         <!-- font-awesome is only used when the user is an admin -->
         <link rel="stylesheet" href="<?= $this->asset('/css/font-awesome.min.css') ?> " />
-
-        <!-- alert-alert is only used when the user is an admin -->
-        <link rel="stylesheet" href="<?= $this->asset('/css/alert-alert.min.css') ?> " />
     <?php endif ?>
 
     <?= $this->section('styles') ?>
@@ -56,18 +53,5 @@
             </nav>
         <?php endif ?>
     </footer>
-
-    <?php if (!empty($flash_messages)) : ?>
-        <script src="<?= $this->asset('/js/alert-alert.min.js') ?>"></script>
-
-        <?php foreach ($flash_messages as $type => $messages) : ?>
-            <script>
-                var type = '<?= $type ?>'
-                var message = '<?= implode(", ", $messages) ?>'
-
-                window.Alert.alert(type, message, { timeout: 5000 })
-            </script>
-        <?php endforeach ?>
-    <?php endif ?>
 </body>
 </html>
