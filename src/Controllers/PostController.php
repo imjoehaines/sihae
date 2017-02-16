@@ -143,8 +143,8 @@ class PostController
         }
 
         $tags = $this->tagRepository->getAll(
-            $updatedPost['tags'] ?? [],
-            $updatedPost['new_tags'] ?? []
+            $newPost['tags'] ?? [],
+            $newPost['new_tags'] ?? []
         );
 
         array_walk($tags, [$post, 'addTag']);
