@@ -1,7 +1,6 @@
 <?php $this->layout('layout') ?>
 
 <?php $this->start('styles') ?>
-    <link rel="stylesheet" href="<?= $this->asset('/css/simplemde.min.css') ?>" />
     <link rel="stylesheet" href="<?= $this->asset('/css/tokenfield.css') ?>" />
     <link rel="stylesheet" href="<?= $this->asset('/css/prism.css') ?>" />
 <?php $this->stop('styles') ?>
@@ -25,7 +24,7 @@
     <input name="title" id="title" maxlength="50" required value="<?= isset($post) ? $post->getTitle() : '' ?>">
 
     <label for="body">Content</label>
-    <textarea name="body" id="body"><?= isset($post) ? $post->getBody() : '' ?></textarea>
+    <textarea name="body" id="body" rows="10"><?= isset($post) ? $post->getBody() : '' ?></textarea>
 
     <label for="tags">Tags</label>
     <input id="tags">
@@ -42,7 +41,6 @@
 <div id="tag-data"><?= $tag_data ?? '' ?></div>
 
 <script src="<?= $this->asset('/js/tokenfield.min.js') ?>"></script>
-<script src="<?= $this->asset('/js/simplemde.min.js') ?>"></script>
 <script src="<?= $this->asset('/js/prism.js') ?>"></script>
 <script src="<?= $this->asset('/js/sihae-prism-loader.js') ?>"></script>
 <script src="<?= $this->asset('/js/sihae-editor.js') ?>"></script>
