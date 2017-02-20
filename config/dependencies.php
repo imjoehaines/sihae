@@ -178,7 +178,7 @@ return function (Container $container) {
     };
 
     $container[Session::class] = function (Container $container) : Session {
-        return new Session;
+        return new Session();
     };
 
     $container[CommonMarkConverter::class] = function (Container $container) : CommonMarkConverter {
