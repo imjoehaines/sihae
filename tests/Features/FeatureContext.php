@@ -104,7 +104,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
      */
     public function createTestAdmin() : void
     {
-        $user = new User;
+        $user = new User();
         $user->setUsername('testing');
         $user->setPassword('testing');
         $user->setToken('testing');
@@ -133,7 +133,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
      */
     public function createTestUser() : void
     {
-        $user = new User;
+        $user = new User();
         $user->setUsername('testing');
         $user->setPassword('testing');
         $user->setToken('testing');
@@ -194,7 +194,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
         $user = $this->getEntityManager()->getRepository(User::class)->findOneBy([]);
 
         foreach ($posts as $content) {
-            $post = new Post;
+            $post = new Post();
 
             $post->setTitle($content['title']);
             $post->setBody($content['body']);
