@@ -9,8 +9,9 @@ class Version20161028221622 extends AbstractMigration
 {
     /**
      * @param Schema $schema
+     * @return void
      */
-    public function up(Schema $schema)
+    public function up(Schema $schema) : void
     {
         $postTable = $schema->createTable('post');
         $postTable->addColumn('id', 'integer', ['autoincrement' => true]);
@@ -56,8 +57,9 @@ class Version20161028221622 extends AbstractMigration
 
     /**
      * @param Schema $schema
+     * @return void
      */
-    public function down(Schema $schema)
+    public function down(Schema $schema) : void
     {
         $schema->dropTable('post_tag');
         $schema->dropTable('tag');
