@@ -2,13 +2,20 @@ language: php
 
 php:
   - 7.1
-  - nightly
+
+services:
+  - mysql
+
+env:
+  - DB_DRIVER=pdo_sqlite
+  - DB_DRIVER=pdo_mysql
 
 before_script:
   - cp .env.travis .env
   - composer install
   - php -S localhost:8000 -t public &> /dev/null &
-  - php vendor/bin/doctrine orm:schema-tool:create
+  - if [[ "$DB_DRIVER" == "pdo_mysql" ]]; then mysql -e "CREATE DATABASE IF NOT EXISTS sihae;" -u root; fi
+  - php vendor/bin/doctrine-migrations migrations:migrate --no-interaction
 
 script:
   - composer test:unit
@@ -18,5 +25,3 @@ script:
 
 matrix:
   fast_finish: true
-  allow_failures:
-    - php: nightly
