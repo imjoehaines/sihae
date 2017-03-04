@@ -5,6 +5,7 @@ Sihae is a PHP 7.1+ blog engine built with Slim Framework and Doctrine ORM.
 [![Sihae home page](screenshot.png)](https://raw.githubusercontent.com/imjoehaines/sihae/master/screenshot.png)
 
 ## Setup
+
 ```sh
 $ composer install
 $ cp .env.example .env
@@ -14,10 +15,11 @@ $ php vendor/bin/doctrine-migrations migrations:migrate
 ```
 
 ## Deploying
-```sh
-$ composer install --no-dev
-$ php vendor/bin/doctrine-migrations migrations:migrate
 
-# if a route has changed, remove the route cache file
+```sh
+$ git fetch
+$ git rebase
+$ composer install --no-dev --no-suggest --optimize-autoloader
+$ php vendor/bin/doctrine-migrations migrations:migrate
 $ rm data/cache/router.php
 ```
