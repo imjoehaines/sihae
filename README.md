@@ -35,6 +35,7 @@ All configuration is done in the `.env` file at the root of the project. It cont
 - `DB_DRIVER` &mdash; choose which database to use, possible options are:
   - `pdo_mysql` to use MySQL
   - `pdo_sqlite` to use SQLite
+- `DB_PATH` &mdash; the path to store the database; this **must** be an absolute path! This is only required if `DB_DRIVER` is set to `pdo_sqlite`.
 - `DB_HOST` &mdash; the host to connect to the database on. This is only required if `DB_DRIVER` is set to `pdo_mysql`
 - `DB_NAME` &mdash; the name of the database to use. This is only required if `DB_DRIVER` is set to `pdo_mysql`
 - `DB_USER` &mdash; the user to connect to the database with. This is only required if `DB_DRIVER` is set to `pdo_mysql`
