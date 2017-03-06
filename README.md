@@ -4,6 +4,15 @@ Sihae is a PHP 7.1+ blog engine built with Slim Framework and Doctrine ORM.
 
 [![Sihae home page](screenshot.png)](https://raw.githubusercontent.com/imjoehaines/sihae/master/screenshot.png)
 
+## Features
+
+- Blog post publishing
+- Create static pages
+- Markdown formatting ([CommonMark](http://commonmark.org/) via [league/commonmark](https://github.com/thephpleague/commonmark))
+- Syntax highlighting (via [Prism.js](http://prismjs.com/))
+- Tag posts and explore all posts by tag
+- Archive list of all posts grouped by year
+
 ## Requirements
 
 - PHP 7.1+
@@ -18,6 +27,22 @@ $ cp .env.example .env
 # create a database matching the "DB_NAME" in your .env
 $ php vendor/bin/doctrine-migrations migrations:migrate
 ```
+
+## Configuration
+
+All configuration is done in the `.env` file at the root of the project. It contains the following options:
+
+- `DB_DRIVER` &mdash; choose which database to use, possible options are:
+  - `pdo_mysql` to use MySQL
+  - `pdo_sqlite` to use SQLite
+- `DB_HOST` &mdash; the host to connect to the database on. This is only required if `DB_DRIVER` is set to `pdo_mysql`
+- `DB_NAME` &mdash; the name of the database to use. This is only required if `DB_DRIVER` is set to `pdo_mysql`
+- `DB_USER` &mdash; the user to connect to the database with. This is only required if `DB_DRIVER` is set to `pdo_mysql`
+- `DB_PASSWORD` &mdash; the password to use for the `DB_USER`. This is only required if `DB_DRIVER` is set to `pdo_mysql`
+- `APPLICATION_ENV` &mdash; the environment the application is running in. Locally this should be `development` and should be `production` when deployed
+- `SIHAE_TITLE` &mdash; the title of your blog
+- `SIHAE_SUMMARY` &mdash; the summary (line below the title) of your blog
+- `ENABLE_REGISTRATION` &mdash; whether to allow users to be registered. This should be turned off after the you have registered your initial user
 
 ## Deploying
 
