@@ -4,6 +4,11 @@ Sihae is a PHP 7.1+ blog engine built with Slim Framework and Doctrine ORM.
 
 [![Sihae home page](screenshot.png)](https://raw.githubusercontent.com/imjoehaines/sihae/master/screenshot.png)
 
+## Requirements
+
+- PHP 7.1+
+- MySQL or SQLite
+
 ## Setup
 
 ```sh
