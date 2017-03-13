@@ -7,6 +7,7 @@ return [
         'sihae' => [
             'title' => getenv('SIHAE_TITLE') ?: 'Sihae',
             'summary' => getenv('SIHAE_SUMMARY') ?: 'Welcome to your Sihae blog',
+            'use_custom_theme' => getenv('SIHAE_USE_CUSTOM_THEME') === 'true' ? true : false,
         ],
 
         // markdown settings

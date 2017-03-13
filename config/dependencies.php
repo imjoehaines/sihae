@@ -48,6 +48,10 @@ return function (Container $container) {
         $engine->loadExtension(new Asset(__DIR__ . '/../public/'));
         $engine->loadExtension(new URI($container->get('request')->getUri()->getPath()));
 
+        if ($container['settings']['sihae']['use_custom_theme']) {
+            $engine->addFolder('theme', __DIR__ . '/../templates/theme/', true);
+        }
+
         return $engine;
     };
 
@@ -63,7 +67,9 @@ return function (Container $container) {
     };
 
     $container[Renderer::class] = function (Container $container) : Renderer {
-        return new Renderer($container->get(Engine::class));
+        return new Renderer(
+            $container->get(Engine::class)
+        );
     };
 
     $container[TagRepository::class] = function (Container $container) : TagRepository {
