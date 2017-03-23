@@ -11,6 +11,11 @@ use Psr\Http\Message\ResponseInterface as Response;
 class Renderer
 {
     /**
+     * @var string
+     */
+    private const THEME_PREFIX = 'theme::';
+
+    /**
      * @var Engine
      */
     private $engine;
@@ -33,7 +38,7 @@ class Renderer
     {
         $body = $response->getBody();
 
-        $templateName = 'theme::' . $template;
+        $templateName = static::THEME_PREFIX . $template;
         $body->write($this->engine->render($templateName, $data));
 
         return $response;
