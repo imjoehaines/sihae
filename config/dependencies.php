@@ -64,9 +64,7 @@ return function (Container $container) {
     };
 
     $container[Renderer::class] = function (Container $container) : Renderer {
-        return new Renderer(
-            $container->get(Engine::class)
-        );
+        return new Renderer($container->get(Engine::class));
     };
 
     $container[TagRepository::class] = function (Container $container) : TagRepository {
