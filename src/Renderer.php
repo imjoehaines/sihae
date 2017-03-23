@@ -33,7 +33,7 @@ class Renderer
     {
         $body = $response->getBody();
 
-        $templateName = $this->getTemplateName($template);
+        $templateName = 'theme::' . $template;
         $body->write($this->engine->render($templateName, $data));
 
         return $response;
@@ -48,28 +48,5 @@ class Renderer
     public function addData(array $data) : void
     {
         $this->engine->addData($data);
-    }
-
-    /**
-     * Get the "real" template name - if a custom theme is being used then this
-     * will need to be prefixed with "theme" so that Plates will use it
-     *
-     * @param string $template
-     * @return string
-     */
-    private function getTemplateName(string $template) : string
-    {
-        return $this->useCustomTheme() ? 'theme::' . $template : $template;
-    }
-
-    /**
-     * Determine whether a custom theme is enabled - if the "theme" folder exists
-     * in Plates' Engine then it has been registered and so should be used
-     *
-     * @return bool
-     */
-    private function useCustomTheme() : bool
-    {
-        return $this->engine->getFolders()->exists('theme');
     }
 }
