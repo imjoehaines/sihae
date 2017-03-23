@@ -47,6 +47,7 @@ return function (Container $container) {
         $engine = new Engine($settings['path'], $settings['extension']);
         $engine->loadExtension(new Asset(__DIR__ . '/../public/'));
         $engine->loadExtension(new URI($container->get('request')->getUri()->getPath()));
+        $engine->addFolder('theme', __DIR__ . '/../templates/theme/', true);
 
         return $engine;
     };

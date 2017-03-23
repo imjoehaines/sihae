@@ -6,10 +6,15 @@ use League\Plates\Engine;
 use Psr\Http\Message\ResponseInterface as Response;
 
 /**
- * Wrapper around League\Plates\Engine to better support PSR-7
+ * Wrapper around League\Plates\Engine to better support PSR-7 and theming
  */
 class Renderer
 {
+    /**
+     * @var string
+     */
+    private const THEME_PREFIX = 'theme::';
+
     /**
      * @var Engine
      */
@@ -32,7 +37,9 @@ class Renderer
     public function render(Response $response, string $template, array $data = []) : Response
     {
         $body = $response->getBody();
-        $body->write($this->engine->render($template, $data));
+
+        $templateName = static::THEME_PREFIX . $template;
+        $body->write($this->engine->render($templateName, $data));
 
         return $response;
     }
