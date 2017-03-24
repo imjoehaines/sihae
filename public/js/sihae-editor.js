@@ -1,7 +1,7 @@
 'use strict'
 
-const tagDataElement = document.getElementById('tag-data')
-const tagData = JSON.parse(tagDataElement.innerText)
+const tagDataElement = document.getElementById('tags')
+const tagData = JSON.parse(tagDataElement.dataset.tagData)
 
 // tokenfield has side effects when you call it :(
 new window.Tokenfield({ // eslint-disable-line no-new
