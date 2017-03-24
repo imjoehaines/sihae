@@ -27,7 +27,7 @@
     <textarea name="body" id="body" rows="10"><?= isset($post) ? $post->getBody() : '' ?></textarea>
 
     <label for="tags">Tags</label>
-    <input id="tags">
+    <input id="tags" data-tag-data=<?= $tag_data ?? '' ?>>
 
     <button name="submit" type="submit">
         <?php if (isset($isEdit) && $isEdit === true) : ?>
@@ -37,8 +37,6 @@
         <?php endif ?>
     </button>
 </form>
-
-<div id="tag-data"><?= $tag_data ?? '' ?></div>
 
 <script src="<?= $this->asset('/js/tokenfield.min.js') ?>"></script>
 <script src="<?= $this->asset('/js/prism.js') ?>"></script>
