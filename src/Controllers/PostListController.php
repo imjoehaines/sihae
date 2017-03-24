@@ -53,10 +53,12 @@ class PostListController
 
         $posts = $postRepository->findBy(['is_page' => false], ['date_created' => 'DESC'], $limit, $offset);
 
-        $total = $postRepository->createQueryBuilder('Post')
-            ->select('COUNT(Post.id)')
-            ->getQuery()
-            ->getSingleScalarResult();
+        $query = $this->entityManager->createQuery(
+            'SELECT COUNT(p.id)
+             FROM Sihae\Entities\Post p'
+        );
+
+        $total = $query->getSingleScalarResult();
 
         return $this->renderer->render($response, 'post-list', [
             'posts' => $posts,
@@ -99,14 +101,14 @@ class PostListController
 
         $posts = $query->getResult();
 
-        $total = $this->entityManager->getRepository(Post::class)
-            ->createQueryBuilder('Post')
-            ->select('COUNT(Post.id)')
-            ->join('Post.tags', 't')
-            ->where('t.slug = :slug')
-            ->setParameter(':slug', $slug)
-            ->getQuery()
-            ->getSingleScalarResult();
+        $query = $this->entityManager->createQuery(
+            'SELECT COUNT(t.id)
+             FROM Sihae\Entities\Post p
+             JOIN p.tags t
+             WHERE t.slug = :slug'
+        )->setParameter(':slug', $slug);
+
+        $total = $query->getSingleScalarResult();
 
         return $this->renderer->render($response, 'post-list', [
             'posts' => $posts,
