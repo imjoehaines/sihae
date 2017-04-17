@@ -12,13 +12,13 @@
 <?php endif ?>
 
 <?php if (!empty($errors)) : ?>
-    <?= $this->insert('partials/errors', ['errors' => $errors]) ?>
+    <?= $this->insert('theme::partials/errors', ['errors' => $errors]) ?>
 <?php endif ?>
 
 <form method="POST"
     action="/post/<?= isset($isEdit) && $isEdit ? 'edit/' . $post->getSlug() : 'new' ?>"
 >
-    <?php $this->insert('partials/csrf', ['csrf' => $csrf]) ?>
+    <?php $this->insert('theme::partials/csrf', ['csrf' => $csrf]) ?>
 
     <label for="title">Title</label>
     <input name="title" id="title" maxlength="50" required value="<?= isset($post) ? $post->getTitle() : '' ?>">
