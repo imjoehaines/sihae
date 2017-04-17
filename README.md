@@ -6,11 +6,11 @@ Sihae is a PHP 7.1+ blog engine built with Slim Framework and Doctrine ORM.
 
 ## Features
 
-- Blog post publishing
+- Publish blog posts
 - Create static pages
 - Markdown formatting ([CommonMark](http://commonmark.org/) via [league/commonmark](https://github.com/thephpleague/commonmark))
 - Syntax highlighting (via [Prism.js](http://prismjs.com/))
-- Tag posts and explore all posts by tag
+- Tag posts and explore all posts by their tag(s)
 - Archive list of all posts grouped by year
 
 ## Requirements
@@ -26,6 +26,16 @@ $ cp .env.example .env
 # configure .env with database connection details
 # create a database matching the "DB_NAME" in your .env
 $ php vendor/bin/doctrine-migrations migrations:migrate
+```
+
+## Deploying
+
+```sh
+$ git fetch
+$ git rebase
+$ composer install --no-dev --no-suggest --optimize-autoloader
+$ php vendor/bin/doctrine-migrations migrations:migrate
+$ rm data/cache/router.php
 ```
 
 ## Configuration
@@ -44,13 +54,3 @@ All configuration is done in the `.env` file at the root of the project. It cont
 - `SIHAE_TITLE` &mdash; the title of your blog
 - `SIHAE_SUMMARY` &mdash; the summary (line below the title) of your blog
 - `ENABLE_REGISTRATION` &mdash; whether to allow users to be registered. This should be turned off after the you have registered your initial user
-
-## Deploying
-
-```sh
-$ git fetch
-$ git rebase
-$ composer install --no-dev --no-suggest --optimize-autoloader
-$ php vendor/bin/doctrine-migrations migrations:migrate
-$ rm data/cache/router.php
-```
