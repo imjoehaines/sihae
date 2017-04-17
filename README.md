@@ -61,4 +61,6 @@ Creating a custom theme is super easy; Sihae will try to load template files fro
 
 The `templates/theme` directory is ignored by git in the Sihae repository so it won't be overwritten in future versions.
 
+Be sure to read the [Plates](http://platesphp.com/) documentation for details on how to create templates.
+
 If you need to include images, CSS or JavaScript in your theme, there is a `public/theme` directory to store any assets your theme requires. This is also ignored by git.
