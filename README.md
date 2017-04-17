@@ -54,3 +54,11 @@ All configuration is done in the `.env` file at the root of the project. It cont
 - `SIHAE_TITLE` &mdash; the title of your blog
 - `SIHAE_SUMMARY` &mdash; the summary (line below the title) of your blog
 - `ENABLE_REGISTRATION` &mdash; whether to allow users to be registered. This should be turned off after the you have registered your initial user
+
+## Custom Themes
+
+Creating a custom theme is super easy; Sihae will try to load template files from `templates/theme` before falling back to the root of `templates`. This means you can replace any template by creating a file with the same name inside `templates/theme`. For example, you can create a custom 404 page by creating `templates/theme/404.phtml`.
+
+The `templates/theme` directory is ignored by git in the Sihae repository so it won't be overwritten in future versions.
+
+If you need to include images, CSS or JavaScript in your theme, there is a `public/theme` directory to store any assets your theme requires. This is also ignored by git.
