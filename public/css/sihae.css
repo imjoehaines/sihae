@@ -10,7 +10,7 @@ html {
 
 body {
   /* GitHub's system font stack */
-  font-family: "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   color: #333;
 }
 
@@ -27,7 +27,7 @@ h6 {
 }
 
 h3 {
-  margin-bottom: 0.3rem;
+  margin-bottom: .3rem;
 }
 
 header {
@@ -157,22 +157,22 @@ a:focus {
 }
 
 .archive > li {
-  margin-bottom: 0.3rem;
+  margin-bottom: .3rem;
 }
 
 .post-date a {
-  margin-left: 0.33rem;
+  margin-left: .33rem;
 }
 
 label {
-  margin: 0 0 0.5rem;
+  margin: 0 0 .5rem;
   display: block;
 }
 
 input,
 textarea {
   margin: 0 0 1rem;
-  padding: 0.5rem;
+  padding: .5rem;
   width: 100%;
   border: 1px solid rgb(221, 221, 221);
 }
@@ -186,7 +186,7 @@ blockquote {
   margin: 1rem;
   padding-left: 1rem;
   overflow: hidden;
-  border-left: 0.25rem solid #007fad;
+  border-left: .25rem solid #007fad;
 }
 
 img {
@@ -247,8 +247,8 @@ img {
 }
 
 .CodeMirror .cm-spell-error:not(.cm-url):not(.cm-comment):not(.cm-tag):not(.cm-word) {
-   border-bottom: 2px dotted rgba(255, 0, 0, 1);
-   background: none;
+  border-bottom: 2px dotted rgba(255, 0, 0, 1);
+  background: none;
 }
 
 /* tokenfield */
@@ -262,15 +262,15 @@ img {
 }
 
 .tokenfield .tokenfield-input {
-  padding: 0.5rem;
+  padding: .5rem;
   margin: 0;
   width: auto !important;
 }
 
 .tokenfield .tokenfield-set > ul > li {
-  margin: 0.5rem 0 0 0.5rem;
+  margin: .5rem 0 0 .5rem;
   border-radius: 0;
-  font-size: 0.8rem;
+  font-size: .8rem;
 }
 
 .tokenfield .tokenfield-set > ul > li:last-child {
