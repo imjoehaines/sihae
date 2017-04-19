@@ -1,13 +1,13 @@
-<?php $this->layout('layout') ?>
+<?php $this->layout('theme::layout') ?>
 
 <h2>Login</h2>
 
 <?php if (!empty($errors)) : ?>
-    <?= $this->insert('partials/errors', ['errors' => $errors]) ?>
+    <?= $this->insert('theme::partials/errors', ['errors' => $errors]) ?>
 <?php endif ?>
 
 <form action="/login" method="POST">
-    <?php $this->insert('partials/csrf', ['csrf' => $csrf]) ?>
+    <?php $this->insert('theme::partials/csrf', ['csrf' => $csrf]) ?>
 
     <label for="username">Username</label>
     <input name="username" id="username" maxlength="50" required value="<?= $username ?? '' ?>">

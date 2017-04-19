@@ -1,4 +1,4 @@
-<?php $this->layout('layout') ?>
+<?php $this->layout('theme::layout') ?>
 
 <h2>Archive</h2>
 
@@ -10,17 +10,7 @@
 
         <ol class="post-list archive">
             <?php foreach ($posts as $post) : ?>
-                <li>
-                    <p>
-                        <a href="/post/<?= $post->getSlug() ?>">
-                            <?= $this->e($post->getTitle()) ?>
-                        </a>
-
-                        <small class="post-date">
-                            <?= $post->getDateCreated()->format('jS M Y') ?>
-                        </small>
-                    </p>
-                </li>
+                <?php $this->insert('theme::partials/post-list-post', ['post' => $post]) ?>
             <?php endforeach ?>
         </ol>
     <?php endforeach ?>

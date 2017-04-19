@@ -1,0 +1,11 @@
+<li>
+    <h2>
+        <a href="/post/<?= $post->getSlug() ?>">
+            <?= $this->e($post->getTitle()) ?>
+        </a>
+
+        <small class="post-date">
+            <?= $post->getDateCreated()->format('jS M Y') ?>
+        </small>
+    </h2>
+</li>

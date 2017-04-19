@@ -156,8 +156,16 @@ a:focus {
   line-height: 1.5;
 }
 
-.archive > li {
+.archive {
+  margin-bottom: 1rem;
+}
+
+.archive li {
   margin-bottom: .3rem;
+}
+
+.archive h2 {
+  font-size: 1rem;
 }
 
 .post-date a {

@@ -1,4 +1,4 @@
-<?php $this->layout('layout') ?>
+<?php $this->layout('theme::layout') ?>
 
 <?php if (isset($tag)) : ?>
     <p>Posts tagged &ldquo;<?= $tag->getName() ?>&rdquo;</p>
@@ -11,45 +11,13 @@
         </li>
     <?php else : ?>
         <?php foreach ($posts as $post) : ?>
-            <li>
-                <h2>
-                    <a href="/post/<?= $post->getSlug() ?>">
-                        <?= $this->e($post->getTitle()) ?>
-                    </a>
-
-                    <small class="post-date">
-                        <?= $post->getDateCreated()->format('jS M Y') ?>
-                    </small>
-                </h2>
-            </li>
+            <?php $this->insert('theme::partials/post-list-post', ['post' => $post]) ?>
         <?php endforeach ?>
     <?php endif ?>
 </ol>
 
-<?php if ($total_pages > 1) : ?>
-    <ol class="post-pagination">
-        <li class="post-pagination-newer">
-            <?php if ($current_page === 1) : ?>
-                <a href="#" class="disabled">Newer Posts</a>
-            <?php else : ?>
-                <a href="<?= isset($tag) ? '/tagged/' . $tag->getSlug() : '' ?>/page/<?= $current_page - 1 ?>">
-                    Newer Posts
-                </a>
-            <?php endif ?>
-        </li>
-
-        <li class="post-pagination-pages">
-            <p>Page <?= $current_page ?> of <?= $total_pages ?></p>
-        </li>
-
-        <li class="post-pagination-older">
-            <?php if ($current_page != $total_pages) : ?>
-                <a href="<?= isset($tag) ? '/tagged/' . $tag->getSlug() : '' ?>/page/<?= $current_page + 1 ?>">
-                    Older Posts
-                </a>
-            <?php else : ?>
-                <a href="#" class="disabled">Older Posts</a>
-            <?php endif ?>
-        </li>
-    </ol>
-<?php endif ?>
+<?php $this->insert('theme::partials/pagination', [
+    'total_pages' => $total_pages,
+    'current_page' => $current_page,
+    'tag' => $tag ?? null,
+]) ?>
