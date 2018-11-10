@@ -109,7 +109,7 @@ class User
 
         $this->updateToken();
 
-        return true
+        return true;
     }
 
     /**
