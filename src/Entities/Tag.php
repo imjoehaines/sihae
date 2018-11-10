@@ -50,8 +50,11 @@ class Tag
     /**
      * Initialise the posts property on creation
      */
-    public function __construct()
+    public function __construct(string $name)
     {
+        $this->name = $name;
+        $this->slug = (string) s($name)->slugify();
+
         $this->posts = new ArrayCollection();
     }
 
@@ -94,10 +97,6 @@ class Tag
     public function setName(string $name) : void
     {
         $this->name = $name;
-
-        if (!$this->slug) {
-            $this->slug = (string) s($name)->slugify();
-        }
     }
 
     /**
