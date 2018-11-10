@@ -61,13 +61,14 @@ class User
     protected $posts;
 
     /**
-     * Initialise posts as an empty ArrayCollection
+     * @param string $username
+     * @param string $password
      */
-    public function __construct(string $username, string $password, string $token)
+    public function __construct(string $username, string $password)
     {
         $this->username = $username;
-        $this->token = $token;
 
+        $this->updateToken();
         $this->setPassword($password);
 
         $this->posts = new ArrayCollection();
@@ -98,6 +99,11 @@ class User
         return password_verify($password, $this->password);
     }
 
+    /**
+     * @todo Rename User::authenticated to something clearer
+     * @param string $password
+     * @return void
+     */
     public function authenticated(string $password) : void
     {
         $this->rehash($password);

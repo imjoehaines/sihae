@@ -73,8 +73,7 @@ class RegistrationController
 
         $user = new User(
             $userDetails['username'],
-            $userDetails['password'],
-            bin2hex(random_bytes(128))
+            $userDetails['password']
         );
 
         $this->entityManager->persist($user);

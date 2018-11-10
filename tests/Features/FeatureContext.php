@@ -83,7 +83,6 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     {
         $user = new User(
             'testing',
-            'testing',
             'testing'
         );
 
@@ -116,7 +115,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
      */
     public function createTestUser() : void
     {
-        $user = new User('testing', 'testing', 'testing');
+        $user = new User('testing', 'testing');
 
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();

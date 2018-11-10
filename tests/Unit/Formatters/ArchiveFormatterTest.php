@@ -27,10 +27,10 @@ class ArchiveFormatterTest extends TestCase
     {
         $formatter = new ArchiveFormatter();
 
-        $post1 = new Post('', '', new User('', '', ''));
+        $post1 = new Post('', '', new User('', ''));
         $post1->onPrePersist();
 
-        $post2 = new Post('', '', new User('', '', ''));
+        $post2 = new Post('', '', new User('', ''));
         $post2->onPrePersist();
 
         $data = [
