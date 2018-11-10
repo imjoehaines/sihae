@@ -71,10 +71,11 @@ class RegistrationController
             ]);
         }
 
-        $user = new User();
-        $user->setUsername($userDetails['username']);
-        $user->setPassword($userDetails['password']);
-        $user->setToken(bin2hex(random_bytes(128)));
+        $user = new User(
+            $userDetails['username'],
+            $userDetails['password'],
+            bin2hex(random_bytes(128))
+        );
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();

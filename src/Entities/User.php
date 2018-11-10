@@ -63,8 +63,13 @@ class User
     /**
      * Initialise posts as an empty ArrayCollection
      */
-    public function __construct()
+    public function __construct(string $username, string $password, string $token)
     {
+        $this->username = $username;
+        $this->token = $token;
+
+        $this->setPassword($password);
+
         $this->posts = new ArrayCollection();
     }
 
