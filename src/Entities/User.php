@@ -76,22 +76,6 @@ class User
     /**
      * @return string
      */
-    public function getUsername() : string
-    {
-        return $this->username;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPassword() : string
-    {
-        return $this->password;
-    }
-
-    /**
-     * @return string
-     */
     public function getToken() : string
     {
         return $this->token;
@@ -100,24 +84,51 @@ class User
     /**
      * @return bool
      */
-    public function getIsAdmin() : bool
+    public function isAdmin() : bool
     {
         return $this->is_admin;
     }
 
     /**
-     * @return Collection
+     * @param string $password
+     * @return bool
      */
-    public function getPosts() : Collection
+    public function isCorrectPassword(string $password) : bool
     {
-        return $this->posts;
+        return password_verify($password, $this->password);
+    }
+
+    public function authenticated(string $password) : void
+    {
+        $this->rehash($password);
+        $this->updateToken();
     }
 
     /**
      * @param string $password
      * @return void
      */
-    public function setPassword(string $password) : void
+    private function rehash(string $password) : void
+    {
+        // if the password was hashed with an old algorithm, re-hash it
+        if (password_needs_rehash($this->password, PASSWORD_DEFAULT)) {
+            $this->setPassword($password);
+        }
+    }
+
+    /**
+     * @return void
+     */
+    private function updateToken() : void
+    {
+        $this->token = bin2hex(random_bytes(128));
+    }
+
+    /**
+     * @param string $password
+     * @return void
+     */
+    private function setPassword(string $password) : void
     {
         $hash = password_hash($password, PASSWORD_DEFAULT);
 
@@ -126,23 +137,5 @@ class User
         }
 
         $this->password = $hash;
-    }
-
-    /**
-     * @param string $token
-     * @return void
-     */
-    public function setToken(string $token) : void
-    {
-        $this->token = $token;
-    }
-
-    /**
-     * @param bool $isAdmin
-     * @return void
-     */
-    public function setIsAdmin(bool $isAdmin) : void
-    {
-        $this->is_admin = $isAdmin;
     }
 }

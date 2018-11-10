@@ -86,10 +86,15 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
             'testing',
             'testing'
         );
-        $user->setIsAdmin(true);
 
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
+
+        $this->getEntityManager()->getConnection()->executeUpdate(
+            'UPDATE user
+             SET is_admin = 1
+             WHERE username = "testing"'
+        );
     }
 
     /**

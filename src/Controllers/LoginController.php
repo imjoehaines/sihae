@@ -60,7 +60,7 @@ class LoginController
 
         if (!$user ||
             !isset($userDetails['password']) ||
-            !password_verify($userDetails['password'], $user->getPassword())
+            !$user->isCorrectPassword($userDetails['password'])
         ) {
             return $this->renderer->render($response, 'login', [
                 'errors' => ['No user was found with these credentials, please try again'],
@@ -68,13 +68,7 @@ class LoginController
             ]);
         }
 
-        // if the password was hashed with an old algorithm, re-hash it
-        if (password_needs_rehash($user->getPassword(), PASSWORD_DEFAULT)) {
-            $user->setPassword($userDetails['password']);
-        }
-
-        // generate a new token for the user
-        $user->setToken(bin2hex(random_bytes(128)));
+        $user->authenticated($userDetails['password']);
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();
