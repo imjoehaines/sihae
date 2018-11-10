@@ -112,17 +112,9 @@ class Post
     }
 
     /**
-     * @return User
-     */
-    public function getUser() : User
-    {
-        return $this->user;
-    }
-
-    /**
      * @return bool
      */
-    public function getIsPage() : bool
+    public function isPage() : bool
     {
         return $this->is_page;
     }

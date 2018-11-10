@@ -280,14 +280,14 @@ class PostController
             return $response->withStatus(404);
         }
 
-        $entity->setIsPage(!$entity->getIsPage());
+        $entity->setIsPage(!$entity->isPage());
 
         $this->entityManager->persist($entity);
         $this->entityManager->flush();
 
         $path = '/' . $entity->getSlug();
 
-        if ($entity->getIsPage() === false) {
+        if ($entity->isPage() === false) {
             $path = '/post' . $path;
         }
 
