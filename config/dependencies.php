@@ -30,6 +30,7 @@ use Sihae\Middleware\AuthMiddleware;
 use Sihae\Controllers\TagController;
 use Sihae\Controllers\PostController;
 use Sihae\Repositories\TagRepository;
+use Sihae\Repositories\UserRepository;
 use Sihae\Formatters\ArchiveFormatter;
 use Sihae\Middleware\SettingsProvider;
 use Sihae\Controllers\ErrorController;
@@ -71,6 +72,10 @@ return function (Container $container) {
         return new TagRepository($container->get(EntityManager::class));
     };
 
+    $container[UserRepository::class] = function (Container $container) : UserRepository {
+        return new UserRepository($container->get(EntityManager::class));
+    };
+
     $container[PostController::class] = function (Container $container) : PostController {
         return new PostController(
             $container->get(Renderer::class),
@@ -107,7 +112,7 @@ return function (Container $container) {
     $container[LoginController::class] = function (Container $container) : LoginController {
         return new LoginController(
             $container->get(Renderer::class),
-            $container->get(EntityManager::class),
+            $container->get(UserRepository::class),
             $container->get(Session::class)
         );
     };
@@ -136,7 +141,7 @@ return function (Container $container) {
     $container[AuthMiddleware::class] = function (Container $container) : AuthMiddleware {
         return new AuthMiddleware(
             $container->get(Session::class),
-            $container->get(EntityManager::class)
+            $container->get(UserRepository::class)
         );
     };
 
@@ -166,7 +171,7 @@ return function (Container $container) {
         return new UserProvider(
             $container->get(Renderer::class),
             $container->get(Session::class),
-            $container->get(EntityManager::class)
+            $container->get(UserRepository::class)
         );
     };
 

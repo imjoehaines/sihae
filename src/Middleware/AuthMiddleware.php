@@ -3,8 +3,7 @@
 namespace Sihae\Middleware;
 
 use RKA\Session;
-use Sihae\Entities\User;
-use Doctrine\ORM\EntityManager;
+use Sihae\Repositories\UserRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -20,18 +19,18 @@ class AuthMiddleware
     private $session;
 
     /**
-     * @var EntityManager
+     * @var UserRepository
      */
-    private $entityManager;
+    private $repository;
 
     /**
      * @param Session $session
-     * @param EntityManager $entityManager
+     * @param UserRepository $repository
      */
-    public function __construct(Session $session, EntityManager $entityManager)
+    public function __construct(Session $session, UserRepository $repository)
     {
         $this->session = $session;
-        $this->entityManager = $entityManager;
+        $this->repository = $repository;
     }
 
     /**
@@ -46,7 +45,7 @@ class AuthMiddleware
     public function __invoke(Request $request, Response $response, callable $next) : Response
     {
         if ($token = $this->session->get('token')) {
-            $user = $this->entityManager->getRepository(User::class)->findOneBy(['token' => $token]);
+            $user = $this->repository->findByToken($token);
 
             if ($user && $user->isAdmin() === true) {
                 return $next($request->withAttribute('user', $user), $response);
