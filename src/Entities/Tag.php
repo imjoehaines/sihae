@@ -59,14 +59,6 @@ class Tag
     }
 
     /**
-     * @return int
-     */
-    public function getId() : int
-    {
-        return $this->id;
-    }
-
-    /**
      * @return string
      */
     public function getName() : string
@@ -88,15 +80,6 @@ class Tag
     public function getPosts() : Collection
     {
         return $this->posts;
-    }
-
-    /**
-     * @param string $name
-     * @return void
-     */
-    public function setName(string $name) : void
-    {
-        $this->name = $name;
     }
 
     /**
