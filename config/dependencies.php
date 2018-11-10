@@ -121,7 +121,7 @@ return function (Container $container) {
         return new RegistrationController(
             $container->get(Renderer::class),
             $container->get(RegistrationValidator::class),
-            $container->get(EntityManager::class),
+            $container->get(UserRepository::class),
             $container->get(Session::class)
         );
     };
