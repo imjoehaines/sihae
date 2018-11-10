@@ -88,14 +88,6 @@ class Post
     }
 
     /**
-     * @return int
-     */
-    public function getId() : int
-    {
-        return $this->id;
-    }
-
-    /**
      * @return string
      */
     public function getTitle() : string
@@ -159,15 +151,6 @@ class Post
     public function setBody(string $body) : void
     {
         $this->body = $body;
-    }
-
-    /**
-     * @param User $user
-     * @return void
-     */
-    public function setUser(User $user) : void
-    {
-        $this->user = $user;
     }
 
     /**
