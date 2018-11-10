@@ -118,7 +118,7 @@ class PostController
         $post->setTitle($newPost['title'] ?? '');
         $post->setBody($newPost['body'] ?? '');
 
-        if (!is_array($newPost) || $this->validator->isValid($newPost)) {
+        if (!is_array($newPost) || !$this->validator->isValid($newPost)) {
             return $this->renderer->render($response, 'editor', [
                 'post' => $post,
                 'errors' => $this->validator->getErrors(),
