@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "cd5a6bdb8d0a6e7d6812ef58a733b30d",
+    "content-hash": "a4c3064cb4818679a6d4f706d9bfe3fe",
     "packages": [
         {
             "name": "akrabat/rka-slim-session-middleware",
@@ -85,20 +85,20 @@
         },
         {
             "name": "danielstjules/stringy",
-            "version": "2.4.0",
+            "version": "3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/danielstjules/Stringy.git",
-                "reference": "edbda419cbe4bcc3cb200b7c9811cb6597bf058b"
+                "reference": "df24ab62d2d8213bbbe88cc36fc35a4503b4bd7e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/danielstjules/Stringy/zipball/edbda419cbe4bcc3cb200b7c9811cb6597bf058b",
-                "reference": "edbda419cbe4bcc3cb200b7c9811cb6597bf058b",
+                "url": "https://api.github.com/repos/danielstjules/Stringy/zipball/df24ab62d2d8213bbbe88cc36fc35a4503b4bd7e",
+                "reference": "df24ab62d2d8213bbbe88cc36fc35a4503b4bd7e",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0",
+                "php": ">=5.4.0",
                 "symfony/polyfill-mbstring": "~1.1"
             },
             "require-dev": {
@@ -137,7 +137,7 @@
                 "utility",
                 "utils"
             ],
-            "time": "2017-03-02T20:43:29+00:00"
+            "time": "2017-06-12T01:10:27+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -827,36 +827,6 @@
                 "orm"
             ],
             "time": "2018-07-12T20:47:13+00:00"
-        },
-        {
-            "name": "i-am-tom/schemer",
-            "version": "2.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/i-am-tom/schemer.git",
-                "reference": "854862ab58abb2f9cdc494095d9c073b075f08e0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/i-am-tom/schemer/zipball/854862ab58abb2f9cdc494095d9c073b075f08e0",
-                "reference": "854862ab58abb2f9cdc494095d9c073b075f08e0",
-                "shasum": ""
-            },
-            "require-dev": {
-                "crysalead/kahlan": "^2.5"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Schemer\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "ISC"
-            ],
-            "description": "A Joi-like interface for validating data structures.",
-            "time": "2016-10-05T20:25:02+00:00"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -2671,6 +2641,36 @@
                 "url"
             ],
             "time": "2017-03-20T17:10:46+00:00"
+        },
+        {
+            "name": "i-am-tom/schemer",
+            "version": "2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/i-am-tom/schemer.git",
+                "reference": "854862ab58abb2f9cdc494095d9c073b075f08e0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/i-am-tom/schemer/zipball/854862ab58abb2f9cdc494095d9c073b075f08e0",
+                "reference": "854862ab58abb2f9cdc494095d9c073b075f08e0",
+                "shasum": ""
+            },
+            "require-dev": {
+                "crysalead/kahlan": "^2.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Schemer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "ISC"
+            ],
+            "description": "A Joi-like interface for validating data structures.",
+            "time": "2016-10-05T20:25:02+00:00"
         },
         {
             "name": "kubawerlos/types-checker",
