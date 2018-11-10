@@ -5,7 +5,7 @@
         "psr/log": "^1.0",
         "container-interop/container-interop": "^1.1",
         "danielstjules/stringy": "^3.1",
-        "league/commonmark": "^0.15.0",
+        "league/commonmark": "^0.18.0",
         "doctrine/orm": "^2.5",
         "slim/flash": "^0.2.0",
         "akrabat/rka-slim-session-middleware": "^2.0",
