@@ -62,7 +62,7 @@ class TagRepository
     {
         $repository = $this->entityManager->getRepository(Tag::class);
 
-        return array_map(function ($name) use ($repository) {
+        return array_map(function (string $name) use ($repository) : Tag {
             // check for an existing tag with this name first
             if (!$tag = $repository->findOneBy(['name' => $name])) {
                 $tag = new Tag($name);
