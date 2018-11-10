@@ -83,6 +83,7 @@ class Post
         $this->body = $body;
         $this->user = $user;
 
+        $this->slug = (string) s($title)->slugify();
         $this->tags = new ArrayCollection();
     }
 
@@ -149,10 +150,6 @@ class Post
     public function setTitle(string $title) : void
     {
         $this->title = $title;
-
-        if (!$this->slug) {
-            $this->slug = (string) s($title)->slugify();
-        }
     }
 
     /**
