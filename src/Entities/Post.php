@@ -77,8 +77,12 @@ class Post
     /**
      * Initialise the $tags property on creation
      */
-    public function __construct()
+    public function __construct(string $title, string $body, User $user)
     {
+        $this->title = $title;
+        $this->body = $body;
+        $this->user = $user;
+
         $this->tags = new ArrayCollection();
     }
 

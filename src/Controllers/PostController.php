@@ -114,9 +114,11 @@ class PostController
     {
         $newPost = $request->getParsedBody();
 
-        $post = new Post();
-        $post->setTitle($newPost['title'] ?? '');
-        $post->setBody($newPost['body'] ?? '');
+        $post = new Post(
+            $newPost['title'] ?? '',
+            $newPost['body'] ?? '',
+            $request->getAttribute('user')
+        );
 
         if (!is_array($newPost) || !$this->validator->isValid($newPost)) {
             return $this->renderer->render($response, 'editor', [
@@ -124,8 +126,6 @@ class PostController
                 'errors' => $this->validator->getErrors(),
             ]);
         }
-
-        $post->setUser($request->getAttribute('user'));
 
         // if there is already a post with the slug we just generated or the slug
         // is "reserved", generate a new one

@@ -175,11 +175,11 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
         }
 
         foreach ($posts as $content) {
-            $post = new Post();
-
-            $post->setTitle($content['title']);
-            $post->setBody($content['body']);
-            $post->setUser($user);
+            $post = new Post(
+                $content['title'],
+                $content['body'],
+                $user
+            );
 
             $this->getEntityManager()->persist($post);
             $this->getEntityManager()->flush();
