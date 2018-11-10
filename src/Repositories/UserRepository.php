@@ -20,17 +20,29 @@ class UserRepository
         $this->entityManager = $entityManager;
     }
 
+    /**
+     * @param User $user
+     * @return void
+     */
     public function save(User $user) : void
     {
         $this->entityManager->persist($user);
         $this->entityManager->flush();
     }
 
+    /**
+     * @param string $username
+     * @return User|null
+     */
     public function findByUsername(string $username) : ?User
     {
         return $this->entityManager->getRepository(User::class)->findOneBy(['username' => $username]);
     }
 
+    /**
+     * @param string $token
+     * @return User|null
+     */
     public function findByToken(string $token) : ?User
     {
         return $this->entityManager->getRepository(User::class)->findOneBy(['token' => $token]);
