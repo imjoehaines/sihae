@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "37154513f33531e78306f9ed63b1b0c1",
+    "content-hash": "0c9f56cc384ab5771f063a19a264499a",
     "packages": [
         {
             "name": "akrabat/rka-slim-session-middleware",
@@ -2330,16 +2330,16 @@
         },
         {
             "name": "slim/flash",
-            "version": "0.2.0",
+            "version": "0.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/slimphp/Slim-Flash.git",
-                "reference": "3c9a26b3163820acc48080336c504d0a3cac6f30"
+                "reference": "9aaff5fded3b54f4e519ec3d4ac74d3d1f2cbbbc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/slimphp/Slim-Flash/zipball/3c9a26b3163820acc48080336c504d0a3cac6f30",
-                "reference": "3c9a26b3163820acc48080336c504d0a3cac6f30",
+                "url": "https://api.github.com/repos/slimphp/Slim-Flash/zipball/9aaff5fded3b54f4e519ec3d4ac74d3d1f2cbbbc",
+                "reference": "9aaff5fded3b54f4e519ec3d4ac74d3d1f2cbbbc",
                 "shasum": ""
             },
             "require": {
@@ -2374,7 +2374,7 @@
                 "provider",
                 "slim"
             ],
-            "time": "2016-11-11T16:29:19+00:00"
+            "time": "2017-10-22T10:35:05+00:00"
         },
         {
             "name": "slim/slim",
@@ -3426,36 +3426,6 @@
                 "url"
             ],
             "time": "2017-03-20T17:10:46+00:00"
-        },
-        {
-            "name": "i-am-tom/schemer",
-            "version": "2.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/i-am-tom/schemer.git",
-                "reference": "854862ab58abb2f9cdc494095d9c073b075f08e0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/i-am-tom/schemer/zipball/854862ab58abb2f9cdc494095d9c073b075f08e0",
-                "reference": "854862ab58abb2f9cdc494095d9c073b075f08e0",
-                "shasum": ""
-            },
-            "require-dev": {
-                "crysalead/kahlan": "^2.5"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Schemer\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "ISC"
-            ],
-            "description": "A Joi-like interface for validating data structures.",
-            "time": "2016-10-05T20:25:02+00:00"
         },
         {
             "name": "kubawerlos/types-checker",
