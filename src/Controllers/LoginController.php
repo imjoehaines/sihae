@@ -59,16 +59,13 @@ class LoginController
             ->findOneBy(['username' => $userDetails['username'] ?? null]);
 
         if (!$user ||
-            !isset($userDetails['password']) ||
-            !$user->isCorrectPassword($userDetails['password'])
+            !$user->login($userDetails['password'] ?? '')
         ) {
             return $this->renderer->render($response, 'login', [
                 'errors' => ['No user was found with these credentials, please try again'],
                 'username' => $userDetails['username'] ?? '',
             ]);
         }
-
-        $user->authenticated($userDetails['password']);
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();

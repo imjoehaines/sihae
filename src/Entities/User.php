@@ -100,14 +100,21 @@ class User
     }
 
     /**
-     * @todo Rename User::authenticated to something clearer
+     * Attempt to login with the given password
+     *
      * @param string $password
-     * @return void
+     * @return bool
      */
-    public function authenticated(string $password) : void
+    public function login(string $password) : bool
     {
+        if (!$this->isCorrectPassword($password)) {
+            return false;
+        }
+
         $this->rehash($password);
         $this->updateToken();
+
+        return true
     }
 
     /**
