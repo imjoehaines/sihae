@@ -4,6 +4,7 @@ namespace Sihae\Repositories;
 
 use Sihae\Entities\Tag;
 use Doctrine\ORM\EntityManager;
+use Doctrine\Common\Collections\Collection;
 
 class TagRepository
 {
@@ -18,6 +19,28 @@ class TagRepository
     public function __construct(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getAllOrderedByUsage() : Collection
+    {
+        $dql =
+            'SELECT t, p
+             FROM Sihae\Entities\Tag t
+             JOIN t.posts p';
+
+        $tags = $this->entityManager->createQuery($dql)->getResult();
+
+        /**
+         * @todo Use database to order tags by post count
+         */
+        usort($tags, function (Tag $a, Tag $b) : int {
+            return $b->getPosts()->count() <=> $a->getPosts()->count();
+        });
+
+        return $tags;
     }
 
     /**

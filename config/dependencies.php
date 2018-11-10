@@ -105,7 +105,7 @@ return function (Container $container) {
     $container[TagController::class] = function (Container $container) : TagController {
         return new TagController(
             $container->get(Renderer::class),
-            $container->get(EntityManager::class)
+            $container->get(TagRepository::class)
         );
     };
 
