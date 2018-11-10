@@ -31,3 +31,7 @@ matrix:
   allow_failures:
     - php: 7.3
     - php: nightly
+
+cache:
+  directories:
+    - $HOME/.composer/cache/files
