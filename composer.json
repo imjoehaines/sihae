@@ -14,7 +14,8 @@
         "vlucas/phpdotenv": "^2.4",
         "league/plates": "^3.1",
         "doctrine/migrations": "^1.4",
-        "jdorn/sql-formatter": "^1.2"
+        "jdorn/sql-formatter": "^1.2",
+        "doctrine/common": "2.8.x"
     },
     "require-dev": {
         "behat/behat": "^3.2",
