@@ -56,12 +56,15 @@ class LoginController
         $userDetails = $request->getParsedBody();
 
         $user = $this->entityManager->getRepository(User::class)
-            ->findOneBy(['username' => $userDetails['username']]);
+            ->findOneBy(['username' => $userDetails['username'] ?? null]);
 
-        if (!$user || !password_verify($userDetails['password'], $user->getPassword())) {
+        if (!$user ||
+            !isset($userDetails['password']) ||
+            !password_verify($userDetails['password'], $user->getPassword())
+        ) {
             return $this->renderer->render($response, 'login', [
                 'errors' => ['No user was found with these credentials, please try again'],
-                'username' => $userDetails['username'],
+                'username' => $userDetails['username'] ?? '',
             ]);
         }
 

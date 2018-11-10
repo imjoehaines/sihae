@@ -115,8 +115,8 @@ class PostController
         $newPost = $request->getParsedBody();
 
         $post = new Post();
-        $post->setTitle($newPost['title']);
-        $post->setBody($newPost['body']);
+        $post->setTitle($newPost['title'] ?? '');
+        $post->setBody($newPost['body'] ?? '');
 
         if (!$this->validator->isValid($newPost)) {
             return $this->renderer->render($response, 'editor', [
@@ -220,8 +220,8 @@ class PostController
 
         $updatedPost = $request->getParsedBody();
 
-        $post->setTitle($updatedPost['title']);
-        $post->setBody($updatedPost['body']);
+        $post->setTitle($updatedPost['title'] ?? '');
+        $post->setBody($updatedPost['body'] ?? '');
 
         if (!$this->validator->isValid($updatedPost)) {
             return $this->renderer->render($response, 'editor', [
