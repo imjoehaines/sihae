@@ -276,6 +276,10 @@ class PostController
     {
         $entity = $this->entityManager->getRepository(Post::class)->findOneBy(['slug' => $slug]);
 
+        if (!$entity) {
+            return $response->withStatus(404);
+        }
+
         $entity->setIsPage(!$entity->getIsPage());
 
         $this->entityManager->persist($entity);
