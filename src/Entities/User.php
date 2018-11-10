@@ -74,14 +74,6 @@ class User
     }
 
     /**
-     * @return int
-     */
-    public function getId() : int
-    {
-        return $this->id;
-    }
-
-    /**
      * @return string
      */
     public function getUsername() : string
@@ -119,15 +111,6 @@ class User
     public function getPosts() : Collection
     {
         return $this->posts;
-    }
-
-    /**
-     * @param string $username
-     * @return void
-     */
-    public function setUsername(string $username) : void
-    {
-        $this->username = $username;
     }
 
     /**
