@@ -5,7 +5,7 @@ namespace Sihae\Validators;
 /**
  * Validator for new Posts
  */
-class PostValidator
+class PostValidator implements Validator
 {
     /**
      * @var array
