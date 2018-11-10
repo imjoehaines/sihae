@@ -8,7 +8,6 @@
         "league/commonmark": "^0.15.0",
         "doctrine/orm": "^2.5",
         "slim/flash": "^0.2.0",
-        "i-am-tom/schemer": "^2.0",
         "akrabat/rka-slim-session-middleware": "^2.0",
         "slim/csrf": "^0.8.1",
         "vlucas/phpdotenv": "^2.4",
