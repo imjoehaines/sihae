@@ -25,7 +25,9 @@
         "slim/csrf": "^0.8.1",
         "slim/flash": "^0.2.0",
         "slim/slim": "^3.5",
-        "vlucas/phpdotenv": "^2.4"
+        "vlucas/phpdotenv": "^2.4",
+        "phpstan/phpstan": "^0.10.5",
+        "phpstan/phpstan-doctrine": "^0.10.0"
     },
     "require-dev": {
         "behat/behat": "^3.2",
@@ -33,14 +35,13 @@
         "behat/mink-goutte-driver": "^1.2",
         "kubawerlos/types-checker": "^1.1",
         "macfja/tracy-doctrine-sql": "@dev",
-        "phpstan/phpstan": "^0.6.3",
         "phpunit/phpunit": "^6.0",
         "tracy/tracy": "^2.4"
     },
     "scripts": {
         "test": "composer test:unit && composer test:acceptance && composer test:phpstan && composer test:types",
         "test:acceptance": "behat --colors -v",
-        "test:phpstan": "phpstan analyse src tests --level 4",
+        "test:phpstan": "phpstan analyse src tests",
         "test:types": "types-checker src tests",
         "test:unit": "phpunit tests/Unit/"
     }
