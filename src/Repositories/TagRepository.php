@@ -4,7 +4,6 @@ namespace Sihae\Repositories;
 
 use Sihae\Entities\Tag;
 use Doctrine\ORM\EntityManager;
-use Doctrine\Common\Collections\Collection;
 
 class TagRepository
 {
@@ -22,9 +21,9 @@ class TagRepository
     }
 
     /**
-     * @return Collection
+     * @return array
      */
-    public function getAllOrderedByUsage() : Collection
+    public function getAllOrderedByUsage() : array
     {
         $dql =
             'SELECT t, p
