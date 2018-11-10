@@ -91,15 +91,6 @@ class User
     }
 
     /**
-     * @param string $password
-     * @return bool
-     */
-    public function isCorrectPassword(string $password) : bool
-    {
-        return password_verify($password, $this->password);
-    }
-
-    /**
      * Attempt to login with the given password
      *
      * @param string $password
@@ -107,26 +98,18 @@ class User
      */
     public function login(string $password) : bool
     {
-        if (!$this->isCorrectPassword($password)) {
+        if (!password_verify($password, $this->password)) {
             return false;
         }
 
-        $this->rehash($password);
-        $this->updateToken();
-
-        return true
-    }
-
-    /**
-     * @param string $password
-     * @return void
-     */
-    private function rehash(string $password) : void
-    {
         // if the password was hashed with an old algorithm, re-hash it
         if (password_needs_rehash($this->password, PASSWORD_DEFAULT)) {
             $this->setPassword($password);
         }
+
+        $this->updateToken();
+
+        return true
     }
 
     /**
