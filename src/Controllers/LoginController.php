@@ -54,7 +54,7 @@ class LoginController
     {
         $userDetails = $request->getParsedBody();
 
-        $user = $this->repository->findByUsername($userDetails['username'] ?? null);
+        $user = $this->repository->findByUsername($userDetails['username'] ?? '');
 
         if (!$user ||
             !$user->login($userDetails['password'] ?? '')
