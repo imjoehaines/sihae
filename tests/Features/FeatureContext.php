@@ -170,6 +170,10 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
         $posts = $posts->getHash();
         $user = $this->getEntityManager()->getRepository(User::class)->findOneBy([]);
 
+        if (!$user) {
+            throw new \RuntimeException('Expected at least one user in the database');
+        }
+
         foreach ($posts as $content) {
             $post = new Post();
 

@@ -64,10 +64,10 @@ class RegistrationController
     {
         $userDetails = $request->getParsedBody();
 
-        if (!$this->validator->isValid($userDetails)) {
+        if (!is_array($userDetails) || $this->validator->isValid($userDetails)) {
             return $this->renderer->render($response, 'register', [
                 'errors' => $this->validator->getErrors(),
-                'username' => $userDetails['username'],
+                'username' => $userDetails['username'] ?? '',
             ]);
         }
 

@@ -115,10 +115,10 @@ class PostController
         $newPost = $request->getParsedBody();
 
         $post = new Post();
-        $post->setTitle($newPost['title']);
-        $post->setBody($newPost['body']);
+        $post->setTitle($newPost['title'] ?? '');
+        $post->setBody($newPost['body'] ?? '');
 
-        if (!$this->validator->isValid($newPost)) {
+        if (!is_array($newPost) || !$this->validator->isValid($newPost)) {
             return $this->renderer->render($response, 'editor', [
                 'post' => $post,
                 'errors' => $this->validator->getErrors(),
@@ -158,7 +158,7 @@ class PostController
      */
     public function show(Request $request, Response $response, string $slug) : Response
     {
-        $post = $request->getAttribute('post');
+        $post = $this->getPost($request);
 
         $parsedBody = $this->markdown->convertToHtml($post->getBody());
         $post->setBody($parsedBody);
@@ -176,7 +176,7 @@ class PostController
      */
     public function edit(Request $request, Response $response, string $slug) : Response
     {
-        $post = $request->getAttribute('post');
+        $post = $this->getPost($request);
 
         $query = $this->entityManager->createQuery(
             'SELECT partial t.{id, name}
@@ -216,14 +216,14 @@ class PostController
      */
     public function update(Request $request, Response $response, string $slug) : Response
     {
-        $post = $request->getAttribute('post');
+        $post = $this->getPost($request);
 
         $updatedPost = $request->getParsedBody();
 
-        $post->setTitle($updatedPost['title']);
-        $post->setBody($updatedPost['body']);
+        $post->setTitle($updatedPost['title'] ?? '');
+        $post->setBody($updatedPost['body'] ?? '');
 
-        if (!$this->validator->isValid($updatedPost)) {
+        if (!is_array($updatedPost) || !$this->validator->isValid($updatedPost)) {
             return $this->renderer->render($response, 'editor', [
                 'post' => $post,
                 'errors' => $this->validator->getErrors(),
@@ -256,7 +256,7 @@ class PostController
      */
     public function delete(Request $request, Response $response, string $slug) : Response
     {
-        $post = $request->getAttribute('post');
+        $post = $this->getPost($request);
 
         $this->entityManager->remove($post);
         $this->entityManager->flush();
@@ -276,6 +276,10 @@ class PostController
     {
         $entity = $this->entityManager->getRepository(Post::class)->findOneBy(['slug' => $slug]);
 
+        if (!$entity) {
+            return $response->withStatus(404);
+        }
+
         $entity->setIsPage(!$entity->getIsPage());
 
         $this->entityManager->persist($entity);
@@ -288,5 +292,10 @@ class PostController
         }
 
         return $response->withStatus(302)->withHeader('Location', $path);
+    }
+
+    private function getPost(Request $request) : Post
+    {
+        return $request->getAttribute('post');
     }
 }

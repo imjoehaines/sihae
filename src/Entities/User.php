@@ -131,7 +131,13 @@ class User
      */
     public function setPassword(string $password) : void
     {
-        $this->password = password_hash($password, PASSWORD_DEFAULT);
+        $hash = password_hash($password, PASSWORD_DEFAULT);
+
+        if ($hash === false) {
+            throw new \RuntimeException('Unable to hash the given password');
+        }
+
+        $this->password = $hash;
     }
 
     /**
