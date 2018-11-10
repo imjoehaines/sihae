@@ -5,6 +5,7 @@ namespace Sihae\Tests\Unit\Formatters;
 use PHPUnit\Framework\TestCase;
 
 use Sihae\Entities\Post;
+use Sihae\Entities\User;
 use Sihae\Formatters\ArchiveFormatter;
 
 class ArchiveFormatterTest extends TestCase
@@ -26,10 +27,10 @@ class ArchiveFormatterTest extends TestCase
     {
         $formatter = new ArchiveFormatter();
 
-        $post1 = new Post();
+        $post1 = new Post('', '', new User('', ''));
         $post1->onPrePersist();
 
-        $post2 = new Post();
+        $post2 = new Post('', '', new User('', ''));
         $post2->onPrePersist();
 
         $data = [

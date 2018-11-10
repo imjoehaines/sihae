@@ -59,22 +59,13 @@ class LoginController
             ->findOneBy(['username' => $userDetails['username'] ?? null]);
 
         if (!$user ||
-            !isset($userDetails['password']) ||
-            !password_verify($userDetails['password'], $user->getPassword())
+            !$user->login($userDetails['password'] ?? '')
         ) {
             return $this->renderer->render($response, 'login', [
                 'errors' => ['No user was found with these credentials, please try again'],
                 'username' => $userDetails['username'] ?? '',
             ]);
         }
-
-        // if the password was hashed with an old algorithm, re-hash it
-        if (password_needs_rehash($user->getPassword(), PASSWORD_DEFAULT)) {
-            $user->setPassword($userDetails['password']);
-        }
-
-        // generate a new token for the user
-        $user->setToken(bin2hex(random_bytes(128)));
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();

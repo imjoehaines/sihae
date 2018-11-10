@@ -61,35 +61,17 @@ class User
     protected $posts;
 
     /**
-     * Initialise posts as an empty ArrayCollection
+     * @param string $username
+     * @param string $password
      */
-    public function __construct()
+    public function __construct(string $username, string $password)
     {
+        $this->username = $username;
+
+        $this->updateToken();
+        $this->setPassword($password);
+
         $this->posts = new ArrayCollection();
-    }
-
-    /**
-     * @return int
-     */
-    public function getId() : int
-    {
-        return $this->id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getUsername() : string
-    {
-        return $this->username;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPassword() : string
-    {
-        return $this->password;
     }
 
     /**
@@ -103,33 +85,46 @@ class User
     /**
      * @return bool
      */
-    public function getIsAdmin() : bool
+    public function isAdmin() : bool
     {
         return $this->is_admin;
     }
 
     /**
-     * @return Collection
+     * Attempt to login with the given password
+     *
+     * @param string $password
+     * @return bool
      */
-    public function getPosts() : Collection
+    public function login(string $password) : bool
     {
-        return $this->posts;
+        if (!password_verify($password, $this->password)) {
+            return false;
+        }
+
+        // if the password was hashed with an old algorithm, re-hash it
+        if (password_needs_rehash($this->password, PASSWORD_DEFAULT)) {
+            $this->setPassword($password);
+        }
+
+        $this->updateToken();
+
+        return true;
     }
 
     /**
-     * @param string $username
      * @return void
      */
-    public function setUsername(string $username) : void
+    private function updateToken() : void
     {
-        $this->username = $username;
+        $this->token = bin2hex(random_bytes(128));
     }
 
     /**
      * @param string $password
      * @return void
      */
-    public function setPassword(string $password) : void
+    private function setPassword(string $password) : void
     {
         $hash = password_hash($password, PASSWORD_DEFAULT);
 
@@ -138,23 +133,5 @@ class User
         }
 
         $this->password = $hash;
-    }
-
-    /**
-     * @param string $token
-     * @return void
-     */
-    public function setToken(string $token) : void
-    {
-        $this->token = $token;
-    }
-
-    /**
-     * @param bool $isAdmin
-     * @return void
-     */
-    public function setIsAdmin(bool $isAdmin) : void
-    {
-        $this->is_admin = $isAdmin;
     }
 }

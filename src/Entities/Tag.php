@@ -50,17 +50,12 @@ class Tag
     /**
      * Initialise the posts property on creation
      */
-    public function __construct()
+    public function __construct(string $name)
     {
-        $this->posts = new ArrayCollection();
-    }
+        $this->name = $name;
+        $this->slug = (string) s($name)->slugify();
 
-    /**
-     * @return int
-     */
-    public function getId() : int
-    {
-        return $this->id;
+        $this->posts = new ArrayCollection();
     }
 
     /**
@@ -85,19 +80,6 @@ class Tag
     public function getPosts() : Collection
     {
         return $this->posts;
-    }
-
-    /**
-     * @param string $name
-     * @return void
-     */
-    public function setName(string $name) : void
-    {
-        $this->name = $name;
-
-        if (!$this->slug) {
-            $this->slug = (string) s($name)->slugify();
-        }
     }
 
     /**

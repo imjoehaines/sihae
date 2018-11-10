@@ -65,8 +65,7 @@ class TagRepository
         return array_map(function ($name) use ($repository) {
             // check for an existing tag with this name first
             if (!$tag = $repository->findOneBy(['name' => $name])) {
-                $tag = new Tag();
-                $tag->setName($name);
+                $tag = new Tag($name);
 
                 $this->entityManager->persist($tag);
             }

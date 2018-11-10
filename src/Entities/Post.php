@@ -77,17 +77,14 @@ class Post
     /**
      * Initialise the $tags property on creation
      */
-    public function __construct()
+    public function __construct(string $title, string $body, User $user)
     {
-        $this->tags = new ArrayCollection();
-    }
+        $this->title = $title;
+        $this->body = $body;
+        $this->user = $user;
 
-    /**
-     * @return int
-     */
-    public function getId() : int
-    {
-        return $this->id;
+        $this->slug = (string) s($title)->slugify();
+        $this->tags = new ArrayCollection();
     }
 
     /**
@@ -115,17 +112,9 @@ class Post
     }
 
     /**
-     * @return User
-     */
-    public function getUser() : User
-    {
-        return $this->user;
-    }
-
-    /**
      * @return bool
      */
-    public function getIsPage() : bool
+    public function isPage() : bool
     {
         return $this->is_page;
     }
@@ -145,10 +134,6 @@ class Post
     public function setTitle(string $title) : void
     {
         $this->title = $title;
-
-        if (!$this->slug) {
-            $this->slug = (string) s($title)->slugify();
-        }
     }
 
     /**
@@ -158,15 +143,6 @@ class Post
     public function setBody(string $body) : void
     {
         $this->body = $body;
-    }
-
-    /**
-     * @param User $user
-     * @return void
-     */
-    public function setUser(User $user) : void
-    {
-        $this->user = $user;
     }
 
     /**

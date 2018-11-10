@@ -5,7 +5,7 @@
 
     <link rel="stylesheet" href="<?= $this->asset('/css/normalize.min.css') ?> " />
 
-    <?php if (isset($user) && $user->getIsAdmin() === true) : ?>
+    <?php if (isset($user) && $user->isAdmin() === true) : ?>
         <!-- font-awesome is only used when the user is an admin -->
         <link rel="stylesheet" href="<?= $this->asset('/css/font-awesome.min.css') ?> " />
     <?php endif ?>
@@ -44,7 +44,7 @@
         <?php if (isset($user)) : ?>
             <nav>
                 <ul>
-                    <?php if ($user->getIsAdmin() === true) : ?>
+                    <?php if ($user->isAdmin() === true) : ?>
                         <li><a <?= $this->uri('/post/new', 'class="selected"') ?> href="/post/new">Add a new post</a></li>
                     <?php endif ?>
 

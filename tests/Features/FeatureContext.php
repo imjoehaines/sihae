@@ -81,14 +81,19 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
      */
     public function createTestAdmin() : void
     {
-        $user = new User();
-        $user->setUsername('testing');
-        $user->setPassword('testing');
-        $user->setToken('testing');
-        $user->setIsAdmin(true);
+        $user = new User(
+            'testing',
+            'testing'
+        );
 
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
+
+        $this->getEntityManager()->getConnection()->executeUpdate(
+            'UPDATE user
+             SET is_admin = 1
+             WHERE username = "testing"'
+        );
     }
 
     /**
@@ -110,10 +115,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
      */
     public function createTestUser() : void
     {
-        $user = new User();
-        $user->setUsername('testing');
-        $user->setPassword('testing');
-        $user->setToken('testing');
+        $user = new User('testing', 'testing');
 
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
@@ -175,11 +177,11 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
         }
 
         foreach ($posts as $content) {
-            $post = new Post();
-
-            $post->setTitle($content['title']);
-            $post->setBody($content['body']);
-            $post->setUser($user);
+            $post = new Post(
+                $content['title'],
+                $content['body'],
+                $user
+            );
 
             $this->getEntityManager()->persist($post);
             $this->getEntityManager()->flush();
