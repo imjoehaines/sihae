@@ -2,4 +2,4 @@ includes:
   - vendor/phpstan/phpstan-doctrine/extension.neon
 
 parameters:
-  level: 3
+  level: 6
