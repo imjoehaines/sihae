@@ -2,33 +2,15 @@
 
 namespace Sihae\Validators;
 
-use Schemer\Validator as V;
-
 /**
  * Validator for new Posts
  */
-class PostValidator implements Validator
+class PostValidator
 {
-    /**
-     * @var \Schemer\Validator\ValidatorInterface
-     */
-    private $validator;
-
     /**
      * @var array
      */
     private $errors = [];
-
-    /**
-     * Initialise validator rules
-     */
-    public function __construct()
-    {
-        $this->validator = V::assoc([
-            'title' => V::text()->min(3)->max(50),
-            'body' => V::text()->min(10),
-        ]);
-    }
 
     /**
      * @param array $postDetails
@@ -36,11 +18,21 @@ class PostValidator implements Validator
      */
     public function isValid(array $postDetails) : bool
     {
-        $result = $this->validator->validate($postDetails);
+        $this->errors = [];
 
-        $this->errors = $result->map('ucfirst')->errors();
+        if (strlen($postDetails['title']) < 3) {
+            $this->errors[] = 'Title: not at least 3 characters';
+        }
 
-        return !$result->isError();
+        if (strlen($postDetails['title']) > 50) {
+            $this->errors[] = 'Title: more than 50 characters';
+        }
+
+        if (strlen($postDetails['body']) < 10) {
+            $this->errors[] = 'Body: not at least 10 characters';
+        }
+
+        return empty($this->errors);
     }
 
     /**
