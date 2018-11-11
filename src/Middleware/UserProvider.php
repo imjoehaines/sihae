@@ -4,8 +4,7 @@ namespace Sihae\Middleware;
 
 use RKA\Session;
 use Sihae\Renderer;
-use Sihae\Entities\User;
-use Doctrine\ORM\EntityManager;
+use Sihae\Repositories\UserRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -25,20 +24,20 @@ class UserProvider
     private $session;
 
     /**
-     * @var EntityManager
+     * @var UserRepository
      */
-    private $entityManager;
+    private $repository;
 
     /**
      * @param Renderer $renderer
      * @param Session $session
-     * @param EntityManager $entityManager
+     * @param UserRepository $repository
      */
-    public function __construct(Renderer $renderer, Session $session, EntityManager $entityManager)
+    public function __construct(Renderer $renderer, Session $session, UserRepository $repository)
     {
         $this->renderer = $renderer;
         $this->session = $session;
-        $this->entityManager = $entityManager;
+        $this->repository = $repository;
     }
 
     /**
@@ -52,7 +51,7 @@ class UserProvider
     public function __invoke(Request $request, Response $response, callable $next) : Response
     {
         if ($token = $this->session->get('token')) {
-            $user = $this->entityManager->getRepository(User::class)->findOneBy(['token' => $token]);
+            $user = $this->repository->findByToken($token);
 
             if ($user) {
                 Session::regenerate();

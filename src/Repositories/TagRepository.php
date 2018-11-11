@@ -3,7 +3,10 @@
 namespace Sihae\Repositories;
 
 use Sihae\Entities\Tag;
+use Doctrine\ORM\Query;
+use Sihae\Entities\Post;
 use Doctrine\ORM\EntityManager;
+use Doctrine\Common\Persistence\ObjectRepository;
 
 class TagRepository
 {
@@ -13,24 +16,88 @@ class TagRepository
     private $entityManager;
 
     /**
-     * @param EntityManager $entityManager
+     * @var ObjectRepository
      */
-    public function __construct(EntityManager $entityManager)
-    {
+    private $repository;
+
+    /**
+     * @param EntityManager $entityManager
+     * @param ObjectRepository $repository
+     */
+    public function __construct(
+        EntityManager $entityManager,
+        ObjectRepository $repository
+    ) {
         $this->entityManager = $entityManager;
+        $this->repository = $repository;
     }
 
     /**
+     * @return array
+     */
+    public function findAllOrderedByUsage() : array
+    {
+        $dql =
+            'SELECT t, p
+             FROM Sihae\Entities\Tag t
+             JOIN t.posts p';
+
+        $tags = $this->entityManager->createQuery($dql)->getResult();
+
+        /**
+         * @todo Use database to order tags by post count
+         */
+        usort($tags, function (Tag $a, Tag $b) : int {
+            return $b->getPosts()->count() <=> $a->getPosts()->count();
+        });
+
+        return $tags;
+    }
+
+    /**
+     * @todo rename this to something clearer
      * @param array $existingTags
      * @param array $newTags
      * @return array
      */
-    public function getAll(array $existingTags, array $newTags) : array
+    public function findAll(array $existingTags, array $newTags) : array
     {
         return array_merge(
             $this->find($existingTags),
             $this->findOrCreate($newTags)
         );
+    }
+
+    /**
+     * @return array
+     */
+    public function findAllAsArray() : array
+    {
+        $query = $this->entityManager->createQuery(
+            'SELECT partial t.{id, name}
+             FROM Sihae\Entities\Tag t'
+        );
+
+        return $query->getResult(Query::HYDRATE_ARRAY);
+    }
+
+    /**
+     * @param Post $post
+     * @return array
+     */
+    public function findAllForPostAsArray(Post $post) : array
+    {
+        $query = $this->entityManager->createQuery(
+            'SELECT partial t.{id, name}
+             FROM Sihae\Entities\Tag t
+             JOIN t.posts p
+             WHERE :post MEMBER OF t.posts
+             GROUP BY t.id'
+        );
+
+        $query->setParameter('post', $post);
+
+        return $query->getResult(Query::HYDRATE_ARRAY);
     }
 
     /**
@@ -60,14 +127,19 @@ class TagRepository
      */
     private function findOrCreate(array $tagNames) : array
     {
-        $repository = $this->entityManager->getRepository(Tag::class);
-
-        return array_map(function (string $name) use ($repository) : Tag {
+        return array_map(function (string $name) : Tag {
             // check for an existing tag with this name first
-            if (!$tag = $repository->findOneBy(['name' => $name])) {
+            if (!$tag = $this->repository->findOneBy(['name' => $name])) {
                 $tag = new Tag($name);
 
                 $this->entityManager->persist($tag);
+            }
+
+            /**
+             * @todo Fix phpstan work around in TagRepository
+             */
+            if (!$tag instanceof Tag) {
+                throw new \RuntimeException('TODO fix this');
             }
 
             return $tag;

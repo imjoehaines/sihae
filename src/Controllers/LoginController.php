@@ -4,8 +4,7 @@ namespace Sihae\Controllers;
 
 use RKA\Session;
 use Sihae\Renderer;
-use Sihae\Entities\User;
-use Doctrine\ORM\EntityManager;
+use Sihae\Repositories\UserRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -20,9 +19,9 @@ class LoginController
     private $renderer;
 
     /**
-     * @var EntityManager
+     * @var UserRepository
      */
-    private $entityManager;
+    private $repository;
 
     /**
      * @var Session
@@ -31,16 +30,16 @@ class LoginController
 
     /**
      * @param Renderer $renderer
-     * @param EntityManager $entityManager
+     * @param UserRepository $repository
      * @param Session $session
      */
     public function __construct(
         Renderer $renderer,
-        EntityManager $entityManager,
+        UserRepository $repository,
         Session $session
     ) {
         $this->renderer = $renderer;
-        $this->entityManager = $entityManager;
+        $this->repository = $repository;
         $this->session = $session;
     }
 
@@ -55,8 +54,7 @@ class LoginController
     {
         $userDetails = $request->getParsedBody();
 
-        $user = $this->entityManager->getRepository(User::class)
-            ->findOneBy(['username' => $userDetails['username'] ?? null]);
+        $user = $this->repository->findByUsername($userDetails['username'] ?? '');
 
         if (!$user ||
             !$user->login($userDetails['password'] ?? '')
@@ -67,8 +65,7 @@ class LoginController
             ]);
         }
 
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
+        $this->repository->save($user);
 
         $this->session->set('token', $user->getToken());
 

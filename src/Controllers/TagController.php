@@ -3,8 +3,7 @@
 namespace Sihae\Controllers;
 
 use Sihae\Renderer;
-use Sihae\Entities\Tag;
-use Doctrine\ORM\EntityManager;
+use Sihae\Repositories\TagRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -19,20 +18,20 @@ class TagController
     private $renderer;
 
     /**
-     * @var EntityManager
+     * @var TagRepository
      */
-    private $entityManager;
+    private $repository;
 
     /**
      * @param Renderer $renderer
-     * @param EntityManager $entityManager
+     * @param TagRepository $repository
      */
     public function __construct(
         Renderer $renderer,
-        EntityManager $entityManager
+        TagRepository $repository
     ) {
         $this->renderer = $renderer;
-        $this->entityManager = $entityManager;
+        $this->repository = $repository;
     }
 
     /**
@@ -47,16 +46,7 @@ class TagController
      */
     public function index(Request $request, Response $response) : Response
     {
-        $dql =
-            'SELECT t, p
-             FROM Sihae\Entities\Tag t
-             JOIN t.posts p';
-
-        $tags = $this->entityManager->createQuery($dql)->getResult();
-
-        usort($tags, function (Tag $a, Tag $b) : int {
-            return $b->getPosts()->count() <=> $a->getPosts()->count();
-        });
+        $tags = $this->repository->findAllOrderedByUsage();
 
         return $this->renderer->render($response, 'tags', ['tags' => $tags]);
     }

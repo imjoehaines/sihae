@@ -21,6 +21,8 @@ use Slim\Handlers\Strategies\RequestResponseArgs;
 use Interop\Container\ContainerInterface as Container;
 
 use Sihae\Renderer;
+use Sihae\Entities\Tag;
+use Sihae\Entities\User;
 use Sihae\Middleware\PostLocator;
 use Sihae\Middleware\CsrfProvider;
 use Sihae\Middleware\PageProvider;
@@ -30,6 +32,7 @@ use Sihae\Middleware\AuthMiddleware;
 use Sihae\Controllers\TagController;
 use Sihae\Controllers\PostController;
 use Sihae\Repositories\TagRepository;
+use Sihae\Repositories\UserRepository;
 use Sihae\Formatters\ArchiveFormatter;
 use Sihae\Middleware\SettingsProvider;
 use Sihae\Controllers\ErrorController;
@@ -68,7 +71,17 @@ return function (Container $container) {
     };
 
     $container[TagRepository::class] = function (Container $container) : TagRepository {
-        return new TagRepository($container->get(EntityManager::class));
+        return new TagRepository(
+            $container->get(EntityManager::class),
+            $container->get(EntityManager::class)->getRepository(Tag::class)
+        );
+    };
+
+    $container[UserRepository::class] = function (Container $container) : UserRepository {
+        return new UserRepository(
+            $container->get(EntityManager::class),
+            $container->get(EntityManager::class)->getRepository(User::class)
+        );
     };
 
     $container[PostController::class] = function (Container $container) : PostController {
@@ -100,14 +113,14 @@ return function (Container $container) {
     $container[TagController::class] = function (Container $container) : TagController {
         return new TagController(
             $container->get(Renderer::class),
-            $container->get(EntityManager::class)
+            $container->get(TagRepository::class)
         );
     };
 
     $container[LoginController::class] = function (Container $container) : LoginController {
         return new LoginController(
             $container->get(Renderer::class),
-            $container->get(EntityManager::class),
+            $container->get(UserRepository::class),
             $container->get(Session::class)
         );
     };
@@ -116,7 +129,7 @@ return function (Container $container) {
         return new RegistrationController(
             $container->get(Renderer::class),
             $container->get(RegistrationValidator::class),
-            $container->get(EntityManager::class),
+            $container->get(UserRepository::class),
             $container->get(Session::class)
         );
     };
@@ -136,7 +149,7 @@ return function (Container $container) {
     $container[AuthMiddleware::class] = function (Container $container) : AuthMiddleware {
         return new AuthMiddleware(
             $container->get(Session::class),
-            $container->get(EntityManager::class)
+            $container->get(UserRepository::class)
         );
     };
 
@@ -166,7 +179,7 @@ return function (Container $container) {
         return new UserProvider(
             $container->get(Renderer::class),
             $container->get(Session::class),
-            $container->get(EntityManager::class)
+            $container->get(UserRepository::class)
         );
     };
 

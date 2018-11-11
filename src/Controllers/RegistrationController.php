@@ -6,7 +6,7 @@ use RKA\Session;
 use Sihae\Renderer;
 use Sihae\Entities\User;
 use Sihae\Validators\Validator;
-use Doctrine\ORM\EntityManager;
+use Sihae\Repositories\UserRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -26,9 +26,9 @@ class RegistrationController
     private $validator;
 
     /**
-     * @var EntityManager
+     * @var UserRepository
      */
-    private $entityManager;
+    private $repository;
 
     /**
      * @var Session
@@ -38,18 +38,18 @@ class RegistrationController
     /**
      * @param Renderer $renderer
      * @param Validator $validator
-     * @param EntityManager $entityManager
+     * @param UserRepository $repository
      * @param Session $session
      */
     public function __construct(
         Renderer $renderer,
         Validator $validator,
-        EntityManager $entityManager,
+        UserRepository $repository,
         Session $session
     ) {
         $this->renderer = $renderer;
         $this->validator = $validator;
-        $this->entityManager = $entityManager;
+        $this->repository = $repository;
         $this->session = $session;
     }
 
@@ -76,8 +76,7 @@ class RegistrationController
             $userDetails['password']
         );
 
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
+        $this->repository->save($user);
 
         $this->session->set('token', $user->getToken());
 
