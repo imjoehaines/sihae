@@ -38,20 +38,16 @@ class TagRepository
     public function findAllOrderedByUsage() : array
     {
         $dql =
-            'SELECT t, p
+            'SELECT t, p, (
+                 SELECT COUNT(p2)
+                 FROM Sihae\Entities\Post p2
+                 WHERE p2 MEMBER OF t.posts
+             ) AS HIDDEN post_count
              FROM Sihae\Entities\Tag t
-             JOIN t.posts p';
+             LEFT JOIN t.posts p
+             ORDER BY post_count DESC';
 
-        $tags = $this->entityManager->createQuery($dql)->getResult();
-
-        /**
-         * @todo Use database to order tags by post count
-         */
-        usort($tags, function (Tag $a, Tag $b) : int {
-            return $b->getPosts()->count() <=> $a->getPosts()->count();
-        });
-
-        return $tags;
+        return $this->entityManager->createQuery($dql)->getResult();
     }
 
     /**
