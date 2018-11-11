@@ -47,11 +47,29 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
 
         $tables = $schemaManager->listTables();
 
-        foreach ($tables as $table) {
-            foreach ($table->getForeignKeys() as $foreignKey) {
-                $table->removeForeignKey($foreignKey->getName());
+        $getForeignTableName = function ($foreignKey) {
+            return $foreignKey->getForeignTableName();
+        };
+
+        // sort the list of tables based on foreign keys so it is safe to delete
+        // from them in order
+        uasort($tables, function ($table1, $table2) use ($getForeignTableName) : int {
+            $table1Relations = array_map($getForeignTableName, $table1->getForeignKeys());
+
+            if (in_array($table2->getName(), $table1Relations)) {
+                return -1;
             }
 
+            $table2Relations = array_map($getForeignTableName, $table2->getForeignKeys());
+
+            if (in_array($table1->getName(), $table2Relations)) {
+                return 1;
+            }
+
+            return 1;
+        });
+
+        foreach ($tables as $table) {
             $connection->exec('DELETE FROM ' . $connection->quoteIdentifier($table->getName()));
         }
     }
