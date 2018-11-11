@@ -3,6 +3,8 @@
 namespace Sihae\Repositories;
 
 use Sihae\Entities\Tag;
+use Doctrine\ORM\Query;
+use Sihae\Entities\Post;
 use Doctrine\ORM\EntityManager;
 
 class TagRepository
@@ -53,6 +55,38 @@ class TagRepository
             $this->find($existingTags),
             $this->findOrCreate($newTags)
         );
+    }
+
+    /**
+     * @return array
+     */
+    public function findAllAsArray() : array
+    {
+        $query = $this->entityManager->createQuery(
+            'SELECT partial t.{id, name}
+             FROM Sihae\Entities\Tag t'
+        );
+
+        return $query->getResult(Query::HYDRATE_ARRAY);
+    }
+
+    /**
+     * @param Post $post
+     * @return array
+     */
+    public function findAllForPostAsArray(Post $post) : array
+    {
+        $query = $this->entityManager->createQuery(
+            'SELECT partial t.{id, name}
+             FROM Sihae\Entities\Tag t
+             JOIN t.posts p
+             WHERE :post MEMBER OF t.posts
+             GROUP BY t.id'
+        );
+
+        $query->setParameter('post', $post);
+
+        return $query->getResult(Query::HYDRATE_ARRAY);
     }
 
     /**

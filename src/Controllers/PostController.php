@@ -90,13 +90,7 @@ class PostController
      */
     public function create(Request $request, Response $response) : Response
     {
-        $query = $this->entityManager->createQuery(
-            'SELECT partial t.{id, name}
-             FROM Sihae\Entities\Tag t
-             ORDER BY t.name DESC'
-        );
-
-        $tags = $query->getResult(Query::HYDRATE_ARRAY);
+        $tags = $this->tagRepository->findAllAsArray();
 
         return $this->renderer->render($response, 'editor', [
             'tag_data' => json_encode(['tags' => $tags]),
@@ -178,23 +172,9 @@ class PostController
     {
         $post = $this->getPost($request);
 
-        $query = $this->entityManager->createQuery(
-            'SELECT partial t.{id, name}
-             FROM Sihae\Entities\Tag t'
-        );
+        $tags = $this->tagRepository->findAllAsArray();
 
-        $tags = $query->getResult(Query::HYDRATE_ARRAY);
-
-        $query = $this->entityManager->createQuery(
-            'SELECT partial t.{id, name}
-             FROM Sihae\Entities\Tag t
-             JOIN t.posts p
-             WHERE :post MEMBER OF t.posts
-             GROUP BY t.id'
-        );
-
-        $query->setParameter('post', $post);
-        $selectedTags = $query->getResult(Query::HYDRATE_ARRAY);
+        $selectedTags = $this->tagRepository->findAllForPostAsArray($post);
 
         return $this->renderer->render($response, 'editor', [
             'post' => $post,
