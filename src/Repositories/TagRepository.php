@@ -25,7 +25,7 @@ class TagRepository
     /**
      * @return array
      */
-    public function getAllOrderedByUsage() : array
+    public function findAllOrderedByUsage() : array
     {
         $dql =
             'SELECT t, p
@@ -45,11 +45,12 @@ class TagRepository
     }
 
     /**
+     * @todo rename this to something clearer
      * @param array $existingTags
      * @param array $newTags
      * @return array
      */
-    public function getAll(array $existingTags, array $newTags) : array
+    public function findAll(array $existingTags, array $newTags) : array
     {
         return array_merge(
             $this->find($existingTags),

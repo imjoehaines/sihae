@@ -129,7 +129,7 @@ class PostController
             $post->regenerateSlug();
         }
 
-        $tags = $this->tagRepository->getAll(
+        $tags = $this->tagRepository->findAll(
             $newPost['tags'] ?? [],
             $newPost['new_tags'] ?? []
         );
@@ -213,7 +213,7 @@ class PostController
 
         $post->clearTags();
 
-        $tags = $this->tagRepository->getAll(
+        $tags = $this->tagRepository->findAll(
             $updatedPost['tags'] ?? [],
             $updatedPost['new_tags'] ?? []
         );

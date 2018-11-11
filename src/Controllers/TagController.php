@@ -46,7 +46,7 @@ class TagController
      */
     public function index(Request $request, Response $response) : Response
     {
-        $tags = $this->repository->getAllOrderedByUsage();
+        $tags = $this->repository->findAllOrderedByUsage();
 
         return $this->renderer->render($response, 'tags', ['tags' => $tags]);
     }
