@@ -46,8 +46,11 @@ $dependencyFactory = require __DIR__ . '/../config/dependencies.php';
 $dependencyFactory($app->getContainer());
 
 // Register middleware
-$middleware = require __DIR__ . '/../config/middleware.php';
-array_walk($middleware, [$app, 'add']);
+$middlewares = require __DIR__ . '/../config/middleware.php';
+
+foreach ($middlewares as $middleware) {
+    $app->add($middleware);
+}
 
 // Register routes
 $routeFactory = require __DIR__ . '/../config/routes.php';

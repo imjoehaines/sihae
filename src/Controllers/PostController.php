@@ -134,7 +134,9 @@ class PostController
             $newPost['new_tags'] ?? []
         );
 
-        array_walk($tags, [$post, 'addTag']);
+        foreach ($tags as $tag) {
+            $post->addTag($tag);
+        }
 
         $this->entityManager->persist($post);
         $this->entityManager->flush();
@@ -218,7 +220,9 @@ class PostController
             $updatedPost['new_tags'] ?? []
         );
 
-        array_walk($tags, [$post, 'addTag']);
+        foreach ($tags as $tag) {
+            $post->addTag($tag);
+        }
 
         $this->entityManager->persist($post);
         $this->entityManager->flush();
