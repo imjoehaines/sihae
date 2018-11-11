@@ -6,6 +6,7 @@ use Sihae\Renderer;
 use Sihae\Entities\Tag;
 use Sihae\Entities\Post;
 use Doctrine\ORM\EntityManager;
+use Sihae\Repositories\TagRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -25,15 +26,23 @@ class PostListController
     private $entityManager;
 
     /**
+     * @var TagRepository
+     */
+    private $tagRepository;
+
+    /**
      * @param Renderer $renderer
      * @param EntityManager $entityManager
+     * @param TagRepository $tagRepository
      */
     public function __construct(
         Renderer $renderer,
-        EntityManager $entityManager
+        EntityManager $entityManager,
+        TagRepository $tagRepository
     ) {
         $this->renderer = $renderer;
         $this->entityManager = $entityManager;
+        $this->tagRepository = $tagRepository;
     }
 
     /**
@@ -78,7 +87,7 @@ class PostListController
      */
     public function tagged(Request $request, Response $response, string $slug, int $page = 1) : Response
     {
-        $tag = $this->entityManager->getRepository(Tag::class)->findOneBy(['slug' => $slug]);
+        $tag = $this->tagRepository->findBySlug($slug);
 
         if (!$tag) {
             return $response->withStatus(404);

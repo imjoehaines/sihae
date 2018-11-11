@@ -33,6 +33,15 @@ class TagRepository
     }
 
     /**
+     * @param string $slug
+     * @return Tag|null
+     */
+    public function findBySlug(string $slug) : ?Tag
+    {
+        return $this->repository->findOneBy(['slug' => $slug]);
+    }
+
+    /**
      * @return array
      */
     public function findAllOrderedByUsage() : array
