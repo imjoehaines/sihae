@@ -17,6 +17,11 @@ if (PHP_SAPI === 'cli-server') {
     }
 }
 
+// convert all warnings, notices etc... into ErrorExceptions
+set_error_handler(function ($severity, $message, $file, $line) {
+    throw new ErrorException($message, 0, $severity, $file, $line);
+}, E_ALL);
+
 // load environment variables
 $dotenv = new Dotenv(__DIR__ . '/..');
 $dotenv->load();
@@ -55,10 +60,5 @@ foreach ($middlewares as $middleware) {
 // Register routes
 $routeFactory = require __DIR__ . '/../config/routes.php';
 $routeFactory($app);
-
-// convert all warnings, notices etc... into ErrorExceptions
-set_error_handler(function ($severity, $message, $file, $line) {
-    throw new ErrorException($message, 0, $severity, $file, $line);
-}, E_ALL);
 
 $app->run();
