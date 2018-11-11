@@ -44,7 +44,9 @@ class AuthMiddleware
      */
     public function __invoke(Request $request, Response $response, callable $next) : Response
     {
-        if ($token = $this->session->get('token')) {
+        $token = $this->session->get('token');
+
+        if ($token) {
             $user = $this->repository->findByToken($token);
 
             if ($user && $user->isAdmin() === true) {

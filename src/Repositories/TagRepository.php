@@ -134,7 +134,9 @@ class TagRepository
     {
         return array_map(function (string $name) : Tag {
             // check for an existing tag with this name first
-            if (!$tag = $this->repository->findOneBy(['name' => $name])) {
+            $tag = $this->repository->findOneBy(['name' => $name]);
+
+            if (!$tag) {
                 $tag = new Tag($name);
 
                 $this->entityManager->persist($tag);
