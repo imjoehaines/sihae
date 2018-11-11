@@ -127,7 +127,7 @@ class TagRepository
      */
     private function findOrCreate(array $tagNames) : array
     {
-        return array_map(function (string $name) use ($repository) : Tag {
+        return array_map(function (string $name) : Tag {
             // check for an existing tag with this name first
             if (!$tag = $this->repository->findOneBy(['name' => $name])) {
                 $tag = new Tag($name);
