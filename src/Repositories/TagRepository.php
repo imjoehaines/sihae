@@ -135,6 +135,13 @@ class TagRepository
                 $this->entityManager->persist($tag);
             }
 
+            /**
+             * @todo Fix phpstan work around in TagRepository
+             */
+            if (!$tag instanceof Tag) {
+                throw new \RuntimeException('TODO fix this');
+            }
+
             return $tag;
         }, $tagNames);
     }

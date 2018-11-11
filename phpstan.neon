@@ -3,3 +3,5 @@ includes:
 
 parameters:
   level: max
+  ignoreErrors:
+    - '#Method [A-z]+?::[A-z]+?\(\) should return [A-z]+?\|null but returns object\|null\.#'
