@@ -4,6 +4,7 @@ namespace Sihae\Repositories;
 
 use Sihae\Entities\User;
 use Doctrine\ORM\EntityManager;
+use Doctrine\Common\Persistence\ObjectRepository;
 
 class UserRepository
 {
@@ -13,11 +14,20 @@ class UserRepository
     private $entityManager;
 
     /**
-     * @param EntityManager $entityManager
+     * @var ObjectRepository
      */
-    public function __construct(EntityManager $entityManager)
-    {
+    private $repository;
+
+    /**
+     * @param EntityManager $entityManager
+     * @param ObjectRepository $repository
+     */
+    public function __construct(
+        EntityManager $entityManager,
+        ObjectRepository $repository
+    ) {
         $this->entityManager = $entityManager;
+        $this->repository = $repository;
     }
 
     /**
@@ -36,7 +46,7 @@ class UserRepository
      */
     public function findByUsername(string $username) : ?User
     {
-        return $this->entityManager->getRepository(User::class)->findOneBy(['username' => $username]);
+        return $this->repository->findOneBy(['username' => $username]);
     }
 
     /**
@@ -45,6 +55,6 @@ class UserRepository
      */
     public function findByToken(string $token) : ?User
     {
-        return $this->entityManager->getRepository(User::class)->findOneBy(['token' => $token]);
+        return $this->repository->findOneBy(['token' => $token]);
     }
 }

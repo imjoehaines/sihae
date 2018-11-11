@@ -21,6 +21,8 @@ use Slim\Handlers\Strategies\RequestResponseArgs;
 use Interop\Container\ContainerInterface as Container;
 
 use Sihae\Renderer;
+use Sihae\Entities\Tag;
+use Sihae\Entities\User;
 use Sihae\Middleware\PostLocator;
 use Sihae\Middleware\CsrfProvider;
 use Sihae\Middleware\PageProvider;
@@ -69,11 +71,17 @@ return function (Container $container) {
     };
 
     $container[TagRepository::class] = function (Container $container) : TagRepository {
-        return new TagRepository($container->get(EntityManager::class));
+        return new TagRepository(
+            $container->get(EntityManager::class),
+            $container->get(EntityManager::class)->getRepository(Tag::class)
+        );
     };
 
     $container[UserRepository::class] = function (Container $container) : UserRepository {
-        return new UserRepository($container->get(EntityManager::class));
+        return new UserRepository(
+            $container->get(EntityManager::class),
+            $container->get(EntityManager::class)->getRepository(User::class)
+        );
     };
 
     $container[PostController::class] = function (Container $container) : PostController {

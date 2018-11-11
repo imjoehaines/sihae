@@ -6,6 +6,7 @@ use Sihae\Entities\Tag;
 use Doctrine\ORM\Query;
 use Sihae\Entities\Post;
 use Doctrine\ORM\EntityManager;
+use Doctrine\Common\Persistence\ObjectRepository;
 
 class TagRepository
 {
@@ -15,11 +16,20 @@ class TagRepository
     private $entityManager;
 
     /**
-     * @param EntityManager $entityManager
+     * @var ObjectRepository
      */
-    public function __construct(EntityManager $entityManager)
-    {
+    private $repository;
+
+    /**
+     * @param EntityManager $entityManager
+     * @param ObjectRepository $repository
+     */
+    public function __construct(
+        EntityManager $entityManager,
+        ObjectRepository $repository
+    ) {
         $this->entityManager = $entityManager;
+        $this->repository = $repository;
     }
 
     /**
@@ -117,11 +127,9 @@ class TagRepository
      */
     private function findOrCreate(array $tagNames) : array
     {
-        $repository = $this->entityManager->getRepository(Tag::class);
-
         return array_map(function (string $name) use ($repository) : Tag {
             // check for an existing tag with this name first
-            if (!$tag = $repository->findOneBy(['name' => $name])) {
+            if (!$tag = $this->repository->findOneBy(['name' => $name])) {
                 $tag = new Tag($name);
 
                 $this->entityManager->persist($tag);
