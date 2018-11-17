@@ -2,7 +2,6 @@
 
 namespace Sihae\Controllers;
 
-use RKA\Session;
 use Sihae\Renderer;
 use Doctrine\ORM\Query;
 use Sihae\Entities\Tag;
@@ -41,11 +40,6 @@ class PostController
     private $validator;
 
     /**
-     * @var Session
-     */
-    private $session;
-
-    /**
      * @var TagRepository
      */
     private $tagRepository;
@@ -62,7 +56,6 @@ class PostController
      * @param EntityManager $entityManager
      * @param CommonMarkConverter $markdown
      * @param Validator $validator
-     * @param Session $session
      * @param TagRepository $tagRepository
      */
     public function __construct(
@@ -70,14 +63,12 @@ class PostController
         EntityManager $entityManager,
         CommonMarkConverter $markdown,
         Validator $validator,
-        Session $session,
         TagRepository $tagRepository
     ) {
         $this->renderer = $renderer;
         $this->entityManager = $entityManager;
         $this->markdown = $markdown;
         $this->validator = $validator;
-        $this->session = $session;
         $this->tagRepository = $tagRepository;
     }
 
