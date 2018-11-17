@@ -36,7 +36,8 @@
         "tracy/tracy": "2.5.5",
         "phpstan/phpstan": "0.10.5",
         "phpstan/phpstan-doctrine": "0.10.0",
-        "phpunit/phpunit": "7.4.4"
+        "phpunit/phpunit": "7.4.4",
+        "phpstan/phpstan-deprecation-rules": "^0.10.2"
     },
     "scripts": {
         "test": "composer test:unit && composer test:acceptance && composer test:phpstan && composer test:types",
