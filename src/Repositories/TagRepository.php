@@ -136,7 +136,7 @@ class TagRepository
             // check for an existing tag with this name first
             $tag = $this->repository->findOneBy(['name' => $name]);
 
-            if (!$tag) {
+            if ($tag === null) {
                 $tag = new Tag($name);
 
                 $this->entityManager->persist($tag);

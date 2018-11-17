@@ -55,7 +55,7 @@ class UserProvider
         if ($token) {
             $user = $this->repository->findByToken($token);
 
-            if ($user) {
+            if ($user !== null) {
                 Session::regenerate();
                 $this->renderer->addData(['user' => $user]);
             }

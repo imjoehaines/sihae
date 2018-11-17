@@ -28,7 +28,7 @@ class RegistrationValidator implements Validator
             $this->errors[] = 'Username: more than 50 characters';
         }
 
-        if (!preg_match('/^[[:alnum:]]+$/', $userDetails['username'])) {
+        if (preg_match('/^[[:alnum:]]+$/', $userDetails['username']) !== 1) {
             $this->errors[] = 'Username: not alphanumeric';
         }
 
@@ -44,7 +44,7 @@ class RegistrationValidator implements Validator
             $this->errors[] = 'Passwords didn\'t match!';
         }
 
-        return empty($this->errors);
+        return count($this->errors) === 0;
     }
 
     /**

@@ -115,7 +115,7 @@ class PostController
         // if there is already a post with the slug we just generated or the slug
         // is "reserved", generate a new one
         if (in_array($post->getSlug(), $this->reservedSlugs, true) ||
-            $this->entityManager->getRepository(Post::class)->findOneBy(['slug' => $post->getSlug()])
+            $this->entityManager->getRepository(Post::class)->findOneBy(['slug' => $post->getSlug()]) !== null
         ) {
             $post->regenerateSlug();
         }
@@ -251,7 +251,7 @@ class PostController
     {
         $entity = $this->entityManager->getRepository(Post::class)->findOneBy(['slug' => $slug]);
 
-        if (!$entity) {
+        if ($entity === null) {
             return $response->withStatus(404);
         }
 

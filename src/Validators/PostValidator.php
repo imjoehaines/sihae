@@ -32,7 +32,7 @@ class PostValidator implements Validator
             $this->errors[] = 'Body: not at least 10 characters';
         }
 
-        return empty($this->errors);
+        return count($this->errors) === 0;
     }
 
     /**

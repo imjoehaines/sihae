@@ -56,7 +56,7 @@ class LoginController
 
         $user = $this->repository->findByUsername($userDetails['username'] ?? '');
 
-        if (!$user ||
+        if ($user === null ||
             !$user->login($userDetails['password'] ?? '')
         ) {
             return $this->renderer->render($response, 'login', [

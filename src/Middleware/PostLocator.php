@@ -38,10 +38,10 @@ class PostLocator
 
         $post = $this->entityManager->getRepository(Post::class)->findOneBy(['slug' => $slug]);
 
-        if ($post) {
-            return $next($request->withAttribute('post', $post), $response);
+        if ($post === null) {
+            return $response->withStatus(404);
         }
 
-        return $response->withStatus(404);
+        return $next($request->withAttribute('post', $post), $response);
     }
 }

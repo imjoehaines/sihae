@@ -49,7 +49,7 @@ class AuthMiddleware
         if ($token) {
             $user = $this->repository->findByToken($token);
 
-            if ($user && $user->isAdmin() === true) {
+            if ($user !== null && $user->isAdmin() === true) {
                 return $next($request->withAttribute('user', $user), $response);
             }
         }

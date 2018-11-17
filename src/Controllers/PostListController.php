@@ -89,7 +89,7 @@ class PostListController
     {
         $tag = $this->tagRepository->findBySlug($slug);
 
-        if (!$tag) {
+        if ($tag === null) {
             return $response->withStatus(404);
         }
 

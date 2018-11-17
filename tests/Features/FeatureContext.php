@@ -55,13 +55,13 @@ class FeatureContext extends MinkContext implements Context
         uasort($tables, function ($table1, $table2) use ($getForeignTableName) : int {
             $table1Relations = array_map($getForeignTableName, $table1->getForeignKeys());
 
-            if (in_array($table2->getName(), $table1Relations)) {
+            if (in_array($table2->getName(), $table1Relations, true)) {
                 return -1;
             }
 
             $table2Relations = array_map($getForeignTableName, $table2->getForeignKeys());
 
-            if (in_array($table1->getName(), $table2Relations)) {
+            if (in_array($table1->getName(), $table2Relations, true)) {
                 return 1;
             }
 
@@ -189,7 +189,7 @@ class FeatureContext extends MinkContext implements Context
         $posts = $posts->getHash();
         $user = $this->getEntityManager()->getRepository(User::class)->findOneBy([]);
 
-        if (!$user) {
+        if ($user === null) {
             throw new \RuntimeException('Expected at least one user in the database');
         }
 

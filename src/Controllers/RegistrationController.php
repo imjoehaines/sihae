@@ -92,7 +92,7 @@ class RegistrationController
      */
     public function showForm(Request $request, Response $response) : Response
     {
-        if (!empty($this->session->get('token'))) {
+        if ($this->session->get('token')) {
             return $response->withStatus(302)->withHeader('Location', '/');
         }
 
