@@ -22,6 +22,7 @@ use Interop\Container\ContainerInterface as Container;
 
 use Sihae\Renderer;
 use Sihae\Entities\Tag;
+use Sihae\Entities\Post;
 use Sihae\Entities\User;
 use Sihae\Middleware\PostLocator;
 use Sihae\Middleware\CsrfProvider;
@@ -32,6 +33,7 @@ use Sihae\Middleware\AuthMiddleware;
 use Sihae\Controllers\TagController;
 use Sihae\Controllers\PostController;
 use Sihae\Repositories\TagRepository;
+use Sihae\Repositories\PostRepository;
 use Sihae\Repositories\UserRepository;
 use Sihae\Formatters\ArchiveFormatter;
 use Sihae\Middleware\SettingsProvider;
@@ -70,6 +72,13 @@ return function (Container $container) {
         return new Renderer($container->get(Engine::class));
     };
 
+    $container[PostRepository::class] = function (Container $container) : PostRepository {
+        return new PostRepository(
+            $container->get(EntityManager::class),
+            $container->get(EntityManager::class)->getRepository(Post::class)
+        );
+    };
+
     $container[TagRepository::class] = function (Container $container) : TagRepository {
         return new TagRepository(
             $container->get(EntityManager::class),
@@ -105,7 +114,7 @@ return function (Container $container) {
     $container[ArchiveController::class] = function (Container $container) : ArchiveController {
         return new ArchiveController(
             $container->get(Renderer::class),
-            $container->get(EntityManager::class),
+            $container->get(PostRepository::class),
             $container->get(ArchiveFormatter::class)
         );
     };
