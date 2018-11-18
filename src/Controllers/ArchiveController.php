@@ -4,8 +4,8 @@ namespace Sihae\Controllers;
 
 use Sihae\Renderer;
 use Sihae\Entities\Post;
-use Doctrine\ORM\EntityManager;
 use Sihae\Formatters\Formatter;
+use Sihae\Repositories\PostRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -20,9 +20,9 @@ class ArchiveController
     private $renderer;
 
     /**
-     * @var EntityManager
+     * @var PostRepository
      */
-    private $entityManager;
+    private $repository;
 
     /**
      * @var Formatter
@@ -31,16 +31,16 @@ class ArchiveController
 
     /**
      * @param Renderer $renderer
-     * @param EntityManager $entityManager
+     * @param PostRepository $repository
      * @param Formatter $formatter
      */
     public function __construct(
         Renderer $renderer,
-        EntityManager $entityManager,
+        PostRepository $repository,
         Formatter $formatter
     ) {
         $this->renderer = $renderer;
-        $this->entityManager = $entityManager;
+        $this->repository = $repository;
         $this->formatter = $formatter;
     }
 
@@ -53,8 +53,7 @@ class ArchiveController
      */
     public function index(Request $request, Response $response) : Response
     {
-        $posts = $this->entityManager->getRepository(Post::class)
-            ->findBy(['is_page' => false], ['date_created' => 'DESC']);
+        $posts = $this->repository->findAllOrderedByDateCreated();
 
         return $this->renderer->render($response, 'archive', [
             'archiveData' => $this->formatter->format($posts),
