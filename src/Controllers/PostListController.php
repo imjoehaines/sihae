@@ -3,10 +3,8 @@
 namespace Sihae\Controllers;
 
 use Sihae\Renderer;
-use Sihae\Entities\Tag;
-use Sihae\Entities\Post;
-use Doctrine\ORM\EntityManager;
 use Sihae\Repositories\TagRepository;
+use Sihae\Repositories\PostRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -21,9 +19,9 @@ class PostListController
     private $renderer;
 
     /**
-     * @var EntityManager
+     * @var PostRepository
      */
-    private $entityManager;
+    private $postRepository;
 
     /**
      * @var TagRepository
@@ -32,16 +30,16 @@ class PostListController
 
     /**
      * @param Renderer $renderer
-     * @param EntityManager $entityManager
+     * @param PostRepository $postRepository
      * @param TagRepository $tagRepository
      */
     public function __construct(
         Renderer $renderer,
-        EntityManager $entityManager,
+        PostRepository $postRepository,
         TagRepository $tagRepository
     ) {
         $this->renderer = $renderer;
-        $this->entityManager = $entityManager;
+        $this->postRepository = $postRepository;
         $this->tagRepository = $tagRepository;
     }
 
@@ -55,19 +53,12 @@ class PostListController
      */
     public function index(Request $request, Response $response, int $page = 1) : Response
     {
-        $postRepository = $this->entityManager->getRepository(Post::class);
-
         $limit = 8;
         $offset = $limit * ($page - 1);
 
-        $posts = $postRepository->findBy(['is_page' => false], ['date_created' => 'DESC'], $limit, $offset);
+        $posts = $this->postRepository->findAllOrderedByDateCreated($limit, $offset);
 
-        $query = $this->entityManager->createQuery(
-            'SELECT COUNT(p.id)
-             FROM Sihae\Entities\Post p'
-        );
-
-        $total = $query->getSingleScalarResult();
+        $total = $this->postRepository->count();
 
         return $this->renderer->render($response, 'post-list', [
             'posts' => $posts,
@@ -96,28 +87,9 @@ class PostListController
         $limit = 8;
         $offset = $limit * ($page - 1);
 
-        $dql =
-            'SELECT p, t
-             FROM Sihae\Entities\Post p
-             JOIN p.tags t
-             WHERE t.slug = :slug
-             ORDER BY p.date_created DESC';
+        $posts = $this->postRepository->findAllTagged($tag->getSlug(), $limit, $offset);
 
-        $query = $this->entityManager->createQuery($dql)
-            ->setFirstResult($limit * ($page - 1))
-            ->setMaxResults($limit)
-            ->setParameter(':slug', $slug);
-
-        $posts = $query->getResult();
-
-        $query = $this->entityManager->createQuery(
-            'SELECT COUNT(t.id)
-             FROM Sihae\Entities\Post p
-             JOIN p.tags t
-             WHERE t.slug = :slug'
-        )->setParameter(':slug', $slug);
-
-        $total = $query->getSingleScalarResult();
+        $total = $this->postRepository->countTagged($tag->getSlug());
 
         return $this->renderer->render($response, 'post-list', [
             'posts' => $posts,
