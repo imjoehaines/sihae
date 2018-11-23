@@ -14,7 +14,7 @@
         "akrabat/rka-slim-session-middleware": "^2.0",
         "container-interop/container-interop": "^1.1",
         "danielstjules/stringy": "^3.1",
-        "doctrine/common": "2.8.x",
+        "doctrine/common": "2.10.x",
         "doctrine/migrations": "^1.4",
         "doctrine/orm": "2.6.3",
         "jdorn/sql-formatter": "^1.2",
