@@ -106,7 +106,7 @@ return function (Container $container) {
     $container[PostListController::class] = function (Container $container) : PostListController {
         return new PostListController(
             $container->get(Renderer::class),
-            $container->get(EntityManager::class),
+            $container->get(PostRepository::class),
             $container->get(TagRepository::class)
         );
     };
