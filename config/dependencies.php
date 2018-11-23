@@ -96,9 +96,9 @@ return function (Container $container) {
     $container[PostController::class] = function (Container $container) : PostController {
         return new PostController(
             $container->get(Renderer::class),
-            $container->get(EntityManager::class),
             $container->get(CommonMarkConverter::class),
             $container->get(PostValidator::class),
+            $container->get(PostRepository::class),
             $container->get(TagRepository::class)
         );
     };

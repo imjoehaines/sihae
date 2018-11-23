@@ -8,8 +8,8 @@ use Sihae\Entities\Tag;
 use Sihae\Entities\Post;
 use Sihae\Entities\User;
 use Sihae\Validators\Validator;
-use Doctrine\ORM\EntityManager;
 use Sihae\Repositories\TagRepository;
+use Sihae\Repositories\PostRepository;
 use League\CommonMark\CommonMarkConverter;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -23,11 +23,6 @@ class PostController
      * @var Renderer
      */
     private $renderer;
-
-    /**
-     * @var EntityManager
-     */
-    private $entityManager;
 
     /**
      * @var CommonMarkConverter
@@ -45,6 +40,11 @@ class PostController
     private $tagRepository;
 
     /**
+     * @var PostRepository
+     */
+    private $postRepository;
+
+    /**
      * Strings that are used in routes and therefore can't be slugs
      *
      * @var array
@@ -53,22 +53,22 @@ class PostController
 
     /**
      * @param Renderer $renderer
-     * @param EntityManager $entityManager
      * @param CommonMarkConverter $markdown
      * @param Validator $validator
+     * @param PostRepository $postRepository
      * @param TagRepository $tagRepository
      */
     public function __construct(
         Renderer $renderer,
-        EntityManager $entityManager,
         CommonMarkConverter $markdown,
         Validator $validator,
+        PostRepository $postRepository,
         TagRepository $tagRepository
     ) {
         $this->renderer = $renderer;
-        $this->entityManager = $entityManager;
         $this->markdown = $markdown;
         $this->validator = $validator;
+        $this->postRepository = $postRepository;
         $this->tagRepository = $tagRepository;
     }
 
@@ -115,7 +115,7 @@ class PostController
         // if there is already a post with the slug we just generated or the slug
         // is "reserved", generate a new one
         if (in_array($post->getSlug(), $this->reservedSlugs, true) ||
-            $this->entityManager->getRepository(Post::class)->findOneBy(['slug' => $post->getSlug()]) !== null
+            $this->postRepository->findOneBySlug($post->getSlug()) !== null
         ) {
             $post->regenerateSlug();
         }
@@ -129,8 +129,7 @@ class PostController
             $post->addTag($tag);
         }
 
-        $this->entityManager->persist($post);
-        $this->entityManager->flush();
+        $this->postRepository->save($post);
 
         return $response->withStatus(302)->withHeader('Location', '/post/' . $post->getSlug());
     }
@@ -215,8 +214,7 @@ class PostController
             $post->addTag($tag);
         }
 
-        $this->entityManager->persist($post);
-        $this->entityManager->flush();
+        $this->postRepository->save($post);
 
         return $response->withStatus(302)->withHeader('Location', '/post/' . $slug);
     }
@@ -233,8 +231,7 @@ class PostController
     {
         $post = $this->getPost($request);
 
-        $this->entityManager->remove($post);
-        $this->entityManager->flush();
+        $this->postRepository->delete($post);
 
         return $response->withStatus(302)->withHeader('Location', '/');
     }
@@ -249,7 +246,7 @@ class PostController
      */
     public function convert(Request $request, Response $response, string $slug) : Response
     {
-        $entity = $this->entityManager->getRepository(Post::class)->findOneBy(['slug' => $slug]);
+        $entity = $this->postRepository->findOneBySlug($slug);
 
         if ($entity === null) {
             return $response->withStatus(404);
@@ -257,8 +254,7 @@ class PostController
 
         $entity->setIsPage(!$entity->isPage());
 
-        $this->entityManager->persist($entity);
-        $this->entityManager->flush();
+        $this->postRepository->save($entity);
 
         $path = '/' . $entity->getSlug();
 

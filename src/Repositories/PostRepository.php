@@ -30,8 +30,25 @@ class PostRepository
         $this->repository = $repository;
     }
 
+    public function save(Post $post) : void
+    {
+        $this->entityManager->persist($post);
+        $this->entityManager->flush();
+    }
+
+    public function delete(Post $post) : void
+    {
+        $this->entityManager->remove($post);
+        $this->entityManager->flush();
+    }
+
     public function findAllOrderedByDateCreated() : array
     {
         return $this->repository->findBy(['is_page' => false], ['date_created' => 'DESC']);
+    }
+
+    public function findOneBySlug(string $slug) : ?Post
+    {
+        return $this->repository->findOneBy(['slug' => $slug]);
     }
 }
