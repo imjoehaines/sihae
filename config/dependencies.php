@@ -44,6 +44,9 @@ use Sihae\Middleware\NotFoundMiddleware;
 use Sihae\Controllers\PostListController;
 use Sihae\Validators\RegistrationValidator;
 use Sihae\Controllers\RegistrationController;
+use Sihae\Repositories\Doctrine\DoctrineTagRepository;
+use Sihae\Repositories\Doctrine\DoctrinePostRepository;
+use Sihae\Repositories\Doctrine\DoctrineUserRepository;
 
 return function (Container $container) {
     $container[Engine::class] = function (Container $container) : Engine {
@@ -73,21 +76,21 @@ return function (Container $container) {
     };
 
     $container[PostRepository::class] = function (Container $container) : PostRepository {
-        return new PostRepository(
+        return new DoctrinePostRepository(
             $container->get(EntityManager::class),
             $container->get(EntityManager::class)->getRepository(Post::class)
         );
     };
 
     $container[TagRepository::class] = function (Container $container) : TagRepository {
-        return new TagRepository(
+        return new DoctrineTagRepository(
             $container->get(EntityManager::class),
             $container->get(EntityManager::class)->getRepository(Tag::class)
         );
     };
 
     $container[UserRepository::class] = function (Container $container) : UserRepository {
-        return new UserRepository(
+        return new DoctrineUserRepository(
             $container->get(EntityManager::class),
             $container->get(EntityManager::class)->getRepository(User::class)
         );
