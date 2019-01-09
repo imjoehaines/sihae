@@ -20,7 +20,7 @@
         "container-interop/container-interop": "^1.1",
         "danielstjules/stringy": "^3.1",
         "doctrine/common": "^2.10",
-        "doctrine/migrations": "^1.4",
+        "doctrine/migrations": "^2.0.0",
         "doctrine/orm": "^2.6.3",
         "jdorn/sql-formatter": "^1.2",
         "league/commonmark": "^0.18",
