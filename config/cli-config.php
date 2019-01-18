@@ -1,12 +1,13 @@
 <?php declare(strict_types=1);
 
+use Dotenv\Dotenv;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$dotenv = new Dotenv\Dotenv(__DIR__ . '/..');
+$dotenv = Dotenv::create(__DIR__ . '/..');
 $dotenv->load();
 
 $settings = require 'settings.php';

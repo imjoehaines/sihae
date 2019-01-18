@@ -2,6 +2,7 @@
 
 namespace Sihae\Tests\Features;
 
+use Dotenv\Dotenv;
 use Sihae\Entities\User;
 use Sihae\Entities\Post;
 use Doctrine\ORM\Tools\Setup;
@@ -28,7 +29,7 @@ class FeatureContext extends MinkContext implements Context
      */
     public static function prepare() : void
     {
-        $dotenv = new \Dotenv\Dotenv(__DIR__ . '/../../');
+        $dotenv = Dotenv::create(__DIR__ . '/../../');
         $dotenv->load();
 
         (new static)->cleanDb();
