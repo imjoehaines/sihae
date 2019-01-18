@@ -2,7 +2,7 @@
 
 namespace Sihae\Migrations;
 
-use Doctrine\DBAL\Migrations\AbstractMigration;
+use Doctrine\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
 
 class Version20161028221622 extends AbstractMigration
