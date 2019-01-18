@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "62d3ed9ec591de799face4ba5820cf8b",
+    "content-hash": "1c7a800cfaf897ab759ba97cd4641024",
     "packages": [
         {
             "name": "akrabat/rka-slim-session-middleware",
@@ -4067,16 +4067,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.10.7",
+            "version": "0.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "b7a70043d9a933c9d1575df49a7b141dbc3c469f"
+                "reference": "cfb0b43021fb75abe853ab8d88d22cdb37596697"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/b7a70043d9a933c9d1575df49a7b141dbc3c469f",
-                "reference": "b7a70043d9a933c9d1575df49a7b141dbc3c469f",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/cfb0b43021fb75abe853ab8d88d22cdb37596697",
+                "reference": "cfb0b43021fb75abe853ab8d88d22cdb37596697",
                 "shasum": ""
             },
             "require": {
@@ -4099,17 +4099,17 @@
                 "brianium/paratest": "^2.0",
                 "consistence/coding-standard": "^3.5",
                 "dealerdirect/phpcodesniffer-composer-installer": "^0.4.4",
-                "ext-gd": "*",
                 "ext-intl": "*",
                 "ext-mysqli": "*",
+                "ext-soap": "*",
                 "ext-zip": "*",
                 "jakub-onderka/php-parallel-lint": "^1.0",
-                "localheinz/composer-normalize": "~0.9.0",
+                "localheinz/composer-normalize": "^1.1.0",
                 "phing/phing": "^2.16.0",
-                "phpstan/phpstan-deprecation-rules": "^0.10.2",
-                "phpstan/phpstan-php-parser": "^0.10",
-                "phpstan/phpstan-phpunit": "^0.10",
-                "phpstan/phpstan-strict-rules": "^0.10",
+                "phpstan/phpstan-deprecation-rules": "^0.11",
+                "phpstan/phpstan-php-parser": "^0.11",
+                "phpstan/phpstan-phpunit": "^0.11",
+                "phpstan/phpstan-strict-rules": "^0.11",
                 "phpunit/phpunit": "^7.0",
                 "slevomat/coding-standard": "^4.7.2",
                 "squizlabs/php_codesniffer": "^3.3.2"
@@ -4120,7 +4120,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.10-dev"
+                    "dev-master": "0.11-dev"
                 }
             },
             "autoload": {
@@ -4136,40 +4136,40 @@
                 "MIT"
             ],
             "description": "PHPStan - PHP Static Analysis Tool",
-            "time": "2018-12-28T13:47:37+00:00"
+            "time": "2019-01-15T14:21:47+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",
-            "version": "0.10.2",
+            "version": "0.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-deprecation-rules.git",
-                "reference": "fc7d373a760d2bf5cf999b052072adfa728892a0"
+                "reference": "449fee6223220b337760abca4444801ddcc8b38d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-deprecation-rules/zipball/fc7d373a760d2bf5cf999b052072adfa728892a0",
-                "reference": "fc7d373a760d2bf5cf999b052072adfa728892a0",
+                "url": "https://api.github.com/repos/phpstan/phpstan-deprecation-rules/zipball/449fee6223220b337760abca4444801ddcc8b38d",
+                "reference": "449fee6223220b337760abca4444801ddcc8b38d",
                 "shasum": ""
             },
             "require": {
                 "nikic/php-parser": "^4.0",
                 "php": "~7.1",
-                "phpstan/phpstan": "^0.10"
+                "phpstan/phpstan": "^0.11"
             },
             "require-dev": {
                 "consistence/coding-standard": "^3.0.1",
                 "dealerdirect/phpcodesniffer-composer-installer": "^0.4.4",
                 "jakub-onderka/php-parallel-lint": "^1.0",
                 "phing/phing": "^2.16.0",
-                "phpstan/phpstan-phpunit": "^0.10",
+                "phpstan/phpstan-phpunit": "^0.11",
                 "phpunit/phpunit": "^7.0",
                 "slevomat/coding-standard": "^4.5.2"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.10-dev"
+                    "dev-master": "0.11-dev"
                 }
             },
             "autoload": {
@@ -4182,26 +4182,26 @@
                 "MIT"
             ],
             "description": "PHPStan rules for detecting usage of deprecated classes, methods, properties, constants and traits.",
-            "time": "2018-06-30T14:42:51+00:00"
+            "time": "2018-12-05T18:04:16+00:00"
         },
         {
             "name": "phpstan/phpstan-doctrine",
-            "version": "0.10",
+            "version": "0.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-doctrine.git",
-                "reference": "a0314b1fa5b4d76880e4e9542ee01f3df8471630"
+                "reference": "acada9010d3cf9f2896ed78c2375d11e5a9488d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-doctrine/zipball/a0314b1fa5b4d76880e4e9542ee01f3df8471630",
-                "reference": "a0314b1fa5b4d76880e4e9542ee01f3df8471630",
+                "url": "https://api.github.com/repos/phpstan/phpstan-doctrine/zipball/acada9010d3cf9f2896ed78c2375d11e5a9488d3",
+                "reference": "acada9010d3cf9f2896ed78c2375d11e5a9488d3",
                 "shasum": ""
             },
             "require": {
                 "nikic/php-parser": "^4.0",
                 "php": "~7.1",
-                "phpstan/phpstan": "^0.10"
+                "phpstan/phpstan": "^0.11"
             },
             "conflict": {
                 "doctrine/collections": "<1.0",
@@ -4216,15 +4216,15 @@
                 "doctrine/orm": "^2.5",
                 "jakub-onderka/php-parallel-lint": "^1.0",
                 "phing/phing": "^2.16.0",
-                "phpstan/phpstan-phpunit": "^0.10",
-                "phpstan/phpstan-strict-rules": "^0.10",
+                "phpstan/phpstan-phpunit": "^0.11",
+                "phpstan/phpstan-strict-rules": "^0.11",
                 "phpunit/phpunit": "^7.0",
                 "slevomat/coding-standard": "^4.5.2"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.10-dev"
+                    "dev-master": "0.11-dev"
                 }
             },
             "autoload": {
@@ -4237,40 +4237,40 @@
                 "MIT"
             ],
             "description": "Doctrine extensions for PHPStan",
-            "time": "2018-05-28T20:08:30+00:00"
+            "time": "2018-11-23T11:16:25+00:00"
         },
         {
             "name": "phpstan/phpstan-strict-rules",
-            "version": "0.10.1",
+            "version": "0.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-strict-rules.git",
-                "reference": "18c0b6e8899606b127c680402ab473a7b67166db"
+                "reference": "747a742b26a35ef4e4ebef5ec4490ad74eebcbc0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-strict-rules/zipball/18c0b6e8899606b127c680402ab473a7b67166db",
-                "reference": "18c0b6e8899606b127c680402ab473a7b67166db",
+                "url": "https://api.github.com/repos/phpstan/phpstan-strict-rules/zipball/747a742b26a35ef4e4ebef5ec4490ad74eebcbc0",
+                "reference": "747a742b26a35ef4e4ebef5ec4490ad74eebcbc0",
                 "shasum": ""
             },
             "require": {
                 "nikic/php-parser": "^4.0",
                 "php": "~7.1",
-                "phpstan/phpstan": "^0.10"
+                "phpstan/phpstan": "^0.11"
             },
             "require-dev": {
                 "consistence/coding-standard": "^3.0.1",
                 "dealerdirect/phpcodesniffer-composer-installer": "^0.4.4",
                 "jakub-onderka/php-parallel-lint": "^1.0",
                 "phing/phing": "^2.16.0",
-                "phpstan/phpstan-phpunit": "^0.10",
+                "phpstan/phpstan-phpunit": "^0.11",
                 "phpunit/phpunit": "^7.0",
                 "slevomat/coding-standard": "^4.5.2"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.10-dev"
+                    "dev-master": "0.11-dev"
                 }
             },
             "autoload": {
@@ -4283,7 +4283,7 @@
                 "MIT"
             ],
             "description": "Extra strict and opinionated rules for PHPStan",
-            "time": "2018-07-06T20:36:44+00:00"
+            "time": "2019-01-14T09:56:55+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
