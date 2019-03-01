@@ -47,10 +47,15 @@
         "phpstan/phpstan-strict-rules": "0.11"
     },
     "scripts": {
-        "test": "composer test:unit && composer test:acceptance && composer test:phpstan && composer test:types",
+        "test": [
+            "composer test:unit",
+            "composer test:acceptance",
+            "composer test:phpstan",
+            "composer test:types"
+        ],
         "test:acceptance": "behat --colors -v",
         "test:phpstan": "phpstan analyse src tests",
         "test:types": "types-checker src tests",
-        "test:unit": "phpunit tests/Unit/"
+        "test:unit": "phpunit tests/Unit/ --testdox --color=always"
     }
 }
