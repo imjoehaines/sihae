@@ -2,8 +2,8 @@
 
 namespace Sihae\Entities;
 
+use Sihae\Slugifier;
 use Doctrine\ORM\Mapping as ORM;
-use function Stringy\create as s;
 use Sihae\Entities\Traits\Timestamps;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -82,8 +82,8 @@ class Post
         $this->title = $title;
         $this->body = $body;
         $this->user = $user;
+        $this->slug = Slugifier::slugify($title);
 
-        $this->slug = (string) s($title)->slugify();
         $this->tags = new ArrayCollection();
     }
 
@@ -164,7 +164,7 @@ class Post
      */
     public function regenerateSlug() : void
     {
-        $this->slug = (string) s($this->title . ' ' . time())->slugify();
+        $this->slug = Slugifier::slugify($this->title . ' ' . time());
     }
 
     /**

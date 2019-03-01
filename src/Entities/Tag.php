@@ -2,8 +2,8 @@
 
 namespace Sihae\Entities;
 
+use Sihae\Slugifier;
 use Doctrine\ORM\Mapping as ORM;
-use function Stringy\create as s;
 use Sihae\Entities\Traits\Timestamps;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -53,7 +53,7 @@ class Tag
     public function __construct(string $name)
     {
         $this->name = $name;
-        $this->slug = (string) s($name)->slugify();
+        $this->slug = Slugifier::slugify($name);
 
         $this->posts = new ArrayCollection();
     }
