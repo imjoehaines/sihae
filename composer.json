@@ -12,10 +12,11 @@
     },
     "config": {
         "platform": {
-            "php": "7.1"
+            "php": "7.2"
         }
     },
     "require": {
+        "php": "^7.2",
         "akrabat/rka-slim-session-middleware": "^2.0",
         "container-interop/container-interop": "^1.1",
         "danielstjules/stringy": "^3.1",
