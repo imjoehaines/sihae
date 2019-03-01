@@ -42,7 +42,7 @@
         "tracy/tracy": "2.6.1",
         "phpstan/phpstan": "0.11.1",
         "phpstan/phpstan-doctrine": "0.11",
-        "phpunit/phpunit": "7.5.3",
+        "phpunit/phpunit": "8.0.4",
         "phpstan/phpstan-deprecation-rules": "0.11",
         "phpstan/phpstan-strict-rules": "0.11"
     },
