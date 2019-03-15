@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "370a4c6e1fd0549032c1594966d9ea76",
+    "content-hash": "13383af260da09487bc59f227f61ac83",
     "packages": [
         {
             "name": "akrabat/rka-slim-session-middleware",
@@ -4264,16 +4264,16 @@
         },
         {
             "name": "phpstan/phpstan-doctrine",
-            "version": "0.11.1",
+            "version": "0.11.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-doctrine.git",
-                "reference": "977df27bbd8b0c1de02f70b3086f057bf500a941"
+                "reference": "f7ce9844788ff131bfb76d379d940617188b8239"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-doctrine/zipball/977df27bbd8b0c1de02f70b3086f057bf500a941",
-                "reference": "977df27bbd8b0c1de02f70b3086f057bf500a941",
+                "url": "https://api.github.com/repos/phpstan/phpstan-doctrine/zipball/f7ce9844788ff131bfb76d379d940617188b8239",
+                "reference": "f7ce9844788ff131bfb76d379d940617188b8239",
                 "shasum": ""
             },
             "require": {
@@ -4318,7 +4318,7 @@
                 "MIT"
             ],
             "description": "Doctrine extensions for PHPStan",
-            "time": "2019-02-13T13:06:29+00:00"
+            "time": "2019-03-11T11:44:21+00:00"
         },
         {
             "name": "phpstan/phpstan-strict-rules",
