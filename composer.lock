@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c044e10951e5b42e13c94f8a576ce0c4",
+    "content-hash": "9a98bae0d1bb9ed42cabde4381c24332",
     "packages": [
         {
             "name": "akrabat/rka-slim-session-middleware",
@@ -4620,16 +4620,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "8.1.1",
+            "version": "8.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "b258457b6259f1e8130a91d3065c993961721f47"
+                "reference": "e7450b51b6f5d29edcd645ff72b355ab0633ca35"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/b258457b6259f1e8130a91d3065c993961721f47",
-                "reference": "b258457b6259f1e8130a91d3065c993961721f47",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/e7450b51b6f5d29edcd645ff72b355ab0633ca35",
+                "reference": "e7450b51b6f5d29edcd645ff72b355ab0633ca35",
                 "shasum": ""
             },
             "require": {
@@ -4698,7 +4698,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2019-04-08T05:40:17+00:00"
+            "time": "2019-04-08T16:03:02+00:00"
         },
         {
             "name": "ralouphie/getallheaders",
