@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c548006f8e6b44a40e49d651d6cbf1eb",
+    "content-hash": "21f1bf2e003ef08c37a49141eee43ef1",
     "packages": [
         {
             "name": "akrabat/rka-slim-session-middleware",
@@ -1080,16 +1080,16 @@
         },
         {
             "name": "league/commonmark",
-            "version": "0.19.0",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/commonmark.git",
-                "reference": "deb4f7ed434ba9b7a147efd3726be4895eb9b157"
+                "reference": "7a40f2b0931602c504c2a9692d9f1e33635fd5ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/deb4f7ed434ba9b7a147efd3726be4895eb9b157",
-                "reference": "deb4f7ed434ba9b7a147efd3726be4895eb9b157",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/7a40f2b0931602c504c2a9692d9f1e33635fd5ef",
+                "reference": "7a40f2b0931602c504c2a9692d9f1e33635fd5ef",
                 "shasum": ""
             },
             "require": {
@@ -1119,7 +1119,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.20-dev"
+                    "dev-master": "1.1-dev"
                 }
             },
             "autoload": {
@@ -1146,7 +1146,7 @@
                 "markdown",
                 "parser"
             ],
-            "time": "2019-04-11T02:28:33+00:00"
+            "time": "2019-06-29T11:19:01+00:00"
         },
         {
             "name": "league/plates",

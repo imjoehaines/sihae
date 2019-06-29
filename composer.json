@@ -23,7 +23,7 @@
         "doctrine/migrations": "^2.0.0",
         "doctrine/orm": "^2.6.3",
         "jdorn/sql-formatter": "^1.2",
-        "league/commonmark": "^0.19.0",
+        "league/commonmark": "^1.0.0",
         "league/plates": "^3.1",
         "monolog/monolog": "^1.21",
         "psr/log": "^1.0",
