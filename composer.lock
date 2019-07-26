@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7d2e782ce0628d986f50bfb3288c1cc3",
+    "content-hash": "cecc2abdbd3c08b9a30915b35c07324a",
     "packages": [
         {
             "name": "akrabat/rka-slim-session-middleware",
@@ -4326,23 +4326,23 @@
         },
         {
             "name": "phpstan/phpstan-doctrine",
-            "version": "0.11.2",
+            "version": "0.11.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-doctrine.git",
-                "reference": "f7ce9844788ff131bfb76d379d940617188b8239"
+                "reference": "3c68697365f0b71e357d773d91a6c77f3f9e143a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-doctrine/zipball/f7ce9844788ff131bfb76d379d940617188b8239",
-                "reference": "f7ce9844788ff131bfb76d379d940617188b8239",
+                "url": "https://api.github.com/repos/phpstan/phpstan-doctrine/zipball/3c68697365f0b71e357d773d91a6c77f3f9e143a",
+                "reference": "3c68697365f0b71e357d773d91a6c77f3f9e143a",
                 "shasum": ""
             },
             "require": {
                 "nikic/php-parser": "^4.0",
                 "php": "~7.1",
                 "phpstan/phpdoc-parser": "^0.3",
-                "phpstan/phpstan": "^0.11"
+                "phpstan/phpstan": "^0.11.7"
             },
             "conflict": {
                 "doctrine/collections": "<1.0",
@@ -4351,7 +4351,7 @@
                 "doctrine/orm": "<2.5"
             },
             "require-dev": {
-                "consistence/coding-standard": "^3.0.1",
+                "consistence/coding-standard": "^3.8",
                 "dealerdirect/phpcodesniffer-composer-installer": "^0.4.4",
                 "doctrine/collections": "^1.0",
                 "doctrine/common": "^2.7",
@@ -4362,12 +4362,18 @@
                 "phpstan/phpstan-phpunit": "^0.11",
                 "phpstan/phpstan-strict-rules": "^0.11",
                 "phpunit/phpunit": "^7.0",
-                "slevomat/coding-standard": "^4.5.2"
+                "slevomat/coding-standard": "^5.0.4"
             },
-            "type": "library",
+            "type": "phpstan-extension",
             "extra": {
                 "branch-alias": {
                     "dev-master": "0.11-dev"
+                },
+                "phpstan": {
+                    "includes": [
+                        "extension.neon",
+                        "rules.neon"
+                    ]
                 }
             },
             "autoload": {
@@ -4380,7 +4386,7 @@
                 "MIT"
             ],
             "description": "Doctrine extensions for PHPStan",
-            "time": "2019-03-11T11:44:21+00:00"
+            "time": "2019-05-29T06:01:20+00:00"
         },
         {
             "name": "phpstan/phpstan-strict-rules",
@@ -4483,8 +4489,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "Library that provides collection, processing, and rendering functionality for PHP code coverage information.",
