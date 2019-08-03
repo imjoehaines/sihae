@@ -19,17 +19,17 @@ return function (App $app) {
         $this->post('/new', PostController::class . ':store');
 
         $this->group('', function () {
-            $this->get('/edit/{slug:[a-zA-Z\d\s-_\-]+}', PostController::class . ':edit');
-            $this->post('/edit/{slug:[a-zA-Z\d\s-_\-]+}', PostController::class . ':update');
-            $this->get('/delete/{slug:[a-zA-Z\d\s-_\-]+}', PostController::class . ':delete');
-            $this->get('/convert/{slug:[a-zA-Z\d\s-_\-]+}', PostController::class . ':convert');
+            $this->get('/edit/{slug:[a-zA-Z\d\s\-_\-]+}', PostController::class . ':edit');
+            $this->post('/edit/{slug:[a-zA-Z\d\s\-_\-]+}', PostController::class . ':update');
+            $this->get('/delete/{slug:[a-zA-Z\d\s\-_\-]+}', PostController::class . ':delete');
+            $this->get('/convert/{slug:[a-zA-Z\d\s\-_\-]+}', PostController::class . ':convert');
         })->add(PostLocator::class);
     })->add(AuthMiddleware::class);
 
-    $app->get('/post/{slug:[a-zA-Z\d\s-_\-]+}', PostController::class . ':show')
+    $app->get('/post/{slug:[a-zA-Z\d\s\-_\-]+}', PostController::class . ':show')
         ->add(PostLocator::class);
 
-    $app->get('/tagged/{slug:[a-zA-Z\d\s-_\-]+}[/page/{page:[1-9][0-9]*}]', PostListController::class . ':tagged');
+    $app->get('/tagged/{slug:[a-zA-Z\d\s\-_\-]+}[/page/{page:[1-9][0-9]*}]', PostListController::class . ':tagged');
 
     $app->get('/archive', ArchiveController::class . ':index');
     $app->get('/tags', TagController::class . ':index');
@@ -43,6 +43,6 @@ return function (App $app) {
         $app->post('/register', RegistrationController::class . ':register');
     }
 
-    $app->get('/{slug:[a-zA-Z\d\s-_\-]+}', PostController::class . ':show')
+    $app->get('/{slug:[a-zA-Z\d\s\-_\-]+}', PostController::class . ':show')
         ->add(PostLocator::class);
 };
