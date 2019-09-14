@@ -25,7 +25,7 @@
         "jdorn/sql-formatter": "^1.2",
         "league/commonmark": "^1.0.0",
         "league/plates": "^3.1",
-        "monolog/monolog": "^1.21",
+        "monolog/monolog": "^2.0.0",
         "psr/log": "^1.0",
         "slim/csrf": "^0.8.1",
         "slim/flash": "^0.4",
