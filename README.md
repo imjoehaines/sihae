@@ -1,4 +1,4 @@
-# Sihae [![Build Status](https://travis-ci.org/imjoehaines/sihae.svg?branch=master)](https://travis-ci.org/imjoehaines/sihae) [![StyleCI](https://styleci.io/repos/42362618/shield)](https://styleci.io/repos/42362618)
+# Sihae [![Build Status](https://travis-ci.org/imjoehaines/sihae.svg?branch=master)](https://travis-ci.org/imjoehaines/sihae)
 
 Sihae is a PHP 7.3+ blog engine built with Slim Framework and Doctrine ORM.
 
