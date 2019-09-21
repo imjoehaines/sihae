@@ -30,7 +30,7 @@ jobs:
     - name: Setup .env
       run: |
         cp .env.ci .env
-        sed -i 's/RANDOM_MYSQL_PORT/${{ job.services.mysql.ports['3306'] }}' .env
+        sed -i 's/RANDOM_MYSQL_PORT/${{ job.services.mysql.ports['3306'] }}/' .env
 
     - name: Install Composer dependencies
       run: php${{ matrix.php }} $(which composer) install --prefer-dist --no-progress --no-suggest
