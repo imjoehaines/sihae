@@ -28,6 +28,7 @@ return [
                 'driver' => getenv('DB_DRIVER') ?: 'pdo_mysql',
                 'path' => getenv('DB_PATH') ?: __DIR__ . '/../data/database.sq3',
                 'host' => getenv('DB_HOST') ?: 'localhost',
+                'port' => getenv('DB_PORT') ?: 3306,
                 'dbname' => getenv('DB_NAME') ?: 'sihae',
                 'user' => getenv('DB_USER') ?: 'root',
                 'password' => getenv('DB_PASSWORD') ?: '',
