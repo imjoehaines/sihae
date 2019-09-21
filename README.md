@@ -47,6 +47,7 @@ All configuration is done in the `.env` file at the root of the project. It cont
   - `pdo_sqlite` to use SQLite
 - `DB_PATH` &mdash; the path to store the database; this **must** be an absolute path! This is only required if `DB_DRIVER` is set to `pdo_sqlite`.
 - `DB_HOST` &mdash; the host to connect to the database on. This is only required if `DB_DRIVER` is set to `pdo_mysql`
+- `DB_PORT` &mdash; the port to use when connecting to the database host. This is only used if `DB_DRIVER` is set to `pdo_mysql` and the default MySQL port (3306) will be used if this is omitted
 - `DB_NAME` &mdash; the name of the database to use. This is only required if `DB_DRIVER` is set to `pdo_mysql`
 - `DB_USER` &mdash; the user to connect to the database with. This is only required if `DB_DRIVER` is set to `pdo_mysql`
 - `DB_PASSWORD` &mdash; the password to use for the `DB_USER`. This is only required if `DB_DRIVER` is set to `pdo_mysql`
