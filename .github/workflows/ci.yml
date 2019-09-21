@@ -36,6 +36,9 @@ jobs:
     - name: Run migrations
       run: php${{ matrix.php }} vendor/bin/doctrine-migrations migrations:migrate
 
+    - name: Start PHP webserver
+      run: php${{ matrix.php }} -S localhost:8000 -t public &
+
     - name: Run PHPStan
       run: php${{ matrix.php }} $(which composer) test:phpstan
 
