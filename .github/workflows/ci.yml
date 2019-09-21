@@ -1,0 +1,49 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php: [7.3]
+
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: password
+        ports:
+          - 3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+    - name: Verify MySQL connection from host
+      run: |
+        sudo apt-get install -y mysql-client
+        mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports['3306'] }} -uroot -ppassword -e "CREATE DATABASE sihae"
+
+    - uses: actions/checkout@v1
+
+    - name: Setup .env
+      run: cp .env.ci .env
+
+    - name: Install Composer dependencies
+      run: php${{ matrix.php }} $(which composer) install --prefer-dist --no-progress --no-suggest
+
+    - name: Run migrations
+      run: php${{ matrix.php }} vendor/bin/doctrine-migrations migrations:migrate
+
+    - name: Run PHPStan
+      run: php${{ matrix.php }} $(which composer) test:phpstan
+
+    - name: Run type checker
+      run: php${{ matrix.php }} $(which composer) test:types
+
+    - name: Run PHPUnit
+      run: php${{ matrix.php }} $(which composer) test:unit
+
+    - name: Run Behat
+      run: php${{ matrix.php }} $(which composer) test:acceptance
