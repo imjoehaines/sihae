@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8f0bb3989674c211ae9aa87183f65ce2",
+    "content-hash": "d9ab99c2831b9a923f4eeafedc5c5108",
     "packages": [
         {
             "name": "akrabat/rka-slim-session-middleware",
@@ -6318,16 +6318,16 @@
         },
         {
             "name": "tracy/tracy",
-            "version": "v2.6.4",
+            "version": "v2.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/tracy.git",
-                "reference": "cad2ec2c40cee828ce5538a4bc5bbde7045a7c1b"
+                "reference": "eb2e7728a867f57938f8aed35a7ad097a1a14835"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/tracy/zipball/cad2ec2c40cee828ce5538a4bc5bbde7045a7c1b",
-                "reference": "cad2ec2c40cee828ce5538a4bc5bbde7045a7c1b",
+                "url": "https://api.github.com/repos/nette/tracy/zipball/eb2e7728a867f57938f8aed35a7ad097a1a14835",
+                "reference": "eb2e7728a867f57938f8aed35a7ad097a1a14835",
                 "shasum": ""
             },
             "require": {
@@ -6335,10 +6335,13 @@
                 "ext-session": "*",
                 "php": ">=7.1"
             },
+            "conflict": {
+                "nette/di": "<3.0"
+            },
             "require-dev": {
-                "nette/di": "^2.4 || ~3.0.0",
+                "nette/di": "^3.0",
                 "nette/tester": "^2.2",
-                "nette/utils": "^2.4 || ^3.0",
+                "nette/utils": "^3.0",
                 "psr/log": "^1.0"
             },
             "suggest": {
@@ -6347,7 +6350,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.6-dev"
+                    "dev-master": "2.7-dev"
                 }
             },
             "autoload": {
@@ -6381,7 +6384,7 @@
                 "nette",
                 "profiler"
             ],
-            "time": "2019-07-16T14:23:55+00:00"
+            "time": "2019-09-24T11:11:10+00:00"
         },
         {
             "name": "webmozart/assert",
