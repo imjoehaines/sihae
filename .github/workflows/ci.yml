@@ -31,7 +31,7 @@ jobs:
       uses: shivammathur/setup-php@v1
       with:
         php-version: ${{ matrix.php-version }}
-        extensions: mbstring
+        extensions: mbstring, mysql
 
     - name: Setup .env
       run: |
