@@ -21,14 +21,11 @@ class DoctrineUserRepository implements UserRepository
 
     /**
      * @param EntityManager $entityManager
-     * @param ObjectRepository $repository
      */
-    public function __construct(
-        EntityManager $entityManager,
-        ObjectRepository $repository
-    ) {
+    public function __construct(EntityManager $entityManager)
+    {
         $this->entityManager = $entityManager;
-        $this->repository = $repository;
+        $this->repository = $entityManager->getRepository(User::class);
     }
 
     /**
@@ -47,7 +44,10 @@ class DoctrineUserRepository implements UserRepository
      */
     public function findByUsername(string $username) : ?User
     {
-        return $this->repository->findOneBy(['username' => $username]);
+        /** @var User|null $user */
+        $user = $this->repository->findOneBy(['username' => $username]);
+
+        return $user;
     }
 
     /**
@@ -56,6 +56,9 @@ class DoctrineUserRepository implements UserRepository
      */
     public function findByToken(string $token) : ?User
     {
-        return $this->repository->findOneBy(['token' => $token]);
+        /** @var User|null $user */
+        $user = $this->repository->findOneBy(['token' => $token]);
+
+        return $user;
     }
 }
