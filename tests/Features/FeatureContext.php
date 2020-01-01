@@ -190,7 +190,7 @@ class FeatureContext extends MinkContext implements Context
         $posts = $posts->getHash();
         $user = $this->getEntityManager()->getRepository(User::class)->findOneBy([]);
 
-        if ($user === null) {
+        if ( ! $user instanceof User) {
             throw new \RuntimeException('Expected at least one user in the database');
         }
 

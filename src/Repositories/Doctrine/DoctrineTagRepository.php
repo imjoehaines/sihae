@@ -23,14 +23,11 @@ class DoctrineTagRepository implements TagRepository
 
     /**
      * @param EntityManager $entityManager
-     * @param ObjectRepository $repository
      */
-    public function __construct(
-        EntityManager $entityManager,
-        ObjectRepository $repository
-    ) {
+    public function __construct(EntityManager $entityManager)
+    {
         $this->entityManager = $entityManager;
-        $this->repository = $repository;
+        $this->repository = $entityManager->getRepository(Tag::class);
     }
 
     /**
@@ -39,7 +36,10 @@ class DoctrineTagRepository implements TagRepository
      */
     public function findBySlug(string $slug) : ?Tag
     {
-        return $this->repository->findOneBy(['slug' => $slug]);
+        /** @var Tag|null $tag */
+        $tag = $this->repository->findOneBy(['slug' => $slug]);
+
+        return $tag;
     }
 
     /**

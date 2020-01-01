@@ -21,14 +21,11 @@ class DoctrinePostRepository implements PostRepository
 
     /**
      * @param EntityManager $entityManager
-     * @param ObjectRepository $repository
      */
-    public function __construct(
-        EntityManager $entityManager,
-        ObjectRepository $repository
-    ) {
+    public function __construct(EntityManager $entityManager)
+    {
         $this->entityManager = $entityManager;
-        $this->repository = $repository;
+        $this->repository = $entityManager->getRepository(Post::class);
     }
 
     public function save(Post $post) : void
@@ -50,7 +47,10 @@ class DoctrinePostRepository implements PostRepository
 
     public function findOneBySlug(string $slug) : ?Post
     {
-        return $this->repository->findOneBy(['slug' => $slug]);
+        /** @var Post|null $post */
+        $post = $this->repository->findOneBy(['slug' => $slug]);
+
+        return $post;
     }
 
     public function findAllTagged(string $slug, int $limit, int $offset) : array

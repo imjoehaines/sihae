@@ -77,22 +77,19 @@ return function (Container $container) {
 
     $container[PostRepository::class] = function (Container $container) : PostRepository {
         return new DoctrinePostRepository(
-            $container->get(EntityManager::class),
-            $container->get(EntityManager::class)->getRepository(Post::class)
+            $container->get(EntityManager::class)
         );
     };
 
     $container[TagRepository::class] = function (Container $container) : TagRepository {
         return new DoctrineTagRepository(
-            $container->get(EntityManager::class),
-            $container->get(EntityManager::class)->getRepository(Tag::class)
+            $container->get(EntityManager::class)
         );
     };
 
     $container[UserRepository::class] = function (Container $container) : UserRepository {
         return new DoctrineUserRepository(
-            $container->get(EntityManager::class),
-            $container->get(EntityManager::class)->getRepository(User::class)
+            $container->get(EntityManager::class)
         );
     };
 
