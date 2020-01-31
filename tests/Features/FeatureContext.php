@@ -16,7 +16,7 @@ use Behat\Behat\Tester\Exception\PendingException;
 /**
  * Defines application features from the specific context.
  */
-class FeatureContext extends MinkContext implements Context
+final class FeatureContext extends MinkContext implements Context
 {
     /**
      * @var EntityManager
@@ -174,6 +174,7 @@ class FeatureContext extends MinkContext implements Context
 
     /**
      * @Given there is a post:
+     * @param TableNode<array> $posts
      * @return void
      */
     public function thereIsAPost(TableNode $posts) : void
@@ -183,6 +184,7 @@ class FeatureContext extends MinkContext implements Context
 
     /**
      * @Given there are some posts:
+     * @param TableNode<array> $posts
      * @return void
      */
     public function thereAreSomePosts(TableNode $posts) : void

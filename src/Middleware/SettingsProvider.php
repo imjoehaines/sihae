@@ -17,13 +17,13 @@ class SettingsProvider
     private $renderer;
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     private $settings;
 
     /**
      * @param Renderer $renderer
-     * @param array $settings
+     * @param array<string, mixed> $settings
      */
     public function __construct(Renderer $renderer, array $settings)
     {

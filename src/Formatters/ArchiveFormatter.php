@@ -14,8 +14,8 @@ class ArchiveFormatter implements Formatter
      * array organised by year. No sorting is done because this should be done
      * using Doctrine & the database, rather than in code
      *
-     * @param array $data
-     * @return array
+     * @param array<mixed> $data This is really array<Post> but PHPStan doesn't allow it
+     * @return array<Post>
      */
     public function format(array $data) : array
     {

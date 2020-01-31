@@ -7,7 +7,7 @@ interface Validator
     /**
      * Check if the given data is valid. This *must* be called before `getErrors`
      *
-     * @param array $data
+     * @param array<string, string> $data
      * @return bool
      */
     public function isValid(array $data) : bool;
@@ -15,7 +15,7 @@ interface Validator
     /**
      * Get the list of errors that will be populated by `isValid`
      *
-     * @return array
+     * @return array<string>
      */
     public function getErrors() : array;
 }

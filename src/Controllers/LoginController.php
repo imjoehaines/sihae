@@ -4,6 +4,7 @@ namespace Sihae\Controllers;
 
 use RKA\Session;
 use Sihae\Renderer;
+use Sihae\Utils\Safe;
 use Sihae\Repositories\UserRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -54,14 +55,14 @@ class LoginController
     {
         $userDetails = $request->getParsedBody();
 
-        $user = $this->repository->findByUsername($userDetails['username'] ?? '');
+        $user = $this->repository->findByUsername(Safe::get('username', $userDetails, ''));
 
         if ($user === null ||
-            !$user->login($userDetails['password'] ?? '')
+            !$user->login(Safe::get('password', $userDetails, ''))
         ) {
             return $this->renderer->render($response, 'login', [
                 'errors' => ['No user was found with these credentials, please try again'],
-                'username' => $userDetails['username'] ?? '',
+                'username' => Safe::get('username', $userDetails, ''),
             ]);
         }
 

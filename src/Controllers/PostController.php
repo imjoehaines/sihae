@@ -3,6 +3,7 @@
 namespace Sihae\Controllers;
 
 use Sihae\Renderer;
+use Sihae\Utils\Safe;
 use Doctrine\ORM\Query;
 use Sihae\Entities\Tag;
 use Sihae\Entities\Post;
@@ -47,7 +48,7 @@ class PostController
     /**
      * Strings that are used in routes and therefore can't be slugs
      *
-     * @var array
+     * @var array<string>
      */
     private $reservedSlugs = ['new', 'edit', 'delete', 'login', 'logout', 'register', 'archive', 'convert'];
 
@@ -100,8 +101,8 @@ class PostController
         $newPost = $request->getParsedBody();
 
         $post = new Post(
-            $newPost['title'] ?? '',
-            $newPost['body'] ?? '',
+            Safe::get('title', $newPost, ''),
+            Safe::get('body', $newPost, ''),
             $request->getAttribute('user')
         );
 
@@ -121,8 +122,8 @@ class PostController
         }
 
         $tags = $this->tagRepository->findAll(
-            $newPost['tags'] ?? [],
-            $newPost['new_tags'] ?? []
+            Safe::get('tags', $newPost, []),
+            Safe::get('new_tags', $newPost, [])
         );
 
         foreach ($tags as $tag) {
@@ -192,8 +193,8 @@ class PostController
 
         $updatedPost = $request->getParsedBody();
 
-        $post->setTitle($updatedPost['title'] ?? '');
-        $post->setBody($updatedPost['body'] ?? '');
+        $post->setTitle(Safe::get('title', $updatedPost, ''));
+        $post->setBody(Safe::get('body', $updatedPost, ''));
 
         if (!is_array($updatedPost) || !$this->validator->isValid($updatedPost)) {
             return $this->renderer->render($response, 'editor', [

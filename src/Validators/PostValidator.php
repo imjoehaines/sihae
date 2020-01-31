@@ -8,12 +8,12 @@ namespace Sihae\Validators;
 class PostValidator implements Validator
 {
     /**
-     * @var array
+     * @var array<string>
      */
     private $errors = [];
 
     /**
-     * @param array $postDetails
+     * @param array<string, string> $postDetails
      * @return bool
      */
     public function isValid(array $postDetails) : bool
@@ -36,7 +36,7 @@ class PostValidator implements Validator
     }
 
     /**
-     * @return array
+     * @return array<string>
      */
     public function getErrors() : array
     {

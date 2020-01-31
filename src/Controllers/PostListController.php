@@ -63,7 +63,7 @@ class PostListController
         return $this->renderer->render($response, 'post-list', [
             'posts' => $posts,
             'current_page' => $page,
-            'total_pages' => ceil($total / $limit) ?: 1,
+            'total_pages' => max(ceil($total / $limit), 1),
         ]);
     }
 
@@ -94,7 +94,7 @@ class PostListController
         return $this->renderer->render($response, 'post-list', [
             'posts' => $posts,
             'current_page' => $page,
-            'total_pages' => ceil($total / $limit) ?: 1,
+            'total_pages' => max(ceil($total / $limit), 1),
             'tag' => $tag,
         ]);
     }

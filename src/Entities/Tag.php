@@ -43,7 +43,7 @@ class Tag
     /**
      * @ORM\ManyToMany(targetEntity="Post", mappedBy="tags")
      *
-     * @var Collection
+     * @var Collection<int, Post>
      */
     protected $posts;
 
@@ -75,7 +75,7 @@ class Tag
     }
 
     /**
-     * @return Collection
+     * @return Collection<int, Post>
      */
     public function getPosts() : Collection
     {

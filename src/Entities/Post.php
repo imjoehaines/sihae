@@ -63,7 +63,7 @@ class Post
      *  inverseJoinColumns={@ORM\JoinColumn(name="tag_id", referencedColumnName="id")}
      * )
      *
-     * @var Collection
+     * @var Collection<int, Tag>
      */
     protected $tags;
 
@@ -120,7 +120,7 @@ class Post
     }
 
     /**
-     * @return Collection
+     * @return Collection<int, Tag>
      */
     public function getTags() : Collection
     {

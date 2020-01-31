@@ -4,6 +4,7 @@ namespace Sihae\Controllers;
 
 use RKA\Session;
 use Sihae\Renderer;
+use Sihae\Utils\Safe;
 use Sihae\Entities\User;
 use Sihae\Validators\Validator;
 use Sihae\Repositories\UserRepository;
@@ -64,10 +65,11 @@ class RegistrationController
     {
         $userDetails = $request->getParsedBody();
 
+        // @todo this is broken - should be !$this->validator->isValid - why isn't there a test?
         if (!is_array($userDetails) || $this->validator->isValid($userDetails)) {
             return $this->renderer->render($response, 'register', [
                 'errors' => $this->validator->getErrors(),
-                'username' => $userDetails['username'] ?? '',
+                'username' => Safe::get('username', $userDetails, ''),
             ]);
         }
 

@@ -56,7 +56,7 @@ class User
     /**
      * @ORM\OneToMany(targetEntity="Post", mappedBy="user")
      *
-     * @var Collection
+     * @var Collection<int, Post>
      */
     protected $posts;
 

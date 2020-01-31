@@ -17,7 +17,7 @@ class DoctrineTagRepository implements TagRepository
     private $entityManager;
 
     /**
-     * @var ObjectRepository
+     * @var ObjectRepository<Tag>
      */
     private $repository;
 
@@ -36,14 +36,11 @@ class DoctrineTagRepository implements TagRepository
      */
     public function findBySlug(string $slug) : ?Tag
     {
-        /** @var Tag|null $tag */
-        $tag = $this->repository->findOneBy(['slug' => $slug]);
-
-        return $tag;
+        return $this->repository->findOneBy(['slug' => $slug]);
     }
 
     /**
-     * @return array
+     * @return array<Tag>
      */
     public function findAllOrderedByUsage() : array
     {
@@ -62,9 +59,9 @@ class DoctrineTagRepository implements TagRepository
 
     /**
      * @todo rename this to something clearer
-     * @param array $existingTags
-     * @param array $newTags
-     * @return array
+     * @param array<int> $existingTags
+     * @param array<string> $newTags
+     * @return array<Tag>
      */
     public function findAll(array $existingTags, array $newTags) : array
     {
@@ -75,7 +72,7 @@ class DoctrineTagRepository implements TagRepository
     }
 
     /**
-     * @return array
+     * @return array<Tag>
      */
     public function findAllAsArray() : array
     {
@@ -89,7 +86,7 @@ class DoctrineTagRepository implements TagRepository
 
     /**
      * @param Post $post
-     * @return array
+     * @return array<Tag>
      */
     public function findAllForPostAsArray(Post $post) : array
     {
@@ -109,8 +106,8 @@ class DoctrineTagRepository implements TagRepository
     /**
      * Find tags from the given list of IDs
      *
-     * @param array $tagIds
-     * @return array
+     * @param array<int> $tagIds
+     * @return array<Tag>
      */
     private function find(array $tagIds) : array
     {
@@ -128,8 +125,8 @@ class DoctrineTagRepository implements TagRepository
     /**
      * Find or create tags from the given list of names
      *
-     * @param array $tagNames
-     * @return array
+     * @param array<string> $tagNames
+     * @return array<Tag>
      */
     private function findOrCreate(array $tagNames) : array
     {
@@ -141,13 +138,6 @@ class DoctrineTagRepository implements TagRepository
                 $tag = new Tag($name);
 
                 $this->entityManager->persist($tag);
-            }
-
-            /**
-             * @todo Fix phpstan work around in TagRepository
-             */
-            if (!$tag instanceof Tag) {
-                throw new \RuntimeException('TODO fix this');
             }
 
             return $tag;

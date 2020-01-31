@@ -31,7 +31,7 @@ class Renderer
     /**
      * @param Response $response
      * @param string $template name of the template file to render
-     * @param array $data optional array of data to pass to the template
+     * @param array<mixed> $data optional array of data to pass to the template
      * @return Response
      */
     public function render(Response $response, string $template, array $data = []) : Response
@@ -47,7 +47,7 @@ class Renderer
     /**
      * Add data to the Engine instance
      *
-     * @param array $data
+     * @param array<mixed> $data
      * @return void
      */
     public function addData(array $data) : void
