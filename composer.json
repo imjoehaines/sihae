@@ -18,7 +18,6 @@
     "require": {
         "php": "^7.3",
         "akrabat/rka-slim-session-middleware": "^2.0",
-        "doctrine/common": "^2.10",
         "doctrine/migrations": "^2.0.0",
         "doctrine/orm": "^2.6.3",
         "jdorn/sql-formatter": "^1.2",
