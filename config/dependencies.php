@@ -18,7 +18,7 @@ use League\CommonMark\CommonMarkConverter;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Interfaces\InvocationStrategyInterface;
 use Slim\Handlers\Strategies\RequestResponseArgs;
-use Interop\Container\ContainerInterface as Container;
+use Psr\Container\ContainerInterface as Container;
 
 use Sihae\Renderer;
 use Sihae\Entities\Tag;
