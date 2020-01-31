@@ -18,7 +18,7 @@ if (PHP_SAPI === 'cli-server') {
 }
 
 // load environment variables
-$dotenv = Dotenv::create(__DIR__ . '/..');
+$dotenv = Dotenv::createImmutable(__DIR__ . '/..');
 $dotenv->load();
 
 // enable debug bar if we're not in production

@@ -7,7 +7,7 @@ use Doctrine\ORM\Tools\Console\ConsoleRunner;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$dotenv = Dotenv::create(__DIR__ . '/..');
+$dotenv = Dotenv::createImmutable(__DIR__ . '/..');
 $dotenv->load();
 
 $settings = require 'settings.php';

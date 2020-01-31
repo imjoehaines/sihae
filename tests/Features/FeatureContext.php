@@ -29,7 +29,7 @@ final class FeatureContext extends MinkContext implements Context
      */
     public static function prepare() : void
     {
-        $dotenv = Dotenv::create(__DIR__ . '/../../');
+        $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
         $dotenv->load();
 
         (new static)->cleanDb();
