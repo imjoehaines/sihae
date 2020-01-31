@@ -54,7 +54,8 @@ final class SafeTest extends TestCase
             ],
             'function returns default' => [
                 'hello',
-                fn($a) => $a,
+                function (): void {
+                },
                 '',
                 '',
             ],
