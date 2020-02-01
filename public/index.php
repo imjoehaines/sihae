@@ -9,7 +9,7 @@ use Sihae\Container;
 use Sihae\Middleware\ErrorMiddleware;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7Server\ServerRequestCreator;
-use Slim\Handlers\Strategies\RequestResponseArgs;
+use Sihae\RouteArgumentMarshaller;
 
 if (PHP_SAPI === 'cli-server') {
     // To help the built-in PHP dev server, check if the request was actually for
@@ -55,7 +55,7 @@ $container['request'] = $request;
 $app = new App($psr17Factory, $container);
 
 $routeCollector = $app->getRouteCollector();
-$routeCollector->setDefaultInvocationStrategy(new RequestResponseArgs());
+$routeCollector->setDefaultInvocationStrategy(new RouteArgumentMarshaller());
 
 // Set up dependencies
 $dependencyFactory = require __DIR__ . '/../config/dependencies.php';
