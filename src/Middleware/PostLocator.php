@@ -46,8 +46,7 @@ class PostLocator implements MiddlewareInterface
      */
     public function process(Request $request, RequestHandlerInterface $next) : ResponseInterface
     {
-        $routeContext = RouteContext::fromRequest($request);
-        $route = $routeContext->getRoute();
+        $route = $request->getAttribute(RouteContext::ROUTE);
 
         if ($route === null) {
             return $this->responseFactory->createResponse(404);
