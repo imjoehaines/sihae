@@ -48,6 +48,7 @@ $psr17Factory = new Psr17Factory();
 $creator = new ServerRequestCreator($psr17Factory, $psr17Factory, $psr17Factory, $psr17Factory);
 
 $request = $creator->fromGlobals();
+$container['request'] = $request;
 
 $app = new App($psr17Factory, $container);
 
@@ -71,4 +72,4 @@ set_error_handler(function ($severity, $message, $file, $line) {
     throw new ErrorException($message, 0, $severity, $file, $line);
 }, E_ALL);
 
-$app->run();
+$app->run($request);

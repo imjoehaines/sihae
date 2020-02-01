@@ -35,8 +35,6 @@ return [
             ],
         ],
 
-        'displayErrorDetails' => !$isProduction,
-        'addContentLengthHeader' => false,
         'routerCacheFile' => $isProduction ? __DIR__ . '/../data/cache/router.php' : false,
 
         // Renderer settings

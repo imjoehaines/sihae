@@ -3,15 +3,17 @@
 namespace Sihae\Middleware;
 
 use RKA\Session;
+use Nyholm\Psr7\Response;
 use Sihae\Repositories\UserRepository;
-use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 /**
  * Checks the user in the current session is an admin, if they are not a 404
  * will be returned
  */
-class AuthMiddleware
+class AuthMiddleware implements MiddlewareInterface
 {
     /**
      * @var Session
@@ -38,11 +40,10 @@ class AuthMiddleware
      * will be returned
      *
      * @param Request $request
-     * @param Response $response
-     * @param callable $next
+     * @param RequestHandlerInterface $handler
      * @return Response
      */
-    public function __invoke(Request $request, Response $response, callable $next) : Response
+    public function process(Request $request, RequestHandlerInterface $handler) : Response
     {
         $token = $this->session->get('token');
 
@@ -50,9 +51,11 @@ class AuthMiddleware
             $user = $this->repository->findByToken($token);
 
             if ($user !== null && $user->isAdmin() === true) {
-                return $next($request->withAttribute('user', $user), $response);
+                return $handler->handle($request->withAttribute('user', $user));
             }
         }
+
+        $response = new Response();
 
         return $response->withStatus(404);
     }
