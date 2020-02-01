@@ -14,15 +14,15 @@ use Sihae\Controllers\RegistrationController;
 return function (App $app) {
     $app->get('/[page/{page:[1-9][0-9]*}]', PostListController::class . ':index');
 
-    $app->group('/post', function () {
-        $this->get('/new', PostController::class . ':create');
-        $this->post('/new', PostController::class . ':store');
+    $app->group('/post', function () use ($app) {
+        $app->get('/new', PostController::class . ':create');
+        $app->post('/new', PostController::class . ':store');
 
-        $this->group('', function () {
-            $this->get('/edit/{slug:[a-zA-Z\d\s\-_\-]+}', PostController::class . ':edit');
-            $this->post('/edit/{slug:[a-zA-Z\d\s\-_\-]+}', PostController::class . ':update');
-            $this->get('/delete/{slug:[a-zA-Z\d\s\-_\-]+}', PostController::class . ':delete');
-            $this->get('/convert/{slug:[a-zA-Z\d\s\-_\-]+}', PostController::class . ':convert');
+        $app->group('', function () use ($app) {
+            $app->get('/edit/{slug:[a-zA-Z\d\s\-_\-]+}', PostController::class . ':edit');
+            $app->post('/edit/{slug:[a-zA-Z\d\s\-_\-]+}', PostController::class . ':update');
+            $app->get('/delete/{slug:[a-zA-Z\d\s\-_\-]+}', PostController::class . ':delete');
+            $app->get('/convert/{slug:[a-zA-Z\d\s\-_\-]+}', PostController::class . ':convert');
         })->add(PostLocator::class);
     })->add(AuthMiddleware::class);
 

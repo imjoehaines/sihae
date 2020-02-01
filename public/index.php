@@ -5,6 +5,9 @@ require __DIR__ . '/../vendor/autoload.php';
 use Slim\App;
 use Dotenv\Dotenv;
 use Tracy\Debugger;
+use Sihae\Container;
+use Nyholm\Psr7\Factory\Psr17Factory;
+use Nyholm\Psr7Server\ServerRequestCreator;
 
 if (PHP_SAPI === 'cli-server') {
     // To help the built-in PHP dev server, check if the request was actually for
@@ -39,11 +42,18 @@ session_start([
 
 // Instantiate the app
 $settings = require __DIR__ . '/../config/settings.php';
-$app = new App($settings);
+
+$container =  new Container($settings);
+$psr17Factory = new Psr17Factory();
+$creator = new ServerRequestCreator($psr17Factory, $psr17Factory, $psr17Factory, $psr17Factory);
+
+$request = $creator->fromGlobals();
+
+$app = new App($psr17Factory, $container);
 
 // Set up dependencies
 $dependencyFactory = require __DIR__ . '/../config/dependencies.php';
-$dependencyFactory($app->getContainer());
+$dependencyFactory($container);
 
 // Register middleware
 $middlewares = require __DIR__ . '/../config/middleware.php';

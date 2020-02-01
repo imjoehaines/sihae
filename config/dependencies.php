@@ -13,14 +13,20 @@ use League\Plates\Extension\Asset;
 use Monolog\Handler\StreamHandler;
 use Monolog\Processor\UidProcessor;
 use Monolog\Processor\WebProcessor;
+use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\UriFactoryInterface;
 use League\CommonMark\CommonMarkConverter;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\StreamFactoryInterface;
+use Psr\Http\Message\ResponseFactoryInterface;
 use Slim\Interfaces\InvocationStrategyInterface;
 use Slim\Handlers\Strategies\RequestResponseArgs;
-use Psr\Container\ContainerInterface as Container;
+use Psr\Http\Message\UploadedFileFactoryInterface;
+use Psr\Http\Message\ServerRequestFactoryInterface;
 
 use Sihae\Renderer;
+use Sihae\Container;
 use Sihae\Entities\Tag;
 use Sihae\Entities\Post;
 use Sihae\Entities\User;
@@ -181,7 +187,17 @@ return function (Container $container) {
     };
 
     $container[Guard::class] = function (Container $container) : Guard {
-        return new Guard();
+        return new Guard(
+            $container->get(ResponseFactoryInterface::class)
+        );
+    };
+
+    $container[ResponseFactoryInterface::class] =
+    $container[ServerRequestFactoryInterface::class] =
+    $container[UriFactoryInterface::class] =
+    $container[UploadedFileFactoryInterface::class] =
+    $container[StreamFactoryInterface::class] = function (Container $container) : Psr17Factory {
+        return new Psr17Factory();
     };
 
     $container[UserProvider::class] = function (Container $container) : UserProvider {
