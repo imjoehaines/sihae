@@ -8,6 +8,7 @@ use Tracy\Debugger;
 use Sihae\Container;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7Server\ServerRequestCreator;
+use Slim\Handlers\Strategies\RequestResponseArgs;
 
 if (PHP_SAPI === 'cli-server') {
     // To help the built-in PHP dev server, check if the request was actually for
@@ -52,6 +53,9 @@ $container['request'] = $request;
 
 $app = new App($psr17Factory, $container);
 
+$routeCollector = $app->getRouteCollector();
+$routeCollector->setDefaultInvocationStrategy(new RequestResponseArgs());
+
 // Set up dependencies
 $dependencyFactory = require __DIR__ . '/../config/dependencies.php';
 $dependencyFactory($container);
@@ -71,5 +75,7 @@ $routeFactory($app);
 set_error_handler(function ($severity, $message, $file, $line) {
     throw new ErrorException($message, 0, $severity, $file, $line);
 }, E_ALL);
+
+$app->addRoutingMiddleware();
 
 $app->run($request);

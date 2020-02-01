@@ -5,6 +5,7 @@ namespace Sihae\Middleware;
 use RKA\Session;
 use Nyholm\Psr7\Response;
 use Sihae\Repositories\UserRepository;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -41,9 +42,9 @@ class AuthMiddleware implements MiddlewareInterface
      *
      * @param Request $request
      * @param RequestHandlerInterface $handler
-     * @return Response
+     * @return ResponseInterface
      */
-    public function process(Request $request, RequestHandlerInterface $handler) : Response
+    public function process(Request $request, RequestHandlerInterface $handler) : ResponseInterface
     {
         $token = $this->session->get('token');
 
@@ -55,8 +56,6 @@ class AuthMiddleware implements MiddlewareInterface
             }
         }
 
-        $response = new Response();
-
-        return $response->withStatus(404);
+        return (new Response())->withStatus(404);
     }
 }

@@ -4,6 +4,7 @@ use Slim\App;
 use Sihae\Middleware\PostLocator;
 use Sihae\Middleware\AuthMiddleware;
 use Sihae\Controllers\TagController;
+use Slim\Routing\RouteCollectorProxy;
 use Sihae\Controllers\PostController;
 use Sihae\Controllers\LoginController;
 use Sihae\Controllers\ArchiveController;
@@ -14,15 +15,15 @@ use Sihae\Controllers\RegistrationController;
 return function (App $app) {
     $app->get('/[page/{page:[1-9][0-9]*}]', PostListController::class . ':index');
 
-    $app->group('/post', function () use ($app) {
-        $app->get('/new', PostController::class . ':create');
-        $app->post('/new', PostController::class . ':store');
+    $app->group('/post', function (RouteCollectorProxy $group) {
+        $group->get('/new', PostController::class . ':create');
+        $group->post('/new', PostController::class . ':store');
 
-        $app->group('', function () use ($app) {
-            $app->get('/edit/{slug:[a-zA-Z\d\s\-_\-]+}', PostController::class . ':edit');
-            $app->post('/edit/{slug:[a-zA-Z\d\s\-_\-]+}', PostController::class . ':update');
-            $app->get('/delete/{slug:[a-zA-Z\d\s\-_\-]+}', PostController::class . ':delete');
-            $app->get('/convert/{slug:[a-zA-Z\d\s\-_\-]+}', PostController::class . ':convert');
+        $group->group('', function (RouteCollectorProxy $group) {
+            $group->get('/edit/{slug:[a-zA-Z\d\s\-_\-]+}', PostController::class . ':edit');
+            $group->post('/edit/{slug:[a-zA-Z\d\s\-_\-]+}', PostController::class . ':update');
+            $group->get('/delete/{slug:[a-zA-Z\d\s\-_\-]+}', PostController::class . ':delete');
+            $group->get('/convert/{slug:[a-zA-Z\d\s\-_\-]+}', PostController::class . ':convert');
         })->add(PostLocator::class);
     })->add(AuthMiddleware::class);
 

@@ -3,14 +3,18 @@
 namespace Sihae\Middleware;
 
 use Sihae\Entities\Post;
+use Nyholm\Psr7\Response;
+use Slim\Routing\RouteContext;
 use Doctrine\ORM\EntityManager;
-use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 /**
  * Finds a post by slug in the request
  */
-class PostLocator
+class PostLocator implements MiddlewareInterface
 {
     /**
      * @var EntityManager
@@ -27,21 +31,26 @@ class PostLocator
 
     /**
      * @param Request $request
-     * @param Response $response
-     * @param callable $next
-     * @return Response
+     * @param RequestHandlerInterface $next
+     * @return ResponseInterface
      */
-    public function __invoke(Request $request, Response $response, callable $next) : Response
+    public function process(Request $request, RequestHandlerInterface $next) : ResponseInterface
     {
-        $route = $request->getAttribute('route');
+        $routeContext = RouteContext::fromRequest($request);
+        $route = $routeContext->getRoute();
+
+        if ($route === null) {
+            return (new Response())->withStatus(404);
+        }
+
         $slug = $route->getArgument('slug');
 
         $post = $this->entityManager->getRepository(Post::class)->findOneBy(['slug' => $slug]);
 
         if ($post === null) {
-            return $response->withStatus(404);
+            return (new Response())->withStatus(404);
         }
 
-        return $next($request->withAttribute('post', $post), $response);
+        return $next->handle($request->withAttribute('post', $post));
     }
 }

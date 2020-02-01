@@ -4,14 +4,17 @@ namespace Sihae\Middleware;
 
 use RKA\Session;
 use Sihae\Renderer;
+use Nyholm\Psr7\Response;
 use Sihae\Repositories\UserRepository;
-use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 /**
  * Provides the logged in user to the Renderer
  */
-class UserProvider
+class UserProvider implements MiddlewareInterface
 {
     /**
      * @var Renderer
@@ -44,11 +47,10 @@ class UserProvider
      * Provide the logged in user to the Renderer
      *
      * @param Request $request
-     * @param Response $response
-     * @param callable $next
-     * @return Response
+     * @param RequestHandlerInterface $next
+     * @return ResponseInterface
      */
-    public function __invoke(Request $request, Response $response, callable $next) : Response
+    public function process(Request $request, RequestHandlerInterface $next) : ResponseInterface
     {
         $token = $this->session->get('token');
 
@@ -61,6 +63,6 @@ class UserProvider
             }
         }
 
-        return $next($request, $response);
+        return $next->handle($request);
     }
 }

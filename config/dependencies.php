@@ -21,7 +21,6 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Slim\Interfaces\InvocationStrategyInterface;
-use Slim\Handlers\Strategies\RequestResponseArgs;
 use Psr\Http\Message\UploadedFileFactoryInterface;
 use Psr\Http\Message\ServerRequestFactoryInterface;
 
@@ -250,10 +249,6 @@ return function (Container $container) {
         $logger->pushHandler(new StreamHandler($settings['path'], $settings['level']));
 
         return $logger;
-    };
-
-    $container['foundHandler'] = function (Container $container) : InvocationStrategyInterface {
-        return new RequestResponseArgs();
     };
 
     // 404 handler
