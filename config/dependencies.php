@@ -47,7 +47,7 @@ use Sihae\Repositories\Doctrine\DoctrinePostRepository;
 use Sihae\Repositories\Doctrine\DoctrineUserRepository;
 
 return function (Container $container) {
-    $container[Engine::class] = function (Container $container) : Engine {
+    $container[Engine::class] = static function (Container $container) : Engine {
         $settings = $container->get('settings')['renderer'];
 
         $engine = new Engine($settings['path'], $settings['extension']);
@@ -58,43 +58,43 @@ return function (Container $container) {
         return $engine;
     };
 
-    $container[PageProvider::class] = function (Container $container) : PageProvider {
+    $container[PageProvider::class] = static function (Container $container) : PageProvider {
         return new PageProvider(
             $container->get(Renderer::class),
             $container->get(EntityManager::class)
         );
     };
 
-    $container[PostLocator::class] = function (Container $container) : PostLocator {
+    $container[PostLocator::class] = static function (Container $container) : PostLocator {
         return new PostLocator(
             $container->get(EntityManager::class),
             $container->get(ResponseFactoryInterface::class)
         );
     };
 
-    $container[Renderer::class] = function (Container $container) : Renderer {
+    $container[Renderer::class] = static function (Container $container) : Renderer {
         return new Renderer($container->get(Engine::class));
     };
 
-    $container[PostRepository::class] = function (Container $container) : PostRepository {
+    $container[PostRepository::class] = static function (Container $container) : PostRepository {
         return new DoctrinePostRepository(
             $container->get(EntityManager::class)
         );
     };
 
-    $container[TagRepository::class] = function (Container $container) : TagRepository {
+    $container[TagRepository::class] = static function (Container $container) : TagRepository {
         return new DoctrineTagRepository(
             $container->get(EntityManager::class)
         );
     };
 
-    $container[UserRepository::class] = function (Container $container) : UserRepository {
+    $container[UserRepository::class] = static function (Container $container) : UserRepository {
         return new DoctrineUserRepository(
             $container->get(EntityManager::class)
         );
     };
 
-    $container[PostController::class] = function (Container $container) : PostController {
+    $container[PostController::class] = static function (Container $container) : PostController {
         return new PostController(
             $container->get(Renderer::class),
             $container->get(CommonMarkConverter::class),
@@ -104,7 +104,7 @@ return function (Container $container) {
         );
     };
 
-    $container[PostListController::class] = function (Container $container) : PostListController {
+    $container[PostListController::class] = static function (Container $container) : PostListController {
         return new PostListController(
             $container->get(Renderer::class),
             $container->get(PostRepository::class),
@@ -112,7 +112,7 @@ return function (Container $container) {
         );
     };
 
-    $container[ArchiveController::class] = function (Container $container) : ArchiveController {
+    $container[ArchiveController::class] = static function (Container $container) : ArchiveController {
         return new ArchiveController(
             $container->get(Renderer::class),
             $container->get(PostRepository::class),
@@ -120,14 +120,14 @@ return function (Container $container) {
         );
     };
 
-    $container[TagController::class] = function (Container $container) : TagController {
+    $container[TagController::class] = static function (Container $container) : TagController {
         return new TagController(
             $container->get(Renderer::class),
             $container->get(TagRepository::class)
         );
     };
 
-    $container[LoginController::class] = function (Container $container) : LoginController {
+    $container[LoginController::class] = static function (Container $container) : LoginController {
         return new LoginController(
             $container->get(Renderer::class),
             $container->get(UserRepository::class),
@@ -135,7 +135,7 @@ return function (Container $container) {
         );
     };
 
-    $container[RegistrationController::class] = function (Container $container) : RegistrationController {
+    $container[RegistrationController::class] = static function (Container $container) : RegistrationController {
         return new RegistrationController(
             $container->get(Renderer::class),
             $container->get(RegistrationValidator::class),
@@ -144,19 +144,19 @@ return function (Container $container) {
         );
     };
 
-    $container[ArchiveFormatter::class] = function (Container $container) : ArchiveFormatter {
+    $container[ArchiveFormatter::class] = static function (Container $container) : ArchiveFormatter {
         return new ArchiveFormatter();
     };
 
-    $container[RegistrationValidator::class] = function (Container $container) : RegistrationValidator {
+    $container[RegistrationValidator::class] = static function (Container $container) : RegistrationValidator {
         return new RegistrationValidator();
     };
 
-    $container[PostValidator::class] = function (Container $container) : PostValidator {
+    $container[PostValidator::class] = static function (Container $container) : PostValidator {
         return new PostValidator();
     };
 
-    $container[AuthMiddleware::class] = function (Container $container) : AuthMiddleware {
+    $container[AuthMiddleware::class] = static function (Container $container) : AuthMiddleware {
         return new AuthMiddleware(
             $container->get(Session::class),
             $container->get(UserRepository::class),
@@ -164,27 +164,27 @@ return function (Container $container) {
         );
     };
 
-    $container[NotFoundMiddleware::class] = function (Container $container) : NotFoundMiddleware {
+    $container[NotFoundMiddleware::class] = static function (Container $container) : NotFoundMiddleware {
         return new NotFoundMiddleware(
             $container->get(Renderer::class)
         );
     };
 
-    $container[SettingsProvider::class] = function (Container $container) : SettingsProvider {
+    $container[SettingsProvider::class] = static function (Container $container) : SettingsProvider {
         return new SettingsProvider(
             $container->get(Renderer::class),
             $container->get('settings')['sihae']
         );
     };
 
-    $container[CsrfProvider::class] = function (Container $container) : CsrfProvider {
+    $container[CsrfProvider::class] = static function (Container $container) : CsrfProvider {
         return new CsrfProvider(
             $container->get(Renderer::class),
             $container->get(Guard::class)
         );
     };
 
-    $container[Guard::class] = function (Container $container) : Guard {
+    $container[Guard::class] = static function (Container $container) : Guard {
         return new Guard(
             $container->get(ResponseFactoryInterface::class)
         );
@@ -194,11 +194,11 @@ return function (Container $container) {
     $container[ServerRequestFactoryInterface::class] =
     $container[UriFactoryInterface::class] =
     $container[UploadedFileFactoryInterface::class] =
-    $container[StreamFactoryInterface::class] = function (Container $container) : Psr17Factory {
+    $container[StreamFactoryInterface::class] = static function (Container $container) : Psr17Factory {
         return new Psr17Factory();
     };
 
-    $container[UserProvider::class] = function (Container $container) : UserProvider {
+    $container[UserProvider::class] = static function (Container $container) : UserProvider {
         return new UserProvider(
             $container->get(Renderer::class),
             $container->get(Session::class),
@@ -206,17 +206,17 @@ return function (Container $container) {
         );
     };
 
-    $container[Session::class] = function (Container $container) : Session {
+    $container[Session::class] = static function (Container $container) : Session {
         return new Session();
     };
 
-    $container[CommonMarkConverter::class] = function (Container $container) : CommonMarkConverter {
+    $container[CommonMarkConverter::class] = static function (Container $container) : CommonMarkConverter {
         $settings = $container->get('settings')['markdown'];
 
         return new CommonMarkConverter($settings);
     };
 
-    $container[EntityManager::class] = function (Container $container) : EntityManager {
+    $container[EntityManager::class] = static function (Container $container) : EntityManager {
         $settings = $container->get('settings')['doctrine'];
 
         $config = Setup::createAnnotationMetadataConfiguration(
@@ -237,7 +237,7 @@ return function (Container $container) {
     };
 
     // monolog
-    $container['logger'] = function (Container $container) : LoggerInterface {
+    $container['logger'] = static function (Container $container) : LoggerInterface {
         $settings = $container->get('settings')['logger'];
 
         $logger = new Logger($settings['name']);
@@ -251,7 +251,7 @@ return function (Container $container) {
     };
 
     if (getenv('APPLICATION_ENV') === 'production') {
-        $errorHandler = function (Container $container) : callable {
+        $errorHandler = static function (Container $container) : callable {
             return new ErrorController(
                 $container->get('logger'),
                 $container->get('response'),
@@ -263,7 +263,6 @@ return function (Container $container) {
         $container['phpErrorHandler'] = $errorHandler;
     } else {
         // in development we don't care about error handlers as Tracy will do it for us
-        unset($container['errorHandler']);
-        unset($container['phpErrorHandler']);
+        unset($container['errorHandler'], $container['phpErrorHandler']);
     }
 };

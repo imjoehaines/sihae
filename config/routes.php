@@ -11,7 +11,7 @@ use Sihae\Controllers\ArchiveController;
 use Sihae\Controllers\PostListController;
 use Sihae\Controllers\RegistrationController;
 
-return function (App $app) {
+return static function (App $app) {
     $app->get('/[page/{page:[1-9][0-9]*}]', PostListController::class . ':index');
 
     $app->group('/post', function (RouteCollectorProxy $group) {
