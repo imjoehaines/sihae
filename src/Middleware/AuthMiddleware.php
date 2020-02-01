@@ -8,6 +8,7 @@ use Sihae\Repositories\UserRepository;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 /**
@@ -27,13 +28,23 @@ class AuthMiddleware implements MiddlewareInterface
     private $repository;
 
     /**
+     * @var ResponseFactoryInterface
+     */
+    private $responseFactory;
+
+    /**
      * @param Session $session
      * @param UserRepository $repository
+     * @param ResponseFactoryInterface $responseFactory
      */
-    public function __construct(Session $session, UserRepository $repository)
-    {
+    public function __construct(
+        Session $session,
+        UserRepository $repository,
+        ResponseFactoryInterface $responseFactory
+    ) {
         $this->session = $session;
         $this->repository = $repository;
+        $this->responseFactory = $responseFactory;
     }
 
     /**
@@ -56,6 +67,6 @@ class AuthMiddleware implements MiddlewareInterface
             }
         }
 
-        return (new Response())->withStatus(404);
+        return $this->responseFactory->createResponse(404);
     }
 }

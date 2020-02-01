@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManager;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 /**
@@ -22,11 +23,20 @@ class PostLocator implements MiddlewareInterface
     private $entityManager;
 
     /**
-     * @param EntityManager $entityManager
+     * @var ResponseFactoryInterface
      */
-    public function __construct(EntityManager $entityManager)
-    {
+    private $responseFactory;
+
+    /**
+     * @param EntityManager $entityManager
+     * @param ResponseFactoryInterface $responseFactory
+     */
+    public function __construct(
+        EntityManager $entityManager,
+        ResponseFactoryInterface $responseFactory
+    ) {
         $this->entityManager = $entityManager;
+        $this->responseFactory = $responseFactory;
     }
 
     /**
@@ -40,7 +50,7 @@ class PostLocator implements MiddlewareInterface
         $route = $routeContext->getRoute();
 
         if ($route === null) {
-            return (new Response())->withStatus(404);
+            return $this->responseFactory->createResponse(404);
         }
 
         $slug = $route->getArgument('slug');
@@ -48,7 +58,7 @@ class PostLocator implements MiddlewareInterface
         $post = $this->entityManager->getRepository(Post::class)->findOneBy(['slug' => $slug]);
 
         if ($post === null) {
-            return (new Response())->withStatus(404);
+            return $this->responseFactory->createResponse(404);
         }
 
         return $next->handle($request->withAttribute('post', $post));

@@ -73,7 +73,10 @@ return function (Container $container) {
     };
 
     $container[PostLocator::class] = function (Container $container) : PostLocator {
-        return new PostLocator($container->get(EntityManager::class));
+        return new PostLocator(
+            $container->get(EntityManager::class),
+            $container->get(ResponseFactoryInterface::class)
+        );
     };
 
     $container[Renderer::class] = function (Container $container) : Renderer {
@@ -163,12 +166,15 @@ return function (Container $container) {
     $container[AuthMiddleware::class] = function (Container $container) : AuthMiddleware {
         return new AuthMiddleware(
             $container->get(Session::class),
-            $container->get(UserRepository::class)
+            $container->get(UserRepository::class),
+            $container->get(ResponseFactoryInterface::class)
         );
     };
 
     $container[NotFoundMiddleware::class] = function (Container $container) : NotFoundMiddleware {
-        return new NotFoundMiddleware($container->get(Renderer::class));
+        return new NotFoundMiddleware(
+            $container->get(Renderer::class)
+        );
     };
 
     $container[SettingsProvider::class] = function (Container $container) : SettingsProvider {
