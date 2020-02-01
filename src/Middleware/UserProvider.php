@@ -4,7 +4,6 @@ namespace Sihae\Middleware;
 
 use RKA\Session;
 use Sihae\Renderer;
-use Nyholm\Psr7\Response;
 use Sihae\Repositories\UserRepository;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\MiddlewareInterface;

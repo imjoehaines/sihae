@@ -9,7 +9,6 @@ use Sihae\Controllers\PostController;
 use Sihae\Controllers\LoginController;
 use Sihae\Controllers\ArchiveController;
 use Sihae\Controllers\PostListController;
-use League\CommonMark\CommonMarkConverter;
 use Sihae\Controllers\RegistrationController;
 
 return function (App $app) {

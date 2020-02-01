@@ -3,7 +3,7 @@
 namespace Sihae\Middleware;
 
 use RKA\Session;
-use Nyholm\Psr7\Response;
+use Nyholm\Psr7\Reponse;
 use Sihae\Repositories\UserRepository;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\MiddlewareInterface;

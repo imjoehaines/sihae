@@ -3,7 +3,6 @@
 namespace Sihae\Middleware;
 
 use Sihae\Entities\Post;
-use Nyholm\Psr7\Response;
 use Slim\Routing\RouteContext;
 use Doctrine\ORM\EntityManager;
 use Psr\Http\Message\ResponseInterface;

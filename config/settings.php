@@ -1,5 +1,7 @@
 <?php declare(strict_types=1);
 
+use Monolog\Logger;
+
 $isProduction = getenv('APPLICATION_ENV') === 'production';
 
 return [
@@ -47,7 +49,7 @@ return [
         'logger' => [
             'name' => 'sihae',
             'path' => __DIR__ . '/../data/logs/app.log',
-            'level' => \Monolog\Logger::DEBUG,
+            'level' => Logger::DEBUG,
         ],
     ],
 ];

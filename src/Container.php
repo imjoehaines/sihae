@@ -2,7 +2,6 @@
 
 namespace Sihae;
 
-use ArrayAccess;
 use Psr\Container\ContainerInterface;
 use Pimple\Container as PimpleContainer;
 

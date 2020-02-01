@@ -3,7 +3,6 @@
 use RKA\Session;
 use Monolog\Logger;
 use Slim\Csrf\Guard;
-use Slim\Http\Response;
 use League\Plates\Engine;
 use Psr\Log\LoggerInterface;
 use Doctrine\ORM\Tools\Setup;
@@ -20,15 +19,11 @@ use League\CommonMark\CommonMarkConverter;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
-use Slim\Interfaces\InvocationStrategyInterface;
 use Psr\Http\Message\UploadedFileFactoryInterface;
 use Psr\Http\Message\ServerRequestFactoryInterface;
 
 use Sihae\Renderer;
 use Sihae\Container;
-use Sihae\Entities\Tag;
-use Sihae\Entities\Post;
-use Sihae\Entities\User;
 use Sihae\Middleware\PostLocator;
 use Sihae\Middleware\CsrfProvider;
 use Sihae\Middleware\PageProvider;

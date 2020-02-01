@@ -4,7 +4,6 @@ namespace Sihae\Middleware;
 
 use Sihae\Renderer;
 use Sihae\Entities\Post;
-use Nyholm\Psr7\Response;
 use Doctrine\ORM\EntityManager;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\MiddlewareInterface;
