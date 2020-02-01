@@ -27,7 +27,7 @@ class NotFoundMiddleware implements MiddlewareInterface
     }
 
     /**
-     * Check for 404s and pass them on to the notFoundHandler if one occurs
+     * Check for 404s and render the 404 template if one occurs
      *
      * @param Request $request
      * @param RequestHandlerInterface $handler

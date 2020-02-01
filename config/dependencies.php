@@ -13,10 +13,8 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Processor\UidProcessor;
 use Monolog\Processor\WebProcessor;
 use Nyholm\Psr7\Factory\Psr17Factory;
-use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\UriFactoryInterface;
 use League\CommonMark\CommonMarkConverter;
-use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\UploadedFileFactoryInterface;
@@ -250,13 +248,6 @@ return function (Container $container) {
         $logger->pushHandler(new StreamHandler($settings['path'], $settings['level']));
 
         return $logger;
-    };
-
-    // 404 handler
-    $container['notFoundHandler'] = function (Container $container) : callable {
-        return function (ServerRequestInterface $request, ResponseInterface $response) use ($container) {
-            return $container->get('response')->withStatus(404);
-        };
     };
 
     if (getenv('APPLICATION_ENV') === 'production') {
