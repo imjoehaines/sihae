@@ -41,10 +41,10 @@ class PostLocator implements MiddlewareInterface
 
     /**
      * @param Request $request
-     * @param RequestHandlerInterface $next
+     * @param RequestHandlerInterface $handler
      * @return ResponseInterface
      */
-    public function process(Request $request, RequestHandlerInterface $next) : ResponseInterface
+    public function process(Request $request, RequestHandlerInterface $handler) : ResponseInterface
     {
         $route = $request->getAttribute(RouteContext::ROUTE);
 
@@ -60,6 +60,6 @@ class PostLocator implements MiddlewareInterface
             return $this->responseFactory->createResponse(404);
         }
 
-        return $next->handle($request->withAttribute('post', $post));
+        return $handler->handle($request->withAttribute('post', $post));
     }
 }

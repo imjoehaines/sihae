@@ -38,15 +38,15 @@ class PageProvider implements MiddlewareInterface
 
     /**
      * @param Request $request
-     * @param RequestHandlerInterface $next
+     * @param RequestHandlerInterface $handler
      * @return ResponseInterface
      */
-    public function process(Request $request, RequestHandlerInterface $next) : ResponseInterface
+    public function process(Request $request, RequestHandlerInterface $handler) : ResponseInterface
     {
         $pages = $this->entityManager->getRepository(Post::class)->findBy(['is_page' => true]);
 
         $this->renderer->addData(['pages' => $pages]);
 
-        return $next->handle($request);
+        return $handler->handle($request);
     }
 }

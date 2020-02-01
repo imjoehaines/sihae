@@ -31,12 +31,12 @@ class NotFoundMiddleware implements MiddlewareInterface
      * Check for 404s and pass them on to the notFoundHandler if one occurs
      *
      * @param Request $request
-     * @param RequestHandlerInterface $next
+     * @param RequestHandlerInterface $handler
      * @return ResponseInterface
      */
-    public function process(Request $request, RequestHandlerInterface $next) : ResponseInterface
+    public function process(Request $request, RequestHandlerInterface $handler) : ResponseInterface
     {
-        $response = $next->handle($request);
+        $response = $handler->handle($request);
 
         if ($response->getStatusCode() === 404) {
             return $this->renderer->render($response, '404');

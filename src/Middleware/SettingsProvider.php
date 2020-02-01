@@ -38,13 +38,13 @@ class SettingsProvider implements MiddlewareInterface
      * Provide the Sihae settings to the Renderer
      *
      * @param Request $request
-     * @param RequestHandlerInterface $next
+     * @param RequestHandlerInterface $handler
      * @return ResponseInterface
      */
-    public function process(Request $request, RequestHandlerInterface $next) : ResponseInterface
+    public function process(Request $request, RequestHandlerInterface $handler) : ResponseInterface
     {
         $this->renderer->addData(['settings' => $this->settings]);
 
-        return $next->handle($request);
+        return $handler->handle($request);
     }
 }

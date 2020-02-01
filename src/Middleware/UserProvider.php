@@ -47,10 +47,10 @@ class UserProvider implements MiddlewareInterface
      * Provide the logged in user to the Renderer
      *
      * @param Request $request
-     * @param RequestHandlerInterface $next
+     * @param RequestHandlerInterface $handler
      * @return ResponseInterface
      */
-    public function process(Request $request, RequestHandlerInterface $next) : ResponseInterface
+    public function process(Request $request, RequestHandlerInterface $handler) : ResponseInterface
     {
         $token = $this->session->get('token');
 
@@ -63,6 +63,6 @@ class UserProvider implements MiddlewareInterface
             }
         }
 
-        return $next->handle($request);
+        return $handler->handle($request);
     }
 }
