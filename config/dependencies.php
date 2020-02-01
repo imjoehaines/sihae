@@ -31,11 +31,11 @@ use Sihae\Middleware\AuthMiddleware;
 use Sihae\Controllers\TagController;
 use Sihae\Controllers\PostController;
 use Sihae\Repositories\TagRepository;
+use Sihae\Middleware\ErrorMiddleware;
 use Sihae\Repositories\PostRepository;
 use Sihae\Repositories\UserRepository;
 use Sihae\Formatters\ArchiveFormatter;
 use Sihae\Middleware\SettingsProvider;
-use Sihae\Controllers\ErrorController;
 use Sihae\Controllers\LoginController;
 use Sihae\Controllers\ArchiveController;
 use Sihae\Middleware\NotFoundMiddleware;
@@ -250,19 +250,14 @@ return function (Container $container) {
         return $logger;
     };
 
+    // in development we don't care about error handlers as Tracy will do it for us
     if (getenv('APPLICATION_ENV') === 'production') {
-        $errorHandler = static function (Container $container) : callable {
-            return new ErrorController(
+        $container[ErrorMiddleware::class] = static function (Container $container) : ErrorMiddleware {
+            return new ErrorMiddleware(
                 $container->get('logger'),
-                $container->get('response'),
+                $container->get(ResponseFactoryInterface::class),
                 $container->get(Renderer::class)
             );
         };
-
-        $container['errorHandler'] = $errorHandler;
-        $container['phpErrorHandler'] = $errorHandler;
-    } else {
-        // in development we don't care about error handlers as Tracy will do it for us
-        unset($container['errorHandler'], $container['phpErrorHandler']);
     }
 };

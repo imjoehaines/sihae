@@ -6,6 +6,7 @@ use Slim\App;
 use Dotenv\Dotenv;
 use Tracy\Debugger;
 use Sihae\Container;
+use Sihae\Middleware\ErrorMiddleware;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7Server\ServerRequestCreator;
 use Slim\Handlers\Strategies\RequestResponseArgs;
@@ -77,5 +78,9 @@ set_error_handler(function ($severity, $message, $file, $line) {
 }, E_ALL);
 
 $app->addRoutingMiddleware();
+
+if ($container->has(ErrorMiddleware::class)) {
+    $app->addMiddleware($container->get(ErrorMiddleware::class));
+}
 
 $app->run($request);
