@@ -3,7 +3,6 @@
 namespace Sihae\Controllers;
 
 use Sihae\Renderer;
-use Sihae\Entities\Post;
 use Sihae\Formatters\Formatter;
 use Sihae\Repositories\PostRepository;
 use Psr\Http\Message\ResponseInterface as Response;

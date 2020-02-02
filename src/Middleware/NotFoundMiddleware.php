@@ -3,13 +3,15 @@
 namespace Sihae\Middleware;
 
 use Sihae\Renderer;
-use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 /**
  * Checks for 404s and renders the 404 page if one occurs
  */
-class NotFoundMiddleware
+class NotFoundMiddleware implements MiddlewareInterface
 {
     /**
      * @var Renderer
@@ -25,16 +27,15 @@ class NotFoundMiddleware
     }
 
     /**
-     * Check for 404s and pass them on to the notFoundHandler if one occurs
+     * Check for 404s and render the 404 template if one occurs
      *
      * @param Request $request
-     * @param Response $response
-     * @param callable $next
-     * @return Response
+     * @param RequestHandlerInterface $handler
+     * @return ResponseInterface
      */
-    public function __invoke(Request $request, Response $response, callable $next) : Response
+    public function process(Request $request, RequestHandlerInterface $handler) : ResponseInterface
     {
-        $response = $next($request, $response);
+        $response = $handler->handle($request);
 
         if ($response->getStatusCode() === 404) {
             return $this->renderer->render($response, '404');

@@ -5,6 +5,11 @@ require __DIR__ . '/../vendor/autoload.php';
 use Slim\App;
 use Dotenv\Dotenv;
 use Tracy\Debugger;
+use Sihae\Container;
+use Sihae\Middleware\ErrorMiddleware;
+use Nyholm\Psr7\Factory\Psr17Factory;
+use Nyholm\Psr7Server\ServerRequestCreator;
+use Sihae\RouteArgumentMarshaller;
 
 if (PHP_SAPI === 'cli-server') {
     // To help the built-in PHP dev server, check if the request was actually for
@@ -39,11 +44,22 @@ session_start([
 
 // Instantiate the app
 $settings = require __DIR__ . '/../config/settings.php';
-$app = new App($settings);
+
+$container =  new Container($settings);
+$psr17Factory = new Psr17Factory();
+$creator = new ServerRequestCreator($psr17Factory, $psr17Factory, $psr17Factory, $psr17Factory);
+
+$request = $creator->fromGlobals();
+$container['request'] = $request;
+
+$app = new App($psr17Factory, $container);
+
+$routeCollector = $app->getRouteCollector();
+$routeCollector->setDefaultInvocationStrategy(new RouteArgumentMarshaller());
 
 // Set up dependencies
 $dependencyFactory = require __DIR__ . '/../config/dependencies.php';
-$dependencyFactory($app->getContainer());
+$dependencyFactory($container);
 
 // Register middleware
 $middlewares = require __DIR__ . '/../config/middleware.php';
@@ -61,4 +77,10 @@ set_error_handler(function ($severity, $message, $file, $line) {
     throw new ErrorException($message, 0, $severity, $file, $line);
 }, E_ALL);
 
-$app->run();
+$app->addRoutingMiddleware();
+
+if ($container->has(ErrorMiddleware::class)) {
+    $app->addMiddleware($container->get(ErrorMiddleware::class));
+}
+
+$app->run($request);

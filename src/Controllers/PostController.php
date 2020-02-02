@@ -4,10 +4,7 @@ namespace Sihae\Controllers;
 
 use Sihae\Renderer;
 use Sihae\Utils\Safe;
-use Doctrine\ORM\Query;
-use Sihae\Entities\Tag;
 use Sihae\Entities\Post;
-use Sihae\Entities\User;
 use Sihae\Validators\Validator;
 use Sihae\Repositories\TagRepository;
 use Sihae\Repositories\PostRepository;

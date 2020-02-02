@@ -3,14 +3,18 @@
 namespace Sihae\Middleware;
 
 use Sihae\Entities\Post;
+use Slim\Routing\RouteContext;
 use Doctrine\ORM\EntityManager;
-use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 /**
  * Finds a post by slug in the request
  */
-class PostLocator
+class PostLocator implements MiddlewareInterface
 {
     /**
      * @var EntityManager
@@ -18,30 +22,43 @@ class PostLocator
     private $entityManager;
 
     /**
-     * @param EntityManager $entityManager
+     * @var ResponseFactoryInterface
      */
-    public function __construct(EntityManager $entityManager)
-    {
+    private $responseFactory;
+
+    /**
+     * @param EntityManager $entityManager
+     * @param ResponseFactoryInterface $responseFactory
+     */
+    public function __construct(
+        EntityManager $entityManager,
+        ResponseFactoryInterface $responseFactory
+    ) {
         $this->entityManager = $entityManager;
+        $this->responseFactory = $responseFactory;
     }
 
     /**
      * @param Request $request
-     * @param Response $response
-     * @param callable $next
-     * @return Response
+     * @param RequestHandlerInterface $handler
+     * @return ResponseInterface
      */
-    public function __invoke(Request $request, Response $response, callable $next) : Response
+    public function process(Request $request, RequestHandlerInterface $handler) : ResponseInterface
     {
-        $route = $request->getAttribute('route');
+        $route = $request->getAttribute(RouteContext::ROUTE);
+
+        if ($route === null) {
+            return $this->responseFactory->createResponse(404);
+        }
+
         $slug = $route->getArgument('slug');
 
         $post = $this->entityManager->getRepository(Post::class)->findOneBy(['slug' => $slug]);
 
         if ($post === null) {
-            return $response->withStatus(404);
+            return $this->responseFactory->createResponse(404);
         }
 
-        return $next($request->withAttribute('post', $post), $response);
+        return $handler->handle($request->withAttribute('post', $post));
     }
 }

@@ -3,13 +3,15 @@
 namespace Sihae\Middleware;
 
 use Sihae\Renderer;
-use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 /**
  * Provides the Sihae settings to the Renderer
  */
-class SettingsProvider
+class SettingsProvider implements MiddlewareInterface
 {
     /**
      * @var Renderer
@@ -35,14 +37,13 @@ class SettingsProvider
      * Provide the Sihae settings to the Renderer
      *
      * @param Request $request
-     * @param Response $response
-     * @param callable $next
-     * @return Response
+     * @param RequestHandlerInterface $handler
+     * @return ResponseInterface
      */
-    public function __invoke(Request $request, Response $response, callable $next) : Response
+    public function process(Request $request, RequestHandlerInterface $handler) : ResponseInterface
     {
         $this->renderer->addData(['settings' => $this->settings]);
 
-        return $next($request, $response);
+        return $handler->handle($request);
     }
 }

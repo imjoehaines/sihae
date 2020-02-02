@@ -4,13 +4,15 @@ namespace Sihae\Middleware;
 
 use Sihae\Renderer;
 use Slim\Csrf\Guard;
-use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 /**
  * Provides data for CSRF protection to the Renderer
  */
-class CsrfProvider
+class CsrfProvider implements MiddlewareInterface
 {
     /**
      * @var Renderer
@@ -36,11 +38,10 @@ class CsrfProvider
      * Provide data for CSRF protection to the Renderer
      *
      * @param Request $request
-     * @param Response $response
-     * @param callable $next
-     * @return Response
+     * @param RequestHandlerInterface $handler
+     * @return ResponseInterface
      */
-    public function __invoke(Request $request, Response $response, callable $next) : Response
+    public function process(Request $request, RequestHandlerInterface $handler) : ResponseInterface
     {
         $nameKey = $this->csrf->getTokenNameKey();
         $valueKey = $this->csrf->getTokenValueKey();
@@ -52,6 +53,6 @@ class CsrfProvider
             'value' => $request->getAttribute($valueKey),
         ]]);
 
-        return $next($request, $response);
+        return $handler->handle($request);
     }
 }
