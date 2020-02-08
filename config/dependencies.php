@@ -24,6 +24,7 @@ use Psr\Http\Message\ServerRequestFactoryInterface;
 use Sihae\Renderer;
 use Sihae\Container;
 use Sihae\Actions\LoginAction;
+use Sihae\Actions\LogoutAction;
 use Sihae\Middleware\PostLocator;
 use Sihae\Middleware\CsrfProvider;
 use Sihae\Middleware\PageProvider;
@@ -131,9 +132,7 @@ return function (Container $container) {
 
     $container[LoginController::class] = static function (Container $container) : LoginController {
         return new LoginController(
-            $container->get(Renderer::class),
-            $container->get(UserRepository::class),
-            $container->get(Session::class)
+            $container->get(Renderer::class)
         );
     };
 
@@ -142,6 +141,12 @@ return function (Container $container) {
             $container->get(Renderer::class),
             $container->get(UserRepository::class),
             $container->get(Session::class),
+            $container->get(ResponseFactoryInterface::class)
+        );
+    };
+
+    $container[LogoutAction::class] = static function (Container $container) : RequestHandlerInterface {
+        return new LogoutAction(
             $container->get(ResponseFactoryInterface::class)
         );
     };

@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 
 use Sihae\Actions\LoginAction;
+use Sihae\Actions\LogoutAction;
 use Slim\App;
 use Sihae\Middleware\PostLocator;
 use Sihae\Middleware\AuthMiddleware;
@@ -37,7 +38,7 @@ return static function (App $app) {
 
     $app->get('/login', LoginController::class . ':showForm');
     $app->post('/login', LoginAction::class);
-    $app->get('/logout', LoginController::class . ':logout');
+    $app->get('/logout', LogoutAction::class);
 
     if ((bool) getenv('ENABLE_REGISTRATION') === true) {
         $app->get('/register', RegistrationController::class . ':showForm');
