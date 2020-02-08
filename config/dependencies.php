@@ -26,6 +26,7 @@ use Sihae\Container;
 use Sihae\Actions\LoginAction;
 use Sihae\Actions\LogoutAction;
 use Sihae\Middleware\PostLocator;
+use Sihae\Actions\LoginFormAction;
 use Sihae\Middleware\CsrfProvider;
 use Sihae\Middleware\PageProvider;
 use Sihae\Middleware\UserProvider;
@@ -130,18 +131,19 @@ return function (Container $container) {
         );
     };
 
-    $container[LoginController::class] = static function (Container $container) : LoginController {
-        return new LoginController(
-            $container->get(Renderer::class)
-        );
-    };
-
     $container[LoginAction::class] = static function (Container $container) : RequestHandlerInterface {
         return new LoginAction(
             $container->get(Renderer::class),
             $container->get(UserRepository::class),
             $container->get(Session::class),
             $container->get(ResponseFactoryInterface::class)
+        );
+    };
+
+    $container[LoginFormAction::class] = static function (Container $container) : RequestHandlerInterface {
+        return new LoginFormAction(
+            $container->get(ResponseFactoryInterface::class),
+            $container->get(Renderer::class)
         );
     };
 

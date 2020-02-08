@@ -2,13 +2,13 @@
 
 namespace Sihae\Actions;
 
-use RKA\Session;
+use Sihae\Renderer;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 
-final class LogoutAction implements RequestHandlerInterface
+final class LoginFormAction implements RequestHandlerInterface
 {
     /**
      * @var ResponseFactoryInterface
@@ -16,11 +16,20 @@ final class LogoutAction implements RequestHandlerInterface
     private $responseFactory;
 
     /**
-     * @param ResponseFactoryInterface $responseFactory
+     * @var Renderer
      */
-    public function __construct(ResponseFactoryInterface $responseFactory)
-    {
+    private $renderer;
+
+    /**
+     * @param ResponseFactoryInterface $responseFactory
+     * @param Renderer $renderer
+     */
+    public function __construct(
+        ResponseFactoryInterface $responseFactory,
+        Renderer $renderer
+    ) {
         $this->responseFactory = $responseFactory;
+        $this->renderer = $renderer;
     }
 
     /**
@@ -30,10 +39,9 @@ final class LogoutAction implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        Session::destroy();
-
-        return $this->responseFactory
-            ->createResponse(302)
-            ->withHeader('Location', '/');
+        return $this->renderer->render(
+            $this->responseFactory->createResponse(),
+            'login'
+        );
     }
 }

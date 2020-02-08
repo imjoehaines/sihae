@@ -1,14 +1,14 @@
 <?php declare(strict_types=1);
 
+use Slim\App;
 use Sihae\Actions\LoginAction;
 use Sihae\Actions\LogoutAction;
-use Slim\App;
 use Sihae\Middleware\PostLocator;
+use Sihae\Actions\LoginFormAction;
 use Sihae\Middleware\AuthMiddleware;
 use Sihae\Controllers\TagController;
 use Slim\Routing\RouteCollectorProxy;
 use Sihae\Controllers\PostController;
-use Sihae\Controllers\LoginController;
 use Sihae\Controllers\ArchiveController;
 use Sihae\Controllers\PostListController;
 use Sihae\Controllers\RegistrationController;
@@ -36,7 +36,7 @@ return static function (App $app) {
     $app->get('/archive', ArchiveController::class . ':index');
     $app->get('/tags', TagController::class . ':index');
 
-    $app->get('/login', LoginController::class . ':showForm');
+    $app->get('/login', LoginFormAction::class);
     $app->post('/login', LoginAction::class);
     $app->get('/logout', LogoutAction::class);
 
