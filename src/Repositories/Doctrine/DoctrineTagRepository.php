@@ -72,7 +72,7 @@ class DoctrineTagRepository implements TagRepository
     }
 
     /**
-     * @return array<Tag>
+     * @return array<string, int|string>
      */
     public function findAllAsArray() : array
     {
@@ -86,7 +86,7 @@ class DoctrineTagRepository implements TagRepository
 
     /**
      * @param Post $post
-     * @return array<Tag>
+     * @return array<string, int|string>
      */
     public function findAllForPostAsArray(Post $post) : array
     {

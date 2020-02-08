@@ -22,13 +22,13 @@ interface TagRepository
     public function findAll(array $existingTags, array $newTags) : array;
 
     /**
-     * @return array<Tag>
+     * @return array<string, int|string>
      */
     public function findAllAsArray() : array;
 
     /**
      * @param Post $post
-     * @return array<Tag>
+     * @return array<string, int|string>
      */
     public function findAllForPostAsArray(Post $post) : array;
 }
