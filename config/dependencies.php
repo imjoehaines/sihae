@@ -15,6 +15,7 @@ use Monolog\Processor\WebProcessor;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Http\Message\UriFactoryInterface;
 use League\CommonMark\CommonMarkConverter;
+use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\UploadedFileFactoryInterface;
@@ -22,6 +23,7 @@ use Psr\Http\Message\ServerRequestFactoryInterface;
 
 use Sihae\Renderer;
 use Sihae\Container;
+use Sihae\Actions\LoginAction;
 use Sihae\Middleware\PostLocator;
 use Sihae\Middleware\CsrfProvider;
 use Sihae\Middleware\PageProvider;
@@ -132,6 +134,15 @@ return function (Container $container) {
             $container->get(Renderer::class),
             $container->get(UserRepository::class),
             $container->get(Session::class)
+        );
+    };
+
+    $container[LoginAction::class] = static function (Container $container) : RequestHandlerInterface {
+        return new LoginAction(
+            $container->get(Renderer::class),
+            $container->get(UserRepository::class),
+            $container->get(Session::class),
+            $container->get(ResponseFactoryInterface::class)
         );
     };
 

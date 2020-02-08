@@ -20,57 +20,11 @@ class LoginController
     private $renderer;
 
     /**
-     * @var UserRepository
-     */
-    private $repository;
-
-    /**
-     * @var Session
-     */
-    private $session;
-
-    /**
      * @param Renderer $renderer
-     * @param UserRepository $repository
-     * @param Session $session
      */
-    public function __construct(
-        Renderer $renderer,
-        UserRepository $repository,
-        Session $session
-    ) {
-        $this->renderer = $renderer;
-        $this->repository = $repository;
-        $this->session = $session;
-    }
-
-    /**
-     * Log a user in
-     *
-     * @param Request $request
-     * @param Response $response
-     * @return Response
-     */
-    public function login(Request $request, Response $response) : Response
+    public function __construct(Renderer $renderer)
     {
-        $userDetails = $request->getParsedBody();
-
-        $user = $this->repository->findByUsername(Safe::get('username', $userDetails, ''));
-
-        if ($user === null ||
-            !$user->login(Safe::get('password', $userDetails, ''))
-        ) {
-            return $this->renderer->render($response, 'login', [
-                'errors' => ['No user was found with these credentials, please try again'],
-                'username' => Safe::get('username', $userDetails, ''),
-            ]);
-        }
-
-        $this->repository->save($user);
-
-        $this->session->set('token', $user->getToken());
-
-        return $response->withStatus(302)->withHeader('Location', '/');
+        $this->renderer = $renderer;
     }
 
     /**
