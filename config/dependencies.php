@@ -25,6 +25,7 @@ use Sihae\Renderer;
 use Sihae\Container;
 use Sihae\Actions\LoginAction;
 use Sihae\Actions\LogoutAction;
+use Sihae\Actions\ArchiveAction;
 use Sihae\Middleware\PostLocator;
 use Sihae\Actions\LoginFormAction;
 use Sihae\Middleware\CsrfProvider;
@@ -40,8 +41,6 @@ use Sihae\Repositories\PostRepository;
 use Sihae\Repositories\UserRepository;
 use Sihae\Formatters\ArchiveFormatter;
 use Sihae\Middleware\SettingsProvider;
-use Sihae\Controllers\LoginController;
-use Sihae\Controllers\ArchiveController;
 use Sihae\Middleware\NotFoundMiddleware;
 use Sihae\Controllers\PostListController;
 use Sihae\Validators\RegistrationValidator;
@@ -116,8 +115,9 @@ return function (Container $container) {
         );
     };
 
-    $container[ArchiveController::class] = static function (Container $container) : ArchiveController {
-        return new ArchiveController(
+    $container[ArchiveAction::class] = static function (Container $container) : RequestHandlerInterface {
+        return new ArchiveAction(
+            $container->get(ResponseFactoryInterface::class),
             $container->get(Renderer::class),
             $container->get(PostRepository::class),
             $container->get(ArchiveFormatter::class)

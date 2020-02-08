@@ -3,13 +3,13 @@
 use Slim\App;
 use Sihae\Actions\LoginAction;
 use Sihae\Actions\LogoutAction;
+use Sihae\Actions\ArchiveAction;
 use Sihae\Middleware\PostLocator;
 use Sihae\Actions\LoginFormAction;
 use Sihae\Middleware\AuthMiddleware;
 use Sihae\Controllers\TagController;
 use Slim\Routing\RouteCollectorProxy;
 use Sihae\Controllers\PostController;
-use Sihae\Controllers\ArchiveController;
 use Sihae\Controllers\PostListController;
 use Sihae\Controllers\RegistrationController;
 
@@ -33,7 +33,7 @@ return static function (App $app) {
 
     $app->get('/tagged/{slug:[a-zA-Z\d\s\-_\-]+}[/page/{page:[1-9][0-9]*}]', PostListController::class . ':tagged');
 
-    $app->get('/archive', ArchiveController::class . ':index');
+    $app->get('/archive', ArchiveAction::class);
     $app->get('/tags', TagController::class . ':index');
 
     $app->get('/login', LoginFormAction::class);
