@@ -1,15 +1,17 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Sihae\Middleware;
 
-use Throwable;
-use Sihae\Renderer;
-use Psr\Log\LoggerInterface as Logger;
-use Psr\Http\Server\MiddlewareInterface;
-use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+use Psr\Log\LoggerInterface as Logger;
+use Sihae\Renderer;
+use Throwable;
 
 class ErrorMiddleware implements MiddlewareInterface
 {
@@ -50,7 +52,7 @@ class ErrorMiddleware implements MiddlewareInterface
      * @param RequestHandlerInterface $handler
      * @return Response
      */
-    public function process(Request $request, RequestHandlerInterface $handler) : Response
+    public function process(Request $request, RequestHandlerInterface $handler): Response
     {
         try {
             return $handler->handle($request);

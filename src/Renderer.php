@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Sihae;
 
@@ -34,7 +36,7 @@ class Renderer
      * @param array<string, mixed> $data optional array of data to pass to the template
      * @return Response
      */
-    public function render(Response $response, string $template, array $data = []) : Response
+    public function render(Response $response, string $template, array $data = []): Response
     {
         $body = $response->getBody();
 
@@ -50,7 +52,7 @@ class Renderer
      * @param array<string, mixed> $data
      * @return void
      */
-    public function addData(array $data) : void
+    public function addData(array $data): void
     {
         $this->engine->addData($data);
     }

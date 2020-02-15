@@ -1,20 +1,22 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use Slim\App;
 use Dotenv\Dotenv;
-use Tracy\Debugger;
-use Sihae\Container;
-use Sihae\Middleware\ErrorMiddleware;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7Server\ServerRequestCreator;
+use Sihae\Container;
+use Sihae\Middleware\ErrorMiddleware;
 use Sihae\RouteArgumentMarshaller;
+use Slim\App;
+use Tracy\Debugger;
 
 if (PHP_SAPI === 'cli-server') {
     // To help the built-in PHP dev server, check if the request was actually for
     // something which should probably be served as a static file
-    $url  = parse_url($_SERVER['REQUEST_URI']);
+    $url = parse_url($_SERVER['REQUEST_URI']);
     $file = __DIR__ . $url['path'];
 
     if (is_file($file)) {
@@ -45,7 +47,7 @@ session_start([
 // Instantiate the app
 $settings = require __DIR__ . '/../config/settings.php';
 
-$container =  new Container($settings);
+$container = new Container($settings);
 $psr17Factory = new Psr17Factory();
 $creator = new ServerRequestCreator($psr17Factory, $psr17Factory, $psr17Factory, $psr17Factory);
 
@@ -73,7 +75,7 @@ $routeFactory = require __DIR__ . '/../config/routes.php';
 $routeFactory($app);
 
 // convert all warnings, notices etc... into ErrorExceptions
-set_error_handler(function ($severity, $message, $file, $line) {
+set_error_handler(function ($severity, $message, $file, $line): void {
     throw new ErrorException($message, 0, $severity, $file, $line);
 }, E_ALL);
 

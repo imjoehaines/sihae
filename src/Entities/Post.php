@@ -1,12 +1,14 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Sihae\Entities;
 
-use Sihae\Slugifier;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Sihae\Entities\Traits\Timestamps;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ArrayCollection;
+use Sihae\Slugifier;
 
 /**
  * @ORM\Entity
@@ -90,7 +92,7 @@ class Post
     /**
      * @return string
      */
-    public function getTitle() : string
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -98,7 +100,7 @@ class Post
     /**
      * @return string
      */
-    public function getSlug() : string
+    public function getSlug(): string
     {
         return $this->slug;
     }
@@ -106,7 +108,7 @@ class Post
     /**
      * @return string
      */
-    public function getBody() : string
+    public function getBody(): string
     {
         return $this->body;
     }
@@ -114,7 +116,7 @@ class Post
     /**
      * @return bool
      */
-    public function isPage() : bool
+    public function isPage(): bool
     {
         return $this->is_page;
     }
@@ -122,7 +124,7 @@ class Post
     /**
      * @return Collection<int, Tag>
      */
-    public function getTags() : Collection
+    public function getTags(): Collection
     {
         return $this->tags;
     }
@@ -131,7 +133,7 @@ class Post
      * @param string $title
      * @return void
      */
-    public function setTitle(string $title) : void
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }
@@ -140,7 +142,7 @@ class Post
      * @param string $body
      * @return void
      */
-    public function setBody(string $body) : void
+    public function setBody(string $body): void
     {
         $this->body = $body;
     }
@@ -149,7 +151,7 @@ class Post
      * @param bool $isPage
      * @return void
      */
-    public function setIsPage(bool $isPage) : void
+    public function setIsPage(bool $isPage): void
     {
         $this->is_page = $isPage;
     }
@@ -162,7 +164,7 @@ class Post
      *
      * @return void
      */
-    public function regenerateSlug() : void
+    public function regenerateSlug(): void
     {
         $this->slug = Slugifier::slugify($this->title . ' ' . time());
     }
@@ -171,7 +173,7 @@ class Post
      * @param Tag $tag
      * @return void
      */
-    public function addTag(Tag $tag) : void
+    public function addTag(Tag $tag): void
     {
         if (!$this->tags->contains($tag)) {
             $this->tags->add($tag);
@@ -183,7 +185,7 @@ class Post
      * @param Tag $tag
      * @return void
      */
-    public function removeTag(Tag $tag) : void
+    public function removeTag(Tag $tag): void
     {
         if ($this->tags->contains($tag)) {
             $this->tags->removeElement($tag);
@@ -194,7 +196,7 @@ class Post
     /**
      * @return void
      */
-    public function clearTags() : void
+    public function clearTags(): void
     {
         $this->tags = new ArrayCollection();
     }

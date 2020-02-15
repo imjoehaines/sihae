@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Sihae\Validators;
 
@@ -16,7 +18,7 @@ class PostValidator implements Validator
      * @param array<string, string> $postDetails
      * @return bool
      */
-    public function isValid(array $postDetails) : bool
+    public function isValid(array $postDetails): bool
     {
         $this->errors = [];
 
@@ -38,7 +40,7 @@ class PostValidator implements Validator
     /**
      * @return array<string>
      */
-    public function getErrors() : array
+    public function getErrors(): array
     {
         return $this->errors;
     }

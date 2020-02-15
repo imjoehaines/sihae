@@ -1,13 +1,15 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Sihae\Controllers;
 
-use RKA\Session;
-use Sihae\Renderer;
-use Sihae\Utils\Safe;
-use Sihae\Repositories\UserRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use RKA\Session;
+use Sihae\Renderer;
+use Sihae\Repositories\UserRepository;
+use Sihae\Utils\Safe;
 
 /**
  * Controller for the login page
@@ -51,7 +53,7 @@ class LoginController
      * @param Response $response
      * @return Response
      */
-    public function login(Request $request, Response $response) : Response
+    public function login(Request $request, Response $response): Response
     {
         $userDetails = $request->getParsedBody();
 
@@ -80,7 +82,7 @@ class LoginController
      * @param Response $response
      * @return Response
      */
-    public function logout(Request $request, Response $response) : Response
+    public function logout(Request $request, Response $response): Response
     {
         Session::destroy();
 
@@ -94,7 +96,7 @@ class LoginController
      * @param Response $response
      * @return Response
      */
-    public function showForm(Request $request, Response $response) : Response
+    public function showForm(Request $request, Response $response): Response
     {
         return $this->renderer->render($response, 'login');
     }

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Sihae\Validators;
 
@@ -10,12 +12,12 @@ interface Validator
      * @param array<string, string> $data
      * @return bool
      */
-    public function isValid(array $data) : bool;
+    public function isValid(array $data): bool;
 
     /**
      * Get the list of errors that will be populated by `isValid`
      *
      * @return array<string>
      */
-    public function getErrors() : array;
+    public function getErrors(): array;
 }

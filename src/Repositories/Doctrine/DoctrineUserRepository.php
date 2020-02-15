@@ -1,11 +1,13 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Sihae\Repositories\Doctrine;
 
-use Sihae\Entities\User;
-use Doctrine\ORM\EntityManager;
-use Sihae\Repositories\UserRepository;
 use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\ORM\EntityManager;
+use Sihae\Entities\User;
+use Sihae\Repositories\UserRepository;
 
 class DoctrineUserRepository implements UserRepository
 {
@@ -32,7 +34,7 @@ class DoctrineUserRepository implements UserRepository
      * @param User $user
      * @return void
      */
-    public function save(User $user) : void
+    public function save(User $user): void
     {
         $this->entityManager->persist($user);
         $this->entityManager->flush();
@@ -42,7 +44,7 @@ class DoctrineUserRepository implements UserRepository
      * @param string $username
      * @return User|null
      */
-    public function findByUsername(string $username) : ?User
+    public function findByUsername(string $username): ?User
     {
         return $this->repository->findOneBy(['username' => $username]);
     }
@@ -51,7 +53,7 @@ class DoctrineUserRepository implements UserRepository
      * @param string $token
      * @return User|null
      */
-    public function findByToken(string $token) : ?User
+    public function findByToken(string $token): ?User
     {
         return $this->repository->findOneBy(['token' => $token]);
     }

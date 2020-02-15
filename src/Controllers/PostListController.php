@@ -1,12 +1,14 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Sihae\Controllers;
 
-use Sihae\Renderer;
-use Sihae\Repositories\TagRepository;
-use Sihae\Repositories\PostRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Sihae\Renderer;
+use Sihae\Repositories\PostRepository;
+use Sihae\Repositories\TagRepository;
 
 /**
  * Controller for handling showing multiple blog posts
@@ -51,7 +53,7 @@ class PostListController
      * @param int $page
      * @return Response
      */
-    public function index(Request $request, Response $response, int $page = 1) : Response
+    public function index(Request $request, Response $response, int $page = 1): Response
     {
         $limit = 8;
         $offset = $limit * ($page - 1);
@@ -76,7 +78,7 @@ class PostListController
      * @param int $page
      * @return Response
      */
-    public function tagged(Request $request, Response $response, string $slug, int $page = 1) : Response
+    public function tagged(Request $request, Response $response, string $slug, int $page = 1): Response
     {
         $tag = $this->tagRepository->findBySlug($slug);
 

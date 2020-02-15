@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
 
-use Dotenv\Dotenv;
-use Doctrine\ORM\Tools\Setup;
+declare(strict_types=1);
+
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
+use Doctrine\ORM\Tools\Setup;
+use Dotenv\Dotenv;
 
 require __DIR__ . '/../vendor/autoload.php';
 

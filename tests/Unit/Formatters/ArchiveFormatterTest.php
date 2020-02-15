@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Sihae\Tests\Unit\Formatters;
 
@@ -13,7 +15,7 @@ class ArchiveFormatterTest extends TestCase
     /**
      * @return void
      */
-    public function testItDoesNothingToEmptyArrays() : void
+    public function testItDoesNothingToEmptyArrays(): void
     {
         $formatter = new ArchiveFormatter();
 
@@ -23,7 +25,7 @@ class ArchiveFormatterTest extends TestCase
     /**
      * @return void
      */
-    public function testItFormatsArraysOfNewPostsIntoArraysIndexedByThisYear() : void
+    public function testItFormatsArraysOfNewPostsIntoArraysIndexedByThisYear(): void
     {
         $formatter = new ArchiveFormatter();
 

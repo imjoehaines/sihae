@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Sihae\Formatters;
 
@@ -17,9 +19,9 @@ class ArchiveFormatter implements Formatter
      * @param array<mixed> $data This is really array<Post> but PHPStan doesn't allow it
      * @return array<Post>
      */
-    public function format(array $data) : array
+    public function format(array $data): array
     {
-        return array_reduce($data, function (array $carry, Post $post) : array {
+        return array_reduce($data, function (array $carry, Post $post): array {
             $date = $post->getDateCreated()->format('Y');
 
             if (isset($carry[$date])) {
