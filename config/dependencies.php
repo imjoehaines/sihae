@@ -5,6 +5,8 @@ declare(strict_types=1);
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
 use League\CommonMark\CommonMarkConverter;
+use League\CommonMark\Environment;
+use League\CommonMark\Extension\Table\TableExtension;
 use League\Plates\Engine;
 use League\Plates\Extension\Asset;
 use League\Plates\Extension\URI;
@@ -215,7 +217,10 @@ return function (Container $container): void {
     $container[CommonMarkConverter::class] = static function (Container $container): CommonMarkConverter {
         $settings = $container->get('settings')['markdown'];
 
-        return new CommonMarkConverter($settings);
+        $environment = Environment::createCommonMarkEnvironment();
+        $environment->addExtension(new TableExtension());
+
+        return new CommonMarkConverter($settings, $environment);
     };
 
     $container[EntityManager::class] = static function (Container $container): EntityManager {

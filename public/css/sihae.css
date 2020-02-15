@@ -202,6 +202,46 @@ img {
   margin: 1rem 0;
 }
 
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  max-width: 100%;
+  overflow-x: scroll;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+th {
+  text-align: left;
+  font-weight: bold;
+  border-bottom: 1px solid #cbcbcb;
+}
+
+th[align="right"] {
+  text-align: right;
+}
+
+th[align="center"] {
+  text-align: center;
+}
+
+th,
+td {
+  padding: .5rem 1rem;
+  border-right: 1px solid #cbcbcb;
+}
+
+th:first-child,
+td:first-child {
+  padding-left: 0;
+}
+
+th:last-child,
+td:last-child {
+  padding-right: 0;
+  border-right: none;
+}
+
 .errors {
   background: #ffdfe4;
   border: 1px solid #e9c1c7;
