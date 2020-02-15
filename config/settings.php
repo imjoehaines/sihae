@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 use Monolog\Logger;
 
@@ -24,7 +26,7 @@ return [
         'doctrine' => [
             'entity_path' => ['src/Entities'],
             'auto_generate_proxies' => true,
-            'proxy_dir' =>  __DIR__ . '/../data/cache/proxies',
+            'proxy_dir' => __DIR__ . '/../data/cache/proxies',
             'cache' => null,
             'connection' => [
                 'driver' => getenv('DB_DRIVER') ?: 'pdo_mysql',

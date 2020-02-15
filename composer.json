@@ -45,7 +45,8 @@
         "phpstan/phpstan-doctrine": "0.12.9",
         "phpunit/phpunit": "9.0.1",
         "phpstan/phpstan-deprecation-rules": "0.12.2",
-        "phpstan/phpstan-strict-rules": "0.12.2"
+        "phpstan/phpstan-strict-rules": "0.12.2",
+        "symplify/easy-coding-standard-prefixed": "7.2.2"
     },
     "scripts": {
         "test": [

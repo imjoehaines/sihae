@@ -1,15 +1,16 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Sihae\Middleware;
 
-use RKA\Session;
-use Nyholm\Psr7\Reponse;
-use Sihae\Repositories\UserRepository;
+use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Psr\Http\Message\ResponseFactoryInterface;
-use Psr\Http\Message\ServerRequestInterface as Request;
+use RKA\Session;
+use Sihae\Repositories\UserRepository;
 
 /**
  * Checks the user in the current session is an admin, if they are not a 404
@@ -55,7 +56,7 @@ class AuthMiddleware implements MiddlewareInterface
      * @param RequestHandlerInterface $handler
      * @return ResponseInterface
      */
-    public function process(Request $request, RequestHandlerInterface $handler) : ResponseInterface
+    public function process(Request $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $token = $this->session->get('token');
 

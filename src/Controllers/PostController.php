@@ -1,16 +1,18 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Sihae\Controllers;
 
-use Sihae\Renderer;
-use Sihae\Utils\Safe;
-use Sihae\Entities\Post;
-use Sihae\Validators\Validator;
-use Sihae\Repositories\TagRepository;
-use Sihae\Repositories\PostRepository;
 use League\CommonMark\CommonMarkConverter;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Sihae\Entities\Post;
+use Sihae\Renderer;
+use Sihae\Repositories\PostRepository;
+use Sihae\Repositories\TagRepository;
+use Sihae\Utils\Safe;
+use Sihae\Validators\Validator;
 
 /**
  * Controller for handling creating/updating/deleting/showing blog posts
@@ -77,7 +79,7 @@ class PostController
      * @param Response $response
      * @return Response
      */
-    public function create(Request $request, Response $response) : Response
+    public function create(Request $request, Response $response): Response
     {
         $tags = $this->tagRepository->findAllAsArray();
 
@@ -93,7 +95,7 @@ class PostController
      * @param Response $response
      * @return Response
      */
-    public function store(Request $request, Response $response) : Response
+    public function store(Request $request, Response $response): Response
     {
         $newPost = $request->getParsedBody();
 
@@ -140,7 +142,7 @@ class PostController
      * @param string $slug
      * @return Response
      */
-    public function show(Request $request, Response $response, string $slug) : Response
+    public function show(Request $request, Response $response, string $slug): Response
     {
         $post = $this->getPost($request);
 
@@ -158,7 +160,7 @@ class PostController
      * @param string $slug
      * @return Response
      */
-    public function edit(Request $request, Response $response, string $slug) : Response
+    public function edit(Request $request, Response $response, string $slug): Response
     {
         $post = $this->getPost($request);
 
@@ -184,7 +186,7 @@ class PostController
      * @param string $slug
      * @return Response
      */
-    public function update(Request $request, Response $response, string $slug) : Response
+    public function update(Request $request, Response $response, string $slug): Response
     {
         $post = $this->getPost($request);
 
@@ -225,7 +227,7 @@ class PostController
      * @param string $slug
      * @return Response
      */
-    public function delete(Request $request, Response $response, string $slug) : Response
+    public function delete(Request $request, Response $response, string $slug): Response
     {
         $post = $this->getPost($request);
 
@@ -242,7 +244,7 @@ class PostController
      * @param string $slug
      * @return Response
      */
-    public function convert(Request $request, Response $response, string $slug) : Response
+    public function convert(Request $request, Response $response, string $slug): Response
     {
         $entity = $this->postRepository->findOneBySlug($slug);
 
@@ -263,7 +265,7 @@ class PostController
         return $response->withStatus(302)->withHeader('Location', $path);
     }
 
-    private function getPost(Request $request) : Post
+    private function getPost(Request $request): Post
     {
         return $request->getAttribute('post');
     }

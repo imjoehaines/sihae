@@ -1,16 +1,18 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Sihae\Tests\Features;
 
-use Dotenv\Dotenv;
-use Sihae\Entities\User;
-use Sihae\Entities\Post;
-use Doctrine\ORM\Tools\Setup;
-use Doctrine\ORM\EntityManager;
 use Behat\Behat\Context\Context;
+use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\TableNode;
 use Behat\MinkExtension\Context\MinkContext;
-use Behat\Behat\Tester\Exception\PendingException;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Tools\Setup;
+use Dotenv\Dotenv;
+use Sihae\Entities\Post;
+use Sihae\Entities\User;
 
 /**
  * Defines application features from the specific context.
@@ -26,12 +28,12 @@ final class FeatureContext extends MinkContext implements Context
      * @BeforeSuite
      * @return void
      */
-    public static function prepare() : void
+    public static function prepare(): void
     {
         $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
         $dotenv->load();
 
-        (new static)->cleanDb();
+        (new static())->cleanDb();
     }
 
     /**
@@ -39,7 +41,7 @@ final class FeatureContext extends MinkContext implements Context
      * @throws PendingException when the database driver isn't supported
      * @return void
      */
-    public function cleanDb() : void
+    public function cleanDb(): void
     {
         $connection = $this->getEntityManager()->getConnection();
         $schemaManager = $connection->getSchemaManager();
@@ -52,7 +54,7 @@ final class FeatureContext extends MinkContext implements Context
 
         // sort the list of tables based on foreign keys so it is safe to delete
         // from them in order
-        uasort($tables, function ($table1, $table2) use ($getForeignTableName) : int {
+        uasort($tables, function ($table1, $table2) use ($getForeignTableName): int {
             $table1Relations = array_map($getForeignTableName, $table1->getForeignKeys());
 
             if (in_array($table2->getName(), $table1Relations, true)) {
@@ -77,7 +79,7 @@ final class FeatureContext extends MinkContext implements Context
      * @BeforeScenario @login
      * @return void
      */
-    public function login() : void
+    public function login(): void
     {
         $this->createTestUser();
         $this->loginTestUser();
@@ -87,7 +89,7 @@ final class FeatureContext extends MinkContext implements Context
      * @BeforeScenario @loginAdmin
      * @return void
      */
-    public function loginAdmin() : void
+    public function loginAdmin(): void
     {
         $this->createTestAdmin();
         $this->loginTestUser();
@@ -96,7 +98,7 @@ final class FeatureContext extends MinkContext implements Context
     /**
      * @return void
      */
-    public function createTestAdmin() : void
+    public function createTestAdmin(): void
     {
         $user = new User(
             'testing',
@@ -116,7 +118,7 @@ final class FeatureContext extends MinkContext implements Context
     /**
      * @return void
      */
-    protected function loginTestUser() : void
+    protected function loginTestUser(): void
     {
         $this->visit('/login');
         $this->fillField('username', 'testing');
@@ -130,7 +132,7 @@ final class FeatureContext extends MinkContext implements Context
      * @BeforeScenario @createUser
      * @return void
      */
-    public function createTestUser() : void
+    public function createTestUser(): void
     {
         $user = new User('testing', 'testing');
 
@@ -143,7 +145,7 @@ final class FeatureContext extends MinkContext implements Context
      *
      * @return EntityManager
      */
-    protected function getEntityManager() : EntityManager
+    protected function getEntityManager(): EntityManager
     {
         if (!isset($this->entityManager)) {
             $settings = require __DIR__ . '/../../config/settings.php';
@@ -166,7 +168,7 @@ final class FeatureContext extends MinkContext implements Context
      * @Given I am logged in
      * @return void
      */
-    public function iAmLoggedIn() : void
+    public function iAmLoggedIn(): void
     {
         $this->login();
     }
@@ -176,7 +178,7 @@ final class FeatureContext extends MinkContext implements Context
      * @param TableNode<array> $posts
      * @return void
      */
-    public function thereIsAPost(TableNode $posts) : void
+    public function thereIsAPost(TableNode $posts): void
     {
         $this->thereAreSomePosts($posts);
     }
@@ -186,7 +188,7 @@ final class FeatureContext extends MinkContext implements Context
      * @param TableNode<array> $posts
      * @return void
      */
-    public function thereAreSomePosts(TableNode $posts) : void
+    public function thereAreSomePosts(TableNode $posts): void
     {
         $posts = $posts->getHash();
         $user = $this->getEntityManager()->getRepository(User::class)->findOneBy([]);
