@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e42e76e6e1f14b47a1287fbbcb3c854a",
+    "content-hash": "0174392159cc98a4bd4a0787b7aa38d8",
     "packages": [
         {
             "name": "akrabat/rka-slim-session-middleware",
@@ -6016,16 +6016,16 @@
         },
         {
             "name": "tracy/tracy",
-            "version": "v2.7.2",
+            "version": "v2.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/tracy.git",
-                "reference": "d28ebdf7ab8d88f231310aef1e8cce965ea0b2ca"
+                "reference": "344c77293038173f49678d9a95c27da6cbdbccd0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/tracy/zipball/d28ebdf7ab8d88f231310aef1e8cce965ea0b2ca",
-                "reference": "d28ebdf7ab8d88f231310aef1e8cce965ea0b2ca",
+                "url": "https://api.github.com/repos/nette/tracy/zipball/344c77293038173f49678d9a95c27da6cbdbccd0",
+                "reference": "344c77293038173f49678d9a95c27da6cbdbccd0",
                 "shasum": ""
             },
             "require": {
@@ -6037,7 +6037,9 @@
                 "nette/di": "<3.0"
             },
             "require-dev": {
+                "latte/latte": "^2.5",
                 "nette/di": "^3.0",
+                "nette/mail": "^3.0",
                 "nette/tester": "^2.2",
                 "nette/utils": "^3.0",
                 "phpstan/phpstan": "^0.12",
@@ -6083,7 +6085,7 @@
                 "nette",
                 "profiler"
             ],
-            "time": "2019-12-15T22:48:05+00:00"
+            "time": "2020-02-23T18:40:15+00:00"
         },
         {
             "name": "webmozart/assert",
