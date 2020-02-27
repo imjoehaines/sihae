@@ -2,18 +2,22 @@
 
 declare(strict_types=1);
 
-namespace Sihae\Controllers;
+namespace Sihae\Actions;
 
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\ResponseFactoryInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Sihae\Renderer;
 use Sihae\Repositories\TagRepository;
 
-/**
- * Controller for the Tag page
- */
-class TagController
+class TagListAction implements RequestHandlerInterface
 {
+    /**
+     * @var ResponseFactoryInterface
+     */
+    private $responseFactory;
+
     /**
      * @var Renderer
      */
@@ -29,9 +33,11 @@ class TagController
      * @param TagRepository $repository
      */
     public function __construct(
+        ResponseFactoryInterface $responseFactory,
         Renderer $renderer,
         TagRepository $repository
     ) {
+        $this->responseFactory = $responseFactory;
         $this->renderer = $renderer;
         $this->repository = $repository;
     }
@@ -42,13 +48,13 @@ class TagController
      * For example if "PHP" has 10 posts, "JS" 4 and "Elixir" 1 then the order
      * will be "PHP", "JS", "Elixir"
      *
-     * @param Request $request
-     * @param Response $response
-     * @return Response
+     * @param ServerRequestInterface $request
+     * @return ResponseInterface
      */
-    public function index(Request $request, Response $response): Response
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $tags = $this->repository->findAllOrderedByUsage();
+        $response = $this->responseFactory->createResponse();
 
         return $this->renderer->render($response, 'tags', ['tags' => $tags]);
     }

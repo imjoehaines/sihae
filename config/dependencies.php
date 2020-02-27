@@ -27,12 +27,11 @@ use Sihae\Actions\ArchiveAction;
 use Sihae\Actions\LoginAction;
 use Sihae\Actions\LoginFormAction;
 use Sihae\Actions\LogoutAction;
+use Sihae\Actions\TagListAction;
 use Sihae\Container;
 use Sihae\Controllers\PostController;
-
 use Sihae\Controllers\PostListController;
 use Sihae\Controllers\RegistrationController;
-use Sihae\Controllers\TagController;
 use Sihae\Formatters\ArchiveFormatter;
 use Sihae\Middleware\AuthMiddleware;
 use Sihae\Middleware\CsrfProvider;
@@ -128,8 +127,9 @@ return function (Container $container): void {
         );
     };
 
-    $container[TagController::class] = static function (Container $container): TagController {
-        return new TagController(
+    $container[TagListAction::class] = static function (Container $container): TagListAction {
+        return new TagListAction(
+            $container->get(ResponseFactoryInterface::class),
             $container->get(Renderer::class),
             $container->get(TagRepository::class)
         );
