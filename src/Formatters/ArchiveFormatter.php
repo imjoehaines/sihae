@@ -21,7 +21,7 @@ class ArchiveFormatter implements Formatter
      */
     public function format(array $data): array
     {
-        return array_reduce($data, function (array $carry, Post $post): array {
+        return array_reduce($data, static function (array $carry, Post $post): array {
             $date = $post->getDateCreated()->format('Y');
 
             if (isset($carry[$date])) {
