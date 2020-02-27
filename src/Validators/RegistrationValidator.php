@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Sihae\Validators;
 
@@ -16,7 +18,7 @@ class RegistrationValidator implements Validator
      * @param array<string, string> $userDetails
      * @return bool
      */
-    public function isValid(array $userDetails) : bool
+    public function isValid(array $userDetails): bool
     {
         $this->errors = [];
 
@@ -50,7 +52,7 @@ class RegistrationValidator implements Validator
     /**
      * @return array<string>
      */
-    public function getErrors() : array
+    public function getErrors(): array
     {
         return $this->errors;
     }

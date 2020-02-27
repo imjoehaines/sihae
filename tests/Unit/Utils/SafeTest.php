@@ -1,10 +1,12 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Sihae\Tests\Unit\Utils;
 
-use stdClass;
-use Sihae\Utils\Safe;
 use PHPUnit\Framework\TestCase;
+use Sihae\Utils\Safe;
+use stdClass;
 
 final class SafeTest extends TestCase
 {

@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Sihae\Migrations;
 
-use Doctrine\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
+use Doctrine\Migrations\AbstractMigration;
 
 class Version20161028221622 extends AbstractMigration
 {
@@ -11,7 +13,7 @@ class Version20161028221622 extends AbstractMigration
      * @param Schema $schema
      * @return void
      */
-    public function up(Schema $schema) : void
+    public function up(Schema $schema): void
     {
         $postTable = $schema->createTable('post');
         $postTable->addColumn('id', 'integer', ['autoincrement' => true]);
@@ -59,7 +61,7 @@ class Version20161028221622 extends AbstractMigration
      * @param Schema $schema
      * @return void
      */
-    public function down(Schema $schema) : void
+    public function down(Schema $schema): void
     {
         $schema->dropTable('post_tag');
         $schema->dropTable('tag');

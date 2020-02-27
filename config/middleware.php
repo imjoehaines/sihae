@@ -1,11 +1,13 @@
-<?php declare(strict_types=1);
+<?php
 
-use Slim\Csrf\Guard;
+declare(strict_types=1);
+
 use Sihae\Middleware\CsrfProvider;
-use Sihae\Middleware\PageProvider;
-use Sihae\Middleware\UserProvider;
-use Sihae\Middleware\SettingsProvider;
 use Sihae\Middleware\NotFoundMiddleware;
+use Sihae\Middleware\PageProvider;
+use Sihae\Middleware\SettingsProvider;
+use Sihae\Middleware\UserProvider;
+use Slim\Csrf\Guard;
 
 return [
     NotFoundMiddleware::class,

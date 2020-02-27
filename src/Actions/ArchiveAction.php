@@ -1,14 +1,16 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Sihae\Actions;
 
 use Psr\Http\Message\ResponseFactoryInterface;
-use Psr\Http\Server\RequestHandlerInterface;
-use Sihae\Renderer;
-use Sihae\Formatters\Formatter;
-use Sihae\Repositories\PostRepository;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+use Sihae\Formatters\Formatter;
+use Sihae\Renderer;
+use Sihae\Repositories\PostRepository;
 
 final class ArchiveAction implements RequestHandlerInterface
 {
@@ -54,7 +56,7 @@ final class ArchiveAction implements RequestHandlerInterface
      * @param ServerRequestInterface $request
      * @return ResponseInterface
      */
-    public function handle(ServerRequestInterface $request) : ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $posts = $this->repository->findAllOrderedByDateCreated();
         $response = $this->responseFactory->createResponse();

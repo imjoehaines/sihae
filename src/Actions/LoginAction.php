@@ -1,15 +1,17 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Sihae\Actions;
 
-use RKA\Session;
-use Sihae\Renderer;
-use Sihae\Utils\Safe;
-use Sihae\Repositories\UserRepository;
+use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Psr\Http\Message\ResponseFactoryInterface;
+use RKA\Session;
+use Sihae\Renderer;
+use Sihae\Repositories\UserRepository;
+use Sihae\Utils\Safe;
 
 final class LoginAction implements RequestHandlerInterface
 {

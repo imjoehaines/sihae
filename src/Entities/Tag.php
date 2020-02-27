@@ -1,12 +1,14 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Sihae\Entities;
 
-use Sihae\Slugifier;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Sihae\Entities\Traits\Timestamps;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ArrayCollection;
+use Sihae\Slugifier;
 
 /**
  * @ORM\Entity
@@ -61,7 +63,7 @@ class Tag
     /**
      * @return string
      */
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -69,7 +71,7 @@ class Tag
     /**
      * @return string
      */
-    public function getSlug() : string
+    public function getSlug(): string
     {
         return $this->slug;
     }
@@ -77,7 +79,7 @@ class Tag
     /**
      * @return Collection<int, Post>
      */
-    public function getPosts() : Collection
+    public function getPosts(): Collection
     {
         return $this->posts;
     }
@@ -86,7 +88,7 @@ class Tag
      * @param Post $post
      * @return void
      */
-    public function addPost(Post $post) : void
+    public function addPost(Post $post): void
     {
         if (!$this->posts->contains($post)) {
             $this->posts->add($post);
@@ -98,7 +100,7 @@ class Tag
      * @param Post $post
      * @return void
      */
-    public function removePost(Post $post) : void
+    public function removePost(Post $post): void
     {
         if ($this->posts->contains($post)) {
             $this->posts->removeElement($post);

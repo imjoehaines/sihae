@@ -1,11 +1,13 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Sihae\Repositories\Doctrine;
 
-use Sihae\Entities\Post;
-use Doctrine\ORM\EntityManager;
-use Sihae\Repositories\PostRepository;
 use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\ORM\EntityManager;
+use Sihae\Entities\Post;
+use Sihae\Repositories\PostRepository;
 
 class DoctrinePostRepository implements PostRepository
 {
@@ -28,29 +30,29 @@ class DoctrinePostRepository implements PostRepository
         $this->repository = $entityManager->getRepository(Post::class);
     }
 
-    public function save(Post $post) : void
+    public function save(Post $post): void
     {
         $this->entityManager->persist($post);
         $this->entityManager->flush();
     }
 
-    public function delete(Post $post) : void
+    public function delete(Post $post): void
     {
         $this->entityManager->remove($post);
         $this->entityManager->flush();
     }
 
-    public function findAllOrderedByDateCreated(?int $limit = null, ?int $offset = null) : array
+    public function findAllOrderedByDateCreated(?int $limit = null, ?int $offset = null): array
     {
         return $this->repository->findBy(['is_page' => false], ['date_created' => 'DESC'], $limit, $offset);
     }
 
-    public function findOneBySlug(string $slug) : ?Post
+    public function findOneBySlug(string $slug): ?Post
     {
         return $this->repository->findOneBy(['slug' => $slug]);
     }
 
-    public function findAllTagged(string $slug, int $limit, int $offset) : array
+    public function findAllTagged(string $slug, int $limit, int $offset): array
     {
         $dql =
             'SELECT p, t
@@ -67,7 +69,7 @@ class DoctrinePostRepository implements PostRepository
         return $query->getResult();
     }
 
-    public function count() : int
+    public function count(): int
     {
         $query = $this->entityManager->createQuery(
             'SELECT COUNT(p.id)
@@ -77,7 +79,7 @@ class DoctrinePostRepository implements PostRepository
         return (int) $query->getSingleScalarResult();
     }
 
-    public function countTagged(string $slug) : int
+    public function countTagged(string $slug): int
     {
         $query = $this->entityManager->createQuery(
             'SELECT COUNT(t.id)

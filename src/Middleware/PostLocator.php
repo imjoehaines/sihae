@@ -1,15 +1,17 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Sihae\Middleware;
 
-use Sihae\Entities\Post;
-use Slim\Routing\RouteContext;
 use Doctrine\ORM\EntityManager;
+use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Psr\Http\Message\ResponseFactoryInterface;
-use Psr\Http\Message\ServerRequestInterface as Request;
+use Sihae\Entities\Post;
+use Slim\Routing\RouteContext;
 
 /**
  * Finds a post by slug in the request
@@ -43,7 +45,7 @@ class PostLocator implements MiddlewareInterface
      * @param RequestHandlerInterface $handler
      * @return ResponseInterface
      */
-    public function process(Request $request, RequestHandlerInterface $handler) : ResponseInterface
+    public function process(Request $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $route = $request->getAttribute(RouteContext::ROUTE);
 

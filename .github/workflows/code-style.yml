@@ -1,0 +1,39 @@
+name: code-style
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php-version: [7.3, 7.4]
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Setup PHP ${{ matrix.php-version }}
+      uses: shivammathur/setup-php@v1
+      with:
+        php-version: ${{ matrix.php-version }}
+        extensions: mbstring
+
+    - name: Get Composer cache directory
+      id: composer-cache
+      run: |
+        echo "::set-output name=path::$(composer config cache-files-dir)"
+
+    - uses: actions/cache@v1
+      with:
+        path: ${{ steps.composer-cache.outputs.path }}
+        key: ${{ runner.os }}-composer-${{ matrix.php-version }}-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-composer-${{ matrix.php-version }}-
+          ${{ runner.os }}-composer-
+
+    - name: Install Composer dependencies
+      run: php${{ matrix.php-version }} $(which composer) install --prefer-dist --no-progress --no-suggest
+
+    - name: Run Easy Coding Standard
+      run: php${{ matrix.php-version }} vendor/bin/ecs check

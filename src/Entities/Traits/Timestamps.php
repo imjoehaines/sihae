@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Sihae\Entities\Traits;
 
@@ -42,7 +44,7 @@ trait Timestamps
      *
      * @return void
      */
-    public function onPrePersist() : void
+    public function onPrePersist(): void
     {
         $date = new DateTime();
 
@@ -57,7 +59,7 @@ trait Timestamps
      *
      * @return void
      */
-    public function onPreUpdate() : void
+    public function onPreUpdate(): void
     {
         $this->date_modified = new DateTime();
     }
@@ -67,7 +69,7 @@ trait Timestamps
      *
      * @return bool
      */
-    public function hasBeenModified() : bool
+    public function hasBeenModified(): bool
     {
         return $this->date_created != $this->date_modified;
     }
@@ -77,7 +79,7 @@ trait Timestamps
      *
      * @return DateTimeImmutable
      */
-    public function getDateCreated() : DateTimeImmutable
+    public function getDateCreated(): DateTimeImmutable
     {
         return DateTimeImmutable::createFromMutable($this->date_created);
     }
@@ -87,7 +89,7 @@ trait Timestamps
      *
      * @return DateTimeImmutable
      */
-    public function getDateModified() : DateTimeImmutable
+    public function getDateModified(): DateTimeImmutable
     {
         return DateTimeImmutable::createFromMutable($this->date_modified);
     }

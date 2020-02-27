@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Sihae\Tests\Unit\Validators;
 
@@ -11,7 +13,7 @@ class RegistrationValidatorTest extends TestCase
     /**
      * @return void
      */
-    public function testItPassesWhenUsernameAndPasswordAreValidLengthsAndConfirmationMatches() : void
+    public function testItPassesWhenUsernameAndPasswordAreValidLengthsAndConfirmationMatches(): void
     {
         $validator = new RegistrationValidator();
 
@@ -28,7 +30,7 @@ class RegistrationValidatorTest extends TestCase
     /**
      * @return void
      */
-    public function testItFailsWhenUsernameIsTooShort() : void
+    public function testItFailsWhenUsernameIsTooShort(): void
     {
         $validator = new RegistrationValidator();
 
@@ -49,7 +51,7 @@ class RegistrationValidatorTest extends TestCase
     /**
      * @return void
      */
-    public function testItFailsWhenPasswordIsTooShort() : void
+    public function testItFailsWhenPasswordIsTooShort(): void
     {
         $validator = new RegistrationValidator();
 
@@ -71,7 +73,7 @@ class RegistrationValidatorTest extends TestCase
     /**
      * @return void
      */
-    public function testItFailsWhenPasswordsDoNotMatch() : void
+    public function testItFailsWhenPasswordsDoNotMatch(): void
     {
         $validator = new RegistrationValidator();
 
@@ -92,7 +94,7 @@ class RegistrationValidatorTest extends TestCase
     /**
      * @return void
      */
-    public function testItFailsWhenUsernameIsTooLong() : void
+    public function testItFailsWhenUsernameIsTooLong(): void
     {
         $validator = new RegistrationValidator();
 
@@ -113,7 +115,7 @@ class RegistrationValidatorTest extends TestCase
     /**
      * @return void
      */
-    public function testItFailsWhenUsernameIsNotAlphaNumeric() : void
+    public function testItFailsWhenUsernameIsNotAlphaNumeric(): void
     {
         $validator = new RegistrationValidator();
 

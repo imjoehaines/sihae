@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Sihae\Repositories;
 
@@ -6,9 +8,9 @@ use Sihae\Entities\User;
 
 interface UserRepository
 {
-    public function save(User $user) : void;
+    public function save(User $user): void;
 
-    public function findByUsername(string $username) : ?User;
+    public function findByUsername(string $username): ?User;
 
-    public function findByToken(string $token) : ?User;
+    public function findByToken(string $token): ?User;
 }

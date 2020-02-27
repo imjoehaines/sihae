@@ -27,7 +27,7 @@
     <textarea name="body" id="body" rows="10"><?= isset($post) ? $post->getBody() : '' ?></textarea>
 
     <label for="tags">Tags</label>
-    <input id="tags" data-tag-data=<?= $tag_data ?? '' ?>>
+    <input id="tags" data-tag-data="<?= $this->e($tag_data ?? '') ?>">
 
     <button name="submit" type="submit">
         <?php if (isset($isEdit) && $isEdit === true) : ?>

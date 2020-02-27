@@ -1,26 +1,28 @@
-<?php declare(strict_types=1);
+<?php
 
-use Slim\App;
-use Sihae\Actions\LoginAction;
-use Sihae\Actions\LogoutAction;
+declare(strict_types=1);
+
 use Sihae\Actions\ArchiveAction;
-use Sihae\Middleware\PostLocator;
+use Sihae\Actions\LoginAction;
 use Sihae\Actions\LoginFormAction;
-use Sihae\Middleware\AuthMiddleware;
-use Sihae\Controllers\TagController;
-use Slim\Routing\RouteCollectorProxy;
+use Sihae\Actions\LogoutAction;
 use Sihae\Controllers\PostController;
 use Sihae\Controllers\PostListController;
 use Sihae\Controllers\RegistrationController;
+use Sihae\Controllers\TagController;
+use Sihae\Middleware\AuthMiddleware;
+use Sihae\Middleware\PostLocator;
+use Slim\App;
+use Slim\Routing\RouteCollectorProxy;
 
-return static function (App $app) {
+return static function (App $app): void {
     $app->get('/[page/{page:[1-9][0-9]*}]', PostListController::class . ':index');
 
-    $app->group('/post', function (RouteCollectorProxy $group) {
+    $app->group('/post', function (RouteCollectorProxy $group): void {
         $group->get('/new', PostController::class . ':create');
         $group->post('/new', PostController::class . ':store');
 
-        $group->group('', function (RouteCollectorProxy $group) {
+        $group->group('', function (RouteCollectorProxy $group): void {
             $group->get('/edit/{slug:[a-zA-Z\d\s\-_\-]+}', PostController::class . ':edit');
             $group->post('/edit/{slug:[a-zA-Z\d\s\-_\-]+}', PostController::class . ':update');
             $group->get('/delete/{slug:[a-zA-Z\d\s\-_\-]+}', PostController::class . ':delete');

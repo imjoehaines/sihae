@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Sihae;
 
-use Psr\Container\ContainerInterface;
 use Pimple\Container as PimpleContainer;
+use Psr\Container\ContainerInterface;
 
 final class Container extends PimpleContainer implements ContainerInterface
 {

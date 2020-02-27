@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Sihae\Formatters;
 
@@ -10,5 +12,5 @@ interface Formatter
      * @param array<mixed> $data
      * @return array<mixed>
      */
-    public function format(array $data) : array;
+    public function format(array $data): array;
 }

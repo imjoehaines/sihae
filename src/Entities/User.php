@@ -1,11 +1,13 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Sihae\Entities;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Sihae\Entities\Traits\Timestamps;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
@@ -77,7 +79,7 @@ class User
     /**
      * @return string
      */
-    public function getToken() : string
+    public function getToken(): string
     {
         return $this->token;
     }
@@ -85,7 +87,7 @@ class User
     /**
      * @return bool
      */
-    public function isAdmin() : bool
+    public function isAdmin(): bool
     {
         return $this->is_admin;
     }
@@ -96,7 +98,7 @@ class User
      * @param string $password
      * @return bool
      */
-    public function login(string $password) : bool
+    public function login(string $password): bool
     {
         if (!password_verify($password, $this->password)) {
             return false;
@@ -115,7 +117,7 @@ class User
     /**
      * @return void
      */
-    private function updateToken() : void
+    private function updateToken(): void
     {
         $this->token = bin2hex(random_bytes(128));
     }
@@ -124,7 +126,7 @@ class User
      * @param string $password
      * @return void
      */
-    private function setPassword(string $password) : void
+    private function setPassword(string $password): void
     {
         $hash = password_hash($password, PASSWORD_DEFAULT);
 
