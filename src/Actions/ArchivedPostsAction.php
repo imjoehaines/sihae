@@ -12,7 +12,7 @@ use Sihae\Formatters\Formatter;
 use Sihae\Renderer;
 use Sihae\Repositories\PostRepository;
 
-final class ArchiveAction implements RequestHandlerInterface
+final class ArchivedPostsAction implements RequestHandlerInterface
 {
     /**
      * @var ResponseFactoryInterface

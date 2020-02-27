@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Sihae\Actions\ArchiveAction;
+use Sihae\Actions\ArchivedPostsAction;
 use Sihae\Actions\LoginAction;
 use Sihae\Actions\LoginFormAction;
 use Sihae\Actions\LogoutAction;
@@ -35,7 +35,7 @@ return static function (App $app): void {
 
     $app->get('/tagged/{slug:[a-zA-Z\d\s\-_\-]+}[/page/{page:[1-9][0-9]*}]', PostListController::class . ':tagged');
 
-    $app->get('/archive', ArchiveAction::class);
+    $app->get('/archive', ArchivedPostsAction::class);
     $app->get('/tags', TagListAction::class);
 
     $app->get('/login', LoginFormAction::class);

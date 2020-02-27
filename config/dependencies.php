@@ -23,7 +23,7 @@ use Psr\Http\Message\UriFactoryInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Log\LoggerInterface;
 use RKA\Session;
-use Sihae\Actions\ArchiveAction;
+use Sihae\Actions\ArchivedPostsAction;
 use Sihae\Actions\LoginAction;
 use Sihae\Actions\LoginFormAction;
 use Sihae\Actions\LogoutAction;
@@ -118,8 +118,8 @@ return function (Container $container): void {
         );
     };
 
-    $container[ArchiveAction::class] = static function (Container $container): RequestHandlerInterface {
-        return new ArchiveAction(
+    $container[ArchivedPostsAction::class] = static function (Container $container): RequestHandlerInterface {
+        return new ArchivedPostsAction(
             $container->get(ResponseFactoryInterface::class),
             $container->get(Renderer::class),
             $container->get(PostRepository::class),
