@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Sihae\Actions\ArchivedPostsAction;
+use Sihae\Actions\CreatePostAction;
 use Sihae\Actions\LoginAction;
 use Sihae\Actions\LoginFormAction;
 use Sihae\Actions\LogoutAction;
@@ -23,7 +24,7 @@ return static function (App $app): void {
 
     $app->group('/post', function (RouteCollectorProxy $group): void {
         $group->get('/new', PostFormAction::class);
-        $group->post('/new', PostController::class . ':store');
+        $group->post('/new', CreatePostAction::class);
 
         $group->group('', function (RouteCollectorProxy $group): void {
             $group->get('/edit/{slug:[a-zA-Z\d\s\-_\-]+}', PostController::class . ':edit');

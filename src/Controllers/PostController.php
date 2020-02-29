@@ -45,13 +45,6 @@ class PostController
     private $postRepository;
 
     /**
-     * Strings that are used in routes and therefore can't be slugs
-     *
-     * @var array<string>
-     */
-    private $reservedSlugs = ['new', 'edit', 'delete', 'login', 'logout', 'register', 'archive', 'convert'];
-
-    /**
      * @param Renderer $renderer
      * @param CommonMarkConverter $markdown
      * @param Validator $validator
@@ -70,52 +63,6 @@ class PostController
         $this->validator = $validator;
         $this->postRepository = $postRepository;
         $this->tagRepository = $tagRepository;
-    }
-
-    /**
-     * Save a new Post
-     *
-     * @param Request $request
-     * @param Response $response
-     * @return Response
-     */
-    public function store(Request $request, Response $response): Response
-    {
-        $newPost = $request->getParsedBody();
-
-        $post = new Post(
-            Safe::get('title', $newPost, ''),
-            Safe::get('body', $newPost, ''),
-            $request->getAttribute('user')
-        );
-
-        if (!is_array($newPost) || !$this->validator->isValid($newPost)) {
-            return $this->renderer->render($response, 'editor', [
-                'post' => $post,
-                'errors' => $this->validator->getErrors(),
-            ]);
-        }
-
-        // if there is already a post with the slug we just generated or the slug
-        // is "reserved", generate a new one
-        if (in_array($post->getSlug(), $this->reservedSlugs, true) ||
-            $this->postRepository->findOneBySlug($post->getSlug()) !== null
-        ) {
-            $post->regenerateSlug();
-        }
-
-        $tags = $this->tagRepository->findAll(
-            Safe::get('tags', $newPost, []),
-            Safe::get('new_tags', $newPost, [])
-        );
-
-        foreach ($tags as $tag) {
-            $post->addTag($tag);
-        }
-
-        $this->postRepository->save($post);
-
-        return $response->withStatus(302)->withHeader('Location', '/post/' . $post->getSlug());
     }
 
     /**
