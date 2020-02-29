@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Sihae\Controllers;
 
-use League\CommonMark\CommonMarkConverter;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Sihae\Entities\Post;
@@ -25,11 +24,6 @@ class PostController
     private $renderer;
 
     /**
-     * @var CommonMarkConverter
-     */
-    private $markdown;
-
-    /**
      * @var Validator
      */
     private $validator;
@@ -46,41 +40,20 @@ class PostController
 
     /**
      * @param Renderer $renderer
-     * @param CommonMarkConverter $markdown
      * @param Validator $validator
      * @param PostRepository $postRepository
      * @param TagRepository $tagRepository
      */
     public function __construct(
         Renderer $renderer,
-        CommonMarkConverter $markdown,
         Validator $validator,
         PostRepository $postRepository,
         TagRepository $tagRepository
     ) {
         $this->renderer = $renderer;
-        $this->markdown = $markdown;
         $this->validator = $validator;
         $this->postRepository = $postRepository;
         $this->tagRepository = $tagRepository;
-    }
-
-    /**
-     * Show a single Post
-     *
-     * @param Request $request
-     * @param Response $response
-     * @param string $slug
-     * @return Response
-     */
-    public function show(Request $request, Response $response, string $slug): Response
-    {
-        $post = $this->getPost($request);
-
-        $parsedBody = $this->markdown->convertToHtml($post->getBody());
-        $post->setBody($parsedBody);
-
-        return $this->renderer->render($response, 'post', ['post' => $post]);
     }
 
     /**

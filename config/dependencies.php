@@ -34,6 +34,7 @@ use Sihae\Actions\PostListTaggedAction;
 use Sihae\Actions\RegisterUserAction;
 use Sihae\Actions\RegistrationFormAction;
 use Sihae\Actions\TagListAction;
+use Sihae\Actions\ViewPostAction;
 use Sihae\Container;
 use Sihae\Controllers\PostController;
 use Sihae\Formatters\ArchiveFormatter;
@@ -107,7 +108,6 @@ return static function (Container $container): void {
     $container[PostController::class] = static function (Container $container): PostController {
         return new PostController(
             $container->get(Renderer::class),
-            $container->get(CommonMarkConverter::class),
             $container->get(PostValidator::class),
             $container->get(PostRepository::class),
             $container->get(TagRepository::class)
@@ -121,6 +121,14 @@ return static function (Container $container): void {
             $container->get(TagRepository::class),
             $container->get(PostRepository::class),
             $container->get(PostValidator::class)
+        );
+    };
+
+    $container[ViewPostAction::class] = static function (Container $container): RequestHandlerInterface {
+        return new ViewPostAction(
+            $container->get(ResponseFactoryInterface::class),
+            $container->get(Renderer::class),
+            $container->get(CommonMarkConverter::class),
         );
     };
 

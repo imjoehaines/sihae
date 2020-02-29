@@ -13,6 +13,7 @@ use Sihae\Actions\PostListTaggedAction;
 use Sihae\Actions\RegisterUserAction;
 use Sihae\Actions\RegistrationFormAction;
 use Sihae\Actions\TagListAction;
+use Sihae\Actions\ViewPostAction;
 use Sihae\Controllers\PostController;
 use Sihae\Middleware\AuthMiddleware;
 use Sihae\Middleware\PostLocator;
@@ -34,7 +35,7 @@ return static function (App $app): void {
         })->add(PostLocator::class);
     })->add(AuthMiddleware::class);
 
-    $app->get('/post/{slug:[a-zA-Z\d\s\-_\-]+}', PostController::class . ':show')
+    $app->get('/post/{slug:[a-zA-Z\d\s\-_\-]+}', ViewPostAction::class)
         ->add(PostLocator::class);
 
     $app->get('/tagged/{slug:[a-zA-Z\d\s\-_\-]+}[/page/{page:[1-9][0-9]*}]', PostListTaggedAction::class);
