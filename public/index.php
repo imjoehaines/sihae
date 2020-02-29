@@ -52,6 +52,7 @@ $psr17Factory = new Psr17Factory();
 $creator = new ServerRequestCreator($psr17Factory, $psr17Factory, $psr17Factory, $psr17Factory);
 
 $request = $creator->fromGlobals();
+// TODO See if we can remove the request from the container
 $container['request'] = $request;
 
 $app = new App($psr17Factory, $container);
