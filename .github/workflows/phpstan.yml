@@ -36,4 +36,4 @@ jobs:
       run: php${{ matrix.php-version }} $(which composer) install --prefer-dist --no-progress --no-suggest
 
     - name: Run PHPStan
-      run: php${{ matrix.php-version }} $(which composer) test:phpstan
+      run: php${{ matrix.php-version }} $(which composer) test:phpstan -- --no-progress

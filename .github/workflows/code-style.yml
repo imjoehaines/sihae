@@ -36,4 +36,4 @@ jobs:
       run: php${{ matrix.php-version }} $(which composer) install --prefer-dist --no-progress --no-suggest
 
     - name: Run Easy Coding Standard
-      run: php${{ matrix.php-version }} vendor/bin/ecs check
+      run: php${{ matrix.php-version }} $(which composer) test:lint -- --no-progress-bar
