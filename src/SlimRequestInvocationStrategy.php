@@ -6,7 +6,6 @@ namespace Sihae;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Interfaces\RequestHandlerInvocationStrategyInterface;
 
 final class SlimRequestInvocationStrategy implements RequestHandlerInvocationStrategyInterface
@@ -25,28 +24,10 @@ final class SlimRequestInvocationStrategy implements RequestHandlerInvocationStr
         ResponseInterface $response,
         array $routeArguments
     ): ResponseInterface {
-        // TODO this can be the entire method when everything is a RequestHandlerInterface
-        if (is_array($callable)
-            && $callable[0] instanceof RequestHandlerInterface
-        ) {
-            foreach ($routeArguments as $name => $value) {
-                $request = $request->withAttribute($name, $value);
-            }
-
-            return $callable($request);
+        foreach ($routeArguments as $name => $value) {
+            $request = $request->withAttribute($name, $value);
         }
 
-        // marshal route arguments that look like ints into actual ints
-        $marshalledArguments = array_reduce(
-            $routeArguments,
-            static function (array $arguments, string $value): array {
-                $arguments[] = ctype_digit($value) ? (int) $value : $value;
-
-                return $arguments;
-            },
-            []
-        );
-
-        return $callable($request, $response, ...$marshalledArguments);
+        return $callable($request);
     }
 }
