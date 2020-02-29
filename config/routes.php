@@ -32,7 +32,9 @@ return static function (App $app): void {
         $group->group('', function (RouteCollectorProxy $group): void {
             $group->get('/edit/{slug:[a-zA-Z\d\s\-_\-]+}', EditPostFormAction::class);
             $group->post('/edit/{slug:[a-zA-Z\d\s\-_\-]+}', PostController::class . ':update');
+            // TODO this should be a POST request
             $group->get('/delete/{slug:[a-zA-Z\d\s\-_\-]+}', DeletePostAction::class);
+            // TODO this should be a POST request
             $group->get('/convert/{slug:[a-zA-Z\d\s\-_\-]+}', PostController::class . ':convert');
         })->add(PostLocator::class);
     })->add(AuthMiddleware::class);
