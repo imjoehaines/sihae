@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Sihae;
 
 use League\Plates\Engine;
-use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Wrapper around League\Plates\Engine to better support PSR-7 and theming
@@ -31,12 +31,13 @@ class Renderer
     }
 
     /**
-     * @param Response $response
+     * @param ResponseInterface $response
      * @param string $template name of the template file to render
      * @param array<string, mixed> $data optional array of data to pass to the template
-     * @return Response
+     *
+     * @return ResponseInterface
      */
-    public function render(Response $response, string $template, array $data = []): Response
+    public function render(ResponseInterface $response, string $template, array $data = []): ResponseInterface
     {
         $body = $response->getBody();
 
@@ -50,6 +51,7 @@ class Renderer
      * Add data to the Engine instance
      *
      * @param array<string, mixed> $data
+     *
      * @return void
      */
     public function addData(array $data): void

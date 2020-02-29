@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Sihae\Middleware;
 
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Sihae\Renderer;
@@ -39,11 +39,12 @@ class CsrfProvider implements MiddlewareInterface
     /**
      * Provide data for CSRF protection to the Renderer
      *
-     * @param Request $request
+     * @param ServerRequestInterface $request
      * @param RequestHandlerInterface $handler
+     *
      * @return ResponseInterface
      */
-    public function process(Request $request, RequestHandlerInterface $handler): ResponseInterface
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $nameKey = $this->csrf->getTokenNameKey();
         $valueKey = $this->csrf->getTokenValueKey();

@@ -7,7 +7,7 @@ namespace Sihae\Middleware;
 use Doctrine\ORM\EntityManager;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Sihae\Entities\Post;
@@ -41,11 +41,12 @@ class PostLocator implements MiddlewareInterface
     }
 
     /**
-     * @param Request $request
+     * @param ServerRequestInterface $request
      * @param RequestHandlerInterface $handler
+     *
      * @return ResponseInterface
      */
-    public function process(Request $request, RequestHandlerInterface $handler): ResponseInterface
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $route = $request->getAttribute(RouteContext::ROUTE);
 

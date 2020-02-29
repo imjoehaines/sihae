@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace Sihae\Middleware;
 
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use RKA\Session;
+use Sihae\Entities\User;
 use Sihae\Renderer;
 use Sihae\Repositories\UserRepository;
 
@@ -47,18 +48,19 @@ class UserProvider implements MiddlewareInterface
     /**
      * Provide the logged in user to the Renderer
      *
-     * @param Request $request
+     * @param ServerRequestInterface $request
      * @param RequestHandlerInterface $handler
+     *
      * @return ResponseInterface
      */
-    public function process(Request $request, RequestHandlerInterface $handler): ResponseInterface
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $token = $this->session->get('token');
 
-        if ($token) {
+        if (is_string($token) && $token !== '') {
             $user = $this->repository->findByToken($token);
 
-            if ($user !== null) {
+            if ($user instanceof User) {
                 Session::regenerate();
                 $this->renderer->addData(['user' => $user]);
             }

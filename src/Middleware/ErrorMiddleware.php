@@ -5,18 +5,18 @@ declare(strict_types=1);
 namespace Sihae\Middleware;
 
 use Psr\Http\Message\ResponseFactoryInterface;
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Psr\Log\LoggerInterface as Logger;
+use Psr\Log\LoggerInterface;
 use Sihae\Renderer;
 use Throwable;
 
 class ErrorMiddleware implements MiddlewareInterface
 {
     /**
-     * @var Logger
+     * @var LoggerInterface
      */
     private $logger;
 
@@ -31,12 +31,12 @@ class ErrorMiddleware implements MiddlewareInterface
     private $renderer;
 
     /**
-     * @param Logger $logger
+     * @param LoggerInterface $logger
      * @param ResponseFactoryInterface $responseFactory
      * @param Renderer $renderer
      */
     public function __construct(
-        Logger $logger,
+        LoggerInterface $logger,
         ResponseFactoryInterface $responseFactory,
         Renderer $renderer
     ) {
@@ -48,11 +48,12 @@ class ErrorMiddleware implements MiddlewareInterface
     /**
      * Handle any error that may occur from $handler by logging it and rendering the error page
      *
-     * @param Request $request
+     * @param ServerRequestInterface $request
      * @param RequestHandlerInterface $handler
-     * @return Response
+     *
+     * @return ResponseInterface
      */
-    public function process(Request $request, RequestHandlerInterface $handler): Response
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         try {
             return $handler->handle($request);
