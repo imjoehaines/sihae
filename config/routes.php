@@ -17,7 +17,6 @@ use Sihae\Actions\RegisterUserAction;
 use Sihae\Actions\RegistrationFormAction;
 use Sihae\Actions\TagListAction;
 use Sihae\Actions\ViewPostAction;
-use Sihae\Controllers\PostController;
 use Sihae\Middleware\AuthMiddleware;
 use Sihae\Middleware\PostLocator;
 use Slim\App;
@@ -54,7 +53,4 @@ return static function (App $app): void {
         $app->get('/register', RegistrationFormAction::class);
         $app->post('/register', RegisterUserAction::class);
     }
-
-    $app->get('/{slug:[a-zA-Z\d\s\-_\-]+}', PostController::class . ':show')
-        ->add(PostLocator::class);
 };
