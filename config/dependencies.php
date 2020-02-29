@@ -26,6 +26,7 @@ use RKA\Session;
 use Sihae\Actions\ArchivedPostsAction;
 use Sihae\Actions\CreatePostAction;
 use Sihae\Actions\DeletePostAction;
+use Sihae\Actions\EditPostAction;
 use Sihae\Actions\EditPostFormAction;
 use Sihae\Actions\LoginAction;
 use Sihae\Actions\LoginFormAction;
@@ -38,7 +39,6 @@ use Sihae\Actions\RegistrationFormAction;
 use Sihae\Actions\TagListAction;
 use Sihae\Actions\ViewPostAction;
 use Sihae\Container;
-use Sihae\Controllers\PostController;
 use Sihae\Formatters\ArchiveFormatter;
 use Sihae\Middleware\AuthMiddleware;
 use Sihae\Middleware\CsrfProvider;
@@ -99,15 +99,6 @@ return static function (Container $container): void {
         );
     };
 
-    $container[PostController::class] = static function (Container $container): PostController {
-        return new PostController(
-            $container->get(Renderer::class),
-            $container->get(PostValidator::class),
-            $container->get(PostRepository::class),
-            $container->get(TagRepository::class)
-        );
-    };
-
     $container[CreatePostAction::class] = static function (Container $container): RequestHandlerInterface {
         return new CreatePostAction(
             $container->get(ResponseFactoryInterface::class),
@@ -115,6 +106,16 @@ return static function (Container $container): void {
             $container->get(TagRepository::class),
             $container->get(PostRepository::class),
             $container->get(PostValidator::class)
+        );
+    };
+
+    $container[EditPostAction::class] = static function (Container $container): RequestHandlerInterface {
+        return new EditPostAction(
+            $container->get(ResponseFactoryInterface::class),
+            $container->get(PostRepository::class),
+            $container->get(TagRepository::class),
+            $container->get(PostValidator::class),
+            $container->get(Renderer::class)
         );
     };
 
