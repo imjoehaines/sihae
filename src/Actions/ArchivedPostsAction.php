@@ -2,19 +2,23 @@
 
 declare(strict_types=1);
 
-namespace Sihae\Controllers;
+namespace Sihae\Actions;
 
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\ResponseFactoryInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Sihae\Formatters\Formatter;
 use Sihae\Renderer;
 use Sihae\Repositories\PostRepository;
 
-/**
- * Controller for the Archive page
- */
-class ArchiveController
+final class ArchivedPostsAction implements RequestHandlerInterface
 {
+    /**
+     * @var ResponseFactoryInterface
+     */
+    private $responseFactory;
+
     /**
      * @var Renderer
      */
@@ -31,30 +35,31 @@ class ArchiveController
     private $formatter;
 
     /**
+     * @param ResponseFactoryInterface $responseFactory
      * @param Renderer $renderer
      * @param PostRepository $repository
      * @param Formatter $formatter
      */
     public function __construct(
+        ResponseFactoryInterface $responseFactory,
         Renderer $renderer,
         PostRepository $repository,
         Formatter $formatter
     ) {
+        $this->responseFactory = $responseFactory;
         $this->renderer = $renderer;
         $this->repository = $repository;
         $this->formatter = $formatter;
     }
 
     /**
-     * List all Posts
-     *
-     * @param Request $request
-     * @param Response $response
-     * @return Response
+     * @param ServerRequestInterface $request
+     * @return ResponseInterface
      */
-    public function index(Request $request, Response $response): Response
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $posts = $this->repository->findAllOrderedByDateCreated();
+        $response = $this->responseFactory->createResponse();
 
         return $this->renderer->render($response, 'archive', [
             'archiveData' => $this->formatter->format($posts),

@@ -12,7 +12,7 @@ use Sihae\Entities\Post;
 class ArchiveFormatter implements Formatter
 {
     /**
-     * Format the given single dimentional array of Posts into a multi dimentional
+     * Format the given single dimensional array of Posts into a multi dimensional
      * array organised by year. No sorting is done because this should be done
      * using Doctrine & the database, rather than in code
      *
@@ -21,7 +21,7 @@ class ArchiveFormatter implements Formatter
      */
     public function format(array $data): array
     {
-        return array_reduce($data, function (array $carry, Post $post): array {
+        return array_reduce($data, static function (array $carry, Post $post): array {
             $date = $post->getDateCreated()->format('Y');
 
             if (isset($carry[$date])) {

@@ -2,20 +2,24 @@
 
 declare(strict_types=1);
 
-namespace Sihae\Controllers;
+namespace Sihae\Actions;
 
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\ResponseFactoryInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use RKA\Session;
 use Sihae\Renderer;
 use Sihae\Repositories\UserRepository;
 use Sihae\Utils\Safe;
 
-/**
- * Controller for the login page
- */
-class LoginController
+final class LoginAction implements RequestHandlerInterface
 {
+    /**
+     * @var ResponseFactoryInterface
+     */
+    private $responseFactory;
+
     /**
      * @var Renderer
      */
@@ -32,32 +36,35 @@ class LoginController
     private $session;
 
     /**
+     * @param ResponseFactoryInterface $responseFactory
      * @param Renderer $renderer
      * @param UserRepository $repository
      * @param Session $session
      */
     public function __construct(
+        ResponseFactoryInterface $responseFactory,
         Renderer $renderer,
         UserRepository $repository,
         Session $session
     ) {
+        $this->responseFactory = $responseFactory;
         $this->renderer = $renderer;
         $this->repository = $repository;
         $this->session = $session;
     }
 
     /**
-     * Log a user in
+     * @param ServerRequestInterface $request
      *
-     * @param Request $request
-     * @param Response $response
-     * @return Response
+     * @return ResponseInterface
      */
-    public function login(Request $request, Response $response): Response
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $userDetails = $request->getParsedBody();
 
         $user = $this->repository->findByUsername(Safe::get('username', $userDetails, ''));
+
+        $response = $this->responseFactory->createResponse();
 
         if ($user === null ||
             !$user->login(Safe::get('password', $userDetails, ''))
@@ -73,31 +80,5 @@ class LoginController
         $this->session->set('token', $user->getToken());
 
         return $response->withStatus(302)->withHeader('Location', '/');
-    }
-
-    /**
-     * Log the current user out
-     *
-     * @param Request $request
-     * @param Response $response
-     * @return Response
-     */
-    public function logout(Request $request, Response $response): Response
-    {
-        Session::destroy();
-
-        return $response->withStatus(302)->withHeader('Location', '/');
-    }
-
-    /**
-     * Show the login form
-     *
-     * @param Request $request
-     * @param Response $response
-     * @return Response
-     */
-    public function showForm(Request $request, Response $response): Response
-    {
-        return $this->renderer->render($response, 'login');
     }
 }

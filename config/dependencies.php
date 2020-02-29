@@ -20,22 +20,30 @@ use Psr\Http\Message\ServerRequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\UploadedFileFactoryInterface;
 use Psr\Http\Message\UriFactoryInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Log\LoggerInterface;
 use RKA\Session;
+use Sihae\Actions\ArchivedPostsAction;
+use Sihae\Actions\CreatePostAction;
+use Sihae\Actions\DeletePostAction;
+use Sihae\Actions\EditPostAction;
+use Sihae\Actions\EditPostFormAction;
+use Sihae\Actions\LoginAction;
+use Sihae\Actions\LoginFormAction;
+use Sihae\Actions\LogoutAction;
+use Sihae\Actions\PostFormAction;
+use Sihae\Actions\PostListAction;
+use Sihae\Actions\PostListTaggedAction;
+use Sihae\Actions\RegisterUserAction;
+use Sihae\Actions\RegistrationFormAction;
+use Sihae\Actions\TagListAction;
+use Sihae\Actions\ViewPostAction;
 use Sihae\Container;
-
-use Sihae\Controllers\ArchiveController;
-use Sihae\Controllers\LoginController;
-use Sihae\Controllers\PostController;
-use Sihae\Controllers\PostListController;
-use Sihae\Controllers\RegistrationController;
-use Sihae\Controllers\TagController;
 use Sihae\Formatters\ArchiveFormatter;
 use Sihae\Middleware\AuthMiddleware;
 use Sihae\Middleware\CsrfProvider;
 use Sihae\Middleware\ErrorMiddleware;
 use Sihae\Middleware\NotFoundMiddleware;
-use Sihae\Middleware\PageProvider;
 use Sihae\Middleware\PostLocator;
 use Sihae\Middleware\SettingsProvider;
 use Sihae\Middleware\UserProvider;
@@ -50,7 +58,7 @@ use Sihae\Validators\PostValidator;
 use Sihae\Validators\RegistrationValidator;
 use Slim\Csrf\Guard;
 
-return function (Container $container): void {
+return static function (Container $container): void {
     $container[Engine::class] = static function (Container $container): Engine {
         $settings = $container->get('settings')['renderer'];
 
@@ -60,13 +68,6 @@ return function (Container $container): void {
         $engine->addFolder('theme', __DIR__ . '/../templates/theme/', true);
 
         return $engine;
-    };
-
-    $container[PageProvider::class] = static function (Container $container): PageProvider {
-        return new PageProvider(
-            $container->get(Renderer::class),
-            $container->get(EntityManager::class)
-        );
     };
 
     $container[PostLocator::class] = static function (Container $container): PostLocator {
@@ -98,52 +99,127 @@ return function (Container $container): void {
         );
     };
 
-    $container[PostController::class] = static function (Container $container): PostController {
-        return new PostController(
+    $container[CreatePostAction::class] = static function (Container $container): RequestHandlerInterface {
+        return new CreatePostAction(
+            $container->get(ResponseFactoryInterface::class),
+            $container->get(Renderer::class),
+            $container->get(TagRepository::class),
+            $container->get(PostRepository::class),
+            $container->get(PostValidator::class)
+        );
+    };
+
+    $container[EditPostAction::class] = static function (Container $container): RequestHandlerInterface {
+        return new EditPostAction(
+            $container->get(ResponseFactoryInterface::class),
+            $container->get(PostRepository::class),
+            $container->get(TagRepository::class),
+            $container->get(PostValidator::class),
+            $container->get(Renderer::class)
+        );
+    };
+
+    $container[EditPostFormAction::class] = static function (Container $container): RequestHandlerInterface {
+        return new EditPostFormAction(
+            $container->get(ResponseFactoryInterface::class),
+            $container->get(Renderer::class),
+            $container->get(TagRepository::class)
+        );
+    };
+
+    $container[DeletePostAction::class] = static function (Container $container): RequestHandlerInterface {
+        return new DeletePostAction(
+            $container->get(ResponseFactoryInterface::class),
+            $container->get(PostRepository::class)
+        );
+    };
+
+    $container[ViewPostAction::class] = static function (Container $container): RequestHandlerInterface {
+        return new ViewPostAction(
+            $container->get(ResponseFactoryInterface::class),
             $container->get(Renderer::class),
             $container->get(CommonMarkConverter::class),
-            $container->get(PostValidator::class),
-            $container->get(PostRepository::class),
-            $container->get(TagRepository::class)
         );
     };
 
-    $container[PostListController::class] = static function (Container $container): PostListController {
-        return new PostListController(
+    $container[PostFormAction::class] = static function (Container $container): RequestHandlerInterface {
+        return new PostFormAction(
+            $container->get(ResponseFactoryInterface::class),
             $container->get(Renderer::class),
-            $container->get(PostRepository::class),
             $container->get(TagRepository::class)
         );
     };
 
-    $container[ArchiveController::class] = static function (Container $container): ArchiveController {
-        return new ArchiveController(
+    $container[PostListAction::class] = static function (Container $container): RequestHandlerInterface {
+        return new PostListAction(
+            $container->get(ResponseFactoryInterface::class),
+            $container->get(PostRepository::class),
+            $container->get(Renderer::class)
+        );
+    };
+
+    $container[PostListTaggedAction::class] = static function (Container $container): RequestHandlerInterface {
+        return new PostListTaggedAction(
+            $container->get(ResponseFactoryInterface::class),
+            $container->get(PostRepository::class),
+            $container->get(TagRepository::class),
+            $container->get(Renderer::class)
+        );
+    };
+
+    $container[ArchivedPostsAction::class] = static function (Container $container): RequestHandlerInterface {
+        return new ArchivedPostsAction(
+            $container->get(ResponseFactoryInterface::class),
             $container->get(Renderer::class),
             $container->get(PostRepository::class),
             $container->get(ArchiveFormatter::class)
         );
     };
 
-    $container[TagController::class] = static function (Container $container): TagController {
-        return new TagController(
+    $container[TagListAction::class] = static function (Container $container): TagListAction {
+        return new TagListAction(
+            $container->get(ResponseFactoryInterface::class),
             $container->get(Renderer::class),
             $container->get(TagRepository::class)
         );
     };
 
-    $container[LoginController::class] = static function (Container $container): LoginController {
-        return new LoginController(
+    $container[LoginAction::class] = static function (Container $container): RequestHandlerInterface {
+        return new LoginAction(
+            $container->get(ResponseFactoryInterface::class),
             $container->get(Renderer::class),
             $container->get(UserRepository::class),
             $container->get(Session::class)
         );
     };
 
-    $container[RegistrationController::class] = static function (Container $container): RegistrationController {
-        return new RegistrationController(
+    $container[LoginFormAction::class] = static function (Container $container): RequestHandlerInterface {
+        return new LoginFormAction(
+            $container->get(ResponseFactoryInterface::class),
+            $container->get(Renderer::class)
+        );
+    };
+
+    $container[LogoutAction::class] = static function (Container $container): RequestHandlerInterface {
+        return new LogoutAction(
+            $container->get(ResponseFactoryInterface::class)
+        );
+    };
+
+    $container[RegisterUserAction::class] = static function (Container $container): RequestHandlerInterface {
+        return new RegisterUserAction(
+            $container->get(ResponseFactoryInterface::class),
             $container->get(Renderer::class),
             $container->get(RegistrationValidator::class),
             $container->get(UserRepository::class),
+            $container->get(Session::class)
+        );
+    };
+
+    $container[RegistrationFormAction::class] = static function (Container $container): RequestHandlerInterface {
+        return new RegistrationFormAction(
+            $container->get(ResponseFactoryInterface::class),
+            $container->get(Renderer::class),
             $container->get(Session::class)
         );
     };

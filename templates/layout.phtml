@@ -30,12 +30,6 @@
     <footer>
         <nav>
             <ul>
-                <?php foreach ($pages as $page) : ?>
-                    <li><a <?= $this->uri('/' . $page->getSlug(), 'class="selected"') ?> href="/<?= $page->getSlug() ?>">
-                        <?= $page->getTitle() ?>
-                    </a></li>
-                <?php endforeach ?>
-
                 <li><a <?= $this->uri('/archive', 'class="selected"') ?> href="/archive">Archive</a></li>
                 <li><a <?= $this->uri('/tags', 'class="selected"') ?> href="/tags">Tags</a></li>
             </ul>

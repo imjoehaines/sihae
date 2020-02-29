@@ -53,11 +53,13 @@
             "composer test:unit",
             "composer test:acceptance",
             "composer test:phpstan",
-            "composer test:types"
+            "composer test:types",
+            "composer test:lint"
         ],
         "test:acceptance": "behat --colors -v",
         "test:phpstan": "phpstan analyse src tests",
         "test:types": "types-checker src tests --exclude Sihae\\\\Utils\\\\Safe --exclude Sihae\\\\Tests\\\\Unit\\\\Utils\\\\SafeTest --exclude Sihae\\\\Container",
-        "test:unit": "phpunit tests/Unit/ --testdox --color=always"
+        "test:unit": "phpunit tests/Unit/ --testdox --color=always",
+        "test:lint": "ecs check"
     }
 }

@@ -2,10 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Sihae\Controllers;
+namespace Sihae\Actions;
 
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\ResponseFactoryInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use RKA\Session;
 use Sihae\Entities\User;
 use Sihae\Renderer;
@@ -13,11 +15,13 @@ use Sihae\Repositories\UserRepository;
 use Sihae\Utils\Safe;
 use Sihae\Validators\Validator;
 
-/**
- * Controller for registering new users
- */
-class RegistrationController
+final class RegisterUserAction implements RequestHandlerInterface
 {
+    /**
+     * @var ResponseFactoryInterface
+     */
+    private $responseFactory;
+
     /**
      * @var Renderer
      */
@@ -39,40 +43,40 @@ class RegistrationController
     private $session;
 
     /**
+     * @param ResponseFactoryInterface $responseFactory
      * @param Renderer $renderer
      * @param Validator $validator
      * @param UserRepository $repository
      * @param Session $session
      */
     public function __construct(
+        ResponseFactoryInterface $responseFactory,
         Renderer $renderer,
         Validator $validator,
         UserRepository $repository,
         Session $session
     ) {
+        $this->responseFactory = $responseFactory;
         $this->renderer = $renderer;
         $this->validator = $validator;
         $this->repository = $repository;
         $this->session = $session;
     }
 
-    /**
-     * Register a new user.
-     *
-     * @param Request $request
-     * @param Response $response
-     * @return Response
-     */
-    public function register(Request $request, Response $response): Response
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $userDetails = $request->getParsedBody();
 
         // @todo this is broken - should be !$this->validator->isValid - why isn't there a test?
         if (!is_array($userDetails) || $this->validator->isValid($userDetails)) {
-            return $this->renderer->render($response, 'register', [
-                'errors' => $this->validator->getErrors(),
-                'username' => Safe::get('username', $userDetails, ''),
-            ]);
+            return $this->renderer->render(
+                $this->responseFactory->createResponse(),
+                'register',
+                [
+                    'errors' => $this->validator->getErrors(),
+                    'username' => Safe::get('username', $userDetails, ''),
+                ]
+            );
         }
 
         $user = new User(
@@ -84,22 +88,7 @@ class RegistrationController
 
         $this->session->set('token', $user->getToken());
 
-        return $response->withStatus(302)->withHeader('Location', '/');
-    }
-
-    /**
-     * Show the registration form
-     *
-     * @param Request $request
-     * @param Response $response
-     * @return Response
-     */
-    public function showForm(Request $request, Response $response): Response
-    {
-        if ($this->session->get('token')) {
-            return $response->withStatus(302)->withHeader('Location', '/');
-        }
-
-        return $this->renderer->render($response, 'register');
+        return $this->responseFactory->createResponse(302)
+            ->withHeader('Location', '/');
     }
 }

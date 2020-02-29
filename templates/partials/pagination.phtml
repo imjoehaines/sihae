@@ -2,7 +2,7 @@
     <ol class="post-pagination">
         <li class="post-pagination-newer">
             <?php if ($current_page === 1) : ?>
-                <a href="#" class="disabled">Newer Posts</a>
+                <span class="disabled">Newer Posts</span>
             <?php else : ?>
                 <a href="<?= isset($tag) ? '/tagged/' . $tag->getSlug() : '' ?>/page/<?= $current_page - 1 ?>">
                     Newer Posts
@@ -20,7 +20,7 @@
                     Older Posts
                 </a>
             <?php else : ?>
-                <a href="#" class="disabled">Older Posts</a>
+                <span class="disabled">Older Posts</span>
             <?php endif ?>
         </li>
     </ol>

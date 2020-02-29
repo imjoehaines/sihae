@@ -13,9 +13,6 @@
         <?php endif ?>
 
         <?php if (isset($user) && $user->isAdmin() === true) : ?>
-            <a href="/post/convert/<?= $post->getSlug() ?>" title="Convert between page and post">
-                <i class="fa fa-exchange" aria-hidden="true"></i>
-            </a>
             <a href="/post/edit/<?= $post->getSlug() ?>" title="Edit this post">
                 <i class="fa fa-pencil" aria-hidden="true"></i>
             </a>
