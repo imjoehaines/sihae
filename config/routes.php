@@ -11,7 +11,6 @@ use Sihae\Actions\RegistrationFormAction;
 use Sihae\Actions\TagListAction;
 use Sihae\Controllers\PostController;
 use Sihae\Controllers\PostListController;
-use Sihae\Controllers\RegistrationController;
 use Sihae\Middleware\AuthMiddleware;
 use Sihae\Middleware\PostLocator;
 use Slim\App;

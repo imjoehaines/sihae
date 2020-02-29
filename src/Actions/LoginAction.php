@@ -16,6 +16,11 @@ use Sihae\Utils\Safe;
 final class LoginAction implements RequestHandlerInterface
 {
     /**
+     * @var ResponseFactoryInterface
+     */
+    private $responseFactory;
+
+    /**
      * @var Renderer
      */
     private $renderer;
@@ -31,26 +36,21 @@ final class LoginAction implements RequestHandlerInterface
     private $session;
 
     /**
-     * @var ResponseFactoryInterface
-     */
-    private $responseFactory;
-
-    /**
+     * @param ResponseFactoryInterface $responseFactory
      * @param Renderer $renderer
      * @param UserRepository $repository
      * @param Session $session
-     * @param ResponseFactoryInterface $responseFactory
      */
     public function __construct(
+        ResponseFactoryInterface $responseFactory,
         Renderer $renderer,
         UserRepository $repository,
-        Session $session,
-        ResponseFactoryInterface $responseFactory
+        Session $session
     ) {
+        $this->responseFactory = $responseFactory;
         $this->renderer = $renderer;
         $this->repository = $repository;
         $this->session = $session;
-        $this->responseFactory = $responseFactory;
     }
 
     /**

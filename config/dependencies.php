@@ -33,7 +33,6 @@ use Sihae\Actions\TagListAction;
 use Sihae\Container;
 use Sihae\Controllers\PostController;
 use Sihae\Controllers\PostListController;
-use Sihae\Controllers\RegistrationController;
 use Sihae\Formatters\ArchiveFormatter;
 use Sihae\Middleware\AuthMiddleware;
 use Sihae\Middleware\CsrfProvider;
@@ -54,7 +53,7 @@ use Sihae\Validators\PostValidator;
 use Sihae\Validators\RegistrationValidator;
 use Slim\Csrf\Guard;
 
-return function (Container $container): void {
+return static function (Container $container): void {
     $container[Engine::class] = static function (Container $container): Engine {
         $settings = $container->get('settings')['renderer'];
 
@@ -139,10 +138,10 @@ return function (Container $container): void {
 
     $container[LoginAction::class] = static function (Container $container): RequestHandlerInterface {
         return new LoginAction(
+            $container->get(ResponseFactoryInterface::class),
             $container->get(Renderer::class),
             $container->get(UserRepository::class),
-            $container->get(Session::class),
-            $container->get(ResponseFactoryInterface::class)
+            $container->get(Session::class)
         );
     };
 

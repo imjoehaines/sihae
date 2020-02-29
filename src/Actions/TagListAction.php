@@ -29,6 +29,7 @@ class TagListAction implements RequestHandlerInterface
     private $repository;
 
     /**
+     * @param ResponseFactoryInterface $responseFactory
      * @param Renderer $renderer
      * @param TagRepository $repository
      */
