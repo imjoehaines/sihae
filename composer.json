@@ -17,6 +17,7 @@
     },
     "require": {
         "php": "^7.3",
+        "ext-json":  "*",
         "akrabat/rka-slim-session-middleware": "^2.0",
         "doctrine/migrations": "^2.0.0",
         "doctrine/orm": "^2.7.1",
