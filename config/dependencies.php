@@ -9,7 +9,6 @@ use League\CommonMark\Environment;
 use League\CommonMark\Extension\Table\TableExtension;
 use League\Plates\Engine;
 use League\Plates\Extension\Asset;
-use League\Plates\Extension\URI;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Monolog\Processor\UidProcessor;
@@ -64,7 +63,6 @@ return static function (Container $container): void {
 
         $engine = new Engine($settings['path'], $settings['extension']);
         $engine->loadExtension(new Asset(__DIR__ . '/../public/'));
-        $engine->loadExtension(new URI($container->get('request')->getUri()->getPath()));
         $engine->addFolder('theme', __DIR__ . '/../templates/theme/', true);
 
         return $engine;

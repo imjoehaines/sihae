@@ -30,8 +30,8 @@
     <footer>
         <nav>
             <ul>
-                <li><a <?= $this->uri('/archive', 'class="selected"') ?> href="/archive">Archive</a></li>
-                <li><a <?= $this->uri('/tags', 'class="selected"') ?> href="/tags">Tags</a></li>
+                <li><a href="/archive">Archive</a></li>
+                <li><a href="/tags">Tags</a></li>
             </ul>
         </nav>
 
@@ -39,13 +39,7 @@
             <nav>
                 <ul>
                     <?php if ($user->isAdmin() === true) : ?>
-                        <li>
-                            <a <?= $this->uri('/post/admin/new', 'class="selected"') ?>
-                               href="/post/admin/new"
-                            >
-                                Add a new post
-                            </a>
-                        </li>
+                        <li><a href="/post/admin/new">Add a new post</a></li>
                     <?php endif ?>
 
                     <li><a href="/logout">Logout</a></li>

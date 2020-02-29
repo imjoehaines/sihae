@@ -47,18 +47,13 @@ session_start([
 // Instantiate the app
 $settings = require __DIR__ . '/../config/settings.php';
 
-$container = new Container($settings);
 $psr17Factory = new Psr17Factory();
-$creator = new ServerRequestCreator($psr17Factory, $psr17Factory, $psr17Factory, $psr17Factory);
 
-$request = $creator->fromGlobals();
-// TODO See if we can remove the request from the container
-$container['request'] = $request;
-
+$container = new Container($settings);
 $app = new App($psr17Factory, $container);
 
-$routeCollector = $app->getRouteCollector();
-$routeCollector->setDefaultInvocationStrategy(new SlimRequestInvocationStrategy());
+$app->getRouteCollector()
+    ->setDefaultInvocationStrategy(new SlimRequestInvocationStrategy());
 
 // Set up dependencies
 $dependencyFactory = require __DIR__ . '/../config/dependencies.php';
@@ -86,4 +81,6 @@ if ($container->has(ErrorMiddleware::class)) {
     $app->addMiddleware($container->get(ErrorMiddleware::class));
 }
 
-$app->run($request);
+$requestCreator = new ServerRequestCreator($psr17Factory, $psr17Factory, $psr17Factory, $psr17Factory);
+
+$app->run($requestCreator->fromGlobals());
