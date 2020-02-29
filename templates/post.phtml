@@ -13,10 +13,10 @@
         <?php endif ?>
 
         <?php if (isset($user) && $user->isAdmin() === true) : ?>
-            <a href="/post/edit/<?= $post->getSlug() ?>" title="Edit this post">
+            <a href="/post/admin/edit/<?= $post->getSlug() ?>" title="Edit this post">
                 <i class="fa fa-pencil" aria-hidden="true"></i>
             </a>
-            <a href="/post/delete/<?= $post->getSlug() ?>" title="Delete this post">
+            <a href="/post/admin/delete/<?= $post->getSlug() ?>" title="Delete this post">
                 <i class="fa fa-trash" aria-hidden="true"></i>
             </a>
         <?php endif ?>

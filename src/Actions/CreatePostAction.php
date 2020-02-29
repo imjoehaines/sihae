@@ -43,15 +43,6 @@ final class CreatePostAction implements RequestHandlerInterface
     private $validator;
 
     /**
-     * Strings that are used in routes and therefore can't be slugs
-     *
-     * @var array<string>
-     *
-     * TODO remove this
-     */
-    private $reservedSlugs = ['new', 'edit', 'delete', 'login', 'logout', 'register', 'archive'];
-
-    /**
      * @param ResponseFactoryInterface $responseFactory
      * @param Renderer $renderer
      * @param TagRepository $tagRepository
@@ -98,11 +89,8 @@ final class CreatePostAction implements RequestHandlerInterface
             );
         }
 
-        // if there is already a post with the slug we just generated or the slug
-        // is "reserved", generate a new one
-        if (in_array($post->getSlug(), $this->reservedSlugs, true) ||
-            $this->postRepository->findOneBySlug($post->getSlug()) !== null
-        ) {
+        // if there is already a post with the slug we just generated, generate a new one
+        if ($this->postRepository->findOneBySlug($post->getSlug()) !== null) {
             $post->regenerateSlug();
         }
 

@@ -25,7 +25,7 @@ use Slim\Routing\RouteCollectorProxy;
 return static function (App $app): void {
     $app->get('/[page/{page:[1-9][0-9]*}]', PostListAction::class);
 
-    $app->group('/post', function (RouteCollectorProxy $group): void {
+    $app->group('/post/admin', function (RouteCollectorProxy $group): void {
         $group->get('/new', PostFormAction::class);
         $group->post('/new', CreatePostAction::class);
 

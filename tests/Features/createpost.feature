@@ -5,21 +5,21 @@ Feature: Create a New Blog Post
 
   @database @loginAdmin
   Scenario: Creating a new post
-    Given I am on "post/new"
+    Given I am on "/post/admin/new"
     When I fill in "title" with "my post"
     And I fill in "body" with "some good text that i wrote"
     And I press "submit"
-    Then I should be on "post/my-post"
+    Then I should be on "/post/my-post"
     And I should see "my post"
     And I should see "some good text that i wrote"
 
   @database @loginAdmin
   Scenario: Creating a new post but failing validation
-    Given I am on "post/new"
+    Given I am on "/post/admin/new"
     When I fill in "title" with "a"
     And I fill in "body" with "b"
     And I press "submit"
-    Then I should be on "post/new"
+    Then I should be on "/post/admin/new"
     And I should see "Oops! Please fix the following errors"
     And I should see "Title: not at least 3 characters"
     And I should see "Body: not at least 10 characters"
@@ -29,7 +29,7 @@ Feature: Create a New Blog Post
     Given there is a post:
       | title       | body                                                                      |
       | A Cool Post | A bunch of cool text about my awesome blog post that I totally just wrote |
-    And I am on "post/new"
+    And I am on "/post/admin/new"
     When I fill in "title" with "A Cool Post"
     And I fill in "body" with "some good text that i wrote"
     And I press "submit"

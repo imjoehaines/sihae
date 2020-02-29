@@ -27,14 +27,14 @@ Feature: Authentication
     Then I should not see "Add a new post"
 
   Scenario: Attempting to add a post when not logged in
-    Given I am on "post/new"
+    Given I am on "/post/admin/new"
     Then I should not see "Add a new post"
     But I should see "Oops!"
     And I should see "I couldn't find the page you requested, maybe you could try this one instead."
 
   @database @login
   Scenario: Attempting to add a post when logged in as a non-admin
-    Given I am on "post/new"
+    Given I am on "/post/admin/new"
     Then I should not see "Add a new post"
     But I should see "Oops!"
     And I should see "I couldn't find the page you requested, maybe you could try this one instead."
@@ -51,8 +51,8 @@ Feature: Authentication
 
   @database @loginAdmin
   Scenario: Logging out
-    Given I am on "post/new"
+    Given I am on "/post/admin/new"
     Then I should see "Add a new post"
     When I am on "logout"
-    And I am on "post/new"
+    And I am on "/post/admin/new"
     Then I should not see "Add a new post"

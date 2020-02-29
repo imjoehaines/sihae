@@ -16,7 +16,7 @@
 <?php endif ?>
 
 <form method="POST"
-    action="/post/<?= isset($isEdit) && $isEdit ? 'edit/' . $post->getSlug() : 'new' ?>"
+    action="/post/admin/<?= isset($isEdit) && $isEdit ? 'edit/' . $post->getSlug() : 'new' ?>"
 >
     <?php $this->insert('theme::partials/csrf', ['csrf' => $csrf]) ?>
 

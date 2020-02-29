@@ -39,7 +39,13 @@
             <nav>
                 <ul>
                     <?php if ($user->isAdmin() === true) : ?>
-                        <li><a <?= $this->uri('/post/new', 'class="selected"') ?> href="/post/new">Add a new post</a></li>
+                        <li>
+                            <a <?= $this->uri('/post/admin/new', 'class="selected"') ?>
+                               href="/post/admin/new"
+                            >
+                                Add a new post
+                            </a>
+                        </li>
                     <?php endif ?>
 
                     <li><a href="/logout">Logout</a></li>
