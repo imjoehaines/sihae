@@ -9,7 +9,7 @@ use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7Server\ServerRequestCreator;
 use Sihae\Container;
 use Sihae\Middleware\ErrorMiddleware;
-use Sihae\RouteArgumentMarshaller;
+use Sihae\SlimRequestInvocationStrategy;
 use Slim\App;
 use Tracy\Debugger;
 
@@ -57,7 +57,7 @@ $container['request'] = $request;
 $app = new App($psr17Factory, $container);
 
 $routeCollector = $app->getRouteCollector();
-$routeCollector->setDefaultInvocationStrategy(new RouteArgumentMarshaller());
+$routeCollector->setDefaultInvocationStrategy(new SlimRequestInvocationStrategy());
 
 // Set up dependencies
 $dependencyFactory = require __DIR__ . '/../config/dependencies.php';

@@ -6,18 +6,19 @@ use Sihae\Actions\ArchivedPostsAction;
 use Sihae\Actions\LoginAction;
 use Sihae\Actions\LoginFormAction;
 use Sihae\Actions\LogoutAction;
+use Sihae\Actions\PostListAction;
+use Sihae\Actions\PostListTaggedAction;
 use Sihae\Actions\RegisterUserAction;
 use Sihae\Actions\RegistrationFormAction;
 use Sihae\Actions\TagListAction;
 use Sihae\Controllers\PostController;
-use Sihae\Controllers\PostListController;
 use Sihae\Middleware\AuthMiddleware;
 use Sihae\Middleware\PostLocator;
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
 
 return static function (App $app): void {
-    $app->get('/[page/{page:[1-9][0-9]*}]', PostListController::class . ':index');
+    $app->get('/[page/{page:[1-9][0-9]*}]', PostListAction::class);
 
     $app->group('/post', function (RouteCollectorProxy $group): void {
         $group->get('/new', PostController::class . ':create');
@@ -34,7 +35,7 @@ return static function (App $app): void {
     $app->get('/post/{slug:[a-zA-Z\d\s\-_\-]+}', PostController::class . ':show')
         ->add(PostLocator::class);
 
-    $app->get('/tagged/{slug:[a-zA-Z\d\s\-_\-]+}[/page/{page:[1-9][0-9]*}]', PostListController::class . ':tagged');
+    $app->get('/tagged/{slug:[a-zA-Z\d\s\-_\-]+}[/page/{page:[1-9][0-9]*}]', PostListTaggedAction::class);
 
     $app->get('/archive', ArchivedPostsAction::class);
     $app->get('/tags', TagListAction::class);

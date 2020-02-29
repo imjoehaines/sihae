@@ -27,12 +27,13 @@ use Sihae\Actions\ArchivedPostsAction;
 use Sihae\Actions\LoginAction;
 use Sihae\Actions\LoginFormAction;
 use Sihae\Actions\LogoutAction;
+use Sihae\Actions\PostListAction;
+use Sihae\Actions\PostListTaggedAction;
 use Sihae\Actions\RegisterUserAction;
 use Sihae\Actions\RegistrationFormAction;
 use Sihae\Actions\TagListAction;
 use Sihae\Container;
 use Sihae\Controllers\PostController;
-use Sihae\Controllers\PostListController;
 use Sihae\Formatters\ArchiveFormatter;
 use Sihae\Middleware\AuthMiddleware;
 use Sihae\Middleware\CsrfProvider;
@@ -111,11 +112,20 @@ return static function (Container $container): void {
         );
     };
 
-    $container[PostListController::class] = static function (Container $container): PostListController {
-        return new PostListController(
-            $container->get(Renderer::class),
+    $container[PostListAction::class] = static function (Container $container): RequestHandlerInterface {
+        return new PostListAction(
+            $container->get(ResponseFactoryInterface::class),
             $container->get(PostRepository::class),
-            $container->get(TagRepository::class)
+            $container->get(Renderer::class)
+        );
+    };
+
+    $container[PostListTaggedAction::class] = static function (Container $container): RequestHandlerInterface {
+        return new PostListTaggedAction(
+            $container->get(ResponseFactoryInterface::class),
+            $container->get(PostRepository::class),
+            $container->get(TagRepository::class),
+            $container->get(Renderer::class)
         );
     };
 
