@@ -81,7 +81,7 @@ final class PostListTaggedAction implements RequestHandlerInterface
             [
                 'posts' => $posts,
                 'current_page' => $page,
-                'total_pages' => max(ceil($total / $limit), 1),
+                'total_pages' => (int) max(ceil($total / $limit), 1),
                 'tag' => $tag,
             ]
         );
