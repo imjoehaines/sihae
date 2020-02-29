@@ -10,8 +10,8 @@ final class Slugifier
     {
         $parts = explode(' ', $string);
 
-        $alphanumericOnly = array_map(function (string $word): string {
-            return preg_replace('/[^\w]/', '', $word) ?? '';
+        $alphanumericOnly = array_map(static function (string $word): string {
+            return preg_replace('/\W/', '', $word) ?? '';
         }, $parts);
 
         return strtolower(implode('-', $alphanumericOnly));
