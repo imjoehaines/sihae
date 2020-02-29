@@ -6,6 +6,8 @@ use Sihae\Actions\ArchivedPostsAction;
 use Sihae\Actions\LoginAction;
 use Sihae\Actions\LoginFormAction;
 use Sihae\Actions\LogoutAction;
+use Sihae\Actions\RegisterUserAction;
+use Sihae\Actions\RegistrationFormAction;
 use Sihae\Actions\TagListAction;
 use Sihae\Controllers\PostController;
 use Sihae\Controllers\PostListController;
@@ -43,8 +45,8 @@ return static function (App $app): void {
     $app->get('/logout', LogoutAction::class);
 
     if ((bool) getenv('ENABLE_REGISTRATION') === true) {
-        $app->get('/register', RegistrationController::class . ':showForm');
-        $app->post('/register', RegistrationController::class . ':register');
+        $app->get('/register', RegistrationFormAction::class);
+        $app->post('/register', RegisterUserAction::class);
     }
 
     $app->get('/{slug:[a-zA-Z\d\s\-_\-]+}', PostController::class . ':show')

@@ -27,6 +27,8 @@ use Sihae\Actions\ArchivedPostsAction;
 use Sihae\Actions\LoginAction;
 use Sihae\Actions\LoginFormAction;
 use Sihae\Actions\LogoutAction;
+use Sihae\Actions\RegisterUserAction;
+use Sihae\Actions\RegistrationFormAction;
 use Sihae\Actions\TagListAction;
 use Sihae\Container;
 use Sihae\Controllers\PostController;
@@ -157,11 +159,20 @@ return function (Container $container): void {
         );
     };
 
-    $container[RegistrationController::class] = static function (Container $container): RegistrationController {
-        return new RegistrationController(
+    $container[RegisterUserAction::class] = static function (Container $container): RequestHandlerInterface {
+        return new RegisterUserAction(
+            $container->get(ResponseFactoryInterface::class),
             $container->get(Renderer::class),
             $container->get(RegistrationValidator::class),
             $container->get(UserRepository::class),
+            $container->get(Session::class)
+        );
+    };
+
+    $container[RegistrationFormAction::class] = static function (Container $container): RequestHandlerInterface {
+        return new RegistrationFormAction(
+            $container->get(ResponseFactoryInterface::class),
+            $container->get(Renderer::class),
             $container->get(Session::class)
         );
     };
