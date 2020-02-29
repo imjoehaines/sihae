@@ -60,15 +60,14 @@ class DoctrineTagRepository implements TagRepository
     }
 
     /**
-     * @todo rename this to something clearer
-     * @param array<int> $existingTags
-     * @param array<string> $newTags
+     * @param array<int> $existingTagIds an array of tag IDs that should already exist
+     * @param array<string> $newTags an array of new tag names to create
      * @return array<Tag>
      */
-    public function findAll(array $existingTags, array $newTags): array
+    public function findAll(array $existingTagIds, array $newTags): array
     {
         return array_merge(
-            $this->find($existingTags),
+            $this->find($existingTagIds),
             $this->findOrCreate($newTags)
         );
     }
