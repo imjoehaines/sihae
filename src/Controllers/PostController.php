@@ -98,23 +98,6 @@ class PostController
     }
 
     /**
-     * Delete a Post
-     *
-     * @param Request $request
-     * @param Response $response
-     * @param string $slug
-     * @return Response
-     */
-    public function delete(Request $request, Response $response, string $slug): Response
-    {
-        $post = $this->getPost($request);
-
-        $this->postRepository->delete($post);
-
-        return $response->withStatus(302)->withHeader('Location', '/');
-    }
-
-    /**
      * Convert a Post to a Page or vice versa
      *
      * @param Request $request

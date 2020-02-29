@@ -25,6 +25,7 @@ use Psr\Log\LoggerInterface;
 use RKA\Session;
 use Sihae\Actions\ArchivedPostsAction;
 use Sihae\Actions\CreatePostAction;
+use Sihae\Actions\DeletePostAction;
 use Sihae\Actions\EditPostFormAction;
 use Sihae\Actions\LoginAction;
 use Sihae\Actions\LoginFormAction;
@@ -130,6 +131,13 @@ return static function (Container $container): void {
             $container->get(ResponseFactoryInterface::class),
             $container->get(Renderer::class),
             $container->get(TagRepository::class)
+        );
+    };
+
+    $container[DeletePostAction::class] = static function (Container $container): RequestHandlerInterface {
+        return new DeletePostAction(
+            $container->get(ResponseFactoryInterface::class),
+            $container->get(PostRepository::class)
         );
     };
 
