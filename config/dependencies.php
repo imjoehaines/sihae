@@ -25,6 +25,7 @@ use Psr\Log\LoggerInterface;
 use RKA\Session;
 use Sihae\Actions\ArchivedPostsAction;
 use Sihae\Actions\CreatePostAction;
+use Sihae\Actions\EditPostFormAction;
 use Sihae\Actions\LoginAction;
 use Sihae\Actions\LoginFormAction;
 use Sihae\Actions\LogoutAction;
@@ -121,6 +122,14 @@ return static function (Container $container): void {
             $container->get(TagRepository::class),
             $container->get(PostRepository::class),
             $container->get(PostValidator::class)
+        );
+    };
+
+    $container[EditPostFormAction::class] = static function (Container $container): RequestHandlerInterface {
+        return new EditPostFormAction(
+            $container->get(ResponseFactoryInterface::class),
+            $container->get(Renderer::class),
+            $container->get(TagRepository::class)
         );
     };
 

@@ -57,32 +57,6 @@ class PostController
     }
 
     /**
-     * Show the form to edit an existing Post
-     *
-     * @param Request $request
-     * @param Response $response
-     * @param string $slug
-     * @return Response
-     */
-    public function edit(Request $request, Response $response, string $slug): Response
-    {
-        $post = $this->getPost($request);
-
-        $tags = $this->tagRepository->findAllAsArray();
-
-        $selectedTags = $this->tagRepository->findAllForPostAsArray($post);
-
-        return $this->renderer->render($response, 'editor', [
-            'post' => $post,
-            'isEdit' => true,
-            'tag_data' => json_encode([
-                'tags' => $tags,
-                'selected_tags' => $selectedTags,
-            ]),
-        ]);
-    }
-
-    /**
      * Save updates to an existing Post
      *
      * @param Request $request
