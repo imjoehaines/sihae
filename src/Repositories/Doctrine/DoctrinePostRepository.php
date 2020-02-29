@@ -44,7 +44,7 @@ class DoctrinePostRepository implements PostRepository
 
     public function findAllOrderedByDateCreated(?int $limit = null, ?int $offset = null): array
     {
-        return $this->repository->findBy(['is_page' => false], ['date_created' => 'DESC'], $limit, $offset);
+        return $this->repository->findBy([], ['date_created' => 'DESC'], $limit, $offset);
     }
 
     public function findOneBySlug(string $slug): ?Post

@@ -49,7 +49,7 @@ final class CreatePostAction implements RequestHandlerInterface
      *
      * TODO remove this
      */
-    private $reservedSlugs = ['new', 'edit', 'delete', 'login', 'logout', 'register', 'archive', 'convert'];
+    private $reservedSlugs = ['new', 'edit', 'delete', 'login', 'logout', 'register', 'archive'];
 
     /**
      * @param ResponseFactoryInterface $responseFactory

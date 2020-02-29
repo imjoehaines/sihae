@@ -44,7 +44,6 @@ use Sihae\Middleware\AuthMiddleware;
 use Sihae\Middleware\CsrfProvider;
 use Sihae\Middleware\ErrorMiddleware;
 use Sihae\Middleware\NotFoundMiddleware;
-use Sihae\Middleware\PageProvider;
 use Sihae\Middleware\PostLocator;
 use Sihae\Middleware\SettingsProvider;
 use Sihae\Middleware\UserProvider;
@@ -69,13 +68,6 @@ return static function (Container $container): void {
         $engine->addFolder('theme', __DIR__ . '/../templates/theme/', true);
 
         return $engine;
-    };
-
-    $container[PageProvider::class] = static function (Container $container): PageProvider {
-        return new PageProvider(
-            $container->get(Renderer::class),
-            $container->get(EntityManager::class)
-        );
     };
 
     $container[PostLocator::class] = static function (Container $container): PostLocator {

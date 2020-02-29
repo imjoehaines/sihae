@@ -97,35 +97,6 @@ class PostController
         return $response->withStatus(302)->withHeader('Location', '/post/' . $slug);
     }
 
-    /**
-     * Convert a Post to a Page or vice versa
-     *
-     * @param Request $request
-     * @param Response $response
-     * @param string $slug
-     * @return Response
-     */
-    public function convert(Request $request, Response $response, string $slug): Response
-    {
-        $entity = $this->postRepository->findOneBySlug($slug);
-
-        if ($entity === null) {
-            return $response->withStatus(404);
-        }
-
-        $entity->setIsPage(!$entity->isPage());
-
-        $this->postRepository->save($entity);
-
-        $path = '/' . $entity->getSlug();
-
-        if ($entity->isPage() === false) {
-            $path = '/post' . $path;
-        }
-
-        return $response->withStatus(302)->withHeader('Location', $path);
-    }
-
     private function getPost(Request $request): Post
     {
         return $request->getAttribute('post');

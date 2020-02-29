@@ -7,7 +7,6 @@ Sihae is a PHP 7.3+ blog engine built with Slim Framework and Doctrine ORM.
 ## Features
 
 - Publish blog posts
-- Create static pages
 - Markdown formatting ([CommonMark](http://commonmark.org/) via [league/commonmark](https://github.com/thephpleague/commonmark))
 - Syntax highlighting (via [Prism.js](http://prismjs.com/))
 - Tag posts and explore all posts by their tag(s)
