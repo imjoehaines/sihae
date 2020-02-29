@@ -73,22 +73,6 @@ class PostController
     }
 
     /**
-     * Show form for creating a new Post
-     *
-     * @param Request $request
-     * @param Response $response
-     * @return Response
-     */
-    public function create(Request $request, Response $response): Response
-    {
-        $tags = $this->tagRepository->findAllAsArray();
-
-        return $this->renderer->render($response, 'editor', [
-            'tag_data' => json_encode(['tags' => $tags]),
-        ]);
-    }
-
-    /**
      * Save a new Post
      *
      * @param Request $request

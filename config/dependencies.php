@@ -27,6 +27,7 @@ use Sihae\Actions\ArchivedPostsAction;
 use Sihae\Actions\LoginAction;
 use Sihae\Actions\LoginFormAction;
 use Sihae\Actions\LogoutAction;
+use Sihae\Actions\PostFormAction;
 use Sihae\Actions\PostListAction;
 use Sihae\Actions\PostListTaggedAction;
 use Sihae\Actions\RegisterUserAction;
@@ -108,6 +109,14 @@ return static function (Container $container): void {
             $container->get(CommonMarkConverter::class),
             $container->get(PostValidator::class),
             $container->get(PostRepository::class),
+            $container->get(TagRepository::class)
+        );
+    };
+
+    $container[PostFormAction::class] = static function (Container $container): RequestHandlerInterface {
+        return new PostFormAction(
+            $container->get(ResponseFactoryInterface::class),
+            $container->get(Renderer::class),
             $container->get(TagRepository::class)
         );
     };

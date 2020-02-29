@@ -6,6 +6,7 @@ use Sihae\Actions\ArchivedPostsAction;
 use Sihae\Actions\LoginAction;
 use Sihae\Actions\LoginFormAction;
 use Sihae\Actions\LogoutAction;
+use Sihae\Actions\PostFormAction;
 use Sihae\Actions\PostListAction;
 use Sihae\Actions\PostListTaggedAction;
 use Sihae\Actions\RegisterUserAction;
@@ -21,7 +22,7 @@ return static function (App $app): void {
     $app->get('/[page/{page:[1-9][0-9]*}]', PostListAction::class);
 
     $app->group('/post', function (RouteCollectorProxy $group): void {
-        $group->get('/new', PostController::class . ':create');
+        $group->get('/new', PostFormAction::class);
         $group->post('/new', PostController::class . ':store');
 
         $group->group('', function (RouteCollectorProxy $group): void {
