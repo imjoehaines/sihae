@@ -66,7 +66,7 @@ final class RegisterUserAction implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $userDetails = $request->getParsedBody();
-        $username = Safe::get('username', $userDetails, '');
+        $username = Safe::getString('username', $userDetails, '');
 
         if (!is_array($userDetails)) {
             return $this->renderError($username);
