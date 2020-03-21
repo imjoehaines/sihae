@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d74eee1ce763b116506958103219d4be",
+    "content-hash": "ffcc178928309bdbaa9b7e1430c482a5",
     "packages": [
         {
             "name": "akrabat/rka-slim-session-middleware",
@@ -2230,16 +2230,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v5.0.4",
+            "version": "v5.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "91c294166c38d8c0858a86fad76d8c14dc1144c8"
+                "reference": "d29e2d36941de13600c399e393a60b8cfe59ac49"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/91c294166c38d8c0858a86fad76d8c14dc1144c8",
-                "reference": "91c294166c38d8c0858a86fad76d8c14dc1144c8",
+                "url": "https://api.github.com/repos/symfony/console/zipball/d29e2d36941de13600c399e393a60b8cfe59ac49",
+                "reference": "d29e2d36941de13600c399e393a60b8cfe59ac49",
                 "shasum": ""
             },
             "require": {
@@ -2302,7 +2302,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2020-01-25T15:56:29+00:00"
+            "time": "2020-02-24T15:05:31+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -3454,22 +3454,26 @@
         },
         {
             "name": "kubawerlos/types-checker",
-            "version": "v1.2.0",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kubawerlos/types-checker.git",
-                "reference": "ec6f3e2e4fed8aa33e8b34982c74d2904f6b20c2"
+                "reference": "c325532e8faa7b057266f22c17fe1d2721dd3032"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kubawerlos/types-checker/zipball/ec6f3e2e4fed8aa33e8b34982c74d2904f6b20c2",
-                "reference": "ec6f3e2e4fed8aa33e8b34982c74d2904f6b20c2",
+                "url": "https://api.github.com/repos/kubawerlos/types-checker/zipball/c325532e8faa7b057266f22c17fe1d2721dd3032",
+                "reference": "c325532e8faa7b057266f22c17fe1d2721dd3032",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.1",
+                "ext-tokenizer": "*",
+                "php": "^7.2",
                 "symfony/console": "^3.4 || ^4.0 || ^5.0",
                 "symfony/finder": "^3.4 || ^4.0 || ^5.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.5.2 || ^9.0.1"
             },
             "bin": [
                 "types-checker"
@@ -3491,7 +3495,7 @@
                 }
             ],
             "description": "A tool to find missing type declarations in PHP 7 code",
-            "time": "2019-12-28T20:02:21+00:00"
+            "time": "2020-03-20T09:55:38+00:00"
         },
         {
             "name": "macfja/tracy-doctrine-sql",
@@ -5699,16 +5703,16 @@
         },
         {
             "name": "symfony/finder",
-            "version": "v5.0.4",
+            "version": "v5.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
-                "reference": "4176e7cb846fe08f32518b7e0ed8462e2db8d9bb"
+                "reference": "6251f201187ca9d66f6b099d3de65d279e971138"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/finder/zipball/4176e7cb846fe08f32518b7e0ed8462e2db8d9bb",
-                "reference": "4176e7cb846fe08f32518b7e0ed8462e2db8d9bb",
+                "url": "https://api.github.com/repos/symfony/finder/zipball/6251f201187ca9d66f6b099d3de65d279e971138",
+                "reference": "6251f201187ca9d66f6b099d3de65d279e971138",
                 "shasum": ""
             },
             "require": {
@@ -5744,7 +5748,7 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
-            "time": "2020-01-04T14:08:26+00:00"
+            "time": "2020-02-14T07:43:07+00:00"
         },
         {
             "name": "symfony/translation",
