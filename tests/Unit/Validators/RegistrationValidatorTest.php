@@ -23,8 +23,10 @@ class RegistrationValidatorTest extends TestCase
             'password_confirmation' => 'secret123',
         ];
 
-        $this->assertTrue($validator->isValid($data));
-        $this->assertEmpty($validator->getErrors());
+        $result = $validator->validate($data);
+
+        $this->assertTrue($result->isSuccess());
+        $this->assertEmpty($result->getErrors());
     }
 
     /**
@@ -44,8 +46,10 @@ class RegistrationValidatorTest extends TestCase
             'Username: not at least 3 characters',
         ];
 
-        $this->assertFalse($validator->isValid($data));
-        $this->assertSame($expected, $validator->getErrors());
+        $result = $validator->validate($data);
+
+        $this->assertFalse($result->isSuccess());
+        $this->assertSame($expected, $result->getErrors());
     }
 
     /**
@@ -66,8 +70,10 @@ class RegistrationValidatorTest extends TestCase
             'Password confirmation: not at least 7 characters',
         ];
 
-        $this->assertFalse($validator->isValid($data));
-        $this->assertSame($expected, $validator->getErrors());
+        $result = $validator->validate($data);
+
+        $this->assertFalse($result->isSuccess());
+        $this->assertSame($expected, $result->getErrors());
     }
 
     /**
@@ -87,8 +93,10 @@ class RegistrationValidatorTest extends TestCase
             'Passwords didn\'t match!',
         ];
 
-        $this->assertFalse($validator->isValid($data));
-        $this->assertSame($expected, $validator->getErrors());
+        $result = $validator->validate($data);
+
+        $this->assertFalse($result->isSuccess());
+        $this->assertSame($expected, $result->getErrors());
     }
 
     /**
@@ -108,8 +116,10 @@ class RegistrationValidatorTest extends TestCase
             'Username: more than 50 characters',
         ];
 
-        $this->assertFalse($validator->isValid($data));
-        $this->assertSame($expected, $validator->getErrors());
+        $result = $validator->validate($data);
+
+        $this->assertFalse($result->isSuccess());
+        $this->assertSame($expected, $result->getErrors());
     }
 
     /**
@@ -129,7 +139,9 @@ class RegistrationValidatorTest extends TestCase
             'Username: not alphanumeric',
         ];
 
-        $this->assertFalse($validator->isValid($data));
-        $this->assertSame($expected, $validator->getErrors());
+        $result = $validator->validate($data);
+
+        $this->assertFalse($result->isSuccess());
+        $this->assertSame($expected, $result->getErrors());
     }
 }

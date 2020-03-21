@@ -78,19 +78,18 @@ final class EditPostAction implements RequestHandlerInterface
 
         $updatedPost = $request->getParsedBody();
 
+        // Set the title and body here so they are set if we render an error
         $post->setTitle(Safe::get('title', $updatedPost, ''));
         $post->setBody(Safe::get('body', $updatedPost, ''));
 
-        if (!is_array($updatedPost) || !$this->validator->isValid($updatedPost)) {
-            return $this->renderer->render(
-                $this->responseFactory->createResponse(),
-                'editor',
-                [
-                    'post' => $post,
-                    'errors' => $this->validator->getErrors(),
-                    'isEdit' => true,
-                ]
-            );
+        if (!is_array($updatedPost)) {
+            return $this->renderError($post);
+        }
+
+        $result = $this->validator->validate($updatedPost);
+
+        if (!$result->isSuccess()) {
+            return $this->renderError($post, $result->getErrors());
         }
 
         $post->clearTags();
@@ -108,5 +107,23 @@ final class EditPostAction implements RequestHandlerInterface
 
         return $this->responseFactory->createResponse(302)
             ->withHeader('Location', '/post/' . $post->getSlug());
+    }
+
+    /**
+     * @param Post $post
+     * @param array<string> $errors
+     * @return ResponseInterface
+     */
+    private function renderError(Post $post, array $errors = []): ResponseInterface
+    {
+        return $this->renderer->render(
+            $this->responseFactory->createResponse(),
+            'editor',
+            [
+                'post' => $post,
+                'errors' => $errors,
+                'isEdit' => true,
+            ]
+        );
     }
 }

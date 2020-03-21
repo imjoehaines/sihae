@@ -66,17 +66,16 @@ final class RegisterUserAction implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $userDetails = $request->getParsedBody();
+        $username = Safe::get('username', $userDetails, '');
 
-        // @todo this is broken - should be !$this->validator->isValid - why isn't there a test?
-        if (!is_array($userDetails) || $this->validator->isValid($userDetails)) {
-            return $this->renderer->render(
-                $this->responseFactory->createResponse(),
-                'register',
-                [
-                    'errors' => $this->validator->getErrors(),
-                    'username' => Safe::get('username', $userDetails, ''),
-                ]
-            );
+        if (!is_array($userDetails)) {
+            return $this->renderError($username);
+        }
+
+        $result = $this->validator->validate($userDetails);
+
+        if (!$result->isSuccess()) {
+            return $this->renderError($username, $result->getErrors());
         }
 
         $user = new User(
@@ -90,5 +89,22 @@ final class RegisterUserAction implements RequestHandlerInterface
 
         return $this->responseFactory->createResponse(302)
             ->withHeader('Location', '/');
+    }
+
+    /**
+     * @param string $username
+     * @param array<string> $errors
+     * @return ResponseInterface
+     */
+    private function renderError(string $username, array $errors = []): ResponseInterface
+    {
+        return $this->renderer->render(
+            $this->responseFactory->createResponse(),
+            'register',
+            [
+                'errors' => $errors,
+                'username' => $username,
+            ]
+        );
     }
 }

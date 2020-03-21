@@ -19,8 +19,10 @@ class PostValidatorTest extends TestCase
 
         $data = ['title' => '123', 'body' => '1234567890'];
 
-        $this->assertTrue($validator->isValid($data));
-        $this->assertEmpty($validator->getErrors());
+        $result = $validator->validate($data);
+
+        $this->assertTrue($result->isSuccess());
+        $this->assertEmpty($result->getErrors());
     }
 
     /**
@@ -36,8 +38,10 @@ class PostValidatorTest extends TestCase
             'Title: not at least 3 characters',
         ];
 
-        $this->assertFalse($validator->isValid($data));
-        $this->assertSame($expected, $validator->getErrors());
+        $result = $validator->validate($data);
+
+        $this->assertFalse($result->isSuccess());
+        $this->assertSame($expected, $result->getErrors());
     }
 
     /**
@@ -53,8 +57,10 @@ class PostValidatorTest extends TestCase
             'Body: not at least 10 characters',
         ];
 
-        $this->assertFalse($validator->isValid($data));
-        $this->assertSame($expected, $validator->getErrors());
+        $result = $validator->validate($data);
+
+        $this->assertFalse($result->isSuccess());
+        $this->assertSame($expected, $result->getErrors());
     }
 
     /**
@@ -71,8 +77,10 @@ class PostValidatorTest extends TestCase
             'Body: not at least 10 characters',
         ];
 
-        $this->assertFalse($validator->isValid($data));
-        $this->assertSame($expected, $validator->getErrors());
+        $result = $validator->validate($data);
+
+        $this->assertFalse($result->isSuccess());
+        $this->assertSame($expected, $result->getErrors());
     }
 
     /**
@@ -88,8 +96,10 @@ class PostValidatorTest extends TestCase
             'Title: more than 50 characters',
         ];
 
-        $this->assertFalse($validator->isValid($data));
-        $this->assertSame($expected, $validator->getErrors());
+        $result = $validator->validate($data);
+
+        $this->assertFalse($result->isSuccess());
+        $this->assertSame($expected, $result->getErrors());
     }
 
     /**
@@ -101,7 +111,9 @@ class PostValidatorTest extends TestCase
 
         $data = ['title' => str_repeat('a', 50), 'body' => '1234567890'];
 
-        $this->assertTrue($validator->isValid($data));
-        $this->assertEmpty($validator->getErrors());
+        $result = $validator->validate($data);
+
+        $this->assertTrue($result->isSuccess());
+        $this->assertEmpty($result->getErrors());
     }
 }

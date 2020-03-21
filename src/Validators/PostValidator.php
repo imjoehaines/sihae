@@ -10,38 +10,25 @@ namespace Sihae\Validators;
 class PostValidator implements Validator
 {
     /**
-     * @var array<string>
-     */
-    private $errors = [];
-
-    /**
      * @param array<string, string> $postDetails
-     * @return bool
+     * @return Result
      */
-    public function isValid(array $postDetails): bool
+    public function validate(array $postDetails): Result
     {
-        $this->errors = [];
+        $errors = [];
 
         if (strlen($postDetails['title']) < 3) {
-            $this->errors[] = 'Title: not at least 3 characters';
+            $errors[] = 'Title: not at least 3 characters';
         }
 
         if (strlen($postDetails['title']) > 50) {
-            $this->errors[] = 'Title: more than 50 characters';
+            $errors[] = 'Title: more than 50 characters';
         }
 
         if (strlen($postDetails['body']) < 10) {
-            $this->errors[] = 'Body: not at least 10 characters';
+            $errors[] = 'Body: not at least 10 characters';
         }
 
-        return count($this->errors) === 0;
-    }
-
-    /**
-     * @return array<string>
-     */
-    public function getErrors(): array
-    {
-        return $this->errors;
+        return Result::from($errors);
     }
 }
