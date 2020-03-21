@@ -17,7 +17,6 @@ jobs:
       uses: squalrus/merge-bot@v0.2.0
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        test: true
         reviewers: false
         labels: ':white_check_mark: ready'
         blocking-labels: do not merge
