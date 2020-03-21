@@ -4,13 +4,8 @@ on:
   pull_request:
     types:
       - labeled
-      - review_request_removed
-      - review_requested
       - unlabeled
-  pull_request_review:
-    types:
-      - dismissed
-      - submitted
+      - ready_for_review
   status:
 
 jobs:
@@ -23,8 +18,8 @@ jobs:
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         test: true
-        reviewers: true
-        labels: ''
+        reviewers: false
+        labels: ':white_check_mark: ready'
         blocking-labels: do not merge
         checks: true
         method: merge
