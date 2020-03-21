@@ -55,7 +55,7 @@ jobs:
       run: php${{ matrix.php-version }} $(which composer) install --prefer-dist --no-progress --no-suggest
 
     - name: Run migrations
-      run: php${{ matrix.php-version }} vendor/bin/doctrine-migrations migrations:migrate
+      run: php${{ matrix.php-version }} vendor/bin/doctrine-migrations migrations:migrate --no-interaction
 
     - name: Start PHP webserver
       run: php${{ matrix.php-version }} -S localhost:8000 -t public &
