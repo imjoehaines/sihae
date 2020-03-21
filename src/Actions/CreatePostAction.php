@@ -78,15 +78,14 @@ final class CreatePostAction implements RequestHandlerInterface
             $request->getAttribute('user')
         );
 
-        if (!is_array($newPost) || !$this->validator->isValid($newPost)) {
-            return $this->renderer->render(
-                $this->responseFactory->createResponse(),
-                'editor',
-                [
-                    'post' => $post,
-                    'errors' => $this->validator->getErrors(),
-                ]
-            );
+        if (!is_array($newPost)) {
+            return $this->renderError($post, []);
+        }
+
+        $result = $this->validator->validate($newPost);
+
+        if (!$result->isSuccess()) {
+            return $this->renderError($post, $result->getErrors());
         }
 
         // if there is already a post with the slug we just generated, generate a new one
@@ -107,5 +106,22 @@ final class CreatePostAction implements RequestHandlerInterface
 
         return $this->responseFactory->createResponse(302)
             ->withHeader('Location', '/post/' . $post->getSlug());
+    }
+
+    /**
+     * @param Post $post
+     * @param array<string> $errors
+     * @return ResponseInterface
+     */
+    private function renderError(Post $post, array $errors): ResponseInterface
+    {
+        return $this->renderer->render(
+            $this->responseFactory->createResponse(),
+            'editor',
+            [
+                'post' => $post,
+                'errors' => $errors,
+            ]
+        );
     }
 }
