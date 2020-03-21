@@ -18,7 +18,7 @@ jobs:
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         reviewers: false
-        labels: ':white_check_mark: ready'
+        labels: ''
         blocking-labels: do not merge
         checks: true
         method: merge
