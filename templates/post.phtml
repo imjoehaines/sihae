@@ -16,9 +16,15 @@
             <a href="/post/admin/edit/<?= $post->getSlug() ?>" title="Edit this post">
                 <i class="fa fa-pencil" aria-hidden="true"></i>
             </a>
-            <a href="/post/admin/delete/<?= $post->getSlug() ?>" title="Delete this post">
-                <i class="fa fa-trash" aria-hidden="true"></i>
-            </a>
+            <form method="POST"
+                action="/post/admin/delete/<?= $post->getSlug() ?>"
+                class="inline-form"
+            >
+                <?php $this->insert('theme::partials/csrf', ['csrf' => $csrf]) ?>
+                <button title="Delete this post" class="button-link">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                </button>
+            </form>
         <?php endif ?>
     </small>
 </h2>

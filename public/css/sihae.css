@@ -84,13 +84,16 @@ main {
   overflow-wrap: break-word;
 }
 
-a {
+a,
+.button-link {
   color: #007fad;
   text-decoration: none;
 }
 
 a:hover,
-a:focus {
+a:focus,
+.button-link:hover
+.button-link:focus {
   color: #005e80;
   text-decoration: underline;
 }
@@ -323,6 +326,18 @@ td:last-child {
 
 .tokenfield .tokenfield-set > ul > li:last-child {
   margin-right: 0;
+}
+
+/* admin form stuff */
+.inline-form {
+  display: inline;
+}
+
+.button-link {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
 }
 
 @media only screen and (max-width: 600px) {
