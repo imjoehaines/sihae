@@ -7,18 +7,32 @@ namespace Sihae\Utils;
 final class Safe
 {
     /**
-     * @template T
      * @param string $key
-     * @param array<string, T>|object|null $maybeArray
-     * @param T $default
-     * @return T
+     * @param array<string, string>|object|null $maybeArray
+     * @param string $default
+     * @return string
      */
-    public static function get(string $key, $maybeArray, $default)
+    public static function getString(string $key, $maybeArray, string $default)
     {
-        if ($maybeArray === null || !is_array($maybeArray)) {
+        if (!is_array($maybeArray) || !isset($maybeArray[$key])) {
             return $default;
         }
 
-        return $maybeArray[$key] ?? $default;
+        return $maybeArray[$key];
+    }
+
+    /**
+     * @param string $key
+     * @param array<string, array<mixed>>|object|null $maybeArray
+     * @param array<mixed> $default
+     * @return array<mixed>
+     */
+    public static function getArray(string $key, $maybeArray, array $default): array
+    {
+        if (!is_array($maybeArray) || !isset($maybeArray[$key])) {
+            return $default;
+        }
+
+        return $maybeArray[$key];
     }
 }

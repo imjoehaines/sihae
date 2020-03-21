@@ -79,8 +79,8 @@ final class EditPostAction implements RequestHandlerInterface
         $updatedPost = $request->getParsedBody();
 
         // Set the title and body here so they are set if we render an error
-        $post->setTitle(Safe::get('title', $updatedPost, ''));
-        $post->setBody(Safe::get('body', $updatedPost, ''));
+        $post->setTitle(Safe::getString('title', $updatedPost, ''));
+        $post->setBody(Safe::getString('body', $updatedPost, ''));
 
         if (!is_array($updatedPost)) {
             return $this->renderError($post);

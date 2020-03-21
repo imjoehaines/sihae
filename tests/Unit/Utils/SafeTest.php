@@ -11,21 +11,39 @@ use stdClass;
 final class SafeTest extends TestCase
 {
     /**
-     * @template T
      * @param string $key
-     * @param array<string, T>|object|null $maybeArray
-     * @param T $default
-     * @param T $expected
+     * @param array<string, string>|object|null $maybeArray
+     * @param string $default
+     * @param string $expected
      *
-     * @dataProvider getProvider
+     * @dataProvider getStringProvider
      */
-    public function testItSafelyGetsAnElementFromTheGivenParameter(
+    public function testItSafelyGetsAStringromTheGivenParameter(
         string $key,
         $maybeArray,
-        $default,
-        $expected
+        string $default,
+        string $expected
     ): void {
-        $actual = Safe::get($key, $maybeArray, $default);
+        $actual = Safe::getString($key, $maybeArray, $default);
+
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @param string $key
+     * @param array<string, array<mixed>>|object|null $maybeArray
+     * @param array<mixed> $default
+     * @param array<mixed> $expected
+     *
+     * @dataProvider getArrayProvider
+     */
+    public function testItSafelyGetsAnArrayromTheGivenParameter(
+        string $key,
+        $maybeArray,
+        array $default,
+        array $expected
+    ): void {
+        $actual = Safe::getArray($key, $maybeArray, $default);
 
         $this->assertSame($expected, $actual);
     }
@@ -33,57 +51,70 @@ final class SafeTest extends TestCase
     /**
      * @return array<string, array>
      */
-    public function getProvider(): array
+    public function getStringProvider(): array
     {
         return [
-            'null returns default' => [
+            'null returns default (empty string)' => [
                 'hello',
                 null,
                 '',
                 '',
             ],
-            'empty array returns default' => [
+            'empty array returns default (empty string)' => [
                 'hello',
                 [],
                 '',
                 '',
             ],
-            'object returns default' => [
+            'object returns default (empty string)' => [
                 'hello',
                 new stdClass(),
                 '',
                 '',
             ],
-            'function returns default' => [
+            'function returns default (empty string)' => [
                 'hello',
-                function (): void {
+                static function (): void {
                 },
                 '',
                 '',
             ],
-            'int returns default' => [
+            'int returns default (empty string)' => [
                 'hello',
                 0,
                 '',
                 '',
             ],
-            'default can be a string' => [
+            'null returns default (arbitrary string)' => [
                 'hello',
-                [],
-                'world',
-                'world',
+                null,
+                'arbitrary',
+                'arbitrary',
             ],
-            'default can be an int' => [
+            'empty array returns default (arbitrary string)' => [
                 'hello',
                 [],
-                1298,
-                1298,
+                'arbitrary',
+                'arbitrary',
             ],
-            'default can be an array' => [
+            'object returns default (arbitrary string)' => [
                 'hello',
-                [],
-                [1, 2, 9, 8],
-                [1, 2, 9, 8],
+                new stdClass(),
+                'arbitrary',
+                'arbitrary',
+            ],
+            'function returns default (arbitrary string)' => [
+                'hello',
+                static function (): void {
+                },
+                'arbitrary',
+                'arbitrary',
+            ],
+            'int returns default (arbitrary string)' => [
+                'hello',
+                0,
+                'arbitrary',
+                'arbitrary',
             ],
             'returns the value of the given key' => [
                 'hello',
@@ -96,6 +127,89 @@ final class SafeTest extends TestCase
                 ['hello' => 'world', 'hi' => 'planet', 'hey' => 'oblate spheroid'],
                 '',
                 'planet',
+            ],
+        ];
+    }
+
+    /**
+     * @return array<string, array>
+     */
+    public function getArrayProvider(): array
+    {
+        return [
+            'null returns default (empty array)' => [
+                'hello',
+                null,
+                [],
+                [],
+            ],
+            'empty array returns default (empty array)' => [
+                'hello',
+                [],
+                [],
+                [],
+            ],
+            'object returns default (empty array)' => [
+                'hello',
+                new stdClass(),
+                [],
+                [],
+            ],
+            'function returns default (empty array)' => [
+                'hello',
+                static function (): void {
+                },
+                [],
+                [],
+            ],
+            'int returns default (empty array)' => [
+                'hello',
+                0,
+                [],
+                [],
+            ],
+            'null returns default (arbitrary array)' => [
+                'hello',
+                null,
+                ['a', 'r', 'b', 'i', 't', 'r', 'a', 'r', 'y'],
+                ['a', 'r', 'b', 'i', 't', 'r', 'a', 'r', 'y'],
+            ],
+            'empty array returns default (arbitrary array)' => [
+                'hello',
+                [],
+                ['a', 'r', 'b', 'i', 't', 'r', 'a', 'r', 'y'],
+                ['a', 'r', 'b', 'i', 't', 'r', 'a', 'r', 'y'],
+            ],
+            'object returns default (arbitrary array)' => [
+                'hello',
+                new stdClass(),
+                ['a', 'r', 'b', 'i', 't', 'r', 'a', 'r', 'y'],
+                ['a', 'r', 'b', 'i', 't', 'r', 'a', 'r', 'y'],
+            ],
+            'function returns default (arbitrary array)' => [
+                'hello',
+                static function (): void {
+                },
+                ['a', 'r', 'b', 'i', 't', 'r', 'a', 'r', 'y'],
+                ['a', 'r', 'b', 'i', 't', 'r', 'a', 'r', 'y'],
+            ],
+            'int returns default (arbitrary array)' => [
+                'hello',
+                0,
+                ['a', 'r', 'b', 'i', 't', 'r', 'a', 'r', 'y'],
+                ['a', 'r', 'b', 'i', 't', 'r', 'a', 'r', 'y'],
+            ],
+            'returns the value of the given key' => [
+                'hello',
+                ['hello' => ['w', 'o', 'r', 'l', 'd']],
+                [],
+                ['w', 'o', 'r', 'l', 'd'],
+            ],
+            'returns the value of the given key when other keys exist' => [
+                'hi',
+                ['hello' => ['world'], 'hi' => ['planet'], 'hey' => ['oblate spheroid']],
+                [],
+                ['planet'],
             ],
         ];
     }

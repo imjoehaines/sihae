@@ -62,16 +62,20 @@ final class LoginAction implements RequestHandlerInterface
     {
         $userDetails = $request->getParsedBody();
 
-        $user = $this->repository->findByUsername(Safe::get('username', $userDetails, ''));
+        $username = Safe::getString('username', $userDetails, '');
+        $password = Safe::getString('password', $userDetails, '');
+
+        $user = $this->repository->findByUsername($username);
 
         $response = $this->responseFactory->createResponse();
 
-        if ($user === null ||
-            !$user->login(Safe::get('password', $userDetails, ''))
+        if (
+            $user === null ||
+            !$user->login($password)
         ) {
             return $this->renderer->render($response, 'login', [
                 'errors' => ['No user was found with these credentials, please try again'],
-                'username' => Safe::get('username', $userDetails, ''),
+                'username' => $username,
             ]);
         }
 

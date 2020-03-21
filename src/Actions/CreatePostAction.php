@@ -73,8 +73,8 @@ final class CreatePostAction implements RequestHandlerInterface
         $newPost = $request->getParsedBody();
 
         $post = new Post(
-            Safe::get('title', $newPost, ''),
-            Safe::get('body', $newPost, ''),
+            Safe::getString('title', $newPost, ''),
+            Safe::getString('body', $newPost, ''),
             $request->getAttribute('user')
         );
 
@@ -94,8 +94,8 @@ final class CreatePostAction implements RequestHandlerInterface
         }
 
         $tags = $this->tagRepository->findAll(
-            Safe::get('tags', $newPost, []),
-            Safe::get('new_tags', $newPost, [])
+            Safe::getArray('tags', $newPost, []),
+            Safe::getArray('new_tags', $newPost, [])
         );
 
         foreach ($tags as $tag) {
