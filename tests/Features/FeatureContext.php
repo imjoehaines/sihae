@@ -48,13 +48,11 @@ final class FeatureContext extends MinkContext implements Context
 
         $tables = $schemaManager->listTables();
 
-        $getForeignTableName = function ($foreignKey) {
-            return $foreignKey->getForeignTableName();
-        };
+        $getForeignTableName = fn ($foreignKey) => $foreignKey->getForeignTableName();
 
         // sort the list of tables based on foreign keys so it is safe to delete
         // from them in order
-        uasort($tables, function ($table1, $table2) use ($getForeignTableName): int {
+        uasort($tables, static function ($table1, $table2) use ($getForeignTableName): int {
             $table1Relations = array_map($getForeignTableName, $table1->getForeignKeys());
 
             if (in_array($table2->getName(), $table1Relations, true)) {

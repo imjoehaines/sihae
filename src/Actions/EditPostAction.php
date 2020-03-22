@@ -17,38 +17,12 @@ use Sihae\Validators\Validator;
 
 final class EditPostAction implements RequestHandlerInterface
 {
-    /**
-     * @var ResponseFactoryInterface
-     */
-    private $responseFactory;
+    private ResponseFactoryInterface $responseFactory;
+    private PostRepository $postRepository;
+    private TagRepository $tagRepository;
+    private Validator $validator;
+    private Renderer $renderer;
 
-    /**
-     * @var PostRepository
-     */
-    private $postRepository;
-
-    /**
-     * @var TagRepository
-     */
-    private $tagRepository;
-
-    /**
-     * @var Validator
-     */
-    private $validator;
-
-    /**
-     * @var Renderer
-     */
-    private $renderer;
-
-    /**
-     * @param ResponseFactoryInterface $responseFactory
-     * @param PostRepository $postRepository
-     * @param TagRepository $tagRepository
-     * @param Validator $validator
-     * @param Renderer $renderer
-     */
     public function __construct(
         ResponseFactoryInterface $responseFactory,
         PostRepository $postRepository,
@@ -63,11 +37,6 @@ final class EditPostAction implements RequestHandlerInterface
         $this->renderer = $renderer;
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     *
-     * @return ResponseInterface
-     */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $post = $request->getAttribute('post');

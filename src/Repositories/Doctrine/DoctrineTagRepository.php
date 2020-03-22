@@ -11,31 +11,21 @@ use Sihae\Entities\Post;
 use Sihae\Entities\Tag;
 use Sihae\Repositories\TagRepository;
 
-class DoctrineTagRepository implements TagRepository
+final class DoctrineTagRepository implements TagRepository
 {
-    /**
-     * @var EntityManager
-     */
-    private $entityManager;
+    private EntityManager $entityManager;
 
     /**
      * @var ObjectRepository<Tag>
      */
-    private $repository;
+    private ObjectRepository $repository;
 
-    /**
-     * @param EntityManager $entityManager
-     */
     public function __construct(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
         $this->repository = $entityManager->getRepository(Tag::class);
     }
 
-    /**
-     * @param string $slug
-     * @return Tag|null
-     */
     public function findBySlug(string $slug): ?Tag
     {
         return $this->repository->findOneBy(['slug' => $slug]);

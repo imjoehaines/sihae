@@ -8,11 +8,8 @@ use PHPUnit\Framework\TestCase;
 
 use Sihae\Validators\PostValidator;
 
-class PostValidatorTest extends TestCase
+final class PostValidatorTest extends TestCase
 {
-    /**
-     * @return void
-     */
     public function testItPassesWhenTitleAndBodyAreValidLengths(): void
     {
         $validator = new PostValidator();
@@ -25,9 +22,6 @@ class PostValidatorTest extends TestCase
         $this->assertEmpty($result->getErrors());
     }
 
-    /**
-     * @return void
-     */
     public function testItFailsWhenTitleIsBelowMinimumLength(): void
     {
         $validator = new PostValidator();
@@ -44,9 +38,6 @@ class PostValidatorTest extends TestCase
         $this->assertSame($expected, $result->getErrors());
     }
 
-    /**
-     * @return void
-     */
     public function testItFailsWhenBodyIsBelowMinimumLength(): void
     {
         $validator = new PostValidator();
@@ -63,9 +54,6 @@ class PostValidatorTest extends TestCase
         $this->assertSame($expected, $result->getErrors());
     }
 
-    /**
-     * @return void
-     */
     public function testItFailsWhenTitleAndBodyAreBelowMinimumLengths(): void
     {
         $validator = new PostValidator();
@@ -83,9 +71,6 @@ class PostValidatorTest extends TestCase
         $this->assertSame($expected, $result->getErrors());
     }
 
-    /**
-     * @return void
-     */
     public function testItFailsWhenTitleIsAboveMaximumLength(): void
     {
         $validator = new PostValidator();
@@ -102,9 +87,6 @@ class PostValidatorTest extends TestCase
         $this->assertSame($expected, $result->getErrors());
     }
 
-    /**
-     * @return void
-     */
     public function testItPassesWhenTitleIsJustBelowMaximumLength(): void
     {
         $validator = new PostValidator();

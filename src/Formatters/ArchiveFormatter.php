@@ -9,7 +9,7 @@ use Sihae\Entities\Post;
 /**
  * Formatter for an array of posts for use on the Archive page
  */
-class ArchiveFormatter implements Formatter
+final class ArchiveFormatter implements Formatter
 {
     /**
      * Format the given single dimensional array of Posts into a multi dimensional
@@ -24,11 +24,11 @@ class ArchiveFormatter implements Formatter
         return array_reduce($data, static function (array $carry, Post $post): array {
             $date = $post->getDateCreated()->format('Y');
 
-            if (isset($carry[$date])) {
-                $carry[$date] = array_merge($carry[$date], [$post]);
-            } else {
-                $carry[$date] = [$post];
+            if (!isset($carry[$date])) {
+                $carry[$date] = [];
             }
+
+            $carry[$date][] = $post;
 
             return $carry;
         }, []);

@@ -14,26 +14,10 @@ use Sihae\Repositories\TagRepository;
 
 final class EditPostFormAction implements RequestHandlerInterface
 {
-    /**
-     * @var ResponseFactoryInterface
-     */
-    private $responseFactory;
+    private ResponseFactoryInterface $responseFactory;
+    private Renderer $renderer;
+    private TagRepository $tagRepository;
 
-    /**
-     * @var Renderer
-     */
-    private $renderer;
-
-    /**
-     * @var TagRepository
-     */
-    private $tagRepository;
-
-    /**
-     * @param ResponseFactoryInterface $responseFactory
-     * @param Renderer $renderer
-     * @param TagRepository $tagRepository
-     */
     public function __construct(
         ResponseFactoryInterface $responseFactory,
         Renderer $renderer,
@@ -44,11 +28,6 @@ final class EditPostFormAction implements RequestHandlerInterface
         $this->tagRepository = $tagRepository;
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     *
-     * @return ResponseInterface
-     */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $post = $request->getAttribute('post');
@@ -71,7 +50,8 @@ final class EditPostFormAction implements RequestHandlerInterface
                     [
                         'tags' => $tags,
                         'selected_tags' => $selectedTags,
-                    ]
+                    ],
+                    JSON_THROW_ON_ERROR
                 ),
             ]
         );

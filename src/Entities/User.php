@@ -25,47 +25,43 @@ class User
      *
      * @var int
      */
-    protected $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=50, unique=true)
      *
      * @var string
      */
-    protected $username;
+    private string $username;
 
     /**
      * @ORM\Column(type="string")
      *
      * @var string
      */
-    protected $password;
+    private string $password;
 
     /**
      * @ORM\Column(type="string", length=256)
      *
      * @var string
      */
-    protected $token;
+    private string $token;
 
     /**
      * @ORM\Column(type="boolean")
      *
      * @var bool
      */
-    protected $is_admin = false;
+    private bool $is_admin = false;
 
     /**
      * @ORM\OneToMany(targetEntity="Post", mappedBy="user")
      *
      * @var Collection<int, Post>
      */
-    protected $posts;
+    private Collection $posts;
 
-    /**
-     * @param string $username
-     * @param string $password
-     */
     public function __construct(string $username, string $password)
     {
         $this->username = $username;
@@ -76,28 +72,16 @@ class User
         $this->posts = new ArrayCollection();
     }
 
-    /**
-     * @return string
-     */
     public function getToken(): string
     {
         return $this->token;
     }
 
-    /**
-     * @return bool
-     */
     public function isAdmin(): bool
     {
         return $this->is_admin;
     }
 
-    /**
-     * Attempt to login with the given password
-     *
-     * @param string $password
-     * @return bool
-     */
     public function login(string $password): bool
     {
         if (!password_verify($password, $this->password)) {
@@ -114,18 +98,11 @@ class User
         return true;
     }
 
-    /**
-     * @return void
-     */
     private function updateToken(): void
     {
         $this->token = bin2hex(random_bytes(128));
     }
 
-    /**
-     * @param string $password
-     * @return void
-     */
     private function setPassword(string $password): void
     {
         $hash = password_hash($password, PASSWORD_DEFAULT);

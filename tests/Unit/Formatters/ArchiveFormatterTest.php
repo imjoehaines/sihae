@@ -10,11 +10,8 @@ use Sihae\Entities\Post;
 use Sihae\Entities\User;
 use Sihae\Formatters\ArchiveFormatter;
 
-class ArchiveFormatterTest extends TestCase
+final class ArchiveFormatterTest extends TestCase
 {
-    /**
-     * @return void
-     */
     public function testItDoesNothingToEmptyArrays(): void
     {
         $formatter = new ArchiveFormatter();
@@ -22,9 +19,6 @@ class ArchiveFormatterTest extends TestCase
         $this->assertSame([], $formatter->format([]));
     }
 
-    /**
-     * @return void
-     */
     public function testItFormatsArraysOfNewPostsIntoArraysIndexedByThisYear(): void
     {
         $formatter = new ArchiveFormatter();

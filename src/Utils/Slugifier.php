@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sihae;
+namespace Sihae\Utils;
 
 final class Slugifier
 {
@@ -10,9 +10,10 @@ final class Slugifier
     {
         $parts = explode(' ', $string);
 
-        $alphanumericOnly = array_map(static function (string $word): string {
-            return preg_replace('/\W/', '', $word) ?? '';
-        }, $parts);
+        $alphanumericOnly = array_map(
+            fn (string $word): string => preg_replace('/\W/', '', $word) ?? '',
+            $parts
+        );
 
         return strtolower(implode('-', $alphanumericOnly));
     }

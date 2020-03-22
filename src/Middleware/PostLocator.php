@@ -4,48 +4,31 @@ declare(strict_types=1);
 
 namespace Sihae\Middleware;
 
-use Doctrine\ORM\EntityManager;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Sihae\Entities\Post;
+use Sihae\Repositories\PostRepository;
 use Slim\Routing\RouteContext;
 
 /**
  * Finds a post by slug in the request
  */
-class PostLocator implements MiddlewareInterface
+final class PostLocator implements MiddlewareInterface
 {
-    /**
-     * @var EntityManager
-     */
-    private $entityManager;
+    private PostRepository $postRepository;
+    private ResponseFactoryInterface $responseFactory;
 
-    /**
-     * @var ResponseFactoryInterface
-     */
-    private $responseFactory;
-
-    /**
-     * @param EntityManager $entityManager
-     * @param ResponseFactoryInterface $responseFactory
-     */
     public function __construct(
-        EntityManager $entityManager,
+        PostRepository $postRepository,
         ResponseFactoryInterface $responseFactory
     ) {
-        $this->entityManager = $entityManager;
+        $this->postRepository = $postRepository;
         $this->responseFactory = $responseFactory;
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
-     */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $route = $request->getAttribute(RouteContext::ROUTE);
@@ -56,9 +39,9 @@ class PostLocator implements MiddlewareInterface
 
         $slug = $route->getArgument('slug');
 
-        $post = $this->entityManager->getRepository(Post::class)->findOneBy(['slug' => $slug]);
+        $post = $this->postRepository->findBySlug($slug);
 
-        if ($post === null) {
+        if (!$post instanceof Post) {
             return $this->responseFactory->createResponse(404);
         }
 

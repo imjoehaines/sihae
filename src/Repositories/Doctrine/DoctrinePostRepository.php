@@ -9,21 +9,15 @@ use Doctrine\ORM\EntityManager;
 use Sihae\Entities\Post;
 use Sihae\Repositories\PostRepository;
 
-class DoctrinePostRepository implements PostRepository
+final class DoctrinePostRepository implements PostRepository
 {
-    /**
-     * @var EntityManager
-     */
-    private $entityManager;
+    private EntityManager $entityManager;
 
     /**
      * @var ObjectRepository<Post>
      */
-    private $repository;
+    private ObjectRepository $repository;
 
-    /**
-     * @param EntityManager $entityManager
-     */
     public function __construct(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
@@ -42,16 +36,27 @@ class DoctrinePostRepository implements PostRepository
         $this->entityManager->flush();
     }
 
+    /**
+     * @param int|null $limit
+     * @param int|null $offset
+     * @return array<Post>
+     */
     public function findAllOrderedByDateCreated(?int $limit = null, ?int $offset = null): array
     {
         return $this->repository->findBy([], ['date_created' => 'DESC'], $limit, $offset);
     }
 
-    public function findOneBySlug(string $slug): ?Post
+    public function findBySlug(string $slug): ?Post
     {
         return $this->repository->findOneBy(['slug' => $slug]);
     }
 
+    /**
+     * @param string $slug
+     * @param int $limit
+     * @param int $offset
+     * @return array<Post>
+     */
     public function findAllTagged(string $slug, int $limit, int $offset): array
     {
         $dql =

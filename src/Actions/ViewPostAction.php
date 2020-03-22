@@ -14,26 +14,10 @@ use Sihae\Renderer;
 
 final class ViewPostAction implements RequestHandlerInterface
 {
-    /**
-     * @var ResponseFactoryInterface
-     */
-    private $responseFactory;
+    private ResponseFactoryInterface $responseFactory;
+    private Renderer $renderer;
+    private CommonMarkConverter $markdown;
 
-    /**
-     * @var Renderer
-     */
-    private $renderer;
-
-    /**
-     * @var CommonMarkConverter
-     */
-    private $markdown;
-
-    /**
-     * @param ResponseFactoryInterface $responseFactory
-     * @param Renderer $renderer
-     * @param CommonMarkConverter $markdown
-     */
     public function __construct(
         ResponseFactoryInterface $responseFactory,
         Renderer $renderer,
@@ -44,11 +28,6 @@ final class ViewPostAction implements RequestHandlerInterface
         $this->markdown = $markdown;
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     *
-     * @return ResponseInterface
-     */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $post = $request->getAttribute('post');

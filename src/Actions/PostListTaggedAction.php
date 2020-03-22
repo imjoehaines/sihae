@@ -14,32 +14,11 @@ use Sihae\Repositories\TagRepository;
 
 final class PostListTaggedAction implements RequestHandlerInterface
 {
-    /**
-     * @var ResponseFactoryInterface
-     */
-    private $responseFactory;
+    private ResponseFactoryInterface $responseFactory;
+    private PostRepository $postRepository;
+    private TagRepository $tagRepository;
+    private Renderer $renderer;
 
-    /**
-     * @var PostRepository
-     */
-    private $postRepository;
-
-    /**
-     * @var TagRepository
-     */
-    private $tagRepository;
-
-    /**
-     * @var Renderer
-     */
-    private $renderer;
-
-    /**
-     * @param ResponseFactoryInterface $responseFactory
-     * @param PostRepository $postRepository
-     * @param TagRepository $tagRepository
-     * @param Renderer $renderer
-     */
     public function __construct(
         ResponseFactoryInterface $responseFactory,
         PostRepository $postRepository,
@@ -52,11 +31,6 @@ final class PostListTaggedAction implements RequestHandlerInterface
         $this->renderer = $renderer;
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     *
-     * @return ResponseInterface
-     */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $slug = $request->getAttribute('slug', '');

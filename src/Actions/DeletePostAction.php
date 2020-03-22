@@ -13,20 +13,9 @@ use Sihae\Repositories\PostRepository;
 
 final class DeletePostAction implements RequestHandlerInterface
 {
-    /**
-     * @var ResponseFactoryInterface
-     */
-    private $responseFactory;
+    private ResponseFactoryInterface $responseFactory;
+    private PostRepository $postRepository;
 
-    /**
-     * @var PostRepository
-     */
-    private $postRepository;
-
-    /**
-     * @param ResponseFactoryInterface $responseFactory
-     * @param PostRepository $postRepository
-     */
     public function __construct(
         ResponseFactoryInterface $responseFactory,
         PostRepository $postRepository
@@ -35,11 +24,6 @@ final class DeletePostAction implements RequestHandlerInterface
         $this->postRepository = $postRepository;
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     *
-     * @return ResponseInterface
-     */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $post = $request->getAttribute('post');

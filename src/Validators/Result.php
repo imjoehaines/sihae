@@ -9,7 +9,7 @@ final class Result
     /**
      * @var array<string>
      */
-    private $errors;
+    private array $errors;
 
     /**
      * @param array<string> $errors
@@ -28,9 +28,6 @@ final class Result
         return new Result($errors);
     }
 
-    /**
-     * @return bool
-     */
     public function isSuccess(): bool
     {
         return $this->errors === [];

@@ -70,7 +70,7 @@ return static function (Container $container): void {
 
     $container[PostLocator::class] = static function (Container $container): PostLocator {
         return new PostLocator(
-            $container->get(EntityManager::class),
+            $container->get(PostRepository::class),
             $container->get(ResponseFactoryInterface::class)
         );
     };
@@ -269,12 +269,12 @@ return static function (Container $container): void {
     };
 
     $container[ResponseFactoryInterface::class] =
-    $container[ServerRequestFactoryInterface::class] =
-    $container[UriFactoryInterface::class] =
-    $container[UploadedFileFactoryInterface::class] =
-    $container[StreamFactoryInterface::class] = static function (Container $container): Psr17Factory {
-        return new Psr17Factory();
-    };
+        $container[ServerRequestFactoryInterface::class] =
+        $container[UriFactoryInterface::class] =
+        $container[UploadedFileFactoryInterface::class] =
+        $container[StreamFactoryInterface::class] = static function (Container $container): Psr17Factory {
+            return new Psr17Factory();
+        };
 
     $container[UserProvider::class] = static function (Container $container): UserProvider {
         return new UserProvider(

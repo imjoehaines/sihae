@@ -17,38 +17,12 @@ use Sihae\Validators\Validator;
 
 final class CreatePostAction implements RequestHandlerInterface
 {
-    /**
-     * @var ResponseFactoryInterface
-     */
-    private $responseFactory;
+    private ResponseFactoryInterface $responseFactory;
+    private Renderer $renderer;
+    private TagRepository $tagRepository;
+    private PostRepository $postRepository;
+    private Validator $validator;
 
-    /**
-     * @var Renderer
-     */
-    private $renderer;
-
-    /**
-     * @var TagRepository
-     */
-    private $tagRepository;
-
-    /**
-     * @var PostRepository
-     */
-    private $postRepository;
-
-    /**
-     * @var Validator
-     */
-    private $validator;
-
-    /**
-     * @param ResponseFactoryInterface $responseFactory
-     * @param Renderer $renderer
-     * @param TagRepository $tagRepository
-     * @param PostRepository $postRepository
-     * @param Validator $validator
-     */
     public function __construct(
         ResponseFactoryInterface $responseFactory,
         Renderer $renderer,
@@ -63,11 +37,6 @@ final class CreatePostAction implements RequestHandlerInterface
         $this->postRepository = $postRepository;
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     *
-     * @return ResponseInterface
-     */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $newPost = $request->getParsedBody();
@@ -89,7 +58,7 @@ final class CreatePostAction implements RequestHandlerInterface
         }
 
         // if there is already a post with the slug we just generated, generate a new one
-        if ($this->postRepository->findOneBySlug($post->getSlug()) !== null) {
+        if ($this->postRepository->findBySlug($post->getSlug()) !== null) {
             $post->regenerateSlug();
         }
 

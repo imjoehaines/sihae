@@ -27,14 +27,14 @@ trait Timestamps
      *
      * @var DateTime
      */
-    protected $date_created;
+    private DateTime $date_created;
 
     /**
      * @ORM\Column(type="datetime")
      *
      * @var DateTime
      */
-    protected $date_modified;
+    private DateTime $date_modified;
 
     /**
      * Before persisting this entity for the first time, set both date_created

@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Sihae\Entities\Traits\Timestamps;
-use Sihae\Slugifier;
+use Sihae\Utils\Slugifier;
 
 /**
  * @ORM\Entity
@@ -26,28 +26,28 @@ class Post
      *
      * @var int
      */
-    protected $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=100)
      *
      * @var string
      */
-    protected $title;
+    private string $title;
 
     /**
      * @ORM\Column(type="string", unique=true)
      *
      * @var string
      */
-    protected $slug;
+    private string $slug;
 
     /**
      * @ORM\Column(type="text")
      *
      * @var string
      */
-    protected $body;
+    private string $body;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="posts")
@@ -55,7 +55,7 @@ class Post
      *
      * @var User
      */
-    protected $user;
+    private User $user;
 
     /**
      * @ORM\ManyToMany(targetEntity="Tag", inversedBy="users")
@@ -67,18 +67,15 @@ class Post
      *
      * @var Collection<int, Tag>
      */
-    protected $tags;
+    private Collection $tags;
 
     /**
      * @ORM\Column(type="boolean")
      *
      * @var bool
      */
-    protected $is_page = false;
+    private bool $is_page = false;
 
-    /**
-     * Initialise the $tags property on creation
-     */
     public function __construct(string $title, string $body, User $user)
     {
         $this->title = $title;
@@ -89,33 +86,21 @@ class Post
         $this->tags = new ArrayCollection();
     }
 
-    /**
-     * @return string
-     */
     public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @return string
-     */
     public function getSlug(): string
     {
         return $this->slug;
     }
 
-    /**
-     * @return string
-     */
     public function getBody(): string
     {
         return $this->body;
     }
 
-    /**
-     * @return bool
-     */
     public function isPage(): bool
     {
         return $this->is_page;
@@ -129,28 +114,16 @@ class Post
         return $this->tags;
     }
 
-    /**
-     * @param string $title
-     * @return void
-     */
     public function setTitle(string $title): void
     {
         $this->title = $title;
     }
 
-    /**
-     * @param string $body
-     * @return void
-     */
     public function setBody(string $body): void
     {
         $this->body = $body;
     }
 
-    /**
-     * @param bool $isPage
-     * @return void
-     */
     public function setIsPage(bool $isPage): void
     {
         $this->is_page = $isPage;
@@ -169,10 +142,6 @@ class Post
         $this->slug = Slugifier::slugify($this->title . ' ' . time());
     }
 
-    /**
-     * @param Tag $tag
-     * @return void
-     */
     public function addTag(Tag $tag): void
     {
         if (!$this->tags->contains($tag)) {
@@ -181,10 +150,6 @@ class Post
         }
     }
 
-    /**
-     * @param Tag $tag
-     * @return void
-     */
     public function removeTag(Tag $tag): void
     {
         if ($this->tags->contains($tag)) {
@@ -193,9 +158,6 @@ class Post
         }
     }
 
-    /**
-     * @return void
-     */
     public function clearTags(): void
     {
         $this->tags = new ArrayCollection();
