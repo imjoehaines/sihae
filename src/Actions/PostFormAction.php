@@ -55,7 +55,7 @@ final class PostFormAction implements RequestHandlerInterface
         return $this->renderer->render(
             $this->responseFactory->createResponse(),
             'editor',
-            ['tag_data' => json_encode(['tags' => $tags])]
+            ['tag_data' => json_encode(['tags' => $tags], JSON_THROW_ON_ERROR)]
         );
     }
 }

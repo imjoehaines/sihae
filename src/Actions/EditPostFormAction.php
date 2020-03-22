@@ -71,7 +71,8 @@ final class EditPostFormAction implements RequestHandlerInterface
                     [
                         'tags' => $tags,
                         'selected_tags' => $selectedTags,
-                    ]
+                    ],
+                    JSON_THROW_ON_ERROR
                 ),
             ]
         );
