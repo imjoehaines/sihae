@@ -12,24 +12,13 @@ use RKA\Session;
 
 final class LogoutAction implements RequestHandlerInterface
 {
-    /**
-     * @var ResponseFactoryInterface
-     */
     private ResponseFactoryInterface $responseFactory;
 
-    /**
-     * @param ResponseFactoryInterface $responseFactory
-     */
     public function __construct(ResponseFactoryInterface $responseFactory)
     {
         $this->responseFactory = $responseFactory;
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     *
-     * @return ResponseInterface
-     */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         Session::destroy();

@@ -49,9 +49,6 @@ class Tag
      */
     private Collection $posts;
 
-    /**
-     * Initialise the posts property on creation
-     */
     public function __construct(string $name)
     {
         $this->name = $name;
@@ -60,17 +57,11 @@ class Tag
         $this->posts = new ArrayCollection();
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getSlug(): string
     {
         return $this->slug;
@@ -84,10 +75,6 @@ class Tag
         return $this->posts;
     }
 
-    /**
-     * @param Post $post
-     * @return void
-     */
     public function addPost(Post $post): void
     {
         if (!$this->posts->contains($post)) {
@@ -96,10 +83,6 @@ class Tag
         }
     }
 
-    /**
-     * @param Post $post
-     * @return void
-     */
     public function removePost(Post $post): void
     {
         if ($this->posts->contains($post)) {

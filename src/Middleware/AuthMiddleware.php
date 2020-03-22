@@ -18,26 +18,10 @@ use Sihae\Repositories\UserRepository;
  */
 final class AuthMiddleware implements MiddlewareInterface
 {
-    /**
-     * @var Session
-     */
     private Session $session;
-
-    /**
-     * @var UserRepository
-     */
     private UserRepository $repository;
-
-    /**
-     * @var ResponseFactoryInterface
-     */
     private ResponseFactoryInterface $responseFactory;
 
-    /**
-     * @param Session $session
-     * @param UserRepository $repository
-     * @param ResponseFactoryInterface $responseFactory
-     */
     public function __construct(
         Session $session,
         UserRepository $repository,
@@ -48,15 +32,6 @@ final class AuthMiddleware implements MiddlewareInterface
         $this->responseFactory = $responseFactory;
     }
 
-    /**
-     * Check the user in the current session is an admin, if they are not a 404
-     * will be returned
-     *
-     * @param ServerRequestInterface $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
-     */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $token = $this->session->get('token');

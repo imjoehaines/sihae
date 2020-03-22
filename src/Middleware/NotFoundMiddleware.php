@@ -15,27 +15,13 @@ use Sihae\Renderer;
  */
 final class NotFoundMiddleware implements MiddlewareInterface
 {
-    /**
-     * @var Renderer
-     */
     private Renderer $renderer;
 
-    /**
-     * @param Renderer $renderer
-     */
     public function __construct(Renderer $renderer)
     {
         $this->renderer = $renderer;
     }
 
-    /**
-     * Check for 404s and render the 404 template if one occurs
-     *
-     * @param ServerRequestInterface $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
-     */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $response = $handler->handle($request);

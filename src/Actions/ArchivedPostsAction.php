@@ -14,32 +14,11 @@ use Sihae\Repositories\PostRepository;
 
 final class ArchivedPostsAction implements RequestHandlerInterface
 {
-    /**
-     * @var ResponseFactoryInterface
-     */
     private ResponseFactoryInterface $responseFactory;
-
-    /**
-     * @var Renderer
-     */
     private Renderer $renderer;
-
-    /**
-     * @var PostRepository
-     */
     private PostRepository $repository;
-
-    /**
-     * @var Formatter
-     */
     private Formatter $formatter;
 
-    /**
-     * @param ResponseFactoryInterface $responseFactory
-     * @param Renderer $renderer
-     * @param PostRepository $repository
-     * @param Formatter $formatter
-     */
     public function __construct(
         ResponseFactoryInterface $responseFactory,
         Renderer $renderer,
@@ -52,17 +31,16 @@ final class ArchivedPostsAction implements RequestHandlerInterface
         $this->formatter = $formatter;
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     * @return ResponseInterface
-     */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $posts = $this->repository->findAllOrderedByDateCreated();
-        $response = $this->responseFactory->createResponse();
 
-        return $this->renderer->render($response, 'archive', [
-            'archiveData' => $this->formatter->format($posts),
-        ]);
+        return $this->renderer->render(
+            $this->responseFactory->createResponse(),
+            'archive',
+            [
+                'archiveData' => $this->formatter->format($posts),
+            ]
+        );
     }
 }

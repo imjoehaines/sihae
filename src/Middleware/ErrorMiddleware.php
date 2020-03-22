@@ -13,28 +13,15 @@ use Psr\Log\LoggerInterface;
 use Sihae\Renderer;
 use Throwable;
 
+/**
+ * Handle any error that may occur from a request by logging it and rendering the error page
+ */
 final class ErrorMiddleware implements MiddlewareInterface
 {
-    /**
-     * @var LoggerInterface
-     */
     private LoggerInterface $logger;
-
-    /**
-     * @var ResponseFactoryInterface
-     */
     private ResponseFactoryInterface $responseFactory;
-
-    /**
-     * @var Renderer
-     */
     private Renderer $renderer;
 
-    /**
-     * @param LoggerInterface $logger
-     * @param ResponseFactoryInterface $responseFactory
-     * @param Renderer $renderer
-     */
     public function __construct(
         LoggerInterface $logger,
         ResponseFactoryInterface $responseFactory,
@@ -45,14 +32,6 @@ final class ErrorMiddleware implements MiddlewareInterface
         $this->renderer = $renderer;
     }
 
-    /**
-     * Handle any error that may occur from $handler by logging it and rendering the error page
-     *
-     * @param ServerRequestInterface $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
-     */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         try {

@@ -28,9 +28,6 @@ final class Result
         return new Result($errors);
     }
 
-    /**
-     * @return bool
-     */
     public function isSuccess(): bool
     {
         return $this->errors === [];

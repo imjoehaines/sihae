@@ -62,10 +62,6 @@ class User
      */
     private Collection $posts;
 
-    /**
-     * @param string $username
-     * @param string $password
-     */
     public function __construct(string $username, string $password)
     {
         $this->username = $username;
@@ -76,28 +72,16 @@ class User
         $this->posts = new ArrayCollection();
     }
 
-    /**
-     * @return string
-     */
     public function getToken(): string
     {
         return $this->token;
     }
 
-    /**
-     * @return bool
-     */
     public function isAdmin(): bool
     {
         return $this->is_admin;
     }
 
-    /**
-     * Attempt to login with the given password
-     *
-     * @param string $password
-     * @return bool
-     */
     public function login(string $password): bool
     {
         if (!password_verify($password, $this->password)) {
@@ -114,18 +98,11 @@ class User
         return true;
     }
 
-    /**
-     * @return void
-     */
     private function updateToken(): void
     {
         $this->token = bin2hex(random_bytes(128));
     }
 
-    /**
-     * @param string $password
-     * @return void
-     */
     private function setPassword(string $password): void
     {
         $hash = password_hash($password, PASSWORD_DEFAULT);

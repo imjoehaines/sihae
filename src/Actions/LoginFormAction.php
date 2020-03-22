@@ -12,20 +12,9 @@ use Sihae\Renderer;
 
 final class LoginFormAction implements RequestHandlerInterface
 {
-    /**
-     * @var ResponseFactoryInterface
-     */
     private ResponseFactoryInterface $responseFactory;
-
-    /**
-     * @var Renderer
-     */
     private Renderer $renderer;
 
-    /**
-     * @param ResponseFactoryInterface $responseFactory
-     * @param Renderer $renderer
-     */
     public function __construct(
         ResponseFactoryInterface $responseFactory,
         Renderer $renderer
@@ -34,11 +23,6 @@ final class LoginFormAction implements RequestHandlerInterface
         $this->renderer = $renderer;
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     *
-     * @return ResponseInterface
-     */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         return $this->renderer->render(

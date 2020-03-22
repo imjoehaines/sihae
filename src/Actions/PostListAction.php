@@ -13,26 +13,10 @@ use Sihae\Repositories\PostRepository;
 
 final class PostListAction implements RequestHandlerInterface
 {
-    /**
-     * @var ResponseFactoryInterface
-     */
     private ResponseFactoryInterface $responseFactory;
-
-    /**
-     * @var PostRepository
-     */
     private PostRepository $postRepository;
-
-    /**
-     * @var Renderer
-     */
     private Renderer $renderer;
 
-    /**
-     * @param ResponseFactoryInterface $responseFactory
-     * @param PostRepository $postRepository
-     * @param Renderer $renderer
-     */
     public function __construct(
         ResponseFactoryInterface $responseFactory,
         PostRepository $postRepository,
@@ -43,11 +27,6 @@ final class PostListAction implements RequestHandlerInterface
         $this->renderer = $renderer;
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     *
-     * @return ResponseInterface
-     */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $page = (int) $request->getAttribute('page', 1);

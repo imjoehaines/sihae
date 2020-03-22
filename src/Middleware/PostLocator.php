@@ -18,20 +18,9 @@ use Slim\Routing\RouteContext;
  */
 final class PostLocator implements MiddlewareInterface
 {
-    /**
-     * @var EntityManager
-     */
     private EntityManager $entityManager;
-
-    /**
-     * @var ResponseFactoryInterface
-     */
     private ResponseFactoryInterface $responseFactory;
 
-    /**
-     * @param EntityManager $entityManager
-     * @param ResponseFactoryInterface $responseFactory
-     */
     public function __construct(
         EntityManager $entityManager,
         ResponseFactoryInterface $responseFactory
@@ -40,12 +29,6 @@ final class PostLocator implements MiddlewareInterface
         $this->responseFactory = $responseFactory;
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
-     */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $route = $request->getAttribute(RouteContext::ROUTE);
@@ -56,6 +39,7 @@ final class PostLocator implements MiddlewareInterface
 
         $slug = $route->getArgument('slug');
 
+        // TODO use PostRepository
         $post = $this->entityManager->getRepository(Post::class)->findOneBy(['slug' => $slug]);
 
         if ($post === null) {

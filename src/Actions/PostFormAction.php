@@ -13,26 +13,10 @@ use Sihae\Repositories\TagRepository;
 
 final class PostFormAction implements RequestHandlerInterface
 {
-    /**
-     * @var ResponseFactoryInterface
-     */
     private ResponseFactoryInterface $responseFactory;
-
-    /**
-     * @var Renderer
-     */
     private Renderer $renderer;
-
-    /**
-     * @var TagRepository
-     */
     private TagRepository $tagRepository;
 
-    /**
-     * @param ResponseFactoryInterface $responseFactory
-     * @param Renderer $renderer
-     * @param TagRepository $tagRepository
-     */
     public function __construct(
         ResponseFactoryInterface $responseFactory,
         Renderer $renderer,
@@ -43,11 +27,6 @@ final class PostFormAction implements RequestHandlerInterface
         $this->tagRepository = $tagRepository;
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     *
-     * @return ResponseInterface
-     */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $tags = $this->tagRepository->findAllAsArray();

@@ -18,26 +18,10 @@ use Sihae\Repositories\UserRepository;
  */
 final class UserProvider implements MiddlewareInterface
 {
-    /**
-     * @var Renderer
-     */
     private Renderer $renderer;
-
-    /**
-     * @var Session
-     */
     private Session $session;
-
-    /**
-     * @var UserRepository
-     */
     private UserRepository $repository;
 
-    /**
-     * @param Renderer $renderer
-     * @param Session $session
-     * @param UserRepository $repository
-     */
     public function __construct(Renderer $renderer, Session $session, UserRepository $repository)
     {
         $this->renderer = $renderer;
@@ -45,14 +29,6 @@ final class UserProvider implements MiddlewareInterface
         $this->repository = $repository;
     }
 
-    /**
-     * Provide the logged in user to the Renderer
-     *
-     * @param ServerRequestInterface $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
-     */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $token = $this->session->get('token');

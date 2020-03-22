@@ -17,38 +17,12 @@ use Sihae\Validators\Validator;
 
 final class RegisterUserAction implements RequestHandlerInterface
 {
-    /**
-     * @var ResponseFactoryInterface
-     */
     private ResponseFactoryInterface $responseFactory;
-
-    /**
-     * @var Renderer
-     */
     private Renderer $renderer;
-
-    /**
-     * @var Validator
-     */
     private Validator $validator;
-
-    /**
-     * @var UserRepository
-     */
     private UserRepository $repository;
-
-    /**
-     * @var Session
-     */
     private Session $session;
 
-    /**
-     * @param ResponseFactoryInterface $responseFactory
-     * @param Renderer $renderer
-     * @param Validator $validator
-     * @param UserRepository $repository
-     * @param Session $session
-     */
     public function __construct(
         ResponseFactoryInterface $responseFactory,
         Renderer $renderer,

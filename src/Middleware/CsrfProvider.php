@@ -16,45 +16,28 @@ use Slim\Csrf\Guard;
  */
 final class CsrfProvider implements MiddlewareInterface
 {
-    /**
-     * @var Renderer
-     */
     private Renderer $renderer;
-
-    /**
-     * @var Guard
-     */
     private Guard $csrf;
 
-    /**
-     * @param Renderer $renderer
-     * @param Guard $csrf
-     */
     public function __construct(Renderer $renderer, Guard $csrf)
     {
         $this->renderer = $renderer;
         $this->csrf = $csrf;
     }
 
-    /**
-     * Provide data for CSRF protection to the Renderer
-     *
-     * @param ServerRequestInterface $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
-     */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $nameKey = $this->csrf->getTokenNameKey();
         $valueKey = $this->csrf->getTokenValueKey();
 
-        $this->renderer->addData(['csrf' => [
-            'nameKey' => $nameKey,
-            'valueKey' => $valueKey,
-            'name' => $request->getAttribute($nameKey),
-            'value' => $request->getAttribute($valueKey),
-        ]]);
+        $this->renderer->addData([
+            'csrf' => [
+                'nameKey' => $nameKey,
+                'valueKey' => $valueKey,
+                'name' => $request->getAttribute($nameKey),
+                'value' => $request->getAttribute($valueKey),
+            ]
+        ]);
 
         return $handler->handle($request);
     }

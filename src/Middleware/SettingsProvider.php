@@ -15,9 +15,6 @@ use Sihae\Renderer;
  */
 final class SettingsProvider implements MiddlewareInterface
 {
-    /**
-     * @var Renderer
-     */
     private Renderer $renderer;
 
     /**
@@ -35,14 +32,6 @@ final class SettingsProvider implements MiddlewareInterface
         $this->settings = $settings;
     }
 
-    /**
-     * Provide the Sihae settings to the Renderer
-     *
-     * @param ServerRequestInterface $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
-     */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $this->renderer->addData(['settings' => $this->settings]);

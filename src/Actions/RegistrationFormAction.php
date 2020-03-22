@@ -13,26 +13,10 @@ use Sihae\Renderer;
 
 final class RegistrationFormAction implements RequestHandlerInterface
 {
-    /**
-     * @var ResponseFactoryInterface
-     */
     private ResponseFactoryInterface $responseFactory;
-
-    /**
-     * @var Renderer
-     */
     private Renderer $renderer;
-
-    /**
-     * @var Session
-     */
     private Session $session;
 
-    /**
-     * @param Renderer $renderer
-     * @param Session $session
-     * @param ResponseFactoryInterface $responseFactory
-     */
     public function __construct(
         ResponseFactoryInterface $responseFactory,
         Renderer $renderer,
@@ -43,11 +27,6 @@ final class RegistrationFormAction implements RequestHandlerInterface
         $this->session = $session;
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     *
-     * @return ResponseInterface
-     */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         if ($this->session->get('token')) {

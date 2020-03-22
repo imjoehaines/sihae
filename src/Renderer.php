@@ -12,19 +12,10 @@ use Psr\Http\Message\ResponseInterface;
  */
 final class Renderer
 {
-    /**
-     * @var string
-     */
     private const THEME_PREFIX = 'theme::';
 
-    /**
-     * @var Engine
-     */
     private Engine $engine;
 
-    /**
-     * @param Engine $engine
-     */
     public function __construct(Engine $engine)
     {
         $this->engine = $engine;
@@ -34,7 +25,6 @@ final class Renderer
      * @param ResponseInterface $response
      * @param string $template name of the template file to render
      * @param array<string, mixed> $data optional array of data to pass to the template
-     *
      * @return ResponseInterface
      */
     public function render(ResponseInterface $response, string $template, array $data = []): ResponseInterface
@@ -51,7 +41,6 @@ final class Renderer
      * Add data to the Engine instance
      *
      * @param array<string, mixed> $data
-     *
      * @return void
      */
     public function addData(array $data): void

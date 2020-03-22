@@ -10,9 +10,6 @@ use Sihae\Validators\RegistrationValidator;
 
 final class RegistrationValidatorTest extends TestCase
 {
-    /**
-     * @return void
-     */
     public function testItPassesWhenUsernameAndPasswordAreValidLengthsAndConfirmationMatches(): void
     {
         $validator = new RegistrationValidator();
@@ -29,9 +26,6 @@ final class RegistrationValidatorTest extends TestCase
         $this->assertEmpty($result->getErrors());
     }
 
-    /**
-     * @return void
-     */
     public function testItFailsWhenUsernameIsTooShort(): void
     {
         $validator = new RegistrationValidator();
@@ -52,9 +46,6 @@ final class RegistrationValidatorTest extends TestCase
         $this->assertSame($expected, $result->getErrors());
     }
 
-    /**
-     * @return void
-     */
     public function testItFailsWhenPasswordIsTooShort(): void
     {
         $validator = new RegistrationValidator();
@@ -76,9 +67,6 @@ final class RegistrationValidatorTest extends TestCase
         $this->assertSame($expected, $result->getErrors());
     }
 
-    /**
-     * @return void
-     */
     public function testItFailsWhenPasswordsDoNotMatch(): void
     {
         $validator = new RegistrationValidator();
@@ -99,9 +87,6 @@ final class RegistrationValidatorTest extends TestCase
         $this->assertSame($expected, $result->getErrors());
     }
 
-    /**
-     * @return void
-     */
     public function testItFailsWhenUsernameIsTooLong(): void
     {
         $validator = new RegistrationValidator();
@@ -122,9 +107,6 @@ final class RegistrationValidatorTest extends TestCase
         $this->assertSame($expected, $result->getErrors());
     }
 
-    /**
-     * @return void
-     */
     public function testItFailsWhenUsernameIsNotAlphaNumeric(): void
     {
         $validator = new RegistrationValidator();

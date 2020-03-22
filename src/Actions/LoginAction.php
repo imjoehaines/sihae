@@ -15,32 +15,11 @@ use Sihae\Utils\Safe;
 
 final class LoginAction implements RequestHandlerInterface
 {
-    /**
-     * @var ResponseFactoryInterface
-     */
     private ResponseFactoryInterface $responseFactory;
-
-    /**
-     * @var Renderer
-     */
     private Renderer $renderer;
-
-    /**
-     * @var UserRepository
-     */
     private UserRepository $repository;
-
-    /**
-     * @var Session
-     */
     private Session $session;
 
-    /**
-     * @param ResponseFactoryInterface $responseFactory
-     * @param Renderer $renderer
-     * @param UserRepository $repository
-     * @param Session $session
-     */
     public function __construct(
         ResponseFactoryInterface $responseFactory,
         Renderer $renderer,
@@ -53,11 +32,6 @@ final class LoginAction implements RequestHandlerInterface
         $this->session = $session;
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     *
-     * @return ResponseInterface
-     */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $userDetails = $request->getParsedBody();
@@ -73,10 +47,14 @@ final class LoginAction implements RequestHandlerInterface
             $user === null ||
             !$user->login($password)
         ) {
-            return $this->renderer->render($response, 'login', [
-                'errors' => ['No user was found with these credentials, please try again'],
-                'username' => $username,
-            ]);
+            return $this->renderer->render(
+                $response,
+                'login',
+                [
+                    'errors' => ['No user was found with these credentials, please try again'],
+                    'username' => $username,
+                ]
+            );
         }
 
         $this->repository->save($user);
