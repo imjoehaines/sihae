@@ -1,4 +1,4 @@
-name: behat
+name: Behat
 
 on: [push]
 
