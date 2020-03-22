@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Sihae\Middleware;
 
-use Doctrine\ORM\EntityManager;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Sihae\Entities\Post;
+use Sihae\Repositories\PostRepository;
 use Slim\Routing\RouteContext;
 
 /**
@@ -18,14 +18,14 @@ use Slim\Routing\RouteContext;
  */
 final class PostLocator implements MiddlewareInterface
 {
-    private EntityManager $entityManager;
+    private PostRepository $postRepository;
     private ResponseFactoryInterface $responseFactory;
 
     public function __construct(
-        EntityManager $entityManager,
+        PostRepository $postRepository,
         ResponseFactoryInterface $responseFactory
     ) {
-        $this->entityManager = $entityManager;
+        $this->postRepository = $postRepository;
         $this->responseFactory = $responseFactory;
     }
 
@@ -39,10 +39,9 @@ final class PostLocator implements MiddlewareInterface
 
         $slug = $route->getArgument('slug');
 
-        // TODO use PostRepository
-        $post = $this->entityManager->getRepository(Post::class)->findOneBy(['slug' => $slug]);
+        $post = $this->postRepository->findBySlug($slug);
 
-        if ($post === null) {
+        if (!$post instanceof Post) {
             return $this->responseFactory->createResponse(404);
         }
 
