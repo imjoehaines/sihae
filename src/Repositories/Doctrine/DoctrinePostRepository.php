@@ -46,7 +46,7 @@ final class DoctrinePostRepository implements PostRepository
         return $this->repository->findBy([], ['date_created' => 'DESC'], $limit, $offset);
     }
 
-    public function findOneBySlug(string $slug): ?Post
+    public function findBySlug(string $slug): ?Post
     {
         return $this->repository->findOneBy(['slug' => $slug]);
     }

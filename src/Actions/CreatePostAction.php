@@ -58,7 +58,7 @@ final class CreatePostAction implements RequestHandlerInterface
         }
 
         // if there is already a post with the slug we just generated, generate a new one
-        if ($this->postRepository->findOneBySlug($post->getSlug()) !== null) {
+        if ($this->postRepository->findBySlug($post->getSlug()) !== null) {
             $post->regenerateSlug();
         }
 

@@ -19,7 +19,7 @@ interface PostRepository
      */
     public function findAllOrderedByDateCreated(?int $limit = null, ?int $offset = null): array;
 
-    public function findOneBySlug(string $slug): ?Post;
+    public function findBySlug(string $slug): ?Post;
 
     /**
      * @param string $slug
