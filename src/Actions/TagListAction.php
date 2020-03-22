@@ -16,17 +16,17 @@ class TagListAction implements RequestHandlerInterface
     /**
      * @var ResponseFactoryInterface
      */
-    private $responseFactory;
+    private ResponseFactoryInterface $responseFactory;
 
     /**
      * @var Renderer
      */
-    private $renderer;
+    private Renderer $renderer;
 
     /**
      * @var TagRepository
      */
-    private $repository;
+    private TagRepository $repository;
 
     /**
      * @param ResponseFactoryInterface $responseFactory

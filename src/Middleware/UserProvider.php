@@ -21,17 +21,17 @@ class UserProvider implements MiddlewareInterface
     /**
      * @var Renderer
      */
-    private $renderer;
+    private Renderer $renderer;
 
     /**
      * @var Session
      */
-    private $session;
+    private Session $session;
 
     /**
      * @var UserRepository
      */
-    private $repository;
+    private UserRepository $repository;
 
     /**
      * @param Renderer $renderer

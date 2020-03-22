@@ -20,27 +20,27 @@ final class RegisterUserAction implements RequestHandlerInterface
     /**
      * @var ResponseFactoryInterface
      */
-    private $responseFactory;
+    private ResponseFactoryInterface $responseFactory;
 
     /**
      * @var Renderer
      */
-    private $renderer;
+    private Renderer $renderer;
 
     /**
      * @var Validator
      */
-    private $validator;
+    private Validator $validator;
 
     /**
      * @var UserRepository
      */
-    private $repository;
+    private UserRepository $repository;
 
     /**
      * @var Session
      */
-    private $session;
+    private Session $session;
 
     /**
      * @param ResponseFactoryInterface $responseFactory

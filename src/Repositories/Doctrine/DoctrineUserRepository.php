@@ -14,12 +14,12 @@ class DoctrineUserRepository implements UserRepository
     /**
      * @var EntityManager
      */
-    private $entityManager;
+    private EntityManager $entityManager;
 
     /**
      * @var ObjectRepository<User>
      */
-    private $repository;
+    private ObjectRepository $repository;
 
     /**
      * @param EntityManager $entityManager

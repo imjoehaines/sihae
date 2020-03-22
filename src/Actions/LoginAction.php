@@ -18,22 +18,22 @@ final class LoginAction implements RequestHandlerInterface
     /**
      * @var ResponseFactoryInterface
      */
-    private $responseFactory;
+    private ResponseFactoryInterface $responseFactory;
 
     /**
      * @var Renderer
      */
-    private $renderer;
+    private Renderer $renderer;
 
     /**
      * @var UserRepository
      */
-    private $repository;
+    private UserRepository $repository;
 
     /**
      * @var Session
      */
-    private $session;
+    private Session $session;
 
     /**
      * @param ResponseFactoryInterface $responseFactory

@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Sihae\Entities\Traits\Timestamps;
-use Sihae\Slugifier;
+use Sihae\Utils\Slugifier;
 
 /**
  * @ORM\Entity
@@ -26,28 +26,28 @@ class Tag
      *
      * @var int
      */
-    protected $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=50)
      *
      * @var string
      */
-    protected $name;
+    private string $name;
 
     /**
      * @ORM\Column(type="string", unique=true)
      *
      * @var string
      */
-    protected $slug;
+    private string $slug;
 
     /**
      * @ORM\ManyToMany(targetEntity="Post", mappedBy="tags")
      *
      * @var Collection<int, Post>
      */
-    protected $posts;
+    private Collection $posts;
 
     /**
      * Initialise the posts property on creation

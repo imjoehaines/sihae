@@ -18,12 +18,12 @@ class SettingsProvider implements MiddlewareInterface
     /**
      * @var Renderer
      */
-    private $renderer;
+    private Renderer $renderer;
 
     /**
      * @var array<string, mixed>
      */
-    private $settings;
+    private array $settings;
 
     /**
      * @param Renderer $renderer

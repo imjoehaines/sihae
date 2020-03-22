@@ -17,22 +17,22 @@ final class ArchivedPostsAction implements RequestHandlerInterface
     /**
      * @var ResponseFactoryInterface
      */
-    private $responseFactory;
+    private ResponseFactoryInterface $responseFactory;
 
     /**
      * @var Renderer
      */
-    private $renderer;
+    private Renderer $renderer;
 
     /**
      * @var PostRepository
      */
-    private $repository;
+    private PostRepository $repository;
 
     /**
      * @var Formatter
      */
-    private $formatter;
+    private Formatter $formatter;
 
     /**
      * @param ResponseFactoryInterface $responseFactory

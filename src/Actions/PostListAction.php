@@ -16,17 +16,17 @@ final class PostListAction implements RequestHandlerInterface
     /**
      * @var ResponseFactoryInterface
      */
-    private $responseFactory;
+    private ResponseFactoryInterface $responseFactory;
 
     /**
      * @var PostRepository
      */
-    private $postRepository;
+    private PostRepository $postRepository;
 
     /**
      * @var Renderer
      */
-    private $renderer;
+    private Renderer $renderer;
 
     /**
      * @param ResponseFactoryInterface $responseFactory

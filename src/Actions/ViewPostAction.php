@@ -17,17 +17,17 @@ final class ViewPostAction implements RequestHandlerInterface
     /**
      * @var ResponseFactoryInterface
      */
-    private $responseFactory;
+    private ResponseFactoryInterface $responseFactory;
 
     /**
      * @var Renderer
      */
-    private $renderer;
+    private Renderer $renderer;
 
     /**
      * @var CommonMarkConverter
      */
-    private $markdown;
+    private CommonMarkConverter $markdown;
 
     /**
      * @param ResponseFactoryInterface $responseFactory

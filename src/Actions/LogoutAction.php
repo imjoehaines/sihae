@@ -15,7 +15,7 @@ final class LogoutAction implements RequestHandlerInterface
     /**
      * @var ResponseFactoryInterface
      */
-    private $responseFactory;
+    private ResponseFactoryInterface $responseFactory;
 
     /**
      * @param ResponseFactoryInterface $responseFactory

@@ -5,9 +5,16 @@ parameters:
         - config
         - migrations
         - public
+
     sets:
         - psr12
         - clean-code
         - php70
         - php71
         - dead-code
+
+    skip:
+        SlevomatCodingStandard\Sniffs\Classes\UnusedPrivateElementsSniff.UnusedProperty:
+            - 'src/Entities/*'
+        SlevomatCodingStandard\Sniffs\Classes\UnusedPrivateElementsSniff.WriteOnlyProperty:
+            - 'src/Entities/*'

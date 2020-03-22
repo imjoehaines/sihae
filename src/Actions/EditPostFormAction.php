@@ -17,17 +17,17 @@ final class EditPostFormAction implements RequestHandlerInterface
     /**
      * @var ResponseFactoryInterface
      */
-    private $responseFactory;
+    private ResponseFactoryInterface $responseFactory;
 
     /**
      * @var Renderer
      */
-    private $renderer;
+    private Renderer $renderer;
 
     /**
      * @var TagRepository
      */
-    private $tagRepository;
+    private TagRepository $tagRepository;
 
     /**
      * @param ResponseFactoryInterface $responseFactory

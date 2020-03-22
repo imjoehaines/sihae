@@ -16,12 +16,12 @@ class DoctrineTagRepository implements TagRepository
     /**
      * @var EntityManager
      */
-    private $entityManager;
+    private EntityManager $entityManager;
 
     /**
      * @var ObjectRepository<Tag>
      */
-    private $repository;
+    private ObjectRepository $repository;
 
     /**
      * @param EntityManager $entityManager

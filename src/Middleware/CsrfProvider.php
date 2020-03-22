@@ -19,12 +19,12 @@ class CsrfProvider implements MiddlewareInterface
     /**
      * @var Renderer
      */
-    private $renderer;
+    private Renderer $renderer;
 
     /**
      * @var Guard
      */
-    private $csrf;
+    private Guard $csrf;
 
     /**
      * @param Renderer $renderer

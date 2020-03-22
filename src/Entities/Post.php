@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Sihae\Entities\Traits\Timestamps;
-use Sihae\Slugifier;
+use Sihae\Utils\Slugifier;
 
 /**
  * @ORM\Entity
@@ -26,28 +26,28 @@ class Post
      *
      * @var int
      */
-    protected $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=100)
      *
      * @var string
      */
-    protected $title;
+    private string $title;
 
     /**
      * @ORM\Column(type="string", unique=true)
      *
      * @var string
      */
-    protected $slug;
+    private string $slug;
 
     /**
      * @ORM\Column(type="text")
      *
      * @var string
      */
-    protected $body;
+    private string $body;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="posts")
@@ -55,7 +55,7 @@ class Post
      *
      * @var User
      */
-    protected $user;
+    private User $user;
 
     /**
      * @ORM\ManyToMany(targetEntity="Tag", inversedBy="users")
@@ -67,14 +67,14 @@ class Post
      *
      * @var Collection<int, Tag>
      */
-    protected $tags;
+    private Collection $tags;
 
     /**
      * @ORM\Column(type="boolean")
      *
      * @var bool
      */
-    protected $is_page = false;
+    private bool $is_page = false;
 
     /**
      * Initialise the $tags property on creation

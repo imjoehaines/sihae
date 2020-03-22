@@ -14,12 +14,12 @@ class DoctrinePostRepository implements PostRepository
     /**
      * @var EntityManager
      */
-    private $entityManager;
+    private EntityManager $entityManager;
 
     /**
      * @var ObjectRepository<Post>
      */
-    private $repository;
+    private ObjectRepository $repository;
 
     /**
      * @param EntityManager $entityManager

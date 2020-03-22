@@ -74,8 +74,7 @@ final class SafeTest extends TestCase
             ],
             'function returns default (empty string)' => [
                 'hello',
-                static function (): void {
-                },
+                fn () => null,
                 '',
                 '',
             ],
@@ -105,8 +104,7 @@ final class SafeTest extends TestCase
             ],
             'function returns default (arbitrary string)' => [
                 'hello',
-                static function (): void {
-                },
+                fn () => null,
                 'arbitrary',
                 'arbitrary',
             ],
@@ -157,8 +155,7 @@ final class SafeTest extends TestCase
             ],
             'function returns default (empty array)' => [
                 'hello',
-                static function (): void {
-                },
+                fn () => null,
                 [],
                 [],
             ],
@@ -188,8 +185,7 @@ final class SafeTest extends TestCase
             ],
             'function returns default (arbitrary array)' => [
                 'hello',
-                static function (): void {
-                },
+                fn () => null,
                 ['a', 'r', 'b', 'i', 't', 'r', 'a', 'r', 'y'],
                 ['a', 'r', 'b', 'i', 't', 'r', 'a', 'r', 'y'],
             ],

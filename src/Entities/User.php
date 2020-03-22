@@ -25,42 +25,42 @@ class User
      *
      * @var int
      */
-    protected $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=50, unique=true)
      *
      * @var string
      */
-    protected $username;
+    private string $username;
 
     /**
      * @ORM\Column(type="string")
      *
      * @var string
      */
-    protected $password;
+    private string $password;
 
     /**
      * @ORM\Column(type="string", length=256)
      *
      * @var string
      */
-    protected $token;
+    private string $token;
 
     /**
      * @ORM\Column(type="boolean")
      *
      * @var bool
      */
-    protected $is_admin = false;
+    private bool $is_admin = false;
 
     /**
      * @ORM\OneToMany(targetEntity="Post", mappedBy="user")
      *
      * @var Collection<int, Post>
      */
-    protected $posts;
+    private Collection $posts;
 
     /**
      * @param string $username

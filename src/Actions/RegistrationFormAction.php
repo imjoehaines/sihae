@@ -16,17 +16,17 @@ final class RegistrationFormAction implements RequestHandlerInterface
     /**
      * @var ResponseFactoryInterface
      */
-    private $responseFactory;
+    private ResponseFactoryInterface $responseFactory;
 
     /**
      * @var Renderer
      */
-    private $renderer;
+    private Renderer $renderer;
 
     /**
      * @var Session
      */
-    private $session;
+    private Session $session;
 
     /**
      * @param Renderer $renderer

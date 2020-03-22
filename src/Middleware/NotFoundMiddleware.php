@@ -18,7 +18,7 @@ class NotFoundMiddleware implements MiddlewareInterface
     /**
      * @var Renderer
      */
-    private $renderer;
+    private Renderer $renderer;
 
     /**
      * @param Renderer $renderer

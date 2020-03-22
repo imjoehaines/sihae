@@ -20,27 +20,27 @@ final class CreatePostAction implements RequestHandlerInterface
     /**
      * @var ResponseFactoryInterface
      */
-    private $responseFactory;
+    private ResponseFactoryInterface $responseFactory;
 
     /**
      * @var Renderer
      */
-    private $renderer;
+    private Renderer $renderer;
 
     /**
      * @var TagRepository
      */
-    private $tagRepository;
+    private TagRepository $tagRepository;
 
     /**
      * @var PostRepository
      */
-    private $postRepository;
+    private PostRepository $postRepository;
 
     /**
      * @var Validator
      */
-    private $validator;
+    private Validator $validator;
 
     /**
      * @param ResponseFactoryInterface $responseFactory

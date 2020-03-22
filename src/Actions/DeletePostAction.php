@@ -16,12 +16,12 @@ final class DeletePostAction implements RequestHandlerInterface
     /**
      * @var ResponseFactoryInterface
      */
-    private $responseFactory;
+    private ResponseFactoryInterface $responseFactory;
 
     /**
      * @var PostRepository
      */
-    private $postRepository;
+    private PostRepository $postRepository;
 
     /**
      * @param ResponseFactoryInterface $responseFactory

@@ -21,17 +21,17 @@ class AuthMiddleware implements MiddlewareInterface
     /**
      * @var Session
      */
-    private $session;
+    private Session $session;
 
     /**
      * @var UserRepository
      */
-    private $repository;
+    private UserRepository $repository;
 
     /**
      * @var ResponseFactoryInterface
      */
-    private $responseFactory;
+    private ResponseFactoryInterface $responseFactory;
 
     /**
      * @param Session $session

@@ -71,7 +71,7 @@ $routeFactory = require __DIR__ . '/../config/routes.php';
 $routeFactory($app);
 
 // convert all warnings, notices etc... into ErrorExceptions
-set_error_handler(function ($severity, $message, $file, $line): void {
+set_error_handler(static function ($severity, $message, $file, $line): void {
     throw new ErrorException($message, 0, $severity, $file, $line);
 }, E_ALL);
 

@@ -20,7 +20,7 @@ class Renderer
     /**
      * @var Engine
      */
-    private $engine;
+    private Engine $engine;
 
     /**
      * @param Engine $engine

@@ -20,27 +20,27 @@ final class EditPostAction implements RequestHandlerInterface
     /**
      * @var ResponseFactoryInterface
      */
-    private $responseFactory;
+    private ResponseFactoryInterface $responseFactory;
 
     /**
      * @var PostRepository
      */
-    private $postRepository;
+    private PostRepository $postRepository;
 
     /**
      * @var TagRepository
      */
-    private $tagRepository;
+    private TagRepository $tagRepository;
 
     /**
      * @var Validator
      */
-    private $validator;
+    private Validator $validator;
 
     /**
      * @var Renderer
      */
-    private $renderer;
+    private Renderer $renderer;
 
     /**
      * @param ResponseFactoryInterface $responseFactory

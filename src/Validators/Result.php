@@ -9,7 +9,7 @@ final class Result
     /**
      * @var array<string>
      */
-    private $errors;
+    private array $errors;
 
     /**
      * @param array<string> $errors
