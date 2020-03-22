@@ -16,7 +16,7 @@ use Sihae\Repositories\UserRepository;
  * Checks the user in the current session is an admin, if they are not a 404
  * will be returned
  */
-class AuthMiddleware implements MiddlewareInterface
+final class AuthMiddleware implements MiddlewareInterface
 {
     /**
      * @var Session

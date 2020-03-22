@@ -11,7 +11,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Sihae\Renderer;
 use Sihae\Repositories\TagRepository;
 
-class TagListAction implements RequestHandlerInterface
+final class TagListAction implements RequestHandlerInterface
 {
     /**
      * @var ResponseFactoryInterface

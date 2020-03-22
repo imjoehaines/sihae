@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 use Sihae\Validators\RegistrationValidator;
 
-class RegistrationValidatorTest extends TestCase
+final class RegistrationValidatorTest extends TestCase
 {
     /**
      * @return void

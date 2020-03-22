@@ -14,7 +14,7 @@ use Slim\Csrf\Guard;
 /**
  * Provides data for CSRF protection to the Renderer
  */
-class CsrfProvider implements MiddlewareInterface
+final class CsrfProvider implements MiddlewareInterface
 {
     /**
      * @var Renderer

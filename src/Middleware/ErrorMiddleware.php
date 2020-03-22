@@ -13,7 +13,7 @@ use Psr\Log\LoggerInterface;
 use Sihae\Renderer;
 use Throwable;
 
-class ErrorMiddleware implements MiddlewareInterface
+final class ErrorMiddleware implements MiddlewareInterface
 {
     /**
      * @var LoggerInterface

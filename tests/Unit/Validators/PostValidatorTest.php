@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 use Sihae\Validators\PostValidator;
 
-class PostValidatorTest extends TestCase
+final class PostValidatorTest extends TestCase
 {
     /**
      * @return void

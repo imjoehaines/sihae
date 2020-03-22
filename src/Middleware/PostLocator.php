@@ -16,7 +16,7 @@ use Slim\Routing\RouteContext;
 /**
  * Finds a post by slug in the request
  */
-class PostLocator implements MiddlewareInterface
+final class PostLocator implements MiddlewareInterface
 {
     /**
      * @var EntityManager

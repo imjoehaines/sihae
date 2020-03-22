@@ -13,7 +13,7 @@ use Sihae\Renderer;
 /**
  * Checks for 404s and renders the 404 page if one occurs
  */
-class NotFoundMiddleware implements MiddlewareInterface
+final class NotFoundMiddleware implements MiddlewareInterface
 {
     /**
      * @var Renderer

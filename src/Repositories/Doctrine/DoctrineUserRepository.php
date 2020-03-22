@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManager;
 use Sihae\Entities\User;
 use Sihae\Repositories\UserRepository;
 
-class DoctrineUserRepository implements UserRepository
+final class DoctrineUserRepository implements UserRepository
 {
     /**
      * @var EntityManager

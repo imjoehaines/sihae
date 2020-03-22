@@ -13,7 +13,7 @@ use Sihae\Renderer;
 /**
  * Provides the Sihae settings to the Renderer
  */
-class SettingsProvider implements MiddlewareInterface
+final class SettingsProvider implements MiddlewareInterface
 {
     /**
      * @var Renderer

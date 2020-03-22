@@ -11,7 +11,7 @@ use Sihae\Entities\Post;
 use Sihae\Entities\Tag;
 use Sihae\Repositories\TagRepository;
 
-class DoctrineTagRepository implements TagRepository
+final class DoctrineTagRepository implements TagRepository
 {
     /**
      * @var EntityManager

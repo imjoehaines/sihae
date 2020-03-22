@@ -16,7 +16,7 @@ use Sihae\Repositories\UserRepository;
 /**
  * Provides the logged in user to the Renderer
  */
-class UserProvider implements MiddlewareInterface
+final class UserProvider implements MiddlewareInterface
 {
     /**
      * @var Renderer

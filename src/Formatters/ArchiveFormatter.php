@@ -9,7 +9,7 @@ use Sihae\Entities\Post;
 /**
  * Formatter for an array of posts for use on the Archive page
  */
-class ArchiveFormatter implements Formatter
+final class ArchiveFormatter implements Formatter
 {
     /**
      * Format the given single dimensional array of Posts into a multi dimensional

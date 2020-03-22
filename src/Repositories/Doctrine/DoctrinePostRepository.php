@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManager;
 use Sihae\Entities\Post;
 use Sihae\Repositories\PostRepository;
 
-class DoctrinePostRepository implements PostRepository
+final class DoctrinePostRepository implements PostRepository
 {
     /**
      * @var EntityManager

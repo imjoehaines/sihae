@@ -7,7 +7,7 @@ namespace Sihae\Validators;
 /**
  * Validator for new Users
  */
-class RegistrationValidator implements Validator
+final class RegistrationValidator implements Validator
 {
     /**
      * @param array<string, string> $userDetails

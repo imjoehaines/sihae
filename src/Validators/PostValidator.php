@@ -7,7 +7,7 @@ namespace Sihae\Validators;
 /**
  * Validator for new Posts
  */
-class PostValidator implements Validator
+final class PostValidator implements Validator
 {
     /**
      * @param array<string, string> $postDetails

@@ -10,7 +10,7 @@ use Sihae\Entities\Post;
 use Sihae\Entities\User;
 use Sihae\Formatters\ArchiveFormatter;
 
-class ArchiveFormatterTest extends TestCase
+final class ArchiveFormatterTest extends TestCase
 {
     /**
      * @return void
