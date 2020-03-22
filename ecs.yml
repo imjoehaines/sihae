@@ -13,6 +13,9 @@ parameters:
         - php71
         - dead-code
 
+    services:
+        PhpCsFixer\Fixer\Import\NoUnusedImportsFixer: ~
+
     skip:
         SlevomatCodingStandard\Sniffs\Classes\UnusedPrivateElementsSniff.UnusedProperty:
             - 'src/Entities/*'
