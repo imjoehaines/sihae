@@ -5278,16 +5278,16 @@
         },
         {
             "name": "symfony/browser-kit",
-            "version": "v4.4.5",
+            "version": "v4.4.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/browser-kit.git",
-                "reference": "090ce406505149d6852a7c03b0346dec3b8cf612"
+                "reference": "4e9a171559f5a9018c90ba9e85b4084d4e045186"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/browser-kit/zipball/090ce406505149d6852a7c03b0346dec3b8cf612",
-                "reference": "090ce406505149d6852a7c03b0346dec3b8cf612",
+                "url": "https://api.github.com/repos/symfony/browser-kit/zipball/4e9a171559f5a9018c90ba9e85b4084d4e045186",
+                "reference": "4e9a171559f5a9018c90ba9e85b4084d4e045186",
                 "shasum": ""
             },
             "require": {
@@ -5333,7 +5333,7 @@
             ],
             "description": "Symfony BrowserKit Component",
             "homepage": "https://symfony.com",
-            "time": "2020-02-23T10:00:59+00:00"
+            "time": "2020-03-15T10:05:03+00:00"
         },
         {
             "name": "symfony/config",
@@ -5527,16 +5527,16 @@
         },
         {
             "name": "symfony/dom-crawler",
-            "version": "v4.4.5",
+            "version": "v4.4.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dom-crawler.git",
-                "reference": "11dcf08f12f29981bf770f097a5d64d65bce5929"
+                "reference": "7e7c7957f6d53757d36b61a1f7408ef0b6683040"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/11dcf08f12f29981bf770f097a5d64d65bce5929",
-                "reference": "11dcf08f12f29981bf770f097a5d64d65bce5929",
+                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/7e7c7957f6d53757d36b61a1f7408ef0b6683040",
+                "reference": "7e7c7957f6d53757d36b61a1f7408ef0b6683040",
                 "shasum": ""
             },
             "require": {
@@ -5584,7 +5584,7 @@
             ],
             "description": "Symfony DomCrawler Component",
             "homepage": "https://symfony.com",
-            "time": "2020-02-29T10:05:28+00:00"
+            "time": "2020-03-16T11:24:17+00:00"
         },
         {
             "name": "symfony/event-dispatcher",
