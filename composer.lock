@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0258650f9f273f5ea13579eaab0844c1",
+    "content-hash": "cafd2e154bc61f898920e69c8a201374",
     "packages": [
         {
             "name": "akrabat/rka-slim-session-middleware",
@@ -6134,16 +6134,16 @@
         },
         {
             "name": "tracy/tracy",
-            "version": "v2.7.3",
+            "version": "v2.7.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/tracy.git",
-                "reference": "344c77293038173f49678d9a95c27da6cbdbccd0"
+                "reference": "60f2e554c0253d2b7cf096298650d8293e9f8318"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/tracy/zipball/344c77293038173f49678d9a95c27da6cbdbccd0",
-                "reference": "344c77293038173f49678d9a95c27da6cbdbccd0",
+                "url": "https://api.github.com/repos/nette/tracy/zipball/60f2e554c0253d2b7cf096298650d8293e9f8318",
+                "reference": "60f2e554c0253d2b7cf096298650d8293e9f8318",
                 "shasum": ""
             },
             "require": {
@@ -6203,7 +6203,7 @@
                 "nette",
                 "profiler"
             ],
-            "time": "2020-02-23T18:40:15+00:00"
+            "time": "2020-04-11T17:26:33+00:00"
         },
         {
             "name": "webmozart/assert",
