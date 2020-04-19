@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "53538dc982641e66305f8d67c53fd883",
+    "content-hash": "b1af5be355a801a5f63823971a250a6d",
     "packages": [
         {
             "name": "akrabat/rka-slim-session-middleware",
@@ -6055,16 +6055,16 @@
         },
         {
             "name": "symplify/easy-coding-standard-prefixed",
-            "version": "v7.2.12",
+            "version": "v7.2.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symplify/easy-coding-standard-prefixed.git",
-                "reference": "ddff41da4b9e81d7c4ea3e6bb56c97880c274615"
+                "reference": "f4af45274ea4067ad6abd339fbf82546dca13491"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symplify/easy-coding-standard-prefixed/zipball/ddff41da4b9e81d7c4ea3e6bb56c97880c274615",
-                "reference": "ddff41da4b9e81d7c4ea3e6bb56c97880c274615",
+                "url": "https://api.github.com/repos/symplify/easy-coding-standard-prefixed/zipball/f4af45274ea4067ad6abd339fbf82546dca13491",
+                "reference": "f4af45274ea4067ad6abd339fbf82546dca13491",
                 "shasum": ""
             },
             "require": {
@@ -6091,7 +6091,7 @@
                 "MIT"
             ],
             "description": "Prefixed version of ECS compiled in PHAR",
-            "time": "2020-04-09T23:58:11+00:00"
+            "time": "2020-04-19T10:25:10+00:00"
         },
         {
             "name": "theseer/tokenizer",
