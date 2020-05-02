@@ -44,7 +44,7 @@
         "tracy/tracy": "2.7.4",
         "phpstan/phpstan": "0.12.19",
         "phpstan/phpstan-doctrine": "0.12.10",
-        "phpunit/phpunit": "9.1.3",
+        "phpunit/phpunit": "9.1.4",
         "phpstan/phpstan-deprecation-rules": "0.12.2",
         "phpstan/phpstan-strict-rules": "0.12.2",
         "symplify/easy-coding-standard-prefixed": "7.3.3"
