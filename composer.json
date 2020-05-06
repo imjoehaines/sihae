@@ -43,7 +43,7 @@
         "macfja/tracy-doctrine-sql": "@dev",
         "tracy/tracy": "2.7.4",
         "phpstan/phpstan": "0.12.23",
-        "phpstan/phpstan-doctrine": "0.12.10",
+        "phpstan/phpstan-doctrine": "0.12.11",
         "phpunit/phpunit": "9.1.4",
         "phpstan/phpstan-deprecation-rules": "0.12.2",
         "phpstan/phpstan-strict-rules": "0.12.2",
