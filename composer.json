@@ -47,7 +47,7 @@
         "phpunit/phpunit": "9.1.4",
         "phpstan/phpstan-deprecation-rules": "0.12.2",
         "phpstan/phpstan-strict-rules": "0.12.2",
-        "symplify/easy-coding-standard-prefixed": "7.3.10"
+        "symplify/easy-coding-standard-prefixed": "7.3.17"
     },
     "scripts": {
         "test": [
