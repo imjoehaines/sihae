@@ -41,7 +41,7 @@
         "behat/mink-goutte-driver": "1.2.1",
         "kubawerlos/types-checker": "2.0.0",
         "macfja/tracy-doctrine-sql": "@dev",
-        "tracy/tracy": "2.7.4",
+        "tracy/tracy": "2.7.5",
         "phpstan/phpstan": "0.12.25",
         "phpstan/phpstan-doctrine": "0.12.13",
         "phpunit/phpunit": "9.1.4",
