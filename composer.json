@@ -32,7 +32,7 @@
         "vlucas/phpdotenv": "^4.1",
         "psr/container": "^1.0",
         "nyholm/psr7": "^1.2",
-        "nyholm/psr7-server": "^0.4.1",
+        "nyholm/psr7-server": "^0.4.2",
         "pimple/pimple": "^3.3"
     },
     "require-dev": {
