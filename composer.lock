@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "697bfb1e55982e3efe647cf6b9cf2997",
+    "content-hash": "875870f51d48b4c177e79eaeddbd67e1",
     "packages": [
         {
             "name": "akrabat/rka-slim-session-middleware",
@@ -5034,16 +5034,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "9.3.6",
+            "version": "9.3.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "32ff2c88b44cb0260c595c4787efb0945ceada68"
+                "reference": "c638a0cac77347980352485912de48c99b42ad00"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/32ff2c88b44cb0260c595c4787efb0945ceada68",
-                "reference": "32ff2c88b44cb0260c595c4787efb0945ceada68",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/c638a0cac77347980352485912de48c99b42ad00",
+                "reference": "c638a0cac77347980352485912de48c99b42ad00",
                 "shasum": ""
             },
             "require": {
@@ -5128,7 +5128,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-08-11T09:58:22+00:00"
+            "time": "2020-08-11T15:36:12+00:00"
         },
         {
             "name": "psr/event-dispatcher",
