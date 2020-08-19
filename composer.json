@@ -42,7 +42,7 @@
         "kubawerlos/types-checker": "2.0.0",
         "macfja/tracy-doctrine-sql": "@dev",
         "tracy/tracy": "2.7.5",
-        "phpstan/phpstan": "0.12.37",
+        "phpstan/phpstan": "0.12.38",
         "phpstan/phpstan-doctrine": "0.12.19",
         "phpunit/phpunit": "9.3.7",
         "phpstan/phpstan-deprecation-rules": "0.12.5",
