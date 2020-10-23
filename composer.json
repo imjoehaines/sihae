@@ -20,7 +20,7 @@
         "ext-json":  "*",
         "akrabat/rka-slim-session-middleware": "^2.0",
         "doctrine/migrations": "^2.0.0",
-        "doctrine/orm": "^2.7.2",
+        "doctrine/orm": "^2.7.4",
         "jdorn/sql-formatter": "^1.2",
         "league/commonmark": "^1.5.6",
         "league/plates": "^3.1",
