@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6a2cff5a406bb2cf7e703e17d4d5e90e",
+    "content-hash": "e7087f1098b3c28d5d1437392a842445",
     "packages": [
         {
             "name": "akrabat/rka-slim-session-middleware",
@@ -1075,6 +1075,7 @@
                 "reflection",
                 "static"
             ],
+            "abandoned": "roave/better-reflection",
             "time": "2020-03-27T11:06:43+00:00"
         },
         {
@@ -7082,43 +7083,34 @@
         },
         {
             "name": "symplify/easy-coding-standard-prefixed",
-            "version": "8.3.45",
+            "version": "9.0.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symplify/easy-coding-standard-prefixed.git",
-                "reference": "f9d6bb02287fa019bace3c565edbcfaaf31c0de0"
+                "reference": "3b6aeb5827143b7fda420476cb11c7472b6a02ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symplify/easy-coding-standard-prefixed/zipball/f9d6bb02287fa019bace3c565edbcfaaf31c0de0",
-                "reference": "f9d6bb02287fa019bace3c565edbcfaaf31c0de0",
+                "url": "https://api.github.com/repos/symplify/easy-coding-standard-prefixed/zipball/3b6aeb5827143b7fda420476cb11c7472b6a02ae",
+                "reference": "3b6aeb5827143b7fda420476cb11c7472b6a02ae",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.2"
-            },
-            "conflict": {
-                "symplify/auto-bind-parameter": "<7.2",
-                "symplify/autowire-array-parameter": "<7.2",
-                "symplify/coding-standard": "<7.2",
-                "symplify/package-builder": "<7.2",
-                "symplify/set-config-resolver": "<7.2",
-                "symplify/smart-file-system": "<7.2"
+                "php": ">=7.3"
             },
             "replace": {
                 "symplify/easy-coding-standard": "self.version"
             },
             "bin": [
-                "ecs",
-                "ecs.phar"
+                "bin/ecs"
             ],
             "type": "library",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
-            "description": "Prefixed version of ECS compiled in PHAR",
-            "time": "2020-10-23T17:36:15+00:00"
+            "description": "Prefixed scoped version of \"symplify/easy-coding-standard\" package",
+            "time": "2020-12-24T14:30:05+00:00"
         },
         {
             "name": "theseer/tokenizer",
